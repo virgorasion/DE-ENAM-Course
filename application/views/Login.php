@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,9 +88,9 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="text-center">
-                            <button data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-user fa-lg">Login Admin</button>
-                            <button data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-bank fa-lg">Login Sekolah</button>
-                            <button data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-user fa-lg">Login Siswa</button>
+                            <button id="loginAdmin" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-user fa-lg">Login Admin</button>
+                            <button id="loginSekolah" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-university fa-lg">Login Sekolah</button>
+                            <button id="loginSiswa" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-graduation-cap fa-lg">Login Siswa</button>
                         </div>
                     </div>
                 </div>
@@ -119,8 +118,7 @@
 
 				<!--Modal body-->
 				<div class="modal-body">
-                    
-                    <form action="<?php echo site_url('MainController/verification') ?>" method="POST">
+                    <form name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>" action="<?php echo site_url('MainController/verification') ?>" method="POST">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -132,8 +130,8 @@
 								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
 								<input type="password" class="form-control" name="password">
 							</div>
-                            <?php echo validation_errors(); ?>
 						</div>
+                        <input type="hidden" name="userType" id="userType" class="form-control" value="">
 						<div class="row">
 							<div class="col-xs-1">
 								<div class="form-group text-right">
@@ -157,17 +155,27 @@
     <!--jQuery [ REQUIRED ]-->
     <script src="<?php echo base_url("assets/js/jquery-2.2.1.min.js")?>"></script>
 
-
     <!--BootstrapJS [ RECOMMENDED ]-->
     <script src="<?php echo base_url("assets/js/bootstrap.min.js")?>"></script>
-
 
     <!--Fast Click [ OPTIONAL ]-->
     <script src="<?php echo base_url("assets/plugins/fast-click/fastclick.min.js")?>"></script>
 
-    
     <!--Nifty Admin [ RECOMMENDED ]-->
     <script src="<?php echo base_url("assets/js/nifty.min.js")?>"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('#loginAdmin').click(function(){
+                $('#userType').val('1');
+            });
+            $('#loginSekolah').click(function(){
+                $('#userType').val('2');
+            });
+            $('#loginSiswa').click(function(){
+                $('#userType').val('3');
+            });
+        })
+    </script>
 </body>
 </html>
