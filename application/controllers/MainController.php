@@ -7,6 +7,7 @@ class MainController extends CI_controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('MainModel');
     }
 
     public function index()
@@ -18,38 +19,34 @@ class MainController extends CI_controller
         $this->load->view('Login', $data);
     }
     
-    public function verification()
+    public function login()
     {
-        csrf_verify();
         $user = $this->input->post('username');
-        $pass = $this->input->post('password');
+        $pass = md5($this->input->post('password'));
         $userType = $this->input->post('userType');
+        $cek = "";
         if ($userType == 1) {
-            $cek = $this->MainModel->verif('login_admin',$user, $password);
+            $cek = $this->MainModel->verif('login_admin',$user, $pass, $userType);
         } else if($userType == 2){
-            $cek = $this->MainModel->verif('sekolah_login',$user,$password);
+            $cek = $this->MainModel->verif('login_sekolah',$user,$pass, $userType);
         }else if($userType == 3){
-            $cek = $this->MainModel->verif('siswa_login',$user,$password);
+            $cek = $this->MainModel->verif('login_siswa',$user,$pass, $userType);
         }else{
             $data['msg'] = "Error, Silahkan Refresh Halaman";
                 $this->load->view('login', $data);
         }
-
-        die(var_dump($cek));
 
         if (count($cek) > 0) {
            foreach ($cek as $row)
             {                   
                 $this->session->set_userdata("username",$row->username);
                 $this->session->set_userdata("nama",$row->nama);
-                $this->session->set_userdata("id",$row->id_admin);
-                $this->session->set_userdata("menu",$this->generatemenu());
-                $this->set_hak_akses();
+                $this->session->set_userdata("id",$row->id);
                 redirect(site_url('Home'));
             }
         }else{
                 $data['msg'] = "Username/Password Salah";
-                $this->load->view('login', $data);
+                $this->index();
             }
     }
 }

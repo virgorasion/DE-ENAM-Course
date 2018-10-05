@@ -104,7 +104,7 @@
 
     <!--Default Bootstrap Modal-->
 	<!--===================================================-->
-	<div class="modal fade" id="loginModal" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+	<div class="modal fade" id="loginModal" role="dialog" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -118,7 +118,11 @@
 
 				<!--Modal body-->
 				<div class="modal-body">
-                    <form name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>" action="<?php echo site_url('MainController/verification') ?>" method="POST">
+
+                    <?php echo form_open('MainController/login'); ?>
+                        
+                        <input type="hidden" name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>">
+                        
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -139,7 +143,7 @@
 								</div>
 							</div>
 						</div>
-					</form>
+					<?php echo form_close(); ?>
 				</div>
 			</div>
 		</div>
