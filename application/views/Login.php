@@ -119,10 +119,8 @@
 				<!--Modal body-->
 				<div class="modal-body">
 
-                    <?php echo form_open('MainController/login'); ?>
-                        
-                        <input type="hidden" name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>">
-                        
+                    <form action="<?= site_url('MainController/login')?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -135,7 +133,7 @@
 								<input type="password" class="form-control" name="password">
 							</div>
 						</div>
-                        <input type="hidden" name="userType" id="userType" class="form-control" value="">
+                        <input type="hidden" name="hakAkse" id="hakAkse" class="form-control" value="">
 						<div class="row">
 							<div class="col-xs-1">
 								<div class="form-group text-right">
@@ -143,7 +141,7 @@
 								</div>
 							</div>
 						</div>
-					<?php echo form_close(); ?>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -171,13 +169,13 @@
     <script>
         $(document).ready(function(){
             $('#loginAdmin').click(function(){
-                $('#userType').val('1');
+                $('#hakAkse').val('1');
             });
             $('#loginSekolah').click(function(){
-                $('#userType').val('2');
+                $('#hakAkse').val('2');
             });
             $('#loginSiswa').click(function(){
-                $('#userType').val('3');
+                $('#hakAkse').val('3');
             });
         })
     </script>

@@ -12,28 +12,24 @@ class MainController extends CI_controller
 
     public function index()
     {
-        $data['csrf'] = array(
-            'token' => $this->security->get_csrf_token_name(),
-            'hash' => $this->security->get_csrf_hash()
-        );
-        $this->load->view('Login', $data);
+        $this->load->view('Login');
     }
     
     public function login()
     {
         $user = $this->input->post('username');
         $pass = md5($this->input->post('password'));
-        $userType = $this->input->post('userType');
+        $hakAkses = $this->input->post('hakAkse');
         $cek = "";
-        if ($userType == 1) {
-            $cek = $this->MainModel->verif('login_admin',$user, $pass, $userType);
-        } else if($userType == 2){
-            $cek = $this->MainModel->verif('login_sekolah',$user,$pass, $userType);
-        }else if($userType == 3){
-            $cek = $this->MainModel->verif('login_siswa',$user,$pass, $userType);
+        if ($hakAkses == 1) {
+            $cek = $this->MainModel->verif('tb_admin',$user, $pass, $hakAkses);
+        } else if($hakAkses == 2){
+            $cek = $this->MainModel->verif('tb_sekolah',$user,$pass, $hakAkses);
+        }else if($hakAkses == 3){
+            $cek = $this->MainModel->verif('tb_siswa',$user,$pass, $hakAkses);
         }else{
-            $data['msg'] = "Error, Silahkan Refresh Halaman";
-                $this->load->view('login', $data);
+            $this->session->set_flashdata('msg', 'Akses tidak diketahui silahkan refresh halaman');
+            redirect(site_url('MainController'));
         }
 
         if (count($cek) > 0) {
@@ -42,11 +38,18 @@ class MainController extends CI_controller
                 $this->session->set_userdata("username",$row->username);
                 $this->session->set_userdata("nama",$row->nama);
                 $this->session->set_userdata("id",$row->id);
-                redirect(site_url('Home'));
+                redirect('Home');
             }
         }else{
-                $data['msg'] = "Username/Password Salah";
-                $this->index();
-            }
+                $this->session->set_flashdata('msg', 'Username/Password anda salah');
+                redirect(site_url('MainController'));
+        }
     }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(site_url('MainController'));
+    }
+
 }
