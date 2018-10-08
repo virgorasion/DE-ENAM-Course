@@ -1,117 +1,35 @@
-<body>
-    <div id="container" class="effect mainnav-out">
-        
-        <!--NAVBAR-->
-        <!--===================================================-->
-        <header id="navbar">
-            <div id="navbar-container" class="boxed">
 
-                <!--Brand logo & name-->
-                <!--================================-->
-                <div class="navbar-header">
-                    <a href="index.html" class="navbar-brand">
-                        <img src="<?=site_url('assets/img/logo.png')?>" alt="Nifty Logo" class="brand-icon">
-                        <div class="brand-title">
-                            <span class="brand-text">Nifty</span>
-                        </div>
-                    </a>
-                </div>
-                <!--================================-->
-                <!--End brand logo & name-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Blank Page</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="<?= base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css')?>">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?= base_url('assets/bower_components/font-awesome/css/font-awesome.min.css')?>">
+  <!--Bootstrap Select [ OPTIONAL ]-->
+  <link href="<?=base_url('assets/plugins/bootstrap-select/bootstrap-select.min.css')?>" rel="stylesheet">
+  <!-- DataTables -->
+  <link href="<?=base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css')?>" rel="stylesheet">
+	<link href="<?=base_url('assets/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css')?>" rel="stylesheet">
 
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?= base_url('assets/dist/css/AdminLTE.min.css')?>">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="<?= base_url('assets/dist/css/skins/_all-skins.min.css')?>">
 
-                <!--Navbar Dropdown-->
-                <!--================================-->
-                <div class="navbar-content clearfix">
-                    <ul class="nav navbar-top-links pull-left">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-                        <!--Navigation toogle button-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li class="tgl-menu-btn">
-                            <a class="mainnav-toggle push" href="index.html#">
-                                <i class="fa fa-bars"></i>
-                            </a>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End Navigation toogle button-->                      
-
-                    </ul>
-                    <ul class="nav navbar-top-links pull-right">
-
-                        <!--User dropdown-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li id="dropdown-user" class="dropdown">
-                            <a href="index.html#" data-toggle="dropdown" class="dropdown-toggle text-right">
-                                <span class="pull-right">
-                                    <img class="img-circle img-user media-object" src="<?=site_url('assets/img/av1.png')?>" alt="Profile Picture">
-                                </span>
-                                <div class="username hidden-xs">John Doe</div>
-                            </a>
-
-
-                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
-
-                                <!-- Dropdown heading  -->
-                                <div class="pad-all bord-btm">
-                                    <p class="text-lg text-semibold mar-btm">750Gb of 1,000Gb Used</p>
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar" style="width: 70%;">
-                                            <span class="sr-only">70%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- User dropdown menu -->
-                                <ul class="head-list">
-                                    <li>
-                                        <a href="index.html#">
-                                            <i class="pli-male icon-lg icon-fw"></i> Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index.html#">
-                                            <span class="badge badge-danger pull-right">9</span>
-                                            <i class="pli-mail icon-lg icon-fw"></i> Messages
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index.html#">
-                                            <span class="label label-success pull-right">New</span>
-                                            <i class="pli-gear icon-lg icon-fw"></i> Settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index.html#">
-                                            <i class="pli-information icon-lg icon-fw"></i> Help
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index.html#">
-                                            <i class="pli-computer-secure icon-lg icon-fw"></i> Lock screen
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <!-- Dropdown footer -->
-                                <div class="pad-all text-right">
-                                    <a href="<?= site_url('MainController/logout') ?>" class="btn btn-primary">
-                                        <i class="pli-unlock"></i> Logout
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End user dropdown-->
-
-                    </ul>
-                </div>
-                <!--================================-->
-                <!--End Navbar Dropdown-->
-
-            </div>
-        </header>
-        <!--===================================================-->
-        <!--END NAVBAR-->
-
-        <div class="boxed">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>

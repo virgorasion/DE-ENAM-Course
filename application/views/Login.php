@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="text-center">
-                            <button id="loginAdmin" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-user fa-lg">Login Admin</button>
+                            <button id="loginAdmin" data-toggle="modal" data-target="#loginModal" class="btn btn-block btn-social btn-bitbucket"><i class="fa fa-user fa-lg"></i>Login Admin</button>
                             <button id="loginSekolah" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-university fa-lg">Login Sekolah</button>
                             <button id="loginSiswa" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-labeled fa fa-graduation-cap fa-lg">Login Siswa</button>
                         </div>

@@ -12,37 +12,72 @@ class MainController extends CI_controller
 
     public function index()
     {
-        $this->load->view('Login');
+        $data['csrf'] = array(
+            'token' => $this->security->get_csrf_token_name(),
+            'hash' => $this->security->get_csrf_hash()
+        );
+        $this->load->view('LoginNew',$data);
+    }
+
+    public function test()
+    {
+        echo 'test';
     }
     
     public function login()
     {
         $user = $this->input->post('username');
         $pass = md5($this->input->post('password'));
-        $hakAkses = $this->input->post('hakAkse');
+        $hakAkses = $this->input->post('hakAkses');
         $cek = "";
         if ($hakAkses == 1) {
             $cek = $this->MainModel->verif('tb_admin',$user, $pass, $hakAkses);
+            if(count($cek) > 0){
+                foreach ($cek as $res) {
+                    $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('username', $res->username);
+                    $this->session->set_userdata('nama', $res->nama);
+                    $this->session->set_userdata('id', $res->id);
+                    redirect('Home');
+                }
+            }else{
+                $this->session->set_flashdata('msg', 'Username/Password anda salah');
+                redirect(site_url('MainController'));
+            }
         } else if($hakAkses == 2){
-            $cek = $this->MainModel->verif('tb_sekolah',$user,$pass, $hakAkses);
+            $cek = $this->MainModel->verif('tb_instansi',$user,$pass, $hakAkses);
+            if(count($cek) > 0){
+                foreach ($cek as $res) {
+                    $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('username', $res->username);
+                    $this->session->set_userdata('nama', $res->nama_instansi);
+                    $this->session->set_userdata('kode_instansi', $res->kode_instansi);
+                    $this->session->set_userdata('id', $res->id);
+                    redirect('Home');
+                }
+            }else{
+                $this->session->set_flashdata('msg', 'Username/Password anda salah');
+                redirect(site_url('MainController'));
+            }
         }else if($hakAkses == 3){
             $cek = $this->MainModel->verif('tb_siswa',$user,$pass, $hakAkses);
+            if(count($cek) > 0){
+                foreach ($cek as $res) {
+                    $this->session->set_userdata('id', $res->id);
+                    $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('nama', $res->nama);
+                    $this->session->set_userdata('username', $res->username);
+                    $this->session->set_userdata('nis', $res->nis);
+                    $this->session->set_userdata('nisn', $res->nisn);
+                    redirect('Home');
+                }
+            }else{
+                $this->session->set_flashdata('msg', 'Username/Password anda salah');
+                redirect(site_url('MainController'));
+            }
         }else{
             $this->session->set_flashdata('msg', 'Akses tidak diketahui silahkan refresh halaman');
             redirect(site_url('MainController'));
-        }
-
-        if (count($cek) > 0) {
-           foreach ($cek as $row)
-            {                   
-                $this->session->set_userdata("username",$row->username);
-                $this->session->set_userdata("nama",$row->nama);
-                $this->session->set_userdata("id",$row->id);
-                redirect('Home');
-            }
-        }else{
-                $this->session->set_flashdata('msg', 'Username/Password anda salah');
-                redirect(site_url('MainController'));
         }
     }
 
