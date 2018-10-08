@@ -35,6 +35,7 @@ class MainController extends CI_controller
             if(count($cek) > 0){
                 foreach ($cek as $res) {
                     $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('akses', "Admin");
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('id', $res->id);
@@ -49,6 +50,7 @@ class MainController extends CI_controller
             if(count($cek) > 0){
                 foreach ($cek as $res) {
                     $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('akses', "Instansi");
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama_instansi);
                     $this->session->set_userdata('kode_instansi', $res->kode_instansi);
@@ -65,6 +67,7 @@ class MainController extends CI_controller
                 foreach ($cek as $res) {
                     $this->session->set_userdata('id', $res->id);
                     $this->session->set_userdata('hakAkses', $res->hak_akses);
+                    $this->session->set_userdata('akses', "Siswa");
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nis', $res->nis);
