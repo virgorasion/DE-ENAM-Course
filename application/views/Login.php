@@ -119,7 +119,7 @@
 				<!--Modal body-->
 				<div class="modal-body">
 
-                    <form action="<?= site_url('MainController/login')?>" method="post">
+                    <form action="<?= site_url('Auth/login')?>" method="post">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 						<div class="form-group">
 							<div class="input-group">

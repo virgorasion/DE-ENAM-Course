@@ -70,7 +70,7 @@
 						<!-- /.login-logo -->
 						<div class="login-box-body">
 							<p class="login-box-msg">Sign in to start your session</p>
-							<form action="<?=site_url('MainController/Login')?>" method="post">
+							<form action="<?=site_url('Auth/Login')?>" method="post">
 								<input type="hidden" name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>">
 								<div class="form-group has-feedback">
 									<input type="text" class="form-control" name="username" placeholder="Username">
