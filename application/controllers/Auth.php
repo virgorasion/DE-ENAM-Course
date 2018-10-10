@@ -19,11 +19,6 @@ class Auth extends CI_controller
         $this->load->view('LoginNew',$data);
     }
 
-    public function test()
-    {
-        echo 'test';
-    }
-    
     public function login()
     {
         $user = $this->input->post('username');
@@ -39,7 +34,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('id', $res->id);
-                    redirect('Home');
+                    redirect('ProgramCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
@@ -55,7 +50,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('nama', $res->nama_instansi);
                     $this->session->set_userdata('kode_instansi', $res->kode_instansi);
                     $this->session->set_userdata('id', $res->id);
-                    redirect('Home');
+                    redirect('ProgramCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
@@ -72,7 +67,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nis', $res->nis);
                     $this->session->set_userdata('nisn', $res->nisn);
-                    redirect('Home');
+                    redirect('ProgramCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
