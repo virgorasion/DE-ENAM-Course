@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2018 at 04:49 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.10
+-- Waktu pembuatan: 10 Okt 2018 pada 14.32
+-- Versi server: 10.1.30-MariaDB
+-- Versi PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,26 +19,34 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `e-budgeting`
+-- Database: `db_mangkelno`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_admin`
+-- Struktur dari tabel `tb_admin`
 --
 
 CREATE TABLE `tb_admin` (
   `id` int(11) NOT NULL,
+  `hak_akses` int(1) NOT NULL,
   `nama` varchar(20) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `tb_admin`
+--
+
+INSERT INTO `tb_admin` (`id`, `hak_akses`, `nama`, `username`, `password`) VALUES
+(1, 1, 'Fauzan', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_instansi`
+-- Struktur dari tabel `tb_instansi`
 --
 
 CREATE TABLE `tb_instansi` (
@@ -52,29 +60,46 @@ CREATE TABLE `tb_instansi` (
   `password` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `tb_instansi`
+--
+
+INSERT INTO `tb_instansi` (`id`, `kode_instansi`, `nama_instansi`, `versi`, `keterangan`, `tahun`, `username`, `password`) VALUES
+(1, '010.60134', 'SMKN 2 Surabaya', 'Diri Sendiri', '-', '2018-10-10', 'smekda', '21232f297a57a5a743894a0e4a801fc3');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_program`
+-- Struktur dari tabel `tb_program`
 --
 
 CREATE TABLE `tb_program` (
   `id` int(11) NOT NULL,
+  `kode_instansi` varchar(25) NOT NULL,
   `kode_program` varchar(20) NOT NULL,
   `nama_program` varchar(50) NOT NULL,
   `plafon` varchar(15) NOT NULL,
   `total_rinci` varchar(15) NOT NULL,
-  `total_rekening` varchar(15) NOT NULL
+  `total_rekening` varchar(15) NOT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_program`
+--
+
+INSERT INTO `tb_program` (`id`, `kode_instansi`, `kode_program`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`, `tanggal`) VALUES
+(1, '010.60134', '127.1681', 'Program Keluarga Berencana', '3.352.272.000', '1.716.382.100', '1.176.382.100', '2018-10-10');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_siswa`
+-- Struktur dari tabel `tb_siswa`
 --
 
 CREATE TABLE `tb_siswa` (
   `id` int(11) NOT NULL,
+  `hak_akses` int(1) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `username` varchar(15) NOT NULL,
   `password` varchar(32) NOT NULL,
@@ -83,60 +108,67 @@ CREATE TABLE `tb_siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data untuk tabel `tb_siswa`
+--
+
+INSERT INTO `tb_siswa` (`id`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`) VALUES
+(1, 3, 'M Nur Fauzan W', 'joo', '21232f297a57a5a743894a0e4a801fc3', '13236', '0008096617');
+
+--
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_admin`
+-- Indeks untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_instansi`
+-- Indeks untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_program`
+-- Indeks untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_siswa`
+-- Indeks untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_admin`
+-- AUTO_INCREMENT untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_instansi`
+-- AUTO_INCREMENT untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_program`
+-- AUTO_INCREMENT untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_siswa`
+-- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
