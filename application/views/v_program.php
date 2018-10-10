@@ -41,7 +41,7 @@ $this->load->view('template/_nav');
 						<tr>
 							<th>Tahun</th>
 							<th>Kode</th>
-							<th class="min-tablet">Unit</th>
+							<th class="min-tablet">Nama Instansi</th>
 							<th class="min-tablet">Versi</th>
 							<th class="min-desktop">Keterangan</th>
 							<th class="min-desktop">Action</th>
@@ -50,15 +50,15 @@ $this->load->view('template/_nav');
 					<tbody>
 						<?php
 						foreach($data as $item):
-						$tgl = explode('-', $item->tanggal);
-						$tahun = $tgl[2];
+						$tgl = explode('-', $item->tahun);
+						$tahun = $tgl[0];
 						?>
 						<tr>
 							<td id="tahun"><?= $tahun ?></td>
-							<td id="kode"><?= $item->kode ?></td>
-							<td id="unit"><?= $item->unit ?></td>
+							<td id="kode"><?= $item->kode_instansi ?></td>
+							<td id="unit"><?= $item->nama_instansi ?></td>
 							<td id="versi"><?= $item->versi ?></td>
-							<td id="keterangan"><?= $item->ket ?></td>
+							<td id="keterangan"><?= $item->keterangan ?></td>
 							<td>-</td>
 						</tr>
 						<?php

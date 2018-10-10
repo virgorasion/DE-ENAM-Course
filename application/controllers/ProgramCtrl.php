@@ -1,4 +1,4 @@
-<?php
+<?php   
 
 defined('BASEPATH')or exit('ERROR');
 
@@ -14,7 +14,7 @@ class ProgramCtrl extends CI_controller
     {
         if ($_SESSION['username'] != null) {
             $data['data'] = $this->ProgramModel->DataProgram();
-            $this->load->view('v_home',$data);
+            $this->load->view('v_program',$data);
         }else{
             redirect('Auth');
         }
@@ -23,7 +23,8 @@ class ProgramCtrl extends CI_controller
     public function ProgramDetails($kode)
     {
         if ($_SESSION['username'] != null) {
-            $this->load->view('v_homeDetails',$kode);
+            $data['data'] = $this->ProgramModel->DataProgramDetails($kode)->result();
+            $this->load->view('v_programDetails',$data);
         }else{
             redirect('Auth');
         }
