@@ -82,7 +82,7 @@ class Auth extends CI_controller
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect(site_url('MainController'));
+        redirect(site_url('Auth'));
     }
 
 }
