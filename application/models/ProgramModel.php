@@ -15,4 +15,14 @@ class ProgramModel extends CI_model
                 ->where('kode_instansi = "'.$kode.'" ')
                 ->get();
     }
+
+    public function InsertInstansi($table,$data)
+    {
+        return $this->db->insert($table, $data);
+    }
+
+    public function DeleteInstansi($table,$id)
+    {
+        return $this->db->delete($table, array('id' => $id));
+    }
 }
