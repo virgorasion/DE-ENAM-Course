@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AdminLTE 2 | Log in</title>
+	<title>Mustika Graha Education</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.7 -->
@@ -18,8 +18,10 @@
 	<!-- iCheck -->
 	<link rel="stylesheet" href="<?= base_url('assets/plugins/iCheck/square/blue.css')?>">
 	<style>
-		.foto-bg{
-			background-image: url('<?= base_url('assts/dist/img/Kota-surabaya.jpg') ?>');
+		body{
+			background-image: url('<?= base_url('assets/dist/img/Kota-surabaya.jpg') ?>');
+			background-size:cover;
+			background-repeat: no-repeat;
 		}
 	</style>
 	<!-- Google Font -->
@@ -32,16 +34,16 @@
 	<!--===================================================-->
 	<div class="cls-content">
 		<br><br><br><br><br>
-		<div class="text-center">SELAMAT DATANG DI</div>
-		<br><br>
-		<div class="col-lg-12 text-center">Web Fauzan</div>
-		<br><br><br><br>
+		<div class="text-center"><h4 style="font-family:verdana;"><b>SELAMAT DATANG DI</b></h4></div>
+		<br>
+		<div class="col-lg-12 text-center"><b><h1 style="font-family:sans-serif;"><b>MUSTIKA GRAHA EDUCATION</b></h1></b></div>
+		<br><br><br><br><br><br><br>
 		<div>
 			<div class="form-group">
 				<div class="row">
 					<div class="text-center">
 						<button id="loginAdmin" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
-							 class="fa fa-user fa-lg"></i>Login Admin</button>
+							 class="fa fa-user fa-lg"></i> Login Admin</button>
 						<button id="loginSekolah" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
 							 class="fa fa-university fa-lg"></i>Login Sekolah</button>
 						<button id="loginSiswa" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
@@ -65,11 +67,11 @@
 					</button>
 					<div class="login-box">
 						<div class="login-logo">
-							<a href="../../index2.html"><b>Admin</b>LTE</a>
+							<b>Login</b>
 						</div>
 						<!-- /.login-logo -->
 						<div class="login-box-body">
-							<p class="login-box-msg">Sign in to start your session</p>
+							<p class="login-box-msg"></p>
 							<form action="<?=site_url('Auth/Login')?>" method="post">
 								<input type="hidden" name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>">
 								<div class="form-group has-feedback">
@@ -83,11 +85,7 @@
 								<input type="hidden" name="hakAkses" id="hakAkses" class="form-control" value="">
 								<div class="row">
 									<div class="col-xs-8">
-										<div class="checkbox icheck">
-											<label>
-												<input type="checkbox"> Remember Me
-											</label>
-										</div>
+										
 									</div>
 									<!-- /.col -->
 									<div class="col-xs-4">
