@@ -27,15 +27,13 @@
 			<div class="box-body">
 
 				<?php
-				if($_SESSION['hakAkses'] == 1){
-					echo '
+				if($_SESSION['hakAkses'] == 1){ ?>
 					<div class="form-group col-md-4">
-					<button id="addBtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Tambah Instansi</button>
+					<button id="addBtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-tambah">Tambah Instansi</button>
 					</div>
-					<br><br><br>';
-				}
-				?>
-				<table id="demo-dt-selection" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+					<br><br><br>
+				<?php } ?>
+				<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th>Tahun</th>
@@ -68,11 +66,55 @@
 							<td id="keterangan">
 								<?= $item->keterangan ?>
 							</td>
-							<?php if($_SESSION['hakAkses'] == 1) echo'
+							<?php if($_SESSION['hakAkses'] == 1) { ?>
 							<td>
-								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Launch Default Modal</button>
+								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">
+								<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="View"></span>
+									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+									<span class="fa fa-eye"></span>
+									</button>
+								</a>
+								<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
+									<button class="btn btn-warning btn-xs btnEdit" data-toggle="modal" data-target="#modal-edit" data-title="Edit" id="btnEdit">
+									<span class="fa fa-pencil"></span>
+									</button>
+								</a>
+								<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="Delete"></span>
+									<button class="btn btn-danger btn-xs btnDelete" data-title="Delete" id="btnDelete">
+									<span class="fa fa-remove"></span>
+									</button>
+								</a>
+							</td> 
+							<?php } ?>
+							<?php if ($_SESSION['hakAkses'] == 2) { ?>
+							<td>
+								<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="View"></span>
+									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+									<span class="fa fa-eye"></span>
+									</button>
+								</a>
+								<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
+									<button class="btn btn-warning btn-xs btnEdit" data-toggle="modal" data-target="#modal-edit" data-title="Edit" id="btnEdit">
+									<span class="fa fa-pencil"></span>
+									</button>
+								</a>
+							</td> 
+							<?php } ?>
+							<?php if ($_SESSION['hakAkses'] == 3) { ?>
+							<td>
+									<a href="#">
+									<span data-placement="top" data-toggle="tooltip" title="View"></span>
+									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+									<span class="fa fa-eye"></span>
+									</button>
+								</a>
 							</td>
-							';?>
+							<?php } ?>
 						</tr>
 						<?php
 						endforeach;
@@ -86,15 +128,15 @@
 		<!-- /.box -->
 
 		<!-- Start Modal -->
-		<div class="modal fade" id="modal-default">
+		<div class="modal fade" id="modal-tambah">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Default Modal</h4>
+						<h4 class="modal-title">Tambah Instansi</h4>
 					</div>
-					<form id="addInstani" method="post" action="<?= site_url('ProgramCtrl/TambahInstansi') ?>">
+					<form id="formTambah" method="post" action="<?= site_url('ProgramCtrl/TambahInstansi') ?>">
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="addTahun">Tahun</label>
@@ -149,6 +191,70 @@
 		</div>
 		<!-- /.modal -->
 
+		<!-- Start Modal -->
+		<div class="modal fade" id="modal-edit">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Edit Instansi</h4>
+					</div>
+					<form id="formEdit" method="post" action="<?= site_url('ProgramCtrl/EditInstansi') ?>">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="editTahun">Tahun</label>
+								<input type="text" name="editTahun" id="editTahun" class="form-control" placeholder="2018" autofocus>
+							</div>
+							<div class="form-group">
+								<label>Kode Instansi</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										010.
+									</div>
+									<input type="text" class="form-control" id="editId" name="editId" placeholder="9999" aria-describedby="helpId">
+								</div>
+								<!-- /.input group -->
+								<!-- <small id="helpId" class="text-muted"></small> -->
+							</div>
+							<div class="form-group">
+								<label for="editInstansi">Nama Instansi</label>
+								<input type="text" name="editInstansi" id="editInstansi" class="form-control" placeholder="ex : SMKN 2 Surabaya">
+							</div>
+							<div class="form-group">
+								<label for="editVersi">Versi</label>
+								<input type="text" name="editVersi" id="editVersi" class="form-control" placeholder="-">
+							</div>
+							<div class="form-group">
+								<label for="editKet">Keterangan</label>
+								<textarea class="form-control" name="editKet" id="editKet" rows="3" placeholder="Keterangan"></textarea>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label for="editUser">Username</label>
+								<input type="text" name="editUser" id="editUser" class="form-control" placeholder="Virgorasion">
+							</div>
+							<div class="form-group">
+								<label for="editPass">Password</label>
+								<input type="password" name="editPass" id="editPass" class="form-control" placeholder="********">
+							</div>
+							<div class="form-group">
+								<label for="confirmPassword">Confirmasi Password</label>
+								<input type="password" name="passConfirmEdit" id="passConfirmEdit" class="form-control" placeholder="********">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
 	</section>
 	<!-- /.content -->
 </div>
@@ -161,7 +267,7 @@ $this->load->view('template/_js');
 <script>
 	// Row selection (single row)
 	// -----------------------------------------------------------------
-	var rowSelection = $('#demo-dt-selection').DataTable({
+	var rowSelection = $('#datatable').DataTable({
 		"responsive": true,
 		"language": {
 			"paginate": {
@@ -170,7 +276,12 @@ $this->load->view('template/_js');
 			}
 		}
 	});
-	$('#demo-dt-selection').on('click', 'tr', function () {
+	var faIcon = {
+		valid: 'fa fa-check-circle fa-lg text-success',
+		invalid: 'fa fa-times-circle fa-lg',
+		validating: 'fa fa-refresh'
+	}
+	$('#datatable').on('click', '#btnView', function () {
 		var $item = $(this).closest('tr');
 		var $kode = $item.find('#kode').text();
 		// alert($kode+"asdasd");
@@ -178,39 +289,83 @@ $this->load->view('template/_js');
 
 	});
 
-	var faIcon = {
-		valid: 'fa fa-check-circle fa-lg text-success',
-		invalid: 'fa fa-times-circle fa-lg',
-		validating: 'fa fa-refresh'
-	}
+	$('#datatable').on('click','#btnEdit',function(){
+		var $item = $(this).closest('tr');
+		var id = $item.find('#idInstansi').val();
+		var url = "<?= site_url('ProgramCtrl/DataEdit/') ?>"+id;
+		$.ajax({
+			url: url,
+			type: 'POST',
+			success:function (result) {
+				var data = JSON.parse(result);
+				// console.log(data[0].tahun);
+				$('#editTahun').val(data[0].tahun);
+				$('#editId').val(data[0].kode_instansi);
+				$('#editInstansi').val(data[0].nama_instansi);
+				$('#editVersi').val(data[0].versi);
+				$('#editKet').val(data[0].keterangan);
+			}
+		});
+	})
 
-	$('#addInstani').bootstrapValidator({
+
+	$('#formTambah').bootstrapValidator({
 		message: 'This value is not valid',
 		feedbackIcons: faIcon,
 		fields: {
-		addPass: {
-			validators: {
-				notEmpty: {
-					message: 'The password is required and can\'t be empty'
-				},
-				identical: {
-					field: 'confirmPassword',
-					message: 'The password and its confirm are not the same'
+			addPass: {
+				validators: {
+					notEmpty: {
+						message: 'The password is required and can\'t be empty'
+					},
+					identical: {
+						field: 'confirmPassword',
+						message: 'The password and its confirm are not the same'
+					}
 				}
-			}
-		},
-		confirmPassword: {
-			validators: {
-				notEmpty: {
-					message: 'The confirm password is required and can\'t be empty'
-				},
-				identical: {
-					field: 'addPass',
-					message: 'The password and its confirm are not the same'
+			},
+			confirmPassword: {
+				validators: {
+					notEmpty: {
+						message: 'The confirm password is required and can\'t be empty'
+					},
+					identical: {
+						field: 'addPass',
+						message: 'The password and its confirm are not the same'
+					}
 				}
 			}
 		}
-	}
 	});
+
+	$('#formEdit').bootstrapValidator({
+		message: 'Kolom tidak boleh kosong',
+		feedbackIcons: faIcon,
+		fields: {
+			editPass: {
+				validators: {
+					notEmpty: {
+						message: 'The password is required and can\'t be empty'
+					},
+					identical: {
+						field: 'passConfirmEdit',
+						message: 'The password and its confirm are not the same'
+					}
+				}
+			},
+			passConfirmEdit: {
+				validators: {
+					notEmpty: {
+						message: 'The confirm password is required and can\'t be empty'
+					},
+					identical: {
+						field: 'editPass',
+						message: 'The password and its confirm are not the same'
+					}
+				}
+			}
+		}
+	})
+
 
 </script>

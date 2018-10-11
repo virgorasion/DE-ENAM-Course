@@ -62,5 +62,11 @@ class ProgramCtrl extends CI_controller
         $keygen = $kode.$id;
         return $keygen;
     }
+
+    public function DataEdit($id)
+    {
+        $data = $this->ProgramModel->APIEditInstansi('tb_instansi',$id);
+        echo json_encode($data);
+    }
     
 }
