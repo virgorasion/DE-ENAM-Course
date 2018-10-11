@@ -54,7 +54,7 @@ class Auth extends CI_controller
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
-                redirect(site_url('MainController'));
+                redirect('Auth');
             }
         }else if($hakAkses == 3){
             $cek = $this->MainModel->verif('tb_siswa',$user,$pass, $hakAkses);
@@ -71,18 +71,18 @@ class Auth extends CI_controller
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
-                redirect(site_url('MainController'));
+                redirect('Auth');
             }
         }else{
             $this->session->set_flashdata('msg', 'Akses tidak diketahui silahkan refresh halaman');
-            redirect(site_url('MainController'));
+            redirect('Auth');
         }
     }
 
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect(site_url('Auth'));
+        redirect('Auth');
     }
 
 }

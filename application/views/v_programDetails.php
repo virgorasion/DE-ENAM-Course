@@ -2,6 +2,7 @@
 $this->load->view('template/_header');
 $this->load->view('template/_nav');
 ?>
+<?php $kodeInstansi = $kode; ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -12,7 +13,7 @@ $this->load->view('template/_nav');
 			<small>it all starts here</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Program</a></li>
+			<li><a href="../"><i class="fa fa-dashboard"></i> Program</a></li>
 			<li><a href="#">Program Details</a></li>
 		</ol>
 	</section>
@@ -66,18 +67,14 @@ $this->load->view('template/_nav');
 							<div class="tab-pane fade in active" id="demo-bsc-tab-2">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
-									<?php
-									if ($_SESSION['hakAkses'] != 3) {
-										echo '<br>
-										<div class="form-group col-sm-4">
-										<a name="btnAdd" id="btnAdd" class="btn btn-primary" role="button">Tambah Data</a>
-										</div>';
-									}
-									?>
-									</div>
-									<div class="form-inline col-sm-4">
+										<?php
+									if ($_SESSION['hakAkses'] != 3) { ?>
 										<br>
-										<h4 class="mar-btm text-thin">Tambah Data</h4>
+										<div class="form-group col-sm-4">
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
+												Data</a>
+										</div>
+										<?php } ?>
 									</div>
 								</div>
 								<br><br>
@@ -91,7 +88,9 @@ $this->load->view('template/_nav');
 											<th class="min-tablet">Plafon</th>
 											<th class="min-desktop">Total Rek</th>
 											<th class="min-desktop">Tot. Rinci</th>
-											<th class="min-desktop">Action</th>
+											<?php if ($_SESSION['hakAkses'] == 3) { ?>
+											<th class="min-desktop"></th>
+											<?php } ?>
 										</tr>
 									</thead>
 									<tbody>
@@ -118,7 +117,22 @@ $this->load->view('template/_nav');
 											<td id="t_rinci">
 												<?= $item->total_rinci ?>
 											</td>
-											<td id="">-</td>
+											<?php if($_SESSION['hakAkses'] == 3) { ?>
+											<td>
+												<a href="#">
+													<span data-placement="top" data-toggle="tooltip" title="View"></span>
+													<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+														<span class="fa fa-eye"></span>
+													</button>
+												</a>
+												<a href="#">
+													<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
+													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit">
+														<span class="fa fa-pencil"></span>
+													</button>
+												</a>
+											</td>
+											<?php } ?>
 										</tr>
 										<?php $no++;
 									endforeach; ?>
@@ -218,6 +232,54 @@ $this->load->view('template/_nav');
 			<!-- /.box-footer-->
 		</div>
 		<!-- /.box -->
+		
+		<?php if ($_SESSION['hakAkses'] != 3) {?>
+		<!-- Start Modal -->
+		<div class="modal fade" id="modal-tambah">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Edit Instansi</h4>
+					</div>
+					<form id="formEdit" method="post" action="<?= site_url('ProgramCtrl/TambahProgram') ?>">
+						<div class="modal-body">
+							<div class="form-group">
+								<label>Kode Program</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										127.
+									</div>
+									<input type="text" class="form-control" id="addKodeProgram" name="addKodeProgram" placeholder="9999"
+									 aria-describedby="helpId">
+								</div>
+								<!-- /.input group -->
+								<!-- <small id="helpId" class="text-muted"></small> -->
+							</div>
+							<div class="form-group">
+								<label for="addNamaProgram">Nama Program</label>
+								<input type="text" name="addNamaProgram" id="addNamaProgram" class="form-control" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="addPlafon">Plafon</label>
+								<input type="text" name="addPlafon" id="addPlafon" class="form-control" placeholder="-">
+							</div>
+						</div>
+						<input type="hidden" name="mainID" id="mainID" value="" />
+						<input type="hidden" name="idInstansi" id="idInstansi" value="<?= $kodeInstansi ?>" />
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		<?php } ?>
 
 	</section>
 	<!-- /.content -->
@@ -227,13 +289,15 @@ $this->load->view('template/_nav');
 $this->load->view('template/_footer');
 $this->load->view('template/_js');
 ?>
+<script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script>
 	// Row selection (single row)
 	// -----------------------------------------------------------------
 	var rowSelection = $('#demo-dt-selection').DataTable({
-		"columnDefs": [
-            { width: 750, targets: 2 }
-        ],
+		"columnDefs": [{
+			width: 750,
+			targets: 2
+		}],
 		"responsive": true,
 		"language": {
 			"paginate": {
@@ -242,12 +306,19 @@ $this->load->view('template/_js');
 			}
 		}
 	});
-	$('#demo-dt-selection').on('click', 'tr', function () {
-		// var $item = $(this).closest('tr');
-		// var $kode = $item.find('#kode').text();
-		// alert($kode+"asdasd");
-		// window.location = "<?= site_url('ProgramCtrl/ProgramDetails/') ?>"+ $kode;
+	$('#demo-dt-selection').on('click', '#btnView', function () {
+		alert('Masih Dalam Proses Pengerjaan');
+	});
 
+	$('#addPlafon').inputmask('decimal', {
+		digits: 2,
+		placeholder: "0",
+		digitsOptional: true,
+		radixPoint: ",",
+		groupSeparator: ".",
+		autoGroup: true,
+		rightAlign: false
+		// prefix: "Rp "
 	});
 
 </script>

@@ -1,5 +1,6 @@
 <?php $this->load->view('template/_header'); ?>
 <link href="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.css') ?>" rel="stylesheet">
+<link href="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.css') ?>" rel="stylesheet">
 <?php $this->load->view('template/_nav'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -91,6 +92,7 @@
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 2) { ?>
 							<td>
+								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">x
 								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
@@ -126,7 +128,8 @@
 			<!-- /.box-body -->
 		</div>
 		<!-- /.box -->
-
+		
+		<?php if ($_SESSION['hakAkses'] != 3) { ?>
 		<!-- Start Modal -->
 		<div class="modal fade" id="modal-tambah">
 			<div class="modal-dialog">
@@ -190,7 +193,9 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
-
+		<?php } ?>
+		
+		<?php if ($_SESSION['hakAkses'] != 3) { ?>
 		<!-- Start Modal -->
 		<div class="modal fade" id="modal-edit">
 			<div class="modal-dialog">
@@ -243,6 +248,7 @@
 								<input type="password" name="passConfirmEdit" id="passConfirmEdit" class="form-control" placeholder="********">
 							</div>
 						</div>
+						<input type="hidden" name="mainID" id="mainID" value=""/>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 							<button type="submit" class="btn btn-primary">Simpan</button>
@@ -254,6 +260,7 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+		<?php } ?>
 
 	</section>
 	<!-- /.content -->
@@ -264,6 +271,7 @@ $this->load->view('template/_footer');
 $this->load->view('template/_js');
 ?>
 <script src="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
 <script>
 	// Row selection (single row)
 	// -----------------------------------------------------------------
@@ -299,6 +307,8 @@ $this->load->view('template/_js');
 			success:function (result) {
 				var data = JSON.parse(result);
 				// console.log(data[0].tahun);
+				$('#mainID').val(id);
+				$('#editUser').val(data[0].username);
 				$('#editTahun').val(data[0].tahun);
 				$('#editId').val(data[0].kode_instansi);
 				$('#editInstansi').val(data[0].nama_instansi);
@@ -344,9 +354,6 @@ $this->load->view('template/_js');
 		fields: {
 			editPass: {
 				validators: {
-					notEmpty: {
-						message: 'The password is required and can\'t be empty'
-					},
 					identical: {
 						field: 'passConfirmEdit',
 						message: 'The password and its confirm are not the same'
@@ -355,9 +362,6 @@ $this->load->view('template/_js');
 			},
 			passConfirmEdit: {
 				validators: {
-					notEmpty: {
-						message: 'The confirm password is required and can\'t be empty'
-					},
 					identical: {
 						field: 'editPass',
 						message: 'The password and its confirm are not the same'
@@ -365,7 +369,30 @@ $this->load->view('template/_js');
 				}
 			}
 		}
-	})
+	});
+
+	$('#datatable').on('click', '#btnDelete', function () {
+      var $item = $(this).closest("tr");
+      var $nama = $item.find("#unit").text();
+      console.log($nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Data Ini ?',
+        content: 'Instansi ' + $nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idInstansi").val();
+            }
+          }
+        }
+      });
+    });
 
 
 </script>
