@@ -38,7 +38,7 @@ class Auth extends CI_controller
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
-                redirect(site_url('MainController'));
+                redirect('Auth');
             }
         } else if($hakAkses == 2){
             $cek = $this->MainModel->verif('tb_instansi',$user,$pass, $hakAkses);

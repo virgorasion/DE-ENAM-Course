@@ -7,7 +7,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Program
+			Instansi
 			<small></small>
 		</h1>
 	</section>
@@ -18,7 +18,7 @@
 		<!-- Default box -->
 		<div class="box">
 			<div class="box-header with-border">
-				<h3 class="box-title">Tabel Program</h3>
+				<h3 class="box-title">Tabel Instansi</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -92,19 +92,15 @@
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 2) { ?>
 							<td>
-								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">x
+								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">
+								<?php if ($_SESSION['kode_instansi'] == $item->kode_instansi) { ?>
 								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
 									<span class="fa fa-eye"></span>
 									</button>
 								</a>
-								<a href="#">
-									<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
-									<button class="btn btn-warning btn-xs btnEdit" data-toggle="modal" data-target="#modal-edit" data-title="Edit" id="btnEdit">
-									<span class="fa fa-pencil"></span>
-									</button>
-								</a>
+								<?php } ?>
 							</td> 
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 3) { ?>
@@ -276,6 +272,7 @@ $this->load->view('template/_js');
 	// Row selection (single row)
 	// -----------------------------------------------------------------
 	var rowSelection = $('#datatable').DataTable({
+		"order": [5, "DESC"],
 		"responsive": true,
 		"language": {
 			"paginate": {
