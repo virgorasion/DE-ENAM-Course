@@ -1,8 +1,8 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+      <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Virgorasion &copy; 2018 SMKN 2 Surabaya.</strong> All rights
     reserved.
   </footer>
   <div class="control-sidebar-bg"></div>

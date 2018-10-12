@@ -27,7 +27,7 @@
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-list"></i>
-              <span class="">Program</span>
+              <span class="">Instansi</span>
             </a>
             <ul class="dropdown-menu" style="position:absolute;right:auto;left:0;">
               <li class="header">You have 4 messages</li>
