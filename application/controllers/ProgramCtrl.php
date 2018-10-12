@@ -129,6 +129,13 @@ class ProgramCtrl extends CI_controller
         redirect('ProgramCtrl/ProgramDetails/'.$idInstansi);
     }
 
+    public function DataEditProgramInstansi($id)
+    {
+        $query = $this->ProgramModel->APIDataEditProgramInstansi('tb_program',$id)->result();
+        
+        echo json_encode($query);
+    }
+
     private function GenerateKodeInstansi($id)
     {
         $kode = "010.";
