@@ -1,37 +1,7 @@
-<?php 
+<?php
 
 class ProgramModel extends CI_model
 {
-    public function DataProgram()
-    {
-        return $this->db->get('tb_instansi')->result();
-    }
-
-    public function UpdateInstansi($table,$data,$id)
-    {
-        $this->db->set($data);
-        $this->db->where('id',$id);
-        return $this->db->update($table);
-    }
-
-    public function APIEditInstansi($table,$id)
-    {
-        return $this->db->get_where($table, array('id' => $id))->result();
-    }
-
-    public function InsertInstansi($table,$data)
-    {
-        return $this->db->insert($table, $data);
-    }
-
-    public function DeleteInstansi($table,$id)
-    {
-        $this->db->delete($table, array('id' => $id));
-        return $this->db->delete('tb_program', array('kode_instansi' => $id));
-    }
-
-    //===================================================================================\\
-
     public function DataProgramDetails($kode)
     {
         return $this->db
@@ -47,6 +17,29 @@ class ProgramModel extends CI_model
     }
 
     public function InsertProgram($table,$data)
+    {
+        return $this->db->insert($table,$data);
+    }
+
+    public function getDataKegiatan($kodeInstansi, $kodeProgram)
+    {
+        $this->datatables->select('*');
+        $this->datatables->from('tb_kegiatan');
+        $this->datatables->where('kode_instansi = "' . $kodeInstansi . '"');
+        $this->datatables->where('kode_program = "' . $kodeProgram . '"');
+        $this->datatables->add_column(
+            'action',
+            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a> <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-tanggal="$4" data-id="$7"><i class="fa fa-remove"></i></a>',
+            'id',
+            'kode_kegiatan',
+            'total_rekening',
+            'total_rinci',
+            'keterangan'
+        );
+        return $this->datatables->generate();
+    }
+
+    public function insertKegiatan($table,$data)
     {
         return $this->db->insert($table,$data);
     }

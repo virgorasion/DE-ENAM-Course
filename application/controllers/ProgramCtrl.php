@@ -1,108 +1,23 @@
-<?php   
+<?php 
 
 defined('BASEPATH')or exit('ERROR');
 
 class ProgramCtrl extends CI_controller
 {
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('ProgramModel');
+        $this->load->library('datatables');
     }
 
-    public function index()
+    public function index($kodeInstansi)
     {
         if ($_SESSION['username'] != null) {
-            $data['data'] = $this->ProgramModel->DataProgram();
-            $this->load->view('v_program',$data);
-        }else{
-            redirect('Auth');
-        }
-    }
-
-    public function TambahInstansi()
-    {
-        $tahun = $this->input->post('addTahun');
-        $id = $this->input->post('addId');
-        $kode = $this->GenerateKodeInstansi($id);
-        $instansi = $this->input->post('addInstansi');
-        $versi = $this->input->post('addVersi');
-        $ket = $this->input->post('Ket');
-        $user = $this->input->post('addUser');
-        $pass = $this->input->post('addPass');
-
-        $data = array(
-            'tahun' => $tahun,
-            'hak_akses' => 3,
-            'kode_instansi' => $kode,
-            'nama_instansi' => $instansi,
-            'versi' => $versi,
-            'keterangan' => $ket,
-            'username' => $user,
-            'password' => md5($pass)
-        );
-
-        $this->ProgramModel->InsertInstansi('tb_instansi',$data);
-        $this->session->set_flashdata('msg', 'Data berhasil ditambahkan');
-        redirect('ProgramCtrl');
-    }
-
-    public function DataEdit($id)
-    {
-        $data = $this->ProgramModel->APIEditInstansi('tb_instansi', $id);
-        echo json_encode($data);
-    }
-
-    public function EditInstansi()
-    {
-        $tahun = $this->input->post('editTahun');
-        $kodeInstansi = $this->input->post('editId');
-        $namaInstansi = $this->input->post('editInstansi');
-        $versi = $this->input->post('editVersi');
-        $keterangan = $this->input->post('editKet');
-        $user = $this->input->post('editUser');
-        $pass = $this->input->post('editPass');
-        $id = $this->input->post('mainID');
-
-        if ($pass == null) {
-            $data = array(
-                'tahun' => $tahun,
-                'kode_instansi' => $kodeInstansi,
-                'nama_instansi' => $namaInstansi,
-                'versi' => $versi,
-                'keterangan' => $keterangan,
-                'username' => $user,
-            );
-        }else{
-            $data = array(
-                'tahun' => $tahun,
-                'kode_instansi' => $kodeInstansi,
-                'nama_instansi' => $namaInstansi,
-                'versi' => $versi,
-                'keterangan' => $keterangan,
-                'username' => $user,
-                'password' => md5($pass)
-            );
-        }
-        $this->ProgramModel->UpdateInstansi('tb_instansi',$data, $id);
-        $this->session->set_flashdata('msg', 'Data berhasil diedit');
-        redirect('ProgramCtrl');
-    }
-
-    public function Hapus($id)
-    {
-        $this->ProgramModel->DeleteInstansi('tb_instansi',$id);
-        $this->session->set_flashdata('msg', 'Data Berhasil dihapus');
-        redirect('ProgramCtrl');
-    }
-
-    //=========================================================================
-
-    public function ProgramDetails($kode)
-    {
-        if ($_SESSION['username'] != null) {
-            $data['kode'] = $kode;
-            $data['data'] = $this->ProgramModel->DataProgramDetails($kode)->result();
+            $kodeInstansi = $kodeInstansi
+            $data['kode'] = $kodeInstansi;
+            $data['data'] = $this->ProgramModel->DataProgramDetails($kodeInstansi)->result();
             $this->load->view('v_programDetails', $data);
         } else {
             redirect('Auth');
@@ -126,21 +41,20 @@ class ProgramCtrl extends CI_controller
 
         $this->ProgramModel->InsertProgram('tb_program', $data);
         $this->session->set_flashdata('msg', 'Berhasil Menambahkan Program');
-        redirect('ProgramCtrl/ProgramDetails/'.$idInstansi);
+        redirect('ProgramCtrl/index/' . $idInstansi);
+    }
+
+    public function EditProgram()
+    {
+        $post = $this->input->post();
+        print_r($post);
     }
 
     public function DataEditProgramInstansi($id)
     {
-        $query = $this->ProgramModel->APIDataEditProgramInstansi('tb_program',$id)->result();
-        
-        echo json_encode($query);
-    }
+        $query = $this->ProgramModel->APIDataEditProgramInstansi('tb_program', $id)->result();
 
-    private function GenerateKodeInstansi($id)
-    {
-        $kode = "010.";
-        $keygen = $kode.$id;
-        return $keygen;
+        echo json_encode($query);
     }
 
     private function GenerateKodeProgram($id)
@@ -149,4 +63,36 @@ class ProgramCtrl extends CI_controller
         $keygen = $kode.$id;
         return $keygen;
     }
+
+    //==============================================================================>>
+
+    public function DataTableApi($kodeInstansi,$kodeProgram)
+    {
+        header('Content-Type: application/json');
+        echo $this->ProgramModel->getDataKegiatan($kodeInstansi, $kodeProgram);
+    }
+
+    public function TambahKegiatan()
+    {
+        $post = $this->input->post();
+        $data = array(
+            'kode_instansi' => $post['kodeInstansi'],
+            'kode_program' => $post['kodeProgram'],
+            'kode_kegiatan' => $post['addKodeKegiatan'],
+            'nama_kegiatan' => $post['addNamaKegiatan'],
+            'keterangan' => $post['addKeterangan'],
+            'total_rekening' => $post['addTotalRek'],
+            'total_rinci' => $post['addTotalRinci']
+        );
+        $query = $this->ProgramModel->insertKegiatan('tb_kegiatan',$data);
+
+        if ($query != null) {
+            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            redirect('ProgramCtrl/'.$post['kode_instansi']);
+        }else{
+            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            redirect('ProgramCtrl/'.$post['kode_instansi']);
+        }
+    }
+    
 }
