@@ -34,7 +34,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('id', $res->id);
-                    redirect('ProgramCtrl');
+                    redirect('InstansiCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
@@ -50,7 +50,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('nama', $res->nama_instansi);
                     $this->session->set_userdata('kode_instansi', $res->kode_instansi);
                     $this->session->set_userdata('id', $res->id);
-                    redirect('ProgramCtrl');
+                    redirect('InstansiCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
@@ -67,7 +67,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nis', $res->nis);
                     $this->session->set_userdata('nisn', $res->nisn);
-                    redirect('ProgramCtrl');
+                    redirect('InstansiCtrl');
                 }
             }else{
                 $this->session->set_flashdata('msg', 'Username/Password anda salah');
