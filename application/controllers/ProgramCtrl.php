@@ -16,7 +16,7 @@ class ProgramCtrl extends CI_controller
     {
         if ($_SESSION['username'] != null) {
             $data['kode'] = $kodeInstansi;
-            $data['data'] = $this->ProgramModel->DataProgramDetails($kodeInstansi)->result();
+            $data['data'] = $this->ProgramModel->DataProgram($kodeInstansi)->result();
             $this->load->view('v_programDetails', $data);
         } else {
             redirect('Auth');
@@ -74,14 +74,13 @@ class ProgramCtrl extends CI_controller
     public function TambahKegiatan()
     {
         $post = $this->input->post();
+        $kodeKegiatan = $this->generateKodeKegiatan($post['addKodeKegiatan']);
         $data = array(
             'kode_instansi' => $post['kodeInstansi'],
             'kode_program' => $post['kodeProgram'],
-            'kode_kegiatan' => $post['addKodeKegiatan'],
+            'kode_kegiatan' => $kodeKegiatan,
             'nama_kegiatan' => $post['addNamaKegiatan'],
-            'keterangan' => $post['addKeterangan'],
-            'total_rekening' => $post['addTotalRek'],
-            'total_rinci' => $post['addTotalRinci']
+            'keterangan' => $post['addKeterangan']
         );
         $query = $this->ProgramModel->insertKegiatan('tb_kegiatan',$data);
         $kodeInstansi = $post['kodeInstansi'];
@@ -96,6 +95,13 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/'.$kodeInstansi);
         }
+    }
+
+    private function generateKodeKegiatan($id)
+    {
+        $kode = "080.";
+        $keygen = $kode . $id;
+        return $keygen;
     }
     
 }

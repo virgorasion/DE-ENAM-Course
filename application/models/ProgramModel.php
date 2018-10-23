@@ -2,7 +2,7 @@
 
 class ProgramModel extends CI_model
 {
-    public function DataProgramDetails($kode)
+    public function DataProgram($kode)
     {
         return $this->db
             ->select('*')

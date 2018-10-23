@@ -116,18 +116,22 @@ $this->load->view('template/_nav');
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
 												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>"
+												<?php if ($_SESSION['id_siswa'] == $item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="View"></span>
 													<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
 														<span class="fa fa-eye"></span>
 													</button>
 												</a>
+												<?php } ?>
+												<?php if ($_SESSION['id_siswa'] == $item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
 													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit" data-toggle="modal" data-target="#modal-edit">
 														<span class="fa fa-pencil"></span>
 													</button>
 												</a>
+												<?php } ?>
 											</td>
 											<?php } ?>
 											<?php if ($_SESSION['hakAkses'] != 3) { ?>
@@ -620,14 +624,6 @@ $this->load->view('template/_nav');
 								<label for="addketerangan">Keterangan</label>
 								<input type="text" name="addKeterangan" id="addKeterangan" class="form-control" placeholder="-">
 							</div>
-							<div class="form-group">
-								<label for="addTotalRek">Total Rek</label>
-								<input type="text" name="addTotalRek" id="addTotalRek" class="inputMask form-control" placeholder="-">
-							</div>
-							<div class="form-group">
-								<label for="addTotalRinci">Tot. Rinci</label>
-								<input type="text" name="addTotalRinci" id="addTotalRinci" class="inputMask form-control" placeholder="-">
-							</div>
 						</div>
 						<input type="hidden" name="kodeInstansi" id="kodeInstansi" value="<?= $kodeInstansi ?>" />
 						<input type="hidden" name="kodeProgram" id="kodeProgram" value="" />
@@ -704,6 +700,7 @@ $this->load->view('template/_js');
 <script>
 	var kodeProgram = "";
 	var kodeInstansi = "";
+	var table = "";
     // Setup datatables
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
@@ -722,7 +719,8 @@ $this->load->view('template/_js');
 		$('#boxDetail').fadeIn(1000);
 		$('#boxDetail').removeClass('hidden');
 		kodeInstansi = "<?= $kodeInstansi; ?>";
-		var table = $("#tableKegiatan").dataTable({
+		// console.log(kodeProgram);
+		table = $("#tableKegiatan").DataTable({
 			initComplete: function() {
 				var api = this.api();
 				$('#mytable_filter input')
@@ -734,7 +732,6 @@ $this->load->view('template/_js');
 				oLanguage: {
 				sProcessing: 'Loading....'
 			},
-
 				processing: true,
 				serverSide: true,
 				ajax: {"url": "<?= site_url('ProgramCtrl/dataTableApi/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
@@ -787,14 +784,22 @@ $this->load->view('template/_js');
 	<?php } ?>
 
 	$('#datatable').on('click', '#btnView', function () {
-		var $item = $(this).closest('tr');
-		kodeProgram = $.trim($item.find('#kode_program').text());
-		tableKegiatan(kodeProgram);
+		if ($('#boxDetail').hasClass('hidden')) {
+			var $item = $(this).closest('tr');
+			kodeProgram = $.trim($item.find('#kode_program').text());
+			// console.log(kodeProgram);
+			tableKegiatan(kodeProgram);
+		}else {
+			$('#boxDetail').fadeOut(1000);
+			$('#boxDetail').addClass('hidden');
+			table.destroy();
+		}
 	});
 
 	$('#btnHidden').click(function(){
 		$('#boxDetail').fadeOut(1000);
 		$('#boxDetail').addClass('hidden');
+		table.destroy();
 	});
 
 	$('#datatable').on('click','#btnEdit',function(){
@@ -814,6 +819,29 @@ $this->load->view('template/_js');
 			}
 		});
 	})
+
+	$('#datatable').on('click', '#btnDelete', function () {
+      var $item = $(this).closest("tr");
+      var $nama = $item.find("#unit").text();
+      console.log($nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Data Ini ?',
+        content: 'Instansi ' + $nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('InstansiCtrl/Hapus/') ?>" + $item.find("#idInstansi").val();
+            }
+          }
+        }
+      });
+    });
 
 	$('#btnAddKegiatan').click(function(){
 		$('#modalTambahKegiatan').modal('show');
