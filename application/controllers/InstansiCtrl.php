@@ -14,10 +14,40 @@ class InstansiCtrl extends CI_controller
     {
         if ($_SESSION['username'] != null) {
             $data['data'] = $this->InstansiModel->DataProgram();
+            $data['instansi'] = $this->InstansiModel->getDataInstansi();
             $this->load->view('v_instansi',$data);
         }else{
             redirect('Auth');
         }
+    }
+
+    public function TambahSiswa()
+    {
+        $post = $this->input->post();
+        $data = array(
+            'kode_instansi' => $post['addInstansiSiswa'],
+            'kode_program' => $post['addProgramSiswa'],
+            'nama' => $post['addNamaSiswa'],
+            'hak_akses' => 3,
+            'nis' => $post['addNisSiswa'],
+            'nisn' => $post['addNisnSiswa'],
+            'username' => $post['addUserSiswa'],
+            'password' => md5($post['addPassSiswa']),
+        );
+        $query = $this->InstansiModel->insertUserSiswa('tb_siswa', $data);
+        if ($query != 0) {
+            $this->session->set_flashdata('succ', 'Berhasil menambah siswa');
+            redirect('InstansiCtrl');
+        }else {
+            $this->session->set_flashdata('fail', 'Username sudah dipakai');
+            redirect('InstansiCtrl');
+        }
+    }
+
+    public function getDataProgramAPI($idInstansi)
+    {
+        $query = $this->InstansiModel->getDataProgram('tb_program', $idInstansi);
+        echo json_encode($query);
     }
 
     public function TambahInstansi()
@@ -95,7 +125,6 @@ class InstansiCtrl extends CI_controller
         $this->session->set_flashdata('msg', 'Data Berhasil dihapus');
         redirect('InstansiCtrl');
     }
-
 
     private function GenerateKodeInstansi($id)
     {
