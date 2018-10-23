@@ -703,6 +703,7 @@ $this->load->view('template/_js');
 <script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script>
 	var kodeProgram = "";
+	var kodeInstansi = "";
     // Setup datatables
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
@@ -717,7 +718,10 @@ $this->load->view('template/_js');
         };
     };
 
-	function tableKegiatan(kodeInstansi,kodeProgram) {
+	function tableKegiatan(kodeProgram) {
+		$('#boxDetail').fadeIn(1000);
+		$('#boxDetail').removeClass('hidden');
+		kodeInstansi = "<?= $kodeInstansi; ?>";
 		var table = $("#tableKegiatan").dataTable({
 			initComplete: function() {
 				var api = this.api();
@@ -733,7 +737,7 @@ $this->load->view('template/_js');
 
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?php echo site_url('ProgramCtrl/dataTableApi') ?>", "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/dataTableApi/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
 					columns: [
 						{
 							"data": null,
@@ -742,9 +746,9 @@ $this->load->view('template/_js');
 						},
 						{"data": "kode_kegiatan"},
 						{"data": "nama_kegiatan"},
+						{"data": "keterangan"},
 						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "total_rinci", render: $.fn.dataTable.render.number(',', '.', '')},
-						{"data": "keterangan"},
 						{"data": "action", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -777,12 +781,15 @@ $this->load->view('template/_js');
 		}
 	});
 
+	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
+		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
+		tableKegiatan(kodeProgram);
+	<?php } ?>
+
 	$('#datatable').on('click', '#btnView', function () {
-		$('#boxDetail').fadeIn(1000);
-		$('#boxDetail').removeClass('hidden');
 		var $item = $(this).closest('tr');
 		kodeProgram = $.trim($item.find('#kode_program').text());
-		tableKegiatan();
+		tableKegiatan(kodeProgram);
 	});
 
 	$('#btnHidden').click(function(){

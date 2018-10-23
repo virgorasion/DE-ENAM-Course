@@ -15,7 +15,6 @@ class ProgramCtrl extends CI_controller
     public function index($kodeInstansi)
     {
         if ($_SESSION['username'] != null) {
-            $kodeInstansi = $kodeInstansi
             $data['kode'] = $kodeInstansi;
             $data['data'] = $this->ProgramModel->DataProgramDetails($kodeInstansi)->result();
             $this->load->view('v_programDetails', $data);
@@ -85,13 +84,17 @@ class ProgramCtrl extends CI_controller
             'total_rinci' => $post['addTotalRinci']
         );
         $query = $this->ProgramModel->insertKegiatan('tb_kegiatan',$data);
+        $kodeInstansi = $post['kodeInstansi'];
+        $kodeProgram = $post['kodeProgram'];
 
         if ($query != null) {
             $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
-            redirect('ProgramCtrl/'.$post['kode_instansi']);
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/'.$kodeInstansi);
         }else{
             $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
-            redirect('ProgramCtrl/'.$post['kode_instansi']);
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/'.$kodeInstansi);
         }
     }
     
