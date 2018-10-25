@@ -31,12 +31,23 @@ class ProgramCtrl extends CI_controller
         $plafon = $this->input->post('addPlafon');
         $idInstansi = $this->input->post('idInstansi');
 
-        $data = array(
-            'kode_instansi' => $idInstansi,
-            'kode_program' => $kodeProgram,
-            'nama_program' => $namaProgram,
-            'plafon' => $plafon
-        );
+        if ($_SESSION['akses'] == 'Admin') {
+            $data = array(
+                'kode_admin' => $_SESSION['kode_admin'],
+                'kode_instansi' => $idInstansi,
+                'kode_program' => $kodeProgram,
+                'nama_program' => $namaProgram,
+                'plafon' => $plafon
+            );
+        }else {
+            $data = array(
+                'kode_admin' => 0,
+                'kode_instansi' => $idInstansi,
+                'kode_program' => $kodeProgram,
+                'nama_program' => $namaProgram,
+                'plafon' => $plafon
+            );
+        }
 
         $this->ProgramModel->InsertProgram('tb_program', $data);
         $this->session->set_flashdata('msg', 'Berhasil Menambahkan Program');
@@ -46,7 +57,34 @@ class ProgramCtrl extends CI_controller
     public function EditProgram()
     {
         $post = $this->input->post();
-        print_r($post);
+        if ($_SESSION['akses'] == 'Admin') {
+            $data = array(
+                'kode_program' => $post['editKodeProgram'],
+                'nama_program' => $post['editNamaProgram'],
+                'plafon' => $post['EditPlafon'],
+                'kode_instansi' => $post['idInstansi'],
+                'id_siswa' => $post['editSiswaAkses']
+            );
+        }else {
+            $data = array(
+                'kode_admin' => $_SESSION['kode_admin'],
+                'kode_program' => $post['editKodeProgram'],
+                'nama_program' => $post['editNamaProgram'],
+                'plafon' => $post['EditPlafon'],
+                'kode_instansi' => $post['idInstansi'],
+                'id_siswa' => $post['editSiswaAkses']
+            );
+        }
+        $kodeInstansi = $post['idInstansi'];
+        $id = $post['mainID'];
+        $query = $this->ProgramModel->updateDataProgram('tb_program',$data,$id);
+        if ($query != 0) {
+            $this->session->set_flashdata('succ', 'Berhasil edit data program');
+            redirect('ProgramCtrl'.$kodeInstansi);
+        }else{
+            $this->session->set_flashdata('fail', 'Gagal edit data, segera hubungi admin');
+            redirect('ProgramCtrl' . $kodeInstansi);
+        }
     }
 
     public function DataEditProgramInstansi($id)

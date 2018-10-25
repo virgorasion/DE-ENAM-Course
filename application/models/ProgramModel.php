@@ -21,6 +21,12 @@ class ProgramModel extends CI_model
         return $this->db->insert($table,$data);
     }
 
+    public function updateDataProgram($table,$data,$where)
+    {
+        $this->db->where('id', $where);
+        return $this->db->update($table, $data);
+    }
+
     public function getDataKegiatan($kodeInstansi, $kodeProgram)
     {
         $this->datatables->select('*');

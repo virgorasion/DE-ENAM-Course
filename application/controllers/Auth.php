@@ -38,6 +38,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('id', $res->id);
+                    $this->session->set_userdata('kode_admin', $res->kode_admin);
                     redirect(site_url('InstansiCtrl'));
                 }
             }else{

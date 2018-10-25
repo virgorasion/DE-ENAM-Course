@@ -64,6 +64,7 @@ class InstansiCtrl extends CI_controller
         $data = array(
             'tahun' => $tahun,
             'hak_akses' => 3,
+            'kode_admin' => $_SESSION['kode_admin'],
             'kode_instansi' => $kode,
             'nama_instansi' => $instansi,
             'versi' => $versi,
