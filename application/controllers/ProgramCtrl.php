@@ -29,7 +29,7 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = $this->GenerateKodeProgram($kode);
         $namaProgram = $this->input->post('addNamaProgram');
         $plafon = $this->input->post('addPlafon');
-        $idInstansi = $this->input->post('idInstansi');
+        $idInstansi = $this->input->post('idInstansiEdit');
 
         if ($_SESSION['akses'] == 'Admin') {
             $data = array(
@@ -80,10 +80,10 @@ class ProgramCtrl extends CI_controller
         $query = $this->ProgramModel->updateDataProgram('tb_program',$data,$id);
         if ($query != 0) {
             $this->session->set_flashdata('succ', 'Berhasil edit data program');
-            redirect('ProgramCtrl'.$kodeInstansi);
+            redirect('ProgramCtrl/index/'.$kodeInstansi);
         }else{
             $this->session->set_flashdata('fail', 'Gagal edit data, segera hubungi admin');
-            redirect('ProgramCtrl' . $kodeInstansi);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
