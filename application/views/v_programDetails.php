@@ -1,7 +1,7 @@
 <?php $this->load->view('template/_header'); ?>
 <link href="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.css') ?>" rel="stylesheet">
 <?php $this->load->view('template/_nav'); ?>
-<?php $kodeInstansi = $kode; ?>
+<?php $kodeInstansi['kodeInstansi'] = $kode; ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -123,14 +123,14 @@
 													</button>
 												</a>
 												<?php } ?>
-												<?php if ($_SESSION['id_siswa'] == $item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
+												<!-- <?php if ($_SESSION['id_siswa'] == $item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
 													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit" data-toggle="modal" data-target="#modal-edit">
 														<span class="fa fa-pencil"></span>
 													</button>
 												</a>
-												<?php } ?>
+												<?php } ?> -->
 											</td>
 											<?php } ?>
 											<?php if ($_SESSION['hakAkses'] != 3) { ?>
@@ -257,7 +257,7 @@
 		<!-- End Box Program Details -->
 
 		<!-- Modal Program & Modal Kegiatan -->
-		<?php $this->load->view('modal/_modalProgram') ?>
+		<?php $this->load->view('modal/_modalProgram', $kodeInstansi) ?>
 		<!-- End Modal Program & Modal Kegiatan -->
 
 	</section>
@@ -270,4 +270,4 @@ $this->load->view('template/_js');
 ?>
 <script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
-<?php $this->load->view('js/_programJS') ?>
+<?php $this->load->view('js/_programJS', $kodeInstansi) ?>

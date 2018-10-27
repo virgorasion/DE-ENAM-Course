@@ -19,7 +19,7 @@
 	function tableKegiatan(kodeProgram) {
 		$('#boxDetail').fadeIn(1000);
 		$('#boxDetail').removeClass('hidden');
-		kodeInstansi = "<?php $kodeInstansi ?>";
+		kodeInstansi = "<?= $kodeInstansi ?>";
 		// console.log(kodeProgram);
 		table = $("#tableKegiatan").DataTable({
 			initComplete: function() {
@@ -97,12 +97,19 @@
 			table.destroy();
 		}
 	});
-
 	$('#btnHidden').click(function(){
 		$('#boxDetail').fadeOut(1000);
 		$('#boxDetail').addClass('hidden');
 		table.destroy();
 	});
+
+    $('#tableKegiatan').on('click', '.edit_data', function(){
+        var kode = $(this).data('kode');
+        var nama = $(this).data('nama');
+        $('#modalEditKegiatan').modal('show');
+        $('formEditKegiatan').find('#editKodeKegiatan').val(kode);
+        $('formEditKegiatan').find('#editNamaKegiatan').val(nama);
+    });
 
 	$('#tableProgram').on('click','#btnEdit',function(){
 		var $item = $(this).closest('tr');
@@ -114,7 +121,7 @@
 			success:function (result) {
 				var data = JSON.parse(result);
 				// console.log(data[0].tahun);
-				$('#mainID').val(id);
+				$('#programIdEdit').val(id);
 				$('#editKodeProgram').val(data[0].kode_program);
 				$('#editNamaProgram').val(data[0].nama_program);
 				$('#editPlafon').val(data[0].plafon);

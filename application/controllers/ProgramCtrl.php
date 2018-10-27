@@ -61,22 +61,20 @@ class ProgramCtrl extends CI_controller
             $data = array(
                 'kode_program' => $post['editKodeProgram'],
                 'nama_program' => $post['editNamaProgram'],
-                'plafon' => $post['EditPlafon'],
-                'kode_instansi' => $post['idInstansi'],
-                'id_siswa' => $post['editSiswaAkses']
+                'plafon' => $post['editPlafon'],
+                'kode_instansi' => $post['idInstansiEdit']
             );
         }else {
             $data = array(
                 'kode_admin' => $_SESSION['kode_admin'],
                 'kode_program' => $post['editKodeProgram'],
                 'nama_program' => $post['editNamaProgram'],
-                'plafon' => $post['EditPlafon'],
-                'kode_instansi' => $post['idInstansi'],
-                'id_siswa' => $post['editSiswaAkses']
+                'plafon' => $post['editPlafon'],
+                'kode_instansi' => $post['idInstansiEdit']
             );
         }
-        $kodeInstansi = $post['idInstansi'];
-        $id = $post['mainID'];
+        $kodeInstansi = $post['idInstansiEdit'];
+        $id = $post['programIdEdit'];
         $query = $this->ProgramModel->updateDataProgram('tb_program',$data,$id);
         if ($query != 0) {
             $this->session->set_flashdata('succ', 'Berhasil edit data program');

@@ -17,23 +17,23 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs">
 				<li>
-					<a href="forms-validation.html#demo-bsc-tab-1" data-toggle="tab">
+					<a href="#nav-tabs-kegiatan-1" data-toggle="tab">
 						<i class="fa fa-history"></i> Info Kegiatan</a>
 				</li>
 				<li>
-					<a href="forms-validation.html#demo-bsc-tab-2" data-toggle="tab">
+					<a href="#nav-tabs-kegiatan-2" data-toggle="tab">
 						<i class="fa fa-edit"></i> Indikator</a>
 				</li>
 				<li>
-					<a href="forms-validation.html#demo-bsc-tab-3" data-toggle="tab">
+					<a href="#nav-tabs-kegiatan-3" data-toggle="tab">
 						<i class="fa fa-edit"></i> Penanggung Jawab</a>
 				</li>
 				<li class="active">
-					<a href="forms-validation.html#demo-bsc-tab-4" data-toggle="tab">
+					<a href="#nav-tabs-kegiatan-4" data-toggle="tab">
 						<i class="fa fa-edit"></i> Rincian Kegiatan</a>
 				</li>
 				<li>
-					<a href="forms-validation.html#demo-bsc-tab-5" data-toggle="tab">
+					<a href="#nav-tabs-kegiatan-5" data-toggle="tab">
 						<i class="fa fa-edit"></i> Pembahasan</a>
 				</li>
 			</ul>
@@ -42,11 +42,11 @@
 			<div id="demo-bv-bsc-tabs" class="form-horizontal">
 				<div class="tab-content">
 					<!-- Start First Tab -->
-					<div class="tab-pane pad-btm fade " id="demo-bsc-tab-1">
+					<div class="tab-pane pad-btm fade " id="nav-tabs-kegiatan-1">
 					</div>
 
 					<!-- Start Second Tab -->
-					<div class="tab-pane fade" id="demo-bsc-tab-2">
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-2">
 						<h4 class="mar-btm text-thin">Tambah Data</h4>
 						<hr>
 						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
@@ -86,7 +86,7 @@
 					</div>
 
 					<!-- Start Third Tab -->
-					<div class="tab-pane fade" id="demo-bsc-tab-3">
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-3">
 						<h4 class="mar-btm text-thin">Tambah Data</h4>
 						<hr>
 						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
@@ -126,7 +126,7 @@
 					</div>
 
 					<!-- Start Fourth Tab -->
-					<div class="tab-pane fade in active" id="demo-bsc-tab-4">
+					<div class="tab-pane fade in active" id="nav-tabs-kegiatan-4">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="form-inline col-md-2">
 								<br>
@@ -150,50 +150,13 @@
 								</tr>
 							</thead>
 							<tbody>
-
-								<?php if ($_SESSION['hakAkses'] == 3) { ?>
-								<td>
-									<input type="hidden" id="idKegiatan" name="idKegiatan" value="<?= $item->id ?>" <a href="#">
-									<span data-placement="top" data-toggle="tooltip" title="View"></span>
-									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
-										<span class="fa fa-eye"></span>
-									</button>
-									</a>
-									<a href="#">
-										<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
-										<button class="btn btn-warning btn-xs btnEditKegiatan" data-title="Edit" id="btnEditKegiatan" data-toggle="modal"
-										 data-target="#modalEditKegiatan">
-											<span class="fa fa-pencil"></span>
-										</button>
-									</a>
-								</td>
-								<?php 
-        } ?>
-								<?php if ($_SESSION['hakAkses'] != 3) { ?>
-								<td>
-									<input type="hidden" id="idKegiatan" name="idKegiatan" value="<?= $item->id ?>" <a href="#">
-									<span data-placement="top" data-toggle="tooltip" title="View"></span>
-									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
-										<span class="fa fa-eye"></span>
-									</button>
-									</a>
-									<a href="#">
-										<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
-										<button class="btn btn-warning btn-xs btnEditKegiatan" data-title="Edit" id="btnEditKegiatan" data-toggle="modal"
-										 data-target="#modalEditKegiatan">
-											<span class="fa fa-pencil"></span>
-										</button>
-									</a>
-								</td>
-								<?php 
-        } ?>
-
+                            <!-- Diisi oleh Ajax dari _programJS -->
 							</tbody>
 						</table>
 					</div>
 
 					<!-- Start Fiveth Tab -->
-					<div class="tab-pane fade" id="demo-bsc-tab-5">
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
 						<h4 class="mar-btm text-thin">Tambah Data</h4>
 						<hr>
 						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
