@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Okt 2018 pada 17.30
+-- Waktu pembuatan: 27 Okt 2018 pada 10.52
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_admin` (
   `id` int(11) NOT NULL,
+  `kode_admin` varchar(10) NOT NULL,
   `hak_akses` int(1) NOT NULL,
   `nama` varchar(20) NOT NULL,
   `username` varchar(10) NOT NULL,
@@ -40,8 +41,8 @@ CREATE TABLE `tb_admin` (
 -- Dumping data untuk tabel `tb_admin`
 --
 
-INSERT INTO `tb_admin` (`id`, `hak_akses`, `nama`, `username`, `password`) VALUES
-(1, 1, 'Fauzan', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `password`) VALUES
+(1, '100.001', 1, 'Fauzan', 'admin', '21232f297a57a5a743894a0e4a801fc3');
 
 -- --------------------------------------------------------
 
@@ -51,8 +52,9 @@ INSERT INTO `tb_admin` (`id`, `hak_akses`, `nama`, `username`, `password`) VALUE
 
 CREATE TABLE `tb_instansi` (
   `id` int(11) NOT NULL,
-  `hak_akses` int(1) NOT NULL,
+  `kode_admin` varchar(10) NOT NULL,
   `kode_instansi` varchar(20) NOT NULL,
+  `hak_akses` int(1) NOT NULL,
   `nama_instansi` varchar(50) NOT NULL,
   `versi` varchar(20) NOT NULL,
   `keterangan` varchar(50) DEFAULT '-',
@@ -65,8 +67,25 @@ CREATE TABLE `tb_instansi` (
 -- Dumping data untuk tabel `tb_instansi`
 --
 
-INSERT INTO `tb_instansi` (`id`, `hak_akses`, `kode_instansi`, `nama_instansi`, `versi`, `keterangan`, `tahun`, `username`, `password`) VALUES
-(3, 2, '010.0003', 'SMKN 2 Surabaya', 'baru', '', 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `keterangan`, `tahun`, `username`, `password`) VALUES
+(3, '100.001', '010.6531', 3, 'SMKN 2 Surabaya', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_kegiatan`
+--
+
+CREATE TABLE `tb_kegiatan` (
+  `id` int(11) NOT NULL,
+  `kode_instansi` varchar(10) NOT NULL,
+  `kode_program` varchar(10) NOT NULL,
+  `kode_kegiatan` varchar(10) NOT NULL,
+  `nama_kegiatan` varchar(40) NOT NULL,
+  `total_rekening` int(11) NOT NULL DEFAULT '0',
+  `total_rinci` int(11) NOT NULL DEFAULT '0',
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -76,25 +95,22 @@ INSERT INTO `tb_instansi` (`id`, `hak_akses`, `kode_instansi`, `nama_instansi`, 
 
 CREATE TABLE `tb_program` (
   `id` int(11) NOT NULL,
+  `kode_admin` varchar(10) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
   `kode_instansi` varchar(25) NOT NULL,
   `kode_program` varchar(20) NOT NULL,
   `nama_program` varchar(50) NOT NULL,
   `plafon` varchar(15) NOT NULL,
   `total_rinci` varchar(15) NOT NULL,
-  `total_rekening` varchar(15) NOT NULL,
-  `tanggal` date NOT NULL
+  `total_rekening` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_program`
 --
 
-INSERT INTO `tb_program` (`id`, `kode_instansi`, `kode_program`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`, `tanggal`) VALUES
-(1, '010.60134', '127.1681', 'Program Keluarga Berencana', '3.352.272.000', '1.716.382.100', '1.176.382.100', '2018-10-10'),
-(2, '010.0003', '0001', 'Program Makan Bersama', '1000000', '', '', '0000-00-00'),
-(3, '010.0003', '0002', 'Program Bau', '500000', '', '', '0000-00-00'),
-(4, '010.0003', '127.0003', 'Test', '100000000', '', '', '0000-00-00'),
-(5, '010.0003', '127.0099', 'Program Baru', 'Rp 5.000.000', '', '', '0000-00-00');
+INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
+(6, '100.001', 0, '010.6531', '127.6542', 'Program', '5.000', '', '');
 
 -- --------------------------------------------------------
 
@@ -103,7 +119,9 @@ INSERT INTO `tb_program` (`id`, `kode_instansi`, `kode_program`, `nama_program`,
 --
 
 CREATE TABLE `tb_siswa` (
-  `id` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `kode_instansi` varchar(10) NOT NULL,
+  `kode_program` varchar(10) NOT NULL,
   `hak_akses` int(1) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `username` varchar(15) NOT NULL,
@@ -111,13 +129,6 @@ CREATE TABLE `tb_siswa` (
   `nis` varchar(15) NOT NULL,
   `nisn` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `tb_siswa`
---
-
-INSERT INTO `tb_siswa` (`id`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`) VALUES
-(1, 3, 'M Nur Fauzan W', 'joo', '21232f297a57a5a743894a0e4a801fc3', '13236', '0008096617');
 
 --
 -- Indexes for dumped tables
@@ -133,19 +144,38 @@ ALTER TABLE `tb_admin`
 -- Indeks untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_instansi` (`kode_instansi`),
+  ADD KEY `kode_admin` (`kode_admin`);
+
+--
+-- Indeks untuk tabel `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kode_instansi` (`kode_instansi`),
+  ADD KEY `kode_instansi_2` (`kode_instansi`),
+  ADD KEY `kode_program` (`kode_program`),
+  ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
 -- Indeks untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kode_instansi` (`kode_instansi`),
+  ADD KEY `id_siswa` (`id_siswa`),
+  ADD KEY `kode_admin` (`kode_admin`),
+  ADD KEY `kode_program` (`kode_program`);
 
 --
 -- Indeks untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_siswa`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `kode_program` (`kode_program`),
+  ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -164,16 +194,38 @@ ALTER TABLE `tb_instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  ADD CONSTRAINT `tb_kegiatan_ibfk_1` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tb_program`
+--
+ALTER TABLE `tb_program`
+  ADD CONSTRAINT `tb_program_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

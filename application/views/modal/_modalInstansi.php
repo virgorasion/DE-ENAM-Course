@@ -74,7 +74,7 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Edit Instansi</h4>
             </div>
-            <form id="formEdit" method="post" action="<?= site_url('ProgramCtrl/EditInstansi') ?>">
+            <form id="formEdit" method="post" action="<?= site_url('InstansiCtrl/EditInstansi') ?>">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="editTahun">Tahun</label>

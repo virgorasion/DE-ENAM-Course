@@ -20,7 +20,7 @@
 	<style>
 		body{
 			background-image: url('<?= base_url('assets/dist/img/Kota-surabaya.jpg') ?>');
-			background-size:cover;
+			background-size: cover;
 			background-repeat: no-repeat;
 		}
 	</style>
@@ -123,10 +123,8 @@
 				$('#hakAkses').val('3');
 			});
 
-			$('input').iCheck({
-			checkboxClass: 'icheckbox_square-blue',
-			radioClass: 'iradio_square-blue',
-			increaseArea: '20%' // optional
+			$(".alert").fadeTo(2000, 500).slideUp(500, function(){
+				$(".alert").slideUp(500);
 			});
 		})
 

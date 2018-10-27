@@ -379,13 +379,10 @@ $this->load->view('template/_nav');
 							<div class="tab-pane fade in active" id="demo-bsc-tab-4">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
-										<?php
-									if ($_SESSION['hakAkses'] == 3) { ?>
 										<br>
 										<div class="form-group col-sm-4">
 											<a name="btnAddKegiatan" id="btnAddKegiatan" class="btn btn-primary">Tambah Data</a>
 										</div>
-										<?php } ?>
 									</div>
 								</div>
 								<br><br>
@@ -404,7 +401,7 @@ $this->load->view('template/_nav');
 									</thead>
 									<tbody>
 									
-											<!-- <?php if ($_SESSION['hakAkses'] == 3) { ?>
+											<?php if ($_SESSION['hakAkses'] == 3) { ?>
 											<td>
 												<input type="hidden" id="idKegiatan" name="idKegiatan" value="<?= $item->id ?>"
 												<a href="#">
@@ -437,7 +434,7 @@ $this->load->view('template/_nav');
 													</button>
 												</a>
 											</td>
-											<?php } ?> -->
+											<?php } ?>
 
 									</tbody>
 								</table>
@@ -592,7 +589,6 @@ $this->load->view('template/_nav');
 		<!-- /.modal -->
 		<?php } ?>
 
-		<?php if ($_SESSION['hakAkses'] == 3) { ?>
 		<!-- Start Modal Tambah Kegiatan -->
 		<div class="modal fade" id="modalTambahKegiatan">
 			<div class="modal-dialog">
@@ -638,8 +634,7 @@ $this->load->view('template/_nav');
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
-		<?php } ?>
-
+		
 		<?php if ($_SESSION['hakAkses'] != 3) { ?>
 		<!-- Start Modal Edit Kegiatan -->
 		<div class="modal fade" id="modalEditKegiatan">
