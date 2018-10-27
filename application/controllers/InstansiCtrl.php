@@ -34,8 +34,13 @@ class InstansiCtrl extends CI_controller
             'username' => $post['addUserSiswa'],
             'password' => md5($post['addPassSiswa']),
         );
-        $query = $this->InstansiModel->insertUserSiswa('tb_siswa', $data);
-        if ($query != 0) {
+        $nisn = $post['addNisnSiswa'];
+        $dataProgram = array(
+            'kode_instansi' => $post['addInstansiSiswa'],
+            'kode_program' => $post['addProgramSiswa']
+        );
+        $query = $this->InstansiModel->insertUserSiswa('tb_siswa', $data, $nisn, $dataProgram);
+        if ($query != false) {
             $this->session->set_flashdata('succ', 'Berhasil menambah siswa');
             redirect('InstansiCtrl');
         }else {
