@@ -16,7 +16,7 @@
 							<div class="input-group-addon">
 								127.
 							</div>
-							<input type="text" class="form-control" id="addKodeProgram" name="addKodeProgram" placeholder="9999"
+							<input required type="text" class="form-control" id="addKodeProgram" name="addKodeProgram" placeholder="9999"
 							 aria-describedby="helpId">
 						</div>
 						<!-- /.input group -->
@@ -24,7 +24,7 @@
 					</div>
 					<div class="form-group">
 						<label for="addNamaProgram">Nama Program</label>
-						<input type="text" name="addNamaProgram" id="addNamaProgram" class="form-control" placeholder="">
+						<input required type="text" name="addNamaProgram" id="addNamaProgram" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="addPlafon">Plafon</label>
@@ -113,7 +113,7 @@
 							<div class="input-group-addon">
 								080.
 							</div>
-							<input type="text" class="form-control" id="addKodeKegiatan" name="addKodeKegiatan" placeholder="9999"
+							<input required type="text" class="form-control" id="addKodeKegiatan" name="addKodeKegiatan" placeholder="9999"
 							 aria-describedby="helpId">
 						</div>
 						<!-- /.input group -->
@@ -121,7 +121,7 @@
 					</div>
 					<div class="form-group">
 						<label for="addNamaKegiatan">Nama Kegiatan</label>
-						<input type="text" name="addNamaKegiatan" id="addNamaKegiatan" class="form-control" placeholder="">
+						<input required type="text" name="addNamaKegiatan" id="addNamaKegiatan" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="addketerangan">Keterangan</label>
