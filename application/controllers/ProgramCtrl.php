@@ -29,7 +29,7 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = $this->GenerateKodeProgram($kode);
         $namaProgram = $this->input->post('addNamaProgram');
         $plafon = $this->input->post('addPlafon');
-        $idInstansi = $this->input->post('idInstansiEdit');
+        $idInstansi = $this->input->post('idInstansi');
 
         if ($_SESSION['akses'] == 'Admin') {
             $data = array(
