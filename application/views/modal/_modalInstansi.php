@@ -20,14 +20,14 @@
                             <div class="input-group-addon">
                                 010.
                             </div>
-                            <input type="text" class="form-control" id="addId" name="addId" placeholder="9999" aria-describedby="helpId">
+                            <input required type="text" class="form-control" id="addId" name="addId" placeholder="9999" aria-describedby="helpId">
                         </div>
                         <!-- /.input group -->
                         <!-- <small id="helpId" class="text-muted"></small> -->
                     </div>
                     <div class="form-group">
                         <label for="addInstansi">Nama Instansi</label>
-                        <input type="text" name="addInstansi" id="addInstansi" class="form-control" placeholder="ex : SMKN 2 Surabaya">
+                        <input required type="text" name="addInstansi" id="addInstansi" class="form-control" placeholder="ex : SMKN 2 Surabaya">
                     </div>
                     <div class="form-group">
                         <label for="addVersi">Versi</label>
@@ -40,7 +40,7 @@
                     <hr>
                     <div class="form-group">
                         <label for="addUser">Username</label>
-                        <input type="text" name="addUser" id="addUser" class="form-control" placeholder="Virgorasion">
+                        <input required type="text" name="addUser" id="addUser" class="form-control" placeholder="Virgorasion">
                     </div>
                     <div class="form-group">
                         <label for="addPass">Password</label>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="form-group">
                         <label for="addNisnSiswa">NISN</label>
-                        <input type="number" name="addNisnSiswa" id="addNisnSiswa" class="form-control" placeholder="0008096617" required>
+                        <input type="text" name="addNisnSiswa" id="addNisnSiswa" class="form-control" placeholder="0008096617" required>
                     </div>
                     <div class="form-group">
                       <label for="addProgramSiswa">Program</label>

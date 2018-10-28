@@ -120,6 +120,35 @@ $('#formEdit').bootstrapValidator({
 	}
 });
 
+$('#formTambahSiswa').bootstrapValidator({
+	message: 'This value is not valid',
+	feedbackIcons: faIcon,
+	fields: {
+		addPassSiswa: {
+			validators: {
+				notEmpty: {
+					message: 'The password is required and can\'t be empty'
+				},
+				identical: {
+					field: 'confPassSiswa',
+					message: 'The password and its confirm are not the same'
+				}
+			}
+		},
+		confPassSiswa: {
+			validators: {
+				notEmpty: {
+					message: 'The confirm password is required and can\'t be empty'
+				},
+				identical: {
+					field: 'addPassSiswa',
+					message: 'The password and its confirm are not the same'
+				}
+			}
+		}
+	}
+});
+
 $('#datatable').on('click', '#btnDelete', function () {
 	var $item = $(this).closest("tr");
 	var $nama = $item.find("#unit").text();
