@@ -159,7 +159,7 @@
 							<div class="input-group-addon">
 								080.
 							</div>
-							<input type="text" class="form-control" id="editKodeKegiatan" name="editKodeKegiatan" placeholder="9999"
+							<input type="number" class="form-control" id="editKodeKegiatan" max-lenght="5" name="editKodeKegiatan" placeholder="9999"
 							 aria-describedby="helpId">
 						</div>
 						<!-- /.input group -->
@@ -175,7 +175,8 @@
 					</div>
 				</div>
 				<input type="hidden" name="kodeInstansiEdit" id="kodeInstansiEdit" value="<?= $kodeInstansi ?>" />
-				<input type="hidden" name="kodeProgramEdit" id="kodeProgramEdit" value="" />
+				<input type="hidden" name="kodeProgramEdit" id="kodeProgramEdit"/>
+				<input type="hidden" name="idKegiatanEdit" id="idKegiatanEdit" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>

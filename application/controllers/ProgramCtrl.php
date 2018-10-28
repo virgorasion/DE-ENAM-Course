@@ -92,6 +92,17 @@ class ProgramCtrl extends CI_controller
         echo json_encode($query);
     }
 
+    public function Hapus($idProgram, $idInstansi){
+        $query = $this->ProgramModel->DeleteProgram('tb_program',$idProgram);
+        if ($query == true) {
+            $this->session->set_flashdata('msg', "Program berhasil dihapus");
+            redirect('ProgramCtrl/index/'.$idInstansi);
+        }else{
+            $this->session->set_flashdata('msg', "Program gagal dihapus segera hubungi admin");
+            redirect('ProgramCtrl/index/'.$idInstansi);
+        }
+    }
+
     private function GenerateKodeProgram($id)
     {
         $kode = "127.";
@@ -130,6 +141,43 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/'.$kodeInstansi);
+        }
+    }
+
+    public function EditKegiatan()
+    {
+        $post = $this->input->post();
+        $data = array(
+            'kode_kegiatan' => htmlspecialchars("080.".$post['editKodeKegiatan']),
+            'nama_kegiatan' => htmlspecialchars($post['editNamaKegiatan']),
+            'keterangan' => htmlspecialchars($post['editKeterangan'])
+        );
+        $where = $post['idKegiatanEdit'];
+        $kodeInstansi = $post['kodeInstansiEdit'];
+        $kodeProgram = $post['kodeProgramEdit'];
+        $query = $this->ProgramModel->EditKegiatan('tb_kegiatan',$data,$where);
+        if ($query != null) {
+            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
+
+    public function HapusKegiatan($idKegiatan,$kodeProgram,$kodeInstansi)
+    {
+        $query = $this->ProgramModel->DeleteDataKegiatan('tb_kegiatan', $idKegiatan);
+        if ($query != null) {
+            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 

@@ -104,11 +104,19 @@
 	});
 
     $('#tableKegiatan').on('click', '.edit_data', function(){
-        var kode = $(this).data('kode');
-        var nama = $(this).data('nama');
+		var id = $(this).data('id');
+		var k = $(this).data('kode');
+		var kode = k.substr(4);
+		var kProgram = $(this).data('program');
+		var nama = $(this).data('nama');
+		var ket = $(this).data('ket');
         $('#modalEditKegiatan').modal('show');
-        $('formEditKegiatan').find('#editKodeKegiatan').val(kode);
-        $('formEditKegiatan').find('#editNamaKegiatan').val(nama);
+        $('#formEditKegiatan').find('#idKegiatanEdit').val(id);
+        $('#formEditKegiatan').find('#kodeProgramEdit').val(kProgram);
+        $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
+        $('#formEditKegiatan').find('#editNamaKegiatan').val(nama);
+        $('#formEditKegiatan').find('#editKeterangan').val(ket);
+        $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
     });
 
 	$('#tableProgram').on('click','#btnEdit',function(){
@@ -145,7 +153,35 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idProgram").val();
+              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idProgram").val() +"/"+ "<?= $kodeInstansi ?>";
+            }
+          }
+        }
+      });
+    });
+
+	$('#btnAddKegiatan').click(function(){
+		$('#modalTambahKegiatan').modal('show');
+		$('#kodeProgram').val(kodeProgram);
+	})
+
+	$('#tableKegiatan').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var nama = $(this).data('nama');
+      console.log(nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Program Ini ?',
+        content: 'Kegiatan ' + nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
             }
           }
         }
