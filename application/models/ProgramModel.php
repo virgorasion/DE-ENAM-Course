@@ -49,6 +49,7 @@ class ProgramModel extends CI_model
             total_rinci,
             keterangan');
         return $this->datatables->generate();
+        // <a href="javascript:void(0)" class="view btn btn-primary btn-xs" data-id="$1"><i class="fa fa-eye"></i></a>
     }
 
     public function DeleteDataKegiatan($table,$idKegiatan)
