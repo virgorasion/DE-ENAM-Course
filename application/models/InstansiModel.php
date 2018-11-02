@@ -17,6 +17,7 @@ class InstansiModel extends CI_model
         return $this->db->select('kode_program,nama_program')
                 ->from($table)
                 ->where('kode_instansi',$where)
+                ->where('id_siswa', 0)
                 ->get()->result();
     }
 

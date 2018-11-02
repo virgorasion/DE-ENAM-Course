@@ -40,19 +40,23 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs">
 						<li>
-							<a href="forms-validation.html#demo-bsc-tab-1" data-toggle="tab">
+							<a href="#nav-tab-program-1" data-toggle="tab">
 								<i class="fa fa-history"></i> Rekapitulasi</a>
 						</li>
 						<li class="active">
-							<a href="forms-validation.html#demo-bsc-tab-2" data-toggle="tab">
-								<i class="fa fa-edit"></i>Kegiatan</a>
+							<a href="#nav-tab-program-2" data-toggle="tab">
+								<i class="fa fa-edit"></i>Kegatan</a>
+						</li>
+						<li class="tabKodeRekening hidden">
+							<a href="#nav-tab-program-3" data-toggle="tab">
+								<i class="fa fa-edit"></i>Kode Program</a>
 						</li>
 						<li>
-							<a href="forms-validation.html#demo-bsc-tab-3" data-toggle="tab">
+							<a href="#nav-tab-program-4" data-toggle="tab">
 								<i class="fa fa-edit"></i> Cetak</a>
 						</li>
 						<li>
-							<a href="forms-validation.html#demo-bsc-tab-4" data-toggle="tab">
+							<a href="#nav-tab-program-5" data-toggle="tab">
 								<i class="fa fa-edit"></i> Validasi</a>
 						</li>
 					</ul>
@@ -60,16 +64,20 @@
 					<!-- Tabs Content -->
 					<div id="demo-bv-bsc-tabs" class="form-horizontal">
 						<div class="tab-content">
-							<div class="tab-pane pad-btm fade " id="demo-bsc-tab-1">
+
+							<!-- Start Fist Tab -->
+							<div class="tab-pane pad-btm fade " id="nav-tab-program-1">
 							</div>
+
 							<!-- Start Second Tab -->
-							<div class="tab-pane fade in active" id="demo-bsc-tab-2">
+							<div class="tab-pane fade in active" id="nav-tab-program-2">
 								<?php if ($_SESSION['hakAkses'] != 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah Data</a>
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
+												Data</a>
 										</div>
 									</div>
 								</div>
@@ -114,8 +122,9 @@
 											</td>
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
-												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>"
-												<?php if ($_SESSION['id_siswa'] == $item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
+												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>" <?php if
+												 ($_SESSION['id_siswa']==$item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi &&
+												$_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="View"></span>
 													<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
@@ -135,16 +144,16 @@
 											<?php } ?>
 											<?php if ($_SESSION['hakAkses'] != 3) { ?>
 											<td>
-												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>"
-												<a href="#">
-													<span data-placement="top" data-toggle="tooltip" title="View"></span>
-													<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
-														<span class="fa fa-eye"></span>
-													</button>
+												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>" <a href="#">
+												<span data-placement="top" data-toggle="tooltip" title="View"></span>
+												<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+													<span class="fa fa-eye"></span>
+												</button>
 												</a>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
-													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit" data-toggle="modal" data-target="#modal-edit">
+													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit" data-toggle="modal"
+													 data-target="#modal-edit">
 														<span class="fa fa-pencil"></span>
 													</button>
 												</a>
@@ -163,8 +172,40 @@
 								</table>
 							</div>
 
-							<!-- Start Second Tab -->
-							<div class="tab-pane fade" id="demo-bsc-tab-3">
+							<!-- Start Third Tab -->
+							<div class="tab-pane fade in fade" id="nav-tab-program-3">
+								<?php if ($_SESSION['hakAkses'] != 3) { ?>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="form-inline col-md-2">
+										<br>
+										<div class="form-group col-sm-4">
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
+												Data</a>
+										</div>
+									</div>
+								</div>
+								<br><br>
+								<hr>
+								<?php } ?>
+								<table id="tableRekening" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Kode</th>
+											<th class="min-tablet">Nama Program</th>
+											<th class="min-tablet">Plafon</th>
+											<th class="min-desktop">Total Rek</th>
+											<th class="min-desktop">Tot. Rinci</th>
+											<th class="min-desktop">action</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+
+							<!-- Start Fourth Tab -->
+							<div class="tab-pane fade" id="nav-tab-program-4">
 								<h4 class="mar-btm text-thin">Tambah Data</h4>
 								<hr>
 								<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
@@ -203,8 +244,8 @@
 								</form>
 							</div>
 
-							<!-- Start Second Tab -->
-							<div class="tab-pane fade" id="demo-bsc-tab-2">
+							<!-- Start Fiveth Tab -->
+							<div class="tab-pane fade" id="nav-tab-program-5">
 								<h4 class="mar-btm text-thin">Tambah Data</h4>
 								<hr>
 								<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">

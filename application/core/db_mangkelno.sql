@@ -3,9 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Nov 02, 2018 at 02:30 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
+=======
+-- Waktu pembuatan: 01 Nov 2018 pada 15.20
+-- Versi server: 10.1.30-MariaDB
+-- Versi PHP: 7.2.2
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -87,7 +93,8 @@ CREATE TABLE `tb_instansi` (
 --
 
 INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `keterangan`, `tahun`, `username`, `password`) VALUES
-(3, '100.001', '010.6531', 3, 'SMKN 2 Surabaya', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3');
+(3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
+(4, '100.001', '010.0001', 2, 'SMK Siang', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3');
 
 -- --------------------------------------------------------
 
@@ -107,11 +114,20 @@ CREATE TABLE `tb_kegiatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `tb_kegiatan`
 --
 
 INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
 (1, '010.6531', '127.6542', '080.001', 'Honor Guru', 0, 0, 'Baru');
+=======
+-- Dumping data untuk tabel `tb_kegiatan`
+--
+
+INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
+(3, '010.6531', '127.6544', '080.343543', 'Malmingan', 0, 0, 'Tapi gk ada gandengan :( &lt;script&gt;alert(\'est\');&lt;/script&gt;'),
+(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 0, 0, 'Lihat bagian ini');
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 -- --------------------------------------------------------
 
@@ -136,7 +152,12 @@ CREATE TABLE `tb_program` (
 --
 
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
+<<<<<<< HEAD
 (6, '100.001', 1, '010.6531', '127.6542', 'Program', '5.000', '', '');
+=======
+(6, '100.001', 5, '010.6531', '127.6544', 'Program', '50.005', '', ''),
+(8, '100.001', 2, '010.6531', '127.3321', 'Program Makan Bersama', '50.000', '', '');
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 -- --------------------------------------------------------
 
@@ -176,11 +197,19 @@ CREATE TABLE `tb_siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `tb_siswa`
 --
 
 INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`) VALUES
 (1, '010.6531', '127.6542', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111');
+=======
+-- Dumping data untuk tabel `tb_siswa`
+--
+
+INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`) VALUES
+(2, '010.6531', '127.3321', 3, 'Fauzan Widyanto', 'joo', '21232f297a57a5a743894a0e4a801fc3', '35435', '0008096617');
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 --
 -- Indexes for dumped tables
@@ -261,19 +290,23 @@ ALTER TABLE `tb_detail_rekening`
 -- AUTO_INCREMENT for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 --
 -- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_rekening`
@@ -285,7 +318,11 @@ ALTER TABLE `tb_rekening`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
+<<<<<<< HEAD
   MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+>>>>>>> c680bab68607bd010eddf9c8cf03310b3844d1e6
 
 --
 -- Constraints for dumped tables
@@ -302,6 +339,12 @@ ALTER TABLE `tb_kegiatan`
 --
 ALTER TABLE `tb_program`
   ADD CONSTRAINT `tb_program_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tb_siswa`
+--
+ALTER TABLE `tb_siswa`
+  ADD CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

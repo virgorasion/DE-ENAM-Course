@@ -46,7 +46,7 @@ class Auth extends CI_controller
                 redirect(site_url('Auth'));
             }
         } else if($hakAkses == 2){
-            $cek = $this->MainModel->verif('tb_instansi',$user,$pass, $hakAkses);
+            $cek = $this->MainModel->verif('tb_instasi',$user,$pass, $hakAkses);
             if(count($cek) > 0){
                 foreach ($cek as $res) {
                     $this->session->set_userdata('hakAkses', $res->hak_akses);

@@ -16,6 +16,7 @@
         };
     };
 
+	//Fungsi: untuk menggenerate table Kegiatan secara serverSide
 	function tableKegiatan(kodeProgram) {
 		$('#boxDetail').fadeIn(1000);
 		$('#boxDetail').removeClass('hidden');
@@ -63,7 +64,7 @@
 	return table;
 	}
 
-	// Row selection (single row)
+	// Fungsi: datatable pada tableProgram
 	// -----------------------------------------------------------------
 	var rowSelection = $('#tableProgram').DataTable({
 		"columnDefs": [{
@@ -79,12 +80,14 @@
 		}
 	});
 
+	//Fungsi: untuk memunculkan Box Kegiatan seusai edit & delete
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
 		tableKegiatan(kodeProgram);
 	<?php 
 } ?>
 
+	//Fungsi: untuk memunculkan data dan menampilkan box kegiatan & toggle
 	$('#tableProgram').on('click', '#btnView', function () {
 		if ($('#boxDetail').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
@@ -94,23 +97,44 @@
 		}else {
 			$('#boxDetail').fadeOut(1000);
 			$('#boxDetail').addClass('hidden');
+			if ($('.tabKodeRekening').hasClass('hidden')) {
+				//Emang Kosong kok :)
+			}else{
+				$('.tabKodeRekening').addClass('hidden');
+			}
 			table.destroy();
 		}
 	});
+	//Fungsi: untuk menghilangkan box Kegiatan
 	$('#btnHidden').click(function(){
 		$('#boxDetail').fadeOut(1000);
 		$('#boxDetail').addClass('hidden');
+		if ($('.tabKodeRekening').hasClass('hidden')) {
+			//Emang Kosong kok :)
+		}else{
+			$('.tabKodeRekening').addClass('hidden');
+		}
 		table.destroy();
 	});
 
+	//Fungsi: untuk memunculkan data ketika btn edit di tableKegiatan diklik
     $('#tableKegiatan').on('click', '.edit_data', function(){
-        var kode = $(this).data('kode');
-        var nama = $(this).data('nama');
+		var id = $(this).data('id');
+		var k = $(this).data('kode');
+		var kode = k.substr(4);
+		var kProgram = $(this).data('program');
+		var nama = $(this).data('nama');
+		var ket = $(this).data('ket');
         $('#modalEditKegiatan').modal('show');
-        $('formEditKegiatan').find('#editKodeKegiatan').val(kode);
-        $('formEditKegiatan').find('#editNamaKegiatan').val(nama);
+        $('#formEditKegiatan').find('#idKegiatanEdit').val(id);
+        $('#formEditKegiatan').find('#kodeProgramEdit').val(kProgram);
+        $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
+        $('#formEditKegiatan').find('#editNamaKegiatan').val(nama);
+        $('#formEditKegiatan').find('#editKeterangan').val(ket);
+        $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
     });
 
+	//Fungsi: untuk memunculkan data sebelumnya saat btnEdit Program di klik
 	$('#tableProgram').on('click','#btnEdit',function(){
 		var $item = $(this).closest('tr');
 		var id = $item.find('#idProgram').val();
@@ -129,6 +153,7 @@
 		});
 	})
 
+	//Fungsi: untuk delete ketika btn delete di tableProgram di klik
 	$('#tableProgram').on('click', '#btnDelete', function () {
       var $item = $(this).closest("tr");
       var $nama = $.trim($item.find("#nama_program").text());
@@ -145,19 +170,50 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idProgram").val();
+              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idProgram").val() +"/"+ "<?= $kodeInstansi ?>";
+            }
+          }
+        }
+      });
+    });
+	//Fungsi: untuk menampilkan modal tambah kegiatan
+	$('#btnAddKegiatan').click(function(){
+		$('#modalTambahKegiatan').modal('show');
+		$('#kodeProgram').val(kodeProgram);
+	})
+
+	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
+	$('#tableKegiatan').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var nama = $(this).data('nama');
+      console.log(nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Program Ini ?',
+        content: 'Kegiatan ' + nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
             }
           }
         }
       });
     });
 
+	//Fungsi: untuk membuka model ketika button TambahKegiatan di klik
 	$('#btnAddKegiatan').click(function(){
 		$('#modalTambahKegiatan').modal('show');
 		$('#kodeProgram').val(kodeProgram);
 	})
 
-	$('#addPlafon,#editPlafon, .inputMask').inputmask('decimal', {
+	//Fungsi: untuk input berupa ribuan
+	$('#addPlafon, #editPlafon, .inputMask').inputmask('decimal', {
 		digits: 2,
 		placeholder: "0",
 		digitsOptional: true,
@@ -167,5 +223,24 @@
 		rightAlign: false
 		// prefix: "Rp "
 	});
+	
+	//Fungsi: untuk memunculkan menu kode rekening di Box Program
+	$('#tableKegiatan').on('click','tr', function(){
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		}else{
+			table.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+			$('.tabKodeRekening').removeClass('hidden');
+			window.scrollTo(0,0);
+			//TODO: Masih ngebug saat sorting table
+		}
+	})
+
+	$('.tabKodeRekening').click(function(){
+		$('#boxDetail').fadeOut(1000);
+		$('#boxDetail').addClass('hidden');
+		table.destroy();
+	})
 
 </script>
