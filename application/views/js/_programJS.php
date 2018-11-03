@@ -1,7 +1,9 @@
 <script>
 	var kodeProgram = "";
 	var kodeInstansi = "";
-	var table = "";
+	var kodeKegiatan = "";
+	var tableKegiatan = "";
+	var tableRekening = "";
     // Setup datatables
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
@@ -17,12 +19,12 @@
     };
 
 	//Fungsi: untuk menggenerate table Kegiatan secara serverSide
-	function tableKegiatan(kodeProgram) {
+	function funcTableKegiatan(kodeProgram) {
 		$('#boxDetail').fadeIn(1000);
 		$('#boxDetail').removeClass('hidden');
 		kodeInstansi = "<?= $kodeInstansi ?>";
 		// console.log(kodeProgram);
-		table = $("#tableKegiatan").DataTable({
+		tableKegiatan = $("#tableKegiatan").DataTable({
 			initComplete: function() {
 				var api = this.api();
 				$('#mytable_filter input')
@@ -61,7 +63,45 @@
 
 		});
 		// end setup datatables	
-	return table;
+	return tableKegiatan;
+	}
+
+	//Fungsi: untuk menggenerate table Rekening secara serverSide
+	function funcTableRekening(kodeKegiatan) {
+		tableRekening = $("#tableRekening").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataAPIRekening/') ?>"+kodeKegiatan, "type": "POST"},
+					columns: [
+						{"data": "kode_rekening"},
+						{"data": "uraian_rekening"},
+						{"data": "triwulan_1", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "triwulan_2", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "triwulan_3", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "triwulan_4", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "action", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+			}
+
+		});
+		// end setup datatables	
+	return tableRekening;
 	}
 
 	// Fungsi: datatable pada tableProgram
@@ -83,7 +123,7 @@
 	//Fungsi: untuk memunculkan Box Kegiatan seusai edit & delete
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
-		tableKegiatan(kodeProgram);
+		funcTableKegiatan(kodeProgram);
 	<?php 
 } ?>
 
@@ -92,17 +132,12 @@
 		if ($('#boxDetail').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
-			// console.log(kodeProgram);
-			tableKegiatan(kodeProgram);
+			console.log(kodeProgram);
+			funcTableKegiatan(kodeProgram);
 		}else {
 			$('#boxDetail').fadeOut(1000);
 			$('#boxDetail').addClass('hidden');
-			if ($('.tabKodeRekening').hasClass('hidden')) {
-				//Emang Kosong kok :)
-			}else{
-				$('.tabKodeRekening').addClass('hidden');
-			}
-			table.destroy();
+			tableKegiatan.destroy();
 		}
 	});
 	//Fungsi: untuk menghilangkan box Kegiatan
@@ -114,7 +149,7 @@
 		}else{
 			$('.tabKodeRekening').addClass('hidden');
 		}
-		table.destroy();
+		tableKegiatan.destroy();
 	});
 
 	//Fungsi: untuk memunculkan data ketika btn edit di tableKegiatan diklik
@@ -229,7 +264,7 @@
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
 		}else{
-			table.$('tr.selected').removeClass('selected');
+			tableKegiatan.$('tr.selected').removeClass('selected');
 			$(this).addClass('selected');
 			$('.tabKodeRekening').removeClass('hidden');
 			window.scrollTo(0,0);
@@ -237,10 +272,25 @@
 		}
 	})
 
-	$('.tabKodeRekening').click(function(){
-		$('#boxDetail').fadeOut(1000);
-		$('#boxDetail').addClass('hidden');
-		table.destroy();
+	var tampilRek = 0;
+	$('#tab-nav').on('click', '.tabKodeRekening', function(){
+		// console.log(kodeKegiatan);
+		//TODO: console.log harus hilang
+		tableKegiatan.destroy();
+		console.log(tampilRek);
+		if ($('#boxDetail').hasClass('hidden')) {
+			//Nothing
+		}else{
+			$('#boxDetail').fadeOut(1000);
+			$('#boxDetail').addClass('hidden');
+		}
+		if (tampilRek == 0) {
+			funcTableRekening('080.001');
+			tampilRek++;
+			//TODO: console.log harus hilang
+			console.log(tampilRek);
+		}
+
 	})
 
 </script>

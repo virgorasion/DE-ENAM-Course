@@ -12,15 +12,15 @@ class Auth extends CI_controller
 
     public function index()
     {
-        $data['csrf'] = array(
-            'token' => $this->security->get_csrf_token_name(),
-            'hash' => $this->security->get_csrf_hash()
-        );
-        $this->load->view('LoginNew',$data);
-    }
-
-    public function test(){
-        echo "asdasd";
+        if ($_SESSION['username'] != null) {
+            redirect(site_url('InstansiCtrl'));
+        }else {
+            $data['csrf'] = array(
+                'token' => $this->security->get_csrf_token_name(),
+                'hash' => $this->security->get_csrf_hash()
+            );
+            $this->load->view('LoginNew', $data);
+        }
     }
 
     public function login()

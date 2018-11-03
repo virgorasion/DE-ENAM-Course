@@ -38,7 +38,7 @@
 				<div class="tab-base">
 
 					<!-- Nav tabs -->
-					<ul class="nav nav-tabs">
+					<ul class="nav nav-tabs" id="tab-nav">
 						<li>
 							<a href="#nav-tab-program-1" data-toggle="tab">
 								<i class="fa fa-history"></i> Rekapitulasi</a>
@@ -190,13 +190,13 @@
 								<table id="tableRekening" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
-											<th>No</th>
 											<th>Kode</th>
-											<th class="min-tablet">Nama Program</th>
-											<th class="min-tablet">Plafon</th>
-											<th class="min-desktop">Total Rek</th>
-											<th class="min-desktop">Tot. Rinci</th>
-											<th class="min-desktop">action</th>
+											<th class="min-tablet">Nama Uraian</th>
+											<th class="min-tablet">T1</th>
+											<th class="min-desktop">T2</th>
+											<th class="min-desktop">T3</th>
+											<th class="min-desktop">T4</th>
+											<th class="min-desktop">Action</th>
 										</tr>
 									</thead>
 									<tbody>

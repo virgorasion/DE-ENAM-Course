@@ -111,6 +111,7 @@ class ProgramCtrl extends CI_controller
     }
 
     //==============================================================================>>
+    // Coding untuk Box Kegiatan
 
     public function DataTableApi($kodeInstansi,$kodeProgram)
     {
@@ -186,6 +187,14 @@ class ProgramCtrl extends CI_controller
         $kode = "080.";
         $keygen = $kode . $id;
         return $keygen;
+    }
+
+    //==============================================================================>>
+    // Coding untuk menu tab Rekening
+
+    public function DataAPIRekening($kodeKegiatan){
+        header('Content-Type: application/json');
+        echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeKegiatan);
     }
     
 }

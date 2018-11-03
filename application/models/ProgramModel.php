@@ -67,4 +67,26 @@ class ProgramModel extends CI_model
     {
         return $this->db->insert($table,$data);
     }
+    
+    //==============================================================================>>
+    // Coding untuk menu tab Rekening
+    public function getAllRekening($table,$kodeKegiatan)
+    {
+        $this->datatables->select('tb_rekening.id,tb_rekening.kode_rekening,tb_rekening.uraian_rekening,tb_rekening.triwulan_1,tb_rekening.triwulan_2,tb_rekening.triwulan_3,tb_rekening.triwulan_4');
+        $this->datatables->from('tb_rekening');
+        $this->datatables->join('tb_kegiatan', 'tb_kegiatan.kode_kegiatan = tb_rekening.kode_kegiatan');
+        $this->datatables->where('tb_rekening.kode_kegiatan', $kodeKegiatan);
+        $this->datatables->add_column(
+            'action',
+            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-program="$3" data-kode="$4" data-nama="$5" data-ket="$8"><i class="fa fa-pencil"></i></a> <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-remove"></i></a>',
+            'id,
+            kode_rekening,
+            uraian_rekening,
+            triwulan_1,
+            triwulan_2,
+            triwulan_3,
+            triwulan_4');
+        return $this->datatables->generate();
+    }
+    
 }
