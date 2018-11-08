@@ -211,11 +211,19 @@
         }
       });
     });
+
 	//Fungsi: untuk menampilkan modal tambah kegiatan
 	$('#btnAddKegiatan').click(function(){
 		$('#modalTambahKegiatan').modal('show');
 		$('#kodeProgram').val(kodeProgram);
 	})
+	//Fungsi: untuk menampilkan modal tambah Rekening
+	$('#btnAddRekening').click(function(){
+		$('#modalAddRekening').modal('show');
+		$('#addIDKegiatan').val(kodeKegiatan);
+		$('#addIDInstansi').val(kodeInstansi);
+	})
+
 
 	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
 	$('#tableKegiatan').on('click', '.delete_data', function () {
@@ -241,11 +249,29 @@
       });
     });
 
-	//Fungsi: untuk membuka model ketika button TambahKegiatan di klik
-	$('#btnAddKegiatan').click(function(){
-		$('#modalTambahKegiatan').modal('show');
-		$('#kodeProgram').val(kodeProgram);
-	})
+	//Fungsi: untuk delete ketika btn delete di tableRekening di klik
+	$('#tableRekening').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var nama = $(this).data('nama');
+      console.log(nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Anggaran Ini ?',
+        content: 'Anggaran ' + nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + id;
+            }
+          }
+        }
+      });
+    });
 
 	//Fungsi: untuk input berupa ribuan
 	$('#addPlafon, #editPlafon, .inputMask').inputmask('decimal', {
@@ -278,11 +304,11 @@
 		}
 		console.log(kodeKegiatan);
 		funcTableRekening(kodeKegiatan);
-	})
+	});
 
 	// Fungsi: Saat klik tab Kegiatan TableRekening di destroy
 	$('#tab-nav').on('click','.tabKegiatan', function(){
 		tableRekening.destroy();
-	})
+	});
 
 </script>

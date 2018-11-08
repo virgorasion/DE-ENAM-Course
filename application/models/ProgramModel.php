@@ -90,5 +90,11 @@ class ProgramModel extends CI_model
             triwulan_4');
         return $this->datatables->generate();
     }
+
+    public function getPatokan()
+    {
+        return $this->db->select('*')->from('tb_patokan_rekening')->get()->result();
+    }
+    
     
 }

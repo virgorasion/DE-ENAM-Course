@@ -1,7 +1,10 @@
 <?php $this->load->view('template/_header'); ?>
 <link href="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.css') ?>" rel="stylesheet">
 <?php $this->load->view('template/_nav'); ?>
-<?php $kodeInstansi['kodeInstansi'] = $kode; ?>
+<?php 
+$kodeInstansi['kodeInstansi'] = $kode;
+$dataModal['patokan'] = $patokan;
+ ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -45,11 +48,11 @@
 						</li>
 						<li class="tabKegiatan active">
 							<a href="#nav-tab-program-2" data-toggle="tab">
-								<i class="fa fa-edit"></i>Kegiatan</a>
+								<i class="fa fa-edit"></i>Program</a>
 						</li>
 						<li class="tabKodeRekening hidden">
 							<a href="#nav-tab-program-3" data-toggle="tab">
-								<i class="fa fa-edit"></i>Kode Program</a>
+								<i class="fa fa-edit"></i>Kode Rekening</a>
 						</li>
 						<li class="tabCetak">
 							<a href="#nav-tab-program-4" data-toggle="tab">
@@ -70,7 +73,7 @@
 							</div>
 
 							<!-- Start Second Tab -->
-							<div class="tab-pane fade in active" id="nav-tab-program-2">
+							<div class="tab-pane fade in" id="nav-tab-program-2">
 								<?php if ($_SESSION['hakAkses'] != 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
@@ -173,14 +176,14 @@
 							</div>
 
 							<!-- Start Third Tab -->
-							<div class="tab-pane fade in fade" id="nav-tab-program-3">
+							<div class="tab-pane fade in active" id="nav-tab-program-3">
 								<?php if ($_SESSION['hakAkses'] == 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
-												Data</a>
+											<a name="btnAddRekening" id="btnAddRekening" class="btn btn-primary">
+											Tambah Data</a>
 										</div>
 									</div>
 								</div>
@@ -298,7 +301,7 @@
 		<!-- End Box Program Details -->
 
 		<!-- Modal Program & Modal Kegiatan -->
-		<?php $this->load->view('modal/_modalProgram', $kodeInstansi) ?>
+		<?php $this->load->view('modal/_modalProgram', $dataModal) ?>
 		<!-- End Modal Program & Modal Kegiatan -->
 
 	</section>

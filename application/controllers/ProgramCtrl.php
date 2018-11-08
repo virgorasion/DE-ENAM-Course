@@ -16,6 +16,7 @@ class ProgramCtrl extends CI_controller
     {
         if ($_SESSION['username'] != null) {
             $data['kode'] = $kodeInstansi;
+            $data['patokan'] = $this->ProgramModel->getPatokan();
             $data['data'] = $this->ProgramModel->DataProgram($kodeInstansi)->result();
             $this->load->view('v_programDetails', $data);
         } else {
@@ -192,9 +193,48 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Coding untuk menu tab Rekening
 
-    public function DataAPIRekening($kodeKegiatan){
+    public function DataAPIRekening($kodeKegiatan)
+    {
         header('Content-Type: application/json');
         echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeKegiatan);
+    }
+
+    public function TambahRekening()
+    {
+        $p = $this->input->post();
+        $id = $this->generateKodeRekening($p['addKodeRek'],$p['AddIDKegiatan']);
+        $data = array(
+            'kode_rekening' => $p['addKodeRek'] . $id,
+            'kode_kegiatan' => $p['AddIDKegiatan'],
+            'uraian_kegiatan' => $p['AddNamaRek'],
+            'triwulan_1' => $p['AddT1'],
+            'triwulan_2' => $p['AddT2'],
+            'triwulan_3' => $p['AddT3'],
+            'triwulan_4' => $p['AddT4']
+        );
+        $kodeKeg = $p['AddIDKegiatan'];
+        $kodeIns = $p['AddIDInstansi'];
+        $query = $this->ProgramModel()->InsertDataRekening('tb_rekening');
+        if ($query != null) {
+            $this->session->set_flashdata('msgRekening', 'Berhasil menambah rekening');
+            $this->session->set_flashdata('kodeInstansi', $kodeIns);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        } else {
+            $this->session->set_flashdata('msgRekening', 'Gagal menambah rekening, segera hubungi admin');
+            $this->session->set_flashdata('kodeInstansi', $kodeIns);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        }
+    }
+
+    private function generateKodeRekening($kodePatokan,$kodeKegiatan)
+    {
+        $query = $this->db->select_max('kode_rekening')->from('tb_rekening')->where('kode_patokan',$kodePatokan)->where('kode_kegiatan',$kodeKegiatan)->get();
+        $getRek = $query->row();
+        $kodeRek = $getRek->kode_rekening;
+        $potong = substr($kodeRek, 7);
+        $res = $potong+1;
+        $result = str_pad($res, 2, "0", STR_PAD_LEFT);
+        return $result;
     }
     
 }

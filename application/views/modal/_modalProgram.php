@@ -188,3 +188,59 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<?php if($_SESSION['hakAkses'] == 3){?>
+<!-- Start Modal Tambah Rekening -->
+<div class="modal fade" id="modalAddRekening">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Edit Kegiatan</h4>
+			</div>
+			<form id="formEditKegiatan" method="post" action="<?= site_url('ProgramCtrl/TambahDataRekening') ?>">
+				<div class="modal-body">
+					<div class="form-group">
+					  <label for="addKodeRek">Jenis Pengeluaran</label>
+					  <select class="form-control" name="addKodeRek" id="addKodeRek">
+					  	<?php foreach($patokan as $item){ ?>
+						<option value="<?=$item->kode_patokan?>"><?=$item->nama?></option>
+						<?php } ?>
+					  </select>
+					</div>
+					<div class="form-group">
+						<label for="AddNamaRek">Nama Uraian</label>
+						<input type="text" name="AddNamaRek" id="AddNamaRek" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="AddT1">T1</label>
+						<input type="text" name="AddT1" id="AddT1" class="form-control" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="AddT2">T2</label>
+						<input type="text" name="AddT2" id="AddT2" class="form-control" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="AddT3">T3</label>
+						<input type="text" name="AddT3" id="AddT3" class="form-control" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="AddT4">T4</label>
+						<input type="text" name="AddT4" id="AddT4" class="form-control" placeholder="-">
+					</div>
+				</div>
+				<input type="hidden" name="AddIDKegiatan" id="AddIDKegiatan" value="" />
+				<input type="hidden" name="AddIDInstansi" id="AddIDInstansi" value="" />
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php } ?>
