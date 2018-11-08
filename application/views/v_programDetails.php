@@ -39,23 +39,23 @@
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="tab-nav">
-						<li>
+						<li class="tabRekapitulasi">
 							<a href="#nav-tab-program-1" data-toggle="tab">
 								<i class="fa fa-history"></i> Rekapitulasi</a>
 						</li>
-						<li class="active">
+						<li class="tabKegiatan active">
 							<a href="#nav-tab-program-2" data-toggle="tab">
-								<i class="fa fa-edit"></i>Kegatan</a>
+								<i class="fa fa-edit"></i>Kegiatan</a>
 						</li>
 						<li class="tabKodeRekening hidden">
 							<a href="#nav-tab-program-3" data-toggle="tab">
 								<i class="fa fa-edit"></i>Kode Program</a>
 						</li>
-						<li>
+						<li class="tabCetak">
 							<a href="#nav-tab-program-4" data-toggle="tab">
 								<i class="fa fa-edit"></i> Cetak</a>
 						</li>
-						<li>
+						<li class="tabValidasi">
 							<a href="#nav-tab-program-5" data-toggle="tab">
 								<i class="fa fa-edit"></i> Validasi</a>
 						</li>
@@ -127,7 +127,7 @@
 												$_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="View"></span>
-													<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
+													<button class="btn btn-info btn-xs btnView" data-title="View" id="btnView">
 														<span class="fa fa-eye"></span>
 													</button>
 												</a>
@@ -174,7 +174,7 @@
 
 							<!-- Start Third Tab -->
 							<div class="tab-pane fade in fade" id="nav-tab-program-3">
-								<?php if ($_SESSION['hakAkses'] != 3) { ?>
+								<?php if ($_SESSION['hakAkses'] == 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
 										<br>

@@ -12,7 +12,7 @@ class Auth extends CI_controller
 
     public function index()
     {
-        if ($_SESSION['username'] != null) {
+        if (@$_SESSION['username'] != null) {
             redirect(site_url('InstansiCtrl'));
         }else {
             $data['csrf'] = array(

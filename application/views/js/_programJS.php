@@ -132,8 +132,8 @@
 		if ($('#boxDetail').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
-			console.log(kodeProgram);
 			funcTableKegiatan(kodeProgram);
+			console.log(kodeProgram);
 		}else {
 			$('#boxDetail').fadeOut(1000);
 			$('#boxDetail').addClass('hidden');
@@ -259,38 +259,30 @@
 		// prefix: "Rp "
 	});
 	
-	//Fungsi: untuk memunculkan menu kode rekening di Box Program
-	$('#tableKegiatan').on('click','tr', function(){
-		if ($(this).hasClass('selected')) {
-			$(this).removeClass('selected');
-		}else{
-			tableKegiatan.$('tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-			$('.tabKodeRekening').removeClass('hidden');
-			window.scrollTo(0,0);
-			//TODO: Masih ngebug saat sorting table
-		}
+	//Fungsi: untuk memunculkan tab kode rekening di Box Program
+	$('#tableKegiatan').on('click','.view_data', function(){
+		$('.tabKodeRekening').removeClass('hidden');
+		window.scrollTo(0,0);
+		kodeKegiatan = $(this).data('kegiatan');
+		console.log(kodeKegiatan);
 	})
 
-	var tampilRek = 0;
+	// Fungsi: untuk menampikan Box Rekening
 	$('#tab-nav').on('click', '.tabKodeRekening', function(){
-		// console.log(kodeKegiatan);
-		//TODO: console.log harus hilang
-		tableKegiatan.destroy();
-		console.log(tampilRek);
 		if ($('#boxDetail').hasClass('hidden')) {
 			//Nothing
 		}else{
 			$('#boxDetail').fadeOut(1000);
 			$('#boxDetail').addClass('hidden');
+			tableKegiatan.destroy();
 		}
-		if (tampilRek == 0) {
-			funcTableRekening('080.001');
-			tampilRek++;
-			//TODO: console.log harus hilang
-			console.log(tampilRek);
-		}
+		console.log(kodeKegiatan);
+		funcTableRekening(kodeKegiatan);
+	})
 
+	// Fungsi: Saat klik tab Kegiatan TableRekening di destroy
+	$('#tab-nav').on('click','.tabKegiatan', function(){
+		tableRekening.destroy();
 	})
 
 </script>
