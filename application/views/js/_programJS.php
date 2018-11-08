@@ -224,6 +224,8 @@
 		$('#addIDInstansi').val(kodeInstansi);
 	})
 
+	// TODO: buat fungsi direct saat selesai membuat rekening
+
 
 	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
 	$('#tableKegiatan').on('click', '.delete_data', function () {
