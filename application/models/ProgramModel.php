@@ -91,6 +91,12 @@ class ProgramModel extends CI_model
         return $this->datatables->generate();
     }
 
+    public function InsertDataRekening($table,$data)
+    {
+        return $this->db->insert($table,$data);
+    }
+    
+
     public function getPatokan()
     {
         return $this->db->select('*')->from('tb_patokan_rekening')->get()->result();

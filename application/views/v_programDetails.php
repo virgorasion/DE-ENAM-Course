@@ -46,7 +46,7 @@ $dataModal['patokan'] = $patokan;
 							<a href="#nav-tab-program-1" data-toggle="tab">
 								<i class="fa fa-history"></i> Rekapitulasi</a>
 						</li>
-						<li class="tabKegiatan active">
+						<li class="tabProgram active">
 							<a href="#nav-tab-program-2" data-toggle="tab">
 								<i class="fa fa-edit"></i>Program</a>
 						</li>
@@ -73,7 +73,7 @@ $dataModal['patokan'] = $patokan;
 							</div>
 
 							<!-- Start Second Tab -->
-							<div class="tab-pane fade in" id="nav-tab-program-2">
+							<div class="tab-pane fade in active" id="nav-tab-program-2">
 								<?php if ($_SESSION['hakAkses'] != 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
@@ -176,7 +176,7 @@ $dataModal['patokan'] = $patokan;
 							</div>
 
 							<!-- Start Third Tab -->
-							<div class="tab-pane fade in active" id="nav-tab-program-3">
+							<div class="tab-pane fade in" id="nav-tab-program-3">
 								<?php if ($_SESSION['hakAkses'] == 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">

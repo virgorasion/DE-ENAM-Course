@@ -220,12 +220,19 @@
 	//Fungsi: untuk menampilkan modal tambah Rekening
 	$('#btnAddRekening').click(function(){
 		$('#modalAddRekening').modal('show');
-		$('#addIDKegiatan').val(kodeKegiatan);
-		$('#addIDInstansi').val(kodeInstansi);
+		$('#addIdKegRekening').val(kodeKegiatan);
+		$('#addIdInsRekening').val(kodeInstansi);
 	})
 
 	// TODO: buat fungsi direct saat selesai membuat rekening
-
+	<?php if(@$_SESSION['msgRekening'] != null){?>
+		$('.tabProgram').removeClass('active');
+		$('#nav-tab-program-2').removeClass('active');
+		$('.tabKodeRekening').removeClass('hidden');
+		$('.tabKodeRekening').addClass('active');
+		$('#nav-tab-program-3').addClass('active');
+		funcTableRekening("<?=$_SESSION['kodeKegiatan']?>");
+	<?php } ?>
 
 	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
 	$('#tableKegiatan').on('click', '.delete_data', function () {
@@ -308,8 +315,8 @@
 		funcTableRekening(kodeKegiatan);
 	});
 
-	// Fungsi: Saat klik tab Kegiatan TableRekening di destroy
-	$('#tab-nav').on('click','.tabKegiatan', function(){
+	// Fungsi: destroy tableRekening saat pindah tab
+	$('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(){
 		tableRekening.destroy();
 	});
 

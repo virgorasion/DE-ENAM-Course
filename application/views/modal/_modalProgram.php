@@ -215,23 +215,23 @@
 					</div>
 					<div class="form-group">
 						<label for="AddT1">T1</label>
-						<input type="text" name="AddT1" id="AddT1" class="form-control" placeholder="-">
+						<input type="text" name="AddT1" id="AddT1" class="form-control inputMask" placeholder="-">
 					</div>
 					<div class="form-group">
 						<label for="AddT2">T2</label>
-						<input type="text" name="AddT2" id="AddT2" class="form-control" placeholder="-">
+						<input type="text" name="AddT2" id="AddT2" class="form-control inputMask" placeholder="-">
 					</div>
 					<div class="form-group">
 						<label for="AddT3">T3</label>
-						<input type="text" name="AddT3" id="AddT3" class="form-control" placeholder="-">
+						<input type="text" name="AddT3" id="AddT3" class="form-control inputMask" placeholder="-">
 					</div>
 					<div class="form-group">
 						<label for="AddT4">T4</label>
-						<input type="text" name="AddT4" id="AddT4" class="form-control" placeholder="-">
+						<input type="text" name="AddT4" id="AddT4" class="form-control inputMask" placeholder="-">
 					</div>
 				</div>
-				<input type="hidden" name="AddIDKegiatan" id="AddIDKegiatan" value="" />
-				<input type="hidden" name="AddIDInstansi" id="AddIDInstansi" value="" />
+				<input type="hidden" name="addIdKegRekening" id="addIdKegRekening" value="" />
+				<input type="hidden" name="addIdInsRekening" id="addIdInsRekening" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>

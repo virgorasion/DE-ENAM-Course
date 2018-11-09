@@ -199,29 +199,38 @@ class ProgramCtrl extends CI_controller
         echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeKegiatan);
     }
 
-    public function TambahRekening()
+    public function TambahDataRekening()
     {
         $p = $this->input->post();
-        $id = $this->generateKodeRekening($p['addKodeRek'],$p['AddIDKegiatan']);
+        $id = $this->generateKodeRekening($p['addKodeRek'],$p['addIdKegRekening']);
+        $t1 = explode('.',$p['AddT1']);
+        $r1 = implode('',$t1);
+        $t2 = explode('.',$p['AddT2']);
+        $r2 = implode('',$t2);
+        $t3 = explode('.',$p['AddT3']);
+        $r3 = implode('',$t3);
+        $t4 = explode('.',$p['AddT4']);
+        $r4 = implode('',$t4);
         $data = array(
-            'kode_rekening' => $p['addKodeRek'] . $id,
-            'kode_kegiatan' => $p['AddIDKegiatan'],
-            'uraian_kegiatan' => $p['AddNamaRek'],
-            'triwulan_1' => $p['AddT1'],
-            'triwulan_2' => $p['AddT2'],
-            'triwulan_3' => $p['AddT3'],
-            'triwulan_4' => $p['AddT4']
+            'kode_patokan' => $p['addKodeRek'],
+            'kode_rekening' => $p['addKodeRek'] .".". $id,
+            'kode_kegiatan' => $p['addIdKegRekening'],
+            'uraian_rekening' => $p['AddNamaRek'],
+            'triwulan_1' => $r1,
+            'triwulan_2' => $r2,
+            'triwulan_3' => $r3,
+            'triwulan_4' => $r4
         );
-        $kodeKeg = $p['AddIDKegiatan'];
-        $kodeIns = $p['AddIDInstansi'];
-        $query = $this->ProgramModel()->InsertDataRekening('tb_rekening');
+        $kodeKeg = $p['addIdKegRekening'];
+        $kodeIns = $p['addIdInsRekening'];
+        $query = $this->ProgramModel->InsertDataRekening('tb_rekening', $data);
         if ($query != null) {
             $this->session->set_flashdata('msgRekening', 'Berhasil menambah rekening');
-            $this->session->set_flashdata('kodeInstansi', $kodeIns);
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
             redirect('ProgramCtrl/index/' . $kodeIns);
         } else {
             $this->session->set_flashdata('msgRekening', 'Gagal menambah rekening, segera hubungi admin');
-            $this->session->set_flashdata('kodeInstansi', $kodeIns);
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
             redirect('ProgramCtrl/index/' . $kodeIns);
         }
     }
