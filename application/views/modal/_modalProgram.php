@@ -197,9 +197,9 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Edit Kegiatan</h4>
+				<h4 class="modal-title">Tambah Rekening</h4>
 			</div>
-			<form id="formEditKegiatan" method="post" action="<?= site_url('ProgramCtrl/TambahDataRekening') ?>">
+			<form id="formTambahRekening" method="post" action="<?= site_url('ProgramCtrl/TambahDataRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
 					  <label for="addKodeRek">Jenis Pengeluaran</label>
@@ -244,3 +244,62 @@
 </div>
 <!-- /.modal -->
 <?php } ?>
+
+<?php if ($_SESSION['hakAkses'] == 3) { ?>
+<!-- Start Modal Edit Rekening -->
+<div class="modal fade" id="modalEditRekening">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Edit Rekening</h4>
+			</div>
+			<form id="formEditRekening" method="post" action="<?= site_url('ProgramCtrl/EditDataRekening') ?>">
+				<div class="modal-body">
+					<div class="form-group">
+					  <label for="editKodeRek">Jenis Pengeluaran</label>
+					  <select class="form-control" name="editKodeRek" id="editKodeRek">
+					  	<?php foreach ($patokan as $item) { ?>
+						<option value="<?= $item->kode_patokan ?>"><?= $item->nama ?></option>
+						<?php 
+				} ?>
+					  </select>
+					</div>
+					<div class="form-group">
+						<label for="editNamaRek">Nama Uraian</label>
+						<input type="text" name="editNamaRek" id="editNamaRek" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="editT1">T1</label>
+						<input type="text" name="editT1" id="editT1" class="form-control inputMask" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="editT2">T2</label>
+						<input type="text" name="editT2" id="editT2" class="form-control inputMask" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="editT3">T3</label>
+						<input type="text" name="editT3" id="editT3" class="form-control inputMask" placeholder="-">
+					</div>
+					<div class="form-group">
+						<label for="editT4">T4</label>
+						<input type="text" name="editT4" id="editT4" class="form-control inputMask" placeholder="-">
+					</div>
+				</div>
+				<input type="text" name="editIdRekening" id="editIdRekening"/>
+				<input type="text" name="editIdKegRekening" id="editIdKegRekening"/>
+				<input type="text" name="editIdInsRekening" id="editIdInsRekening"/>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php 
+} ?>

@@ -2,7 +2,7 @@
 <link href="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.css') ?>" rel="stylesheet">
 <?php $this->load->view('template/_nav'); ?>
 <?php 
-$kodeInstansi['kodeInstansi'] = $kode;
+$dataModal['kodeInstansi'] = $kode;
 $dataModal['patokan'] = $patokan;
  ?>
 <!-- Content Wrapper. Contains page content -->
@@ -314,4 +314,4 @@ $this->load->view('template/_js');
 ?>
 <script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
-<?php $this->load->view('js/_programJS', $kodeInstansi) ?>
+<?php $this->load->view('js/_programJS', $dataModal) ?>

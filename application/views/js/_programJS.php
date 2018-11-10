@@ -5,6 +5,7 @@
 	var tableKegiatan = "";
 	var tableRekening = "";
     // Setup datatables
+	// $.fn.dataTableExt.errMode = 'none';
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
         return {
@@ -135,7 +136,7 @@
 			funcTableKegiatan(kodeProgram);
 			console.log(kodeProgram);
 		}else {
-			$('#boxDetail').fadeOut(1000);
+			$('#boxDetail').slideDown(1000);
 			$('#boxDetail').addClass('hidden');
 			tableKegiatan.destroy();
 		}
@@ -169,6 +170,7 @@
         $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
     });
 
+
 	//Fungsi: untuk memunculkan data sebelumnya saat btnEdit Program di klik
 	$('#tableProgram').on('click','#btnEdit',function(){
 		var $item = $(this).closest('tr');
@@ -186,6 +188,29 @@
 				$('#editPlafon').val(data[0].plafon);
 			}
 		});
+	})
+
+	$('#tableRekening').on('click','.edit_data', function(){
+		console.log(kodeKegiatan);
+		console.log(kodeInstansi);
+		var mainID = $(this).data('id');
+		var rekeningID = $(this).data('rekening');
+		var patokanID = $(this).data('patokan');
+		var uraian = $(this).data('uraian');
+		var t1 = $(this).data('t1');
+		var t2 = $(this).data('t2');
+		var t3 = $(this).data('t3');
+		var t4 = $(this).data('t4');
+		$('#modalEditRekening').modal('show');
+		$('#formEditRekening').find('#editKodeRek').val(patokanID);
+		$('#formEditRekening').find('#editNamaRek').val(uraian);
+		$('#formEditRekening').find('#editT1').val(t1);
+		$('#formEditRekening').find('#editT2').val(t2);
+		$('#formEditRekening').find('#editT3').val(t3);
+		$('#formEditRekening').find('#editT4').val(t4);
+		$('#formEditRekening').find('#editIdRekening').val(rekeningID);
+		$('#formEditRekening').find('#editIdKegRekening').val(kodeKegiatan);
+		$('#formEditRekening').find('#editIdInsRekening').val(kodeInstansi);
 	})
 
 	//Fungsi: untuk delete ketika btn delete di tableProgram di klik
@@ -224,7 +249,7 @@
 		$('#addIdInsRekening').val(kodeInstansi);
 	})
 
-	// TODO: buat fungsi direct saat selesai membuat rekening
+	//Fungsi: Redirect langsung ke tableRekening setelah action
 	<?php if(@$_SESSION['msgRekening'] != null){?>
 		$('.tabProgram').removeClass('active');
 		$('#nav-tab-program-2').removeClass('active');
@@ -307,7 +332,7 @@
 		if ($('#boxDetail').hasClass('hidden')) {
 			//Nothing
 		}else{
-			$('#boxDetail').fadeOut(1000);
+			$('#boxDetail').slideUp(1000);
 			$('#boxDetail').addClass('hidden');
 			tableKegiatan.destroy();
 		}
@@ -316,8 +341,18 @@
 	});
 
 	// Fungsi: destroy tableRekening saat pindah tab
-	$('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(){
-		tableRekening.destroy();
+	$('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(event){
+		tableRekening.destroy();	
 	});
+
+
+	// Fungsi: Show Box Kegiatan pas klik tabProgram
+	// if ($('.tabKodeRekening').hasClass('hidden') != true) {
+	// 	$('.tabProgram').click(function(){
+	// 		$('#boxDetail').slideDown(1000);
+	// 		$('#boxDetail').removeClass('hidden');
+	// 	})
+	// }
+
 
 </script>
