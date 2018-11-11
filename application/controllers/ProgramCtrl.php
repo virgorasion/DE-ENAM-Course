@@ -235,6 +235,59 @@ class ProgramCtrl extends CI_controller
         }
     }
 
+    public function EditRekening()
+    {
+        $p = $this->input->post();
+        print_r($p);
+        $id = $this->generateKodeRekening($p['editKodeRek'], $p['editIdKegRekening']);
+        $t1 = explode('.', $p['editT1']);
+        $r1 = implode('', $t1);
+        $t2 = explode('.', $p['editT2']);
+        $r2 = implode('', $t2);
+        $t3 = explode('.', $p['editT3']);
+        $r3 = implode('', $t3);
+        $t4 = explode('.', $p['editT4']);
+        $r4 = implode('', $t4);
+        $data = array(
+            'kode_patokan' => $p['editKodeRek'],
+            'kode_rekening' => $p['editKodeRek'] .".". $id,
+            'kode_kegiatan' => $p['editIdKegRekening'],
+            'uraian_rekening' => $p['editNamaRek'],
+            'triwulan_1' => $r1,
+            'triwulan_2' => $r2,
+            'triwulan_3' => $r3,
+            'triwulan_4' => $r4
+        );
+        $kodeKeg = $p['editIdKegRekening'];
+        $kodeIns = $p['editIdInsRekening'];
+        $mainID = $p['editIdRekening'];
+        $query = $this->ProgramModel->EditDataRekening('tb_rekening', $data, $mainID);
+        if ($query != null) {
+            $this->session->set_flashdata('msgRekening', 'Berhasil Edit rekening');
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        } else {
+            $this->session->set_flashdata('msgRekening', 'Gagal Edit rekening, segera hubungi admin');
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        }
+    }
+    
+    public function HapusRekening($id, $kodeKeg, $kodeIns)
+    {
+        $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $id);
+        if ($query != null) {
+            $this->session->set_flashdata('msgRekening', 'Berhasil Edit rekening');
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        } else {
+            $this->session->set_flashdata('msgRekening', 'Gagal Edit rekening, segera hubungi admin');
+            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        }
+    }
+    
+
     private function generateKodeRekening($kodePatokan,$kodeKegiatan)
     {
         $query = $this->db->select_max('kode_rekening')->from('tb_rekening')->where('kode_patokan',$kodePatokan)->where('kode_kegiatan',$kodeKegiatan)->get();

@@ -98,10 +98,19 @@ class ProgramModel extends CI_model
         return $this->db->insert($table,$data);
     }
     
-
     public function getPatokan()
     {
         return $this->db->select('*')->from('tb_patokan_rekening')->get()->result();
+    }
+    
+    public function EditDataRekening($table, $data, $id)
+    {
+        return $this->db->update($table,$data, array('id' => $id));
+    }
+
+    public function DeleteDataRekening($table, $id)
+    {
+        return $this->db->delete($table, array('id' => $id));
     }
     
     

@@ -208,7 +208,7 @@
 		$('#formEditRekening').find('#editT2').val(t2);
 		$('#formEditRekening').find('#editT3').val(t3);
 		$('#formEditRekening').find('#editT4').val(t4);
-		$('#formEditRekening').find('#editIdRekening').val(rekeningID);
+		$('#formEditRekening').find('#editIdRekening').val(mainID);
 		$('#formEditRekening').find('#editIdKegRekening').val(kodeKegiatan);
 		$('#formEditRekening').find('#editIdInsRekening').val(kodeInstansi);
 	})
@@ -300,7 +300,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + id;
+              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + id +"/"+ kodeKegiatan +"/"+ kodeInstansi;
             }
           }
         }

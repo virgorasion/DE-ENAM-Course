@@ -255,7 +255,7 @@
 					<span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">Edit Rekening</h4>
 			</div>
-			<form id="formEditRekening" method="post" action="<?= site_url('ProgramCtrl/EditDataRekening') ?>">
+			<form id="formEditRekening" method="post" action="<?= site_url('ProgramCtrl/EditRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
 					  <label for="editKodeRek">Jenis Pengeluaran</label>
@@ -287,9 +287,9 @@
 						<input type="text" name="editT4" id="editT4" class="form-control inputMask" placeholder="-">
 					</div>
 				</div>
-				<input type="text" name="editIdRekening" id="editIdRekening"/>
-				<input type="text" name="editIdKegRekening" id="editIdKegRekening"/>
-				<input type="text" name="editIdInsRekening" id="editIdInsRekening"/>
+				<input type="hidden" name="editIdRekening" id="editIdRekening"/>
+				<input type="hidden" name="editIdKegRekening" id="editIdKegRekening"/>
+				<input type="hidden" name="editIdInsRekening" id="editIdInsRekening"/>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>
