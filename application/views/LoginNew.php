@@ -37,73 +37,63 @@
 		<div class="text-center"><h4 style="font-family:verdana;"><b>SELAMAT DATANG DI</b></h4></div>
 		<br>
 		<div class="col-lg-12 text-center"><b><h1 style="font-family:sans-serif;"><b>MUSTIKA GRAHA EDUCATION</b></h1></b></div>
-		<br><br><br><br><br><br><br>
-		<div>
-			<div class="form-group">
-				<div class="row">
-					<div class="text-center">
-						<button id="loginAdmin" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
-							 class="fa fa-user fa-lg"></i> Login Admin</button>
-						<button id="loginSekolah" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
-							 class="fa fa-university fa-lg"></i>Login Sekolah</button>
-						<button id="loginSiswa" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-social btn-bitbucket"><i
-							 class="fa fa-graduation-cap fa-lg"></i> Login Siswa</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--===================================================-->
 
-	<!--Default Bootstrap Modal-->
-	<!--===================================================-->
-	<div class="modal fade" id="loginModal" role="dialog" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!--Modal body-->
-				<div class="modal-body">
-					<button data-dismiss="modal" class="close" type="button">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<div class="login-box">
-						<div class="login-logo">
-							<b>Login</b>
-						</div>
-						<!-- /.login-logo -->
-						<div class="login-box-body">
-							<p class="login-box-msg"></p>
-							<form action="<?= site_url('Auth/login')?>" method="post">
-								<input type="hidden" name="<?=$csrf['token']?>" value="<?=$csrf['hash']?>">
-								<div class="form-group has-feedback">
-									<input type="text" class="form-control" name="username" placeholder="Username" autofocus>
-									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-								</div>
-								<div class="form-group has-feedback">
-									<input type="password" class="form-control" name="password" placeholder="Password">
-									<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-								</div>
-								<input type="hidden" name="hakAkses" id="hakAkses" class="form-control" value="">
-								<div class="row">
-									<div class="col-xs-8">
-										
-									</div>
-									<!-- /.col -->
-									<div class="col-xs-4">
-										<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-									</div>
-									<!-- /.col -->
-								</div>
-							</form>
-						</div>
-						<!-- /.login-box-body -->
-					</div>
-					<!-- /.login-box -->
-				</div>
-			</div>
-		</div>
+		<div class="login-box">
+  <div class="login-box-body">
+    <p class="login-box-msg">Form Login</p>
+
+    <form action="<?=site_url("Auth/login")?>" method="post">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="username" placeholder="Username">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password" placeholder="********">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+	  Login Sebagai :
+	  
+	  <div class="row">
+		  <div class="form-check col-md-4">
+			  <label class="form-check-label">
+			  <input type="radio" class="form-check-input" name="hakAkses" id="AksesAdmin" value="1" checked>
+			  Admin
+			</label>
+		  </div>
+		  <div class="form-check col-md-4">
+			  <label class="form-check-label">
+			  <input type="radio" class="form-check-input" name="hakAkses" id="AksesInstansi" value="2">
+			  Instansi
+			</label>
+		  </div>
+		  <div class="form-check col-md-4">
+			  <label class="form-check-label">
+			  <input type="radio" class="form-check-input" name="hakAkses" id="AksesSiswa" value="3">
+			  Siswa
+			</label>
+		  </div>
+	  </div>
+	  <br>
+      <div class="row">
+        <div class="col-xs-8">
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+    <!-- <a href="#">I forgot my password</a><br> -->
+    <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
 	</div>
 	<!--===================================================-->
-	<!--End Default Bootstrap Modal-->
 
 	<!-- jQuery 3 -->
 	<script src="<?= base_url('assets/bower_components/jquery/dist/jquery.min.js')?>"></script>
