@@ -24,6 +24,7 @@ $('#datatable').on('click', '#btnView', function () {
 
 });
 
+// data program di instansi
 $('#addInstansiSiswa').on('change', function(){
     var dataInstansi = $(this).val();
     console.log(dataInstansi);

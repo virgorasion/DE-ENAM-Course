@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Nov 2018 pada 12.10
--- Versi server: 10.1.30-MariaDB
--- Versi PHP: 7.2.2
+-- Generation Time: 27 Nov 2018 pada 08.18
+-- Versi Server: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_mangkelno`
+-- Database: `db_new`
 --
 
 -- --------------------------------------------------------
@@ -54,8 +54,12 @@ CREATE TABLE `tb_detail_rekening` (
   `id` int(11) NOT NULL,
   `kode_detail_rekening` varchar(10) NOT NULL,
   `kode_rekening` varchar(15) NOT NULL,
+  `jenis` varchar(20) NOT NULL,
   `uraian` varchar(100) NOT NULL,
   `sub_uraian` varchar(100) NOT NULL,
+  `sasaran` varchar(50) NOT NULL,
+  `lokasi` varchar(100) NOT NULL,
+  `dana` varchar(10) NOT NULL,
   `satuan` varchar(10) NOT NULL,
   `volume` int(3) NOT NULL,
   `harga` int(7) NOT NULL,
@@ -112,7 +116,6 @@ CREATE TABLE `tb_kegiatan` (
 --
 
 INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
-(3, '010.6531', '127.6544', '080.343543', 'Malmingan', 0, 0, 'Tapi gk ada gandengan :( &lt;script&gt;alert(\'est\');&lt;/script&gt;'),
 (4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 0, 0, 'Cek Edit Kegiatan'),
 (6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, 'Cek tambah kegiatan untuk rekening');
 
@@ -159,8 +162,8 @@ CREATE TABLE `tb_program` (
 --
 
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
-(6, '100.001', 5, '010.6531', '127.6544', 'Program', '50.005', '', ''),
-(8, '100.001', 2, '010.6531', '127.3321', 'Program Makan Bersama', '50.000', '', '');
+(8, '100.001', 2, '010.6531', '127.3321', 'Program Makan Bersama', '50.000', '', ''),
+(9, '100.001', 0, '010.6531', '127. 02', 'Kerja Bakti 17 Agustus', '1.000.000', '', '');
 
 -- --------------------------------------------------------
 
@@ -188,12 +191,12 @@ CREATE TABLE `tb_rekening` (
 
 INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_rekening`, `kode_kegiatan`, `uraian_rekening`, `triwulan_1`, `triwulan_2`, `triwulan_3`, `triwulan_4`, `total`, `total_rincian`) VALUES
 (1, '5.1.1', '5.1.1.01', '080.001', 'Belanja Gincu', 500000, 510000, 550000, 400000, 0, 0),
-(2, '5.1.1', '5.1.1.02', '080.001', 'Rekening kita', 0, 0, 0, 0, NULL, NULL),
 (11, '5.1.1', '5.1.1.03', '080.001', 'belanja Q2', 0, 0, 0, 0, NULL, NULL),
-(12, '5.1.1', '5.1.1.04', '080.001', 'Belanja Q3', 0, 0, 0, 0, NULL, NULL),
-(14, '5', '5.01', '080.001', 'Beli Bakso', 50, 25, 10, 0, NULL, NULL),
 (15, '5', '5.01', '080.001', 'Test explode data', 500000, 250000, 81231, 23523, NULL, NULL),
-(16, '5.1.1', '5.1.1.01', '080.100', 'Beli Rangin', 53000, 9000, 30000, 0, NULL, NULL);
+(16, '5.1.1', '5.1.1.01', '080.100', 'Beli Rangin', 53000, 9000, 30000, 0, NULL, NULL),
+(17, '5.1.1', '5.1.1.02', '080.100', 'Honor guru Bindo', 0, 0, 0, 0, NULL, NULL),
+(18, '5', '5.01', '080.001', 'Honor guru Bindo', 0, 0, 0, 0, NULL, NULL),
+(20, '5', '5.01', '080.001', 'Honor guru ipa', 0, 0, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -225,19 +228,19 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 --
 
 --
--- Indeks untuk tabel `tb_admin`
+-- Indexes for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tb_detail_rekening`
+-- Indexes for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tb_instansi`
+-- Indexes for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`),
@@ -245,7 +248,7 @@ ALTER TABLE `tb_instansi`
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tb_kegiatan`
+-- Indexes for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   ADD PRIMARY KEY (`id`),
@@ -255,13 +258,13 @@ ALTER TABLE `tb_kegiatan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_patokan_rekening`
+-- Indexes for table `tb_patokan_rekening`
 --
 ALTER TABLE `tb_patokan_rekening`
   ADD PRIMARY KEY (`kode_patokan`);
 
 --
--- Indeks untuk tabel `tb_program`
+-- Indexes for table `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`),
@@ -271,7 +274,7 @@ ALTER TABLE `tb_program`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_rekening`
+-- Indexes for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   ADD PRIMARY KEY (`id`),
@@ -279,7 +282,7 @@ ALTER TABLE `tb_rekening`
   ADD KEY `kode_patokan` (`kode_patokan`);
 
 --
--- Indeks untuk tabel `tb_siswa`
+-- Indexes for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`),
@@ -288,47 +291,47 @@ ALTER TABLE `tb_siswa`
   ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tb_admin`
+-- AUTO_INCREMENT for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
+-- AUTO_INCREMENT for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_instansi`
+-- AUTO_INCREMENT for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kegiatan`
+-- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_program`
+-- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_rekening`
+-- AUTO_INCREMENT for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_siswa`
+-- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
