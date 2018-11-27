@@ -298,5 +298,14 @@ class ProgramCtrl extends CI_controller
         $result = str_pad($res, 2, "0", STR_PAD_LEFT);
         return $result;
     }
+
+    //==============================================================================>>
+    // Detail Rekening Code
+
+    public function DataDetailRekening($idRekening,$kodeRekening,$kodeKegiatan) //Json DetailRekekning
+    {
+        header("Content-Type: application/json");
+        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$idRekening,$kodeRekening,$kodeKegiatan);
+    }
     
 }

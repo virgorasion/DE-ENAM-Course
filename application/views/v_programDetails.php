@@ -68,11 +68,11 @@ $dataModal['patokan'] = $patokan;
 					<div id="demo-bv-bsc-tabs" class="form-horizontal">
 						<div class="tab-content">
 
-							<!-- Start Fist Tab -->
-							<div class="tab-pane pad-btm fade " id="nav-tab-program-1">
+							<!-- Start Rekapitulasi Tab -->
+							<div class="tab-pane pad-btm fade" id="nav-tab-program-1">
 							</div>
 
-							<!-- Start Second Tab -->
+							<!-- Start Program Tab -->
 							<div class="tab-pane fade in active" id="nav-tab-program-2">
 								<?php if ($_SESSION['hakAkses'] != 3) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -92,11 +92,11 @@ $dataModal['patokan'] = $patokan;
 										<tr>
 											<th>No</th>
 											<th>Kode</th>
-											<th class="min-tablet">Nama Program</th>
-											<th class="min-tablet">Plafon</th>
-											<th class="min-desktop">Total Rek</th>
-											<th class="min-desktop">Tot. Rinci</th>
-											<th class="min-desktop">action</th>
+											<th>Nama Program</th>
+											<th>Plafon</th>
+											<th>Total Rek</th>
+											<th>Tot. Rinci</th>
+											<th>action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -175,9 +175,9 @@ $dataModal['patokan'] = $patokan;
 								</table>
 							</div>
 
-							<!-- Start Third Tab -->
+							<!-- Start Kode Rekening Tab -->
 							<div class="tab-pane fade in" id="nav-tab-program-3">
-								<?php if ($_SESSION['hakAkses'] == 3) { ?>
+								<?php if ($_SESSION['hakAkses'] != 2) { ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="form-inline col-md-2">
 										<br>
@@ -199,6 +199,8 @@ $dataModal['patokan'] = $patokan;
 											<th class="min-desktop">T2</th>
 											<th class="min-desktop">T3</th>
 											<th class="min-desktop">T4</th>
+											<th class="min-desktop">Total</th>
+											<th class="min-desktop">Tot. Rinci</th>
 											<th class="min-desktop">Action</th>
 										</tr>
 									</thead>
@@ -207,7 +209,7 @@ $dataModal['patokan'] = $patokan;
 								</table>
 							</div>
 
-							<!-- Start Fourth Tab -->
+							<!-- Start Cetak Tab -->
 							<div class="tab-pane fade" id="nav-tab-program-4">
 								<h4 class="mar-btm text-thin">Tambah Data</h4>
 								<hr>
@@ -247,7 +249,7 @@ $dataModal['patokan'] = $patokan;
 								</form>
 							</div>
 
-							<!-- Start Fiveth Tab -->
+							<!-- Start Validasi Tab -->
 							<div class="tab-pane fade" id="nav-tab-program-5">
 								<h4 class="mar-btm text-thin">Tambah Data</h4>
 								<hr>
@@ -299,6 +301,10 @@ $dataModal['patokan'] = $patokan;
 		<!-- Box Kegiatan -->
 		<?php $this->load->view('box/_boxKegiatan') ?>
 		<!-- End Box Program Details -->
+
+		<!-- Box DetailRekening -->
+		<?php $this->load->view('box/_boxDetailRekening') ?>
+		<!-- End Box DetailRekening -->
 
 		<!-- Modal Program & Modal Kegiatan -->
 		<?php $this->load->view('modal/_modalProgram', $dataModal) ?>
