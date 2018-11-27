@@ -1,6 +1,6 @@
 <!-- Start Modal Tambah Program -->
 <?php if ($_SESSION['hakAkses'] != 3) { ?>
-<div class="modal fade" id="modal-tambah">
+<div class="modal fade" id="">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -159,8 +159,8 @@
 							<div class="input-group-addon">
 								080.
 							</div>
-							<input type="number" class="form-control" id="editKodeKegiatan" max-lenght="5" name="editKodeKegiatan" placeholder="9999"
-							 aria-describedby="helpId">
+							<input type="number" class="form-control" id="editKodeKegiatan" max-lenght="5" name="editKodeKegiatan"
+							 placeholder="9999" aria-describedby="helpId">
 						</div>
 						<!-- /.input group -->
 						<!-- <small id="helpId" class="text-muted"></small> -->
@@ -175,7 +175,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="kodeInstansiEdit" id="kodeInstansiEdit" value="<?= $kodeInstansi ?>" />
-				<input type="hidden" name="kodeProgramEdit" id="kodeProgramEdit"/>
+				<input type="hidden" name="kodeProgramEdit" id="kodeProgramEdit" />
 				<input type="hidden" name="idKegiatanEdit" id="idKegiatanEdit" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
@@ -189,7 +189,7 @@
 </div>
 <!-- /.modal -->
 
-<?php if($_SESSION['hakAkses'] == 3){?>
+<?php if($_SESSION['hakAkses'] != 2){?>
 <!-- Start Modal Tambah Rekening -->
 <div class="modal fade" id="modalAddRekening">
 	<div class="modal-dialog">
@@ -202,12 +202,14 @@
 			<form id="formTambahRekening" method="post" action="<?= site_url('ProgramCtrl/TambahDataRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
-					  <label for="addKodeRek">Jenis Pengeluaran</label>
-					  <select class="form-control" name="addKodeRek" id="addKodeRek">
-					  	<?php foreach($patokan as $item){ ?>
-						<option value="<?=$item->kode_patokan?>"><?=$item->nama?></option>
-						<?php } ?>
-					  </select>
+						<label for="addKodeRek">Jenis Pengeluaran</label>
+						<select class="form-control" name="addKodeRek" id="addKodeRek">
+							<?php foreach($patokan as $item){ ?>
+							<option value="<?=$item->kode_patokan?>">
+								<?=$item->nama?>
+							</option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="AddNamaRek">Nama Uraian</label>
@@ -245,7 +247,7 @@
 <!-- /.modal -->
 <?php } ?>
 
-<?php if ($_SESSION['hakAkses'] == 3) { ?>
+<?php if ($_SESSION['hakAkses'] != 2) { ?>
 <!-- Start Modal Edit Rekening -->
 <div class="modal fade" id="modalEditRekening">
 	<div class="modal-dialog">
@@ -258,13 +260,15 @@
 			<form id="formEditRekening" method="post" action="<?= site_url('ProgramCtrl/EditRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
-					  <label for="editKodeRek">Jenis Pengeluaran</label>
-					  <select class="form-control" name="editKodeRek" id="editKodeRek">
-					  	<?php foreach ($patokan as $item) { ?>
-						<option value="<?= $item->kode_patokan ?>"><?= $item->nama ?></option>
-						<?php 
+						<label for="editKodeRek">Jenis Pengeluaran</label>
+						<select class="form-control" name="editKodeRek" id="editKodeRek">
+							<?php foreach ($patokan as $item) { ?>
+							<option value="<?= $item->kode_patokan ?>">
+								<?= $item->nama ?>
+							</option>
+							<?php 
 				} ?>
-					  </select>
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="editNamaRek">Nama Uraian</label>
@@ -287,13 +291,87 @@
 						<input type="text" name="editT4" id="editT4" class="form-control inputMask" placeholder="-">
 					</div>
 				</div>
-				<input type="hidden" name="editIdRekening" id="editIdRekening"/>
-				<input type="hidden" name="editIdKegRekening" id="editIdKegRekening"/>
-				<input type="hidden" name="editIdInsRekening" id="editIdInsRekening"/>
+				<input type="hidden" name="editIdRekening" id="editIdRekening" />
+				<input type="hidden" name="editIdKegRekening" id="editIdKegRekening" />
+				<input type="hidden" name="editIdInsRekening" id="editIdInsRekening" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>
 				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php 
+} ?>
+
+<?php if ($_SESSION['hakAkses'] != 2) { ?>
+<!-- Start Modal Action Detail Rekening -->
+<div class="modal fade" id="modal-tambah">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Edit Rekening</h4>
+			</div>
+			<form class="form-horizontal">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Jenis</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="addJenis" name="addJenis" placeholder="Email">
+						</div>
+						<div class="col-md-1"></div>
+					<div class="form-check form-check-inline">
+						<label class="form-check-label">
+							Lampiran <input class="form-check-input" type="checkbox" name="addLampiran" id="addLampiran" value="1">
+						</label>
+					</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="addKegiatan" class="col-sm-2 control-label">Kegiatan</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="addKegiatan" name="addKegiatan" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addUraian" class="col-sm-2 control-label">Uraian</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="addUraian" name="addUraian" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addSasaran" class="col-sm-2 control-label">Sasaran</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="addSasaran" name="addSasaran" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addLokasi" class="col-sm-2 control-label">Lokasi</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="addLokasi" name="addLokasi" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addLokasi" class="col-sm-2 control-label">Dana</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="addDana" id="addDana">
+								<option value="1">APBD</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="submit" class="btn btn-default">Cancel</button>
+					<button type="submit" class="btn btn-info pull-right">Sign in</button>
+				</div>
+				<!-- /.box-footer -->
 			</form>
 		</div>
 		<!-- /.modal-content -->

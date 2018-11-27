@@ -4,6 +4,7 @@
 	var kodeKegiatan = "";
 	var tableKegiatan = "";
 	var tableRekening = "";
+	var tableDetailRekening = "";
     // Setup datatables
 	// $.fn.dataTableExt.errMode = 'none';
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -91,6 +92,8 @@
 						{"data": "triwulan_2", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "triwulan_3", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "triwulan_4", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total_rinci", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "action", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -101,7 +104,53 @@
 			}
 
 		});
-		// end setup datatables	
+		// end setup datatables
+	return tableRekening;
+	}
+
+	//Fungsi: untuk menggenerate table Rekening secara serverSide
+	function funcTableDetailRekening(idRekening, kodeRekening, kodeKegiatan) {
+		tableDetailRekening = $("#tableDetailRekening").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+idRekening+"/"+kodeRekening+"/"+kodeKegiatan, "type": "POST"},
+					columns: [
+						{"data": null,
+							"orderable": false,
+							"searchable": false
+						},
+						{"data": "uraian"},
+						{"data": "sub_uraian"},
+						{"data": "satuan"},
+						{"data": "volume"},
+						{"data": "harga",render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "keterangan"},
+						{"data": "action", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(0)', row).html(index);
+
+			}
+
+		});
+		// end setup datatables
 	return tableRekening;
 	}
 
@@ -141,10 +190,39 @@
 			tableKegiatan.destroy();
 		}
 	});
-	//Fungsi: untuk menghilangkan box Kegiatan
+	//Fungsi: Hidden box Kegiatan
 	$('#btnHidden').click(function(){
 		$('#boxDetail').fadeOut(1000);
 		$('#boxDetail').addClass('hidden');
+		if ($('.tabKodeRekening').hasClass('hidden')) {
+			//Emang Kosong kok :)
+		}else{
+			$('.tabKodeRekening').addClass('hidden');
+		}
+		tableKegiatan.destroy();
+	});
+
+	// Funngsi: Show box detail_rekening
+	$("#tableRekening").on('click','.view_data', function(){
+		var idRekening = $(this).data('id');
+		var kodeRekening = $(this).data('koderek');
+		var kodeKeg = $(this).data('kodekeg');
+		console.log(kodeRekening);
+		console.log(kodeKeg);
+	if ($('#boxDetailRekening').hasClass('hidden')) {
+			$("#boxDetailRekening").removeClass("hidden");
+			$("#boxDetailRekening").slideDown();
+			funcTableDetailRekening(idRekening,kodeRekening,kodeKeg);
+		}else {
+			$('#boxDetailRekening').slideDown(1000);
+			$('#boxDetailRekening').addClass('hidden');
+			tableDetailRekening.destroy();
+		}
+	});
+	//Fungsi: untuk menghilangkan box Kegiatan
+	$('#btnHidden').click(function(){
+		$('#boxDetailRekening').fadeOut(1000);
+		$('#boxDetailRekening').addClass('hidden');
 		if ($('.tabKodeRekening').hasClass('hidden')) {
 			//Emang Kosong kok :)
 		}else{
@@ -342,7 +420,7 @@
 
 	// Fungsi: destroy tableRekening saat pindah tab
 	$('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(event){
-		tableRekening.destroy();	
+		// tableRekening.destory();
 	});
 
 
