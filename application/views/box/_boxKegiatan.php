@@ -142,11 +142,11 @@
 								<tr>
 									<th>No</th>
 									<th>Kode</th>
-									<th class="min-tablet">Uraian Kegiatan</th>
-									<th class="min-tablet">Keterangan</th>
-									<th class="min-desktop">Total Rek</th>
-									<th class="min-desktop">Tot. Rinci</th>
-									<th class="min-desktop">action</th>
+									<th>Uraian Kegiatan</th>
+									<th>Keterangan</th>
+									<th>Total Rek</th>
+									<th>Tot. Rinci</th>
+									<th>action</th>
 								</tr>
 							</thead>
 							<tbody>
