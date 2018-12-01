@@ -50,7 +50,7 @@ class ProgramCtrl extends CI_controller
             );
         }
 
-        $this->ProgramModel->InsertProgram('tb_program', $data);
+        $this->ProgramModel->ActionInsert('tb_program', $data);
         $this->session->set_flashdata('msg', 'Berhasil Menambahkan Program');
         redirect('ProgramCtrl/index/' . $idInstansi);
     }
@@ -131,7 +131,7 @@ class ProgramCtrl extends CI_controller
             'nama_kegiatan' => $post['addNamaKegiatan'],
             'keterangan' => $post['addKeterangan']
         );
-        $query = $this->ProgramModel->insertKegiatan('tb_kegiatan',$data);
+        $query = $this->ProgramModel->ActionInsert('tb_kegiatan',$data);
         $kodeInstansi = $post['kodeInstansi'];
         $kodeProgram = $post['kodeProgram'];
 
@@ -199,10 +199,9 @@ class ProgramCtrl extends CI_controller
         echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeKegiatan);
     }
 
-    public function TambahDataRekening()
+    public function ActionRekening()
     {
         $p = $this->input->post();
-        $id = $this->generateKodeRekening($p['addKodeRek'],$p['addIdKegRekening']);
         $t1 = explode('.',$p['AddT1']);
         $r1 = implode('',$t1);
         $t2 = explode('.',$p['AddT2']);
@@ -211,68 +210,58 @@ class ProgramCtrl extends CI_controller
         $r3 = implode('',$t3);
         $t4 = explode('.',$p['AddT4']);
         $r4 = implode('',$t4);
-        $data = array(
-            'kode_patokan' => $p['addKodeRek'],
-            'kode_rekening' => $p['addKodeRek'] .".". $id,
-            'kode_kegiatan' => $p['addIdKegRekening'],
-            'uraian_rekening' => $p['AddNamaRek'],
-            'triwulan_1' => $r1,
-            'triwulan_2' => $r2,
-            'triwulan_3' => $r3,
-            'triwulan_4' => $r4
-        );
-        $kodeKeg = $p['addIdKegRekening'];
-        $kodeIns = $p['addIdInsRekening'];
-        $query = $this->ProgramModel->InsertDataRekening('tb_rekening', $data);
+        $kodeInstansi = $p['KodeInstansiRekening'];
+        $kodeProgram = $p['KodeProgramRekening'];
+        $kodeKegiatan = $p['KodeKegiatanRekening'];
+        if ($p['actionTypeRekening'] == "add") {
+            $kodeRekening = $this->generateKodeRekening($p['addKodeRek'],$p['KodeKegiatanRekening'],$p['KodeProgramRekening'],$p['KodeInstansiRekening']);
+            $data = array(
+                'kode_patokan' => $p['addKodeRek'],
+                'kode_instansi' => $p['KodeInstansiRekening'],
+                'kode_program' => $p['KodeProgramRekening'],
+                'kode_kegiatan' => $p['KodeKegiatanRekening'],
+                'kode_rekening' => $kodeRekening,
+                'uraian_rekening' => $p['addNamaRek'],
+                'triwulan_1' => $r1,
+                'triwulan_2' => $r2,
+                'triwulan_3' => $r3,
+                'triwulan_4' => $r4
+            );
+            $query = $this->ProgramModel->ActionInsert('tb_rekening', $data);
+        }else{
+            $kodeRekening = $this->generateKodeRekening($p['addKodeRek'], $p['KodeKegiatanRekening'], $p['KodeProgramRekening'], $p['KodeInstansiRekening'],$p['KodeRekeningRekening']);
+            $data = array(
+                'kode_patokan' => $p['addKodeRek'],
+                'kode_rekening' => $kodeRekening,
+                'kode_instansi' => $p['KodeInstansiRekening'],
+                'kode_program' => $p['KodeProgramRekening'],
+                'kode_kegiatan' => $p['KodeKegiatanRekening'],
+                'uraian_rekening' => $p['addNamaRek'],
+                'triwulan_1' => $r1,
+                'triwulan_2' => $r2,
+                'triwulan_3' => $r3,
+                'triwulan_4' => $r4
+            );
+            $mainID = $p['IDRekening'];
+            $query = $this->ProgramModel->EditDataRekening('tb_rekening', $data, $mainID);
+        }
         if ($query != null) {
-            $this->session->set_flashdata('msgRekening', 'Berhasil menambah rekening');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('succ', 'Berhasil menambah rekening');
+            $this->session->set_flashdata('Rekening_Direct', "Direction");
+            $this->session->set_flashdata('Rekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('Rekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Rekening_KodeKegiatan', $kodeKegiatan);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('msgRekening', 'Gagal menambah rekening, segera hubungi admin');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('fail', 'Gagal menambah rekening, segera hubungi admin');
+            $this->session->set_flashdata('Rekening_Direct', "Direction");
+            $this->session->set_flashdata('Rekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('Rekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Rekening_KodeKegiatan', $kodeKegiatan);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
-    public function EditRekening()
-    {
-        $p = $this->input->post();
-        print_r($p);
-        $id = $this->generateKodeRekening($p['editKodeRek'], $p['editIdKegRekening']);
-        $t1 = explode('.', $p['editT1']);
-        $r1 = implode('', $t1);
-        $t2 = explode('.', $p['editT2']);
-        $r2 = implode('', $t2);
-        $t3 = explode('.', $p['editT3']);
-        $r3 = implode('', $t3);
-        $t4 = explode('.', $p['editT4']);
-        $r4 = implode('', $t4);
-        $data = array(
-            'kode_patokan' => $p['editKodeRek'],
-            'kode_rekening' => $p['editKodeRek'] .".". $id,
-            'kode_kegiatan' => $p['editIdKegRekening'],
-            'uraian_rekening' => $p['editNamaRek'],
-            'triwulan_1' => $r1,
-            'triwulan_2' => $r2,
-            'triwulan_3' => $r3,
-            'triwulan_4' => $r4
-        );
-        $kodeKeg = $p['editIdKegRekening'];
-        $kodeIns = $p['editIdInsRekening'];
-        $mainID = $p['editIdRekening'];
-        $query = $this->ProgramModel->EditDataRekening('tb_rekening', $data, $mainID);
-        if ($query != null) {
-            $this->session->set_flashdata('msgRekening', 'Berhasil Edit rekening');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
-        } else {
-            $this->session->set_flashdata('msgRekening', 'Gagal Edit rekening, segera hubungi admin');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
-        }
-    }
-    
     public function HapusRekening($id, $kodeKeg, $kodeIns)
     {
         $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $id);
@@ -288,15 +277,44 @@ class ProgramCtrl extends CI_controller
     }
     
 
-    private function generateKodeRekening($kodePatokan,$kodeKegiatan)
+    private function generateKodeRekening($kodePatokan,$kodeKegiatan,$kodeProgram,$kodeInstansi,$kodeRekening = NULL)
     {
-        $query = $this->db->select_max('kode_rekening')->from('tb_rekening')->where('kode_patokan',$kodePatokan)->where('kode_kegiatan',$kodeKegiatan)->get();
-        $getRek = $query->row();
-        $kodeRek = $getRek->kode_rekening;
-        $potong = substr($kodeRek, 7);
-        $res = $potong+1;
-        $result = str_pad($res, 2, "0", STR_PAD_LEFT);
-        return $result;
+        if ($kodeRekening == "") {
+            $query = $this->db->select_max('kode_rekening')->from('tb_rekening')
+                                ->where('kode_patokan',$kodePatokan)
+                                ->where('kode_kegiatan',$kodeKegiatan)
+                                ->where('kode_program',$kodeProgram)
+                                ->where('kode_instansi',$kodeInstansi)
+                                ->get();
+            $getRek = $query->row();
+            $kodeRek = $getRek->kode_rekening; // if(null):null ? 5.1.1.01
+            $potong = substr($kodeRek, -2); // 01
+            $tambah = $potong+1; // 02
+            $pad = str_pad($tambah, 2, "0", STR_PAD_LEFT); //02
+            $result = $kodePatokan.".".$pad;
+            return $result;
+        }else {
+            $currentKode = substr($kodeRekening, 0, -2);
+            $kodeID = substr($kodeRekening, -2);
+            if ($kodePatokan == $currentKode) {
+                $result = $kodePatokan;
+                return $result;
+            } else {
+                $query = $this->db->select_max('kode_rekening')->from('tb_rekening')
+                    ->where('kode_patokan', $kodePatokan)
+                    ->where('kode_kegiatan', $kodeKegiatan)
+                    ->where('kode_program', $kodeProgram)
+                    ->where('kode_instansi', $kodeInstansi)
+                    ->get();
+                $getRek = $query->row();
+                $kodeRek = $getRek->kode_rekening; // if(null):null ? 5.1.1.01
+                $potong = substr($kodeRek, -2); // 01
+                $tambah = $potong + 1; // 02
+                $pad = str_pad($tambah, 2, "0", STR_PAD_LEFT); //02
+                $result = $kodePatokan . "." . $pad;
+                return $result;
+            }
+        }
     }
 
     //==============================================================================>>
@@ -306,6 +324,54 @@ class ProgramCtrl extends CI_controller
     {
         header("Content-Type: application/json");
         echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$idRekening,$kodeRekening,$kodeKegiatan);
+    }
+
+    public function TambahDetailRekening()
+    {
+        $p = $this->input->post();
+        $id = $this->generateKodeDetailRekening($p['KodeRekeningDetailRekening'], $p['IdRekening']);
+        $data = array(
+            'kode_detail_rekening' => $p['KodeRekeningDetailRekening'] .".". $id,
+            'kode_instansi' => $p['KodeInstansiDetailRekening'],
+            'kode_program' => $p['KodeProgramDetailRekening'],
+            'kode_kegiatan' => $p['KodeKegiatanDetailRekening'],
+            'kode_rekening' => $p['KodeRekeningDetailRekening'],
+            'jenis' => $p['addJenis'],
+            'uraian' => $p['addUraian'],
+            'sasaran' => $p['addSasaran'],
+            'lokasi' => $p['addLokasi'],
+            'dana' => $p['addDana']
+        );
+        $query = $this->ProgramModel->ActionInsert('tb_detail_rekening',$data);
+        $kodeKeg = $p['KodeKegiatanDetailRekening'];
+        $kodeRek = $p['KodeRekeningDetailRekening'];
+        $kodeIns = $p['KodeInstansiDetailRekening'];
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil tambah detail');
+            $this->session->set_flashdata('DetailRekening', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        } else {
+            $this->session->set_flashdata('fail', 'Gagal tambah detail, segera hubungi admin');
+            $this->session->set_flashdata('DetailRekening', $kodeKeg);
+            redirect('ProgramCtrl/index/' . $kodeIns);
+        }
+    }
+    public function ApiDataKegiatan($kodeKegiatan,$kodeInstansi)
+    {
+        $query = $this->db->select('nama_kegiatan')->from('tb_kegiatan')->where('kode_kegiatan',$kodeKegiatan)->where('kode_instansi',$kodeInstansi)->get()->result();
+        echo json_encode($query);
+    }
+    
+
+    public function generateKodeDetailRekening($kodeRekening,$idRekening)
+    {
+        $query = $this->db->select_max('kode_detail_rekening')->from('tb_detail_rekening')->where('kode_rekening', $idRekening)->get();
+        $getKode = $query->row();
+        $KodeRek = $getKode->kode_detail_rekening; //if(null): null ? 5.1.1.01.01
+        $potong = substr($KodeRek, 9); // if(null): 1 ? 2
+        $tambah = $potong + 1;
+        $result = str_pad($tambah, 2, "0", STR_PAD_LEFT); //01
+        return $result;
     }
     
 }

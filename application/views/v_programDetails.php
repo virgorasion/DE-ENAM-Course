@@ -42,23 +42,23 @@ $dataModal['patokan'] = $patokan;
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="tab-nav">
-						<li class="tabRekapitulasi">
+						<li id="tabRekapProgram" class="tabRekapitulasi">
 							<a href="#nav-tab-program-1" data-toggle="tab">
 								<i class="fa fa-history"></i> Rekapitulasi</a>
 						</li>
-						<li class="tabProgram active">
+						<li id="tabProgram" class="tabProgram active">
 							<a href="#nav-tab-program-2" data-toggle="tab">
 								<i class="fa fa-edit"></i>Program</a>
 						</li>
-						<li class="tabKodeRekening hidden">
+						<li id="tabKodeRekening" class="tabKodeRekening hidden">
 							<a href="#nav-tab-program-3" data-toggle="tab">
 								<i class="fa fa-edit"></i>Kode Rekening</a>
 						</li>
-						<li class="tabCetak">
+						<li id="tabCetakProgram" class="tabCetak">
 							<a href="#nav-tab-program-4" data-toggle="tab">
 								<i class="fa fa-edit"></i> Cetak</a>
 						</li>
-						<li class="tabValidasi">
+						<li id="tabValidaiProgram" class="tabValidasi">
 							<a href="#nav-tab-program-5" data-toggle="tab">
 								<i class="fa fa-edit"></i> Validasi</a>
 						</li>
@@ -79,8 +79,7 @@ $dataModal['patokan'] = $patokan;
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
-												Data</a>
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary">Tambah Data</a>
 										</div>
 									</div>
 								</div>
@@ -182,8 +181,7 @@ $dataModal['patokan'] = $patokan;
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAddRekening" id="btnAddRekening" class="btn btn-primary">
-											Tambah Data</a>
+											<a name="btnAddRekening" id="btnAddRekening" class="btn btn-primary">Tambah Data</a>
 										</div>
 									</div>
 								</div>

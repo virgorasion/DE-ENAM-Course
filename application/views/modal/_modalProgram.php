@@ -1,6 +1,6 @@
 <!-- Start Modal Tambah Program -->
 <?php if ($_SESSION['hakAkses'] != 3) { ?>
-<div class="modal fade" id="">
+<div class="modal fade" id="modal-tambah">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -190,8 +190,8 @@
 <!-- /.modal -->
 
 <?php if($_SESSION['hakAkses'] != 2){?>
-<!-- Start Modal Tambah Rekening -->
-<div class="modal fade" id="modalAddRekening">
+<!-- Start Modal Action Rekening -->
+<div class="modal fade" id="modalRekening">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -199,7 +199,7 @@
 					<span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">Tambah Rekening</h4>
 			</div>
-			<form id="formTambahRekening" method="post" action="<?= site_url('ProgramCtrl/TambahDataRekening') ?>">
+			<form id="formActionRekening" method="post" action="<?= site_url('ProgramCtrl/ActionRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="addKodeRek">Jenis Pengeluaran</label>
@@ -213,7 +213,7 @@
 					</div>
 					<div class="form-group">
 						<label for="AddNamaRek">Nama Uraian</label>
-						<input type="text" name="AddNamaRek" id="AddNamaRek" class="form-control" placeholder="">
+						<input type="text" name="addNamaRek" id="addNamaRek" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="AddT1">T1</label>
@@ -232,8 +232,12 @@
 						<input type="text" name="AddT4" id="AddT4" class="form-control inputMask" placeholder="-">
 					</div>
 				</div>
-				<input type="hidden" name="addIdKegRekening" id="addIdKegRekening" value="" />
-				<input type="hidden" name="addIdInsRekening" id="addIdInsRekening" value="" />
+				<input type="hidden" name="actionTypeRekening" id="actionTypeRekening" value="" />
+				<input type="hidden" name="IDRekening" id="IDRekening" value="" />
+				<input type="hidden" name="KodeKegiatanRekening" id="KodeKegiatanRekening" value="" />
+				<input type="hidden" name="KodeInstansiRekening" id="KodeInstansiRekening" value="" />
+				<input type="hidden" name="KodeProgramRekening" id="KodeProgramRekening" value="" />
+				<input type="hidden" name="KodeRekeningRekening" id="KodeRekeningRekening" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>
@@ -248,69 +252,8 @@
 <?php } ?>
 
 <?php if ($_SESSION['hakAkses'] != 2) { ?>
-<!-- Start Modal Edit Rekening -->
-<div class="modal fade" id="modalEditRekening">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Edit Rekening</h4>
-			</div>
-			<form id="formEditRekening" method="post" action="<?= site_url('ProgramCtrl/EditRekening') ?>">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="editKodeRek">Jenis Pengeluaran</label>
-						<select class="form-control" name="editKodeRek" id="editKodeRek">
-							<?php foreach ($patokan as $item) { ?>
-							<option value="<?= $item->kode_patokan ?>">
-								<?= $item->nama ?>
-							</option>
-							<?php 
-				} ?>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="editNamaRek">Nama Uraian</label>
-						<input type="text" name="editNamaRek" id="editNamaRek" class="form-control" placeholder="">
-					</div>
-					<div class="form-group">
-						<label for="editT1">T1</label>
-						<input type="text" name="editT1" id="editT1" class="form-control inputMask" placeholder="-">
-					</div>
-					<div class="form-group">
-						<label for="editT2">T2</label>
-						<input type="text" name="editT2" id="editT2" class="form-control inputMask" placeholder="-">
-					</div>
-					<div class="form-group">
-						<label for="editT3">T3</label>
-						<input type="text" name="editT3" id="editT3" class="form-control inputMask" placeholder="-">
-					</div>
-					<div class="form-group">
-						<label for="editT4">T4</label>
-						<input type="text" name="editT4" id="editT4" class="form-control inputMask" placeholder="-">
-					</div>
-				</div>
-				<input type="hidden" name="editIdRekening" id="editIdRekening" />
-				<input type="hidden" name="editIdKegRekening" id="editIdKegRekening" />
-				<input type="hidden" name="editIdInsRekening" id="editIdInsRekening" />
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
-					<button type="submit" class="btn btn-primary">Simpan</button>
-				</div>
-			</form>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-<?php 
-} ?>
-
-<?php if ($_SESSION['hakAkses'] != 2) { ?>
 <!-- Start Modal Action Detail Rekening -->
-<div class="modal fade" id="modal-tambah">
+<div class="modal fade" id="modalDetailRekening">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -318,7 +261,7 @@
 					<span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">Edit Rekening</h4>
 			</div>
-			<form class="form-horizontal">
+			<form id="FormDetailRekening" class="form-horizontal" method="POST" action="<?=site_url('ProgramCtrl/TambahDetailRekening')?>">
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Jenis</label>
@@ -368,6 +311,12 @@
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
+					<input type="hidden" id="KodeInstansiDetailRekening" name="KodeInstansiDetailRekening">
+					<input type="hidden" id="KodeProgramDetailRekening" name="KodeProgramDetailRekening">
+					<input type="hidden" id="KodeKegiatanDetailRekening" name="KodeKegiatanDetailRekening">
+					<input type="hidden" id="KodeRekeningDetailRekening" name="KodeRekeningDetailRekening">
+					<input type="hidden" id="MainIdDetailRekening" name="MainIdDetailRekening">
+					<input type="hidden" id="actionTypeDetailRekening" name="actionTypeDetailRekening">
 					<button type="submit" class="btn btn-default">Cancel</button>
 					<button type="submit" class="btn btn-info pull-right">Sign in</button>
 				</div>

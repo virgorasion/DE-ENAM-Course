@@ -16,7 +16,7 @@ class ProgramModel extends CI_model
         return $this->db->get_where($table, array('id' => $id));
     }
 
-    public function InsertProgram($table,$data)
+    public function ActionInsert($table,$data)
     {
         return $this->db->insert($table,$data);
     }
@@ -64,12 +64,6 @@ class ProgramModel extends CI_model
         $this->db->where('id', $where);
         return $this->db->update($table,$data);
     }
-
-    public function insertKegiatan($table,$data)
-    {
-        return $this->db->insert($table,$data);
-    }
-    
     //==============================================================================>>
     // Coding untuk menu tab Rekening
 
@@ -106,11 +100,6 @@ class ProgramModel extends CI_model
         return $this->datatables->generate();
     }
 
-    public function InsertDataRekening($table,$data)
-    {
-        return $this->db->insert($table,$data);
-    }
-    
     public function getPatokan()
     {
         return $this->db->select('*')->from('tb_patokan_rekening')->get()->result();
@@ -129,12 +118,12 @@ class ProgramModel extends CI_model
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function getDetailRekening($table,$idRekening,$kodeRekening,$kodeKegiatan)
+    public function getDetailRekening($table,$kodeRekening,$kodeKegiatan)
     {
         $this->datatables->select("tb_detail_rekening.*");
         $this->datatables->from('tb_detail_rekening');
-        $this->datatables->join('tb_rekening', 'tb_rekening.id = tb_detail_rekening.id_rekening');
-        $this->datatables->where('tb_detail_rekening.id_rekening',$idRekening);
+        $this->datatables->join('tb_rekening', 'tb_rekening.kode_rekening = tb_detail_rekening.kode_rekening');
+        $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRekening="$3" data-kodeKeg="$9"><i class="fa fa-eye"></i></a>
             <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-rekening="$3" data-patokan="$2" data-uraian="$4" data-t1="$5" data-t2="$6" data-t3="$7" data-t4="$8"><i class="fa fa-pencil"></i></a> 
