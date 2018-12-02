@@ -262,17 +262,23 @@ class ProgramCtrl extends CI_controller
         }
     }
 
-    public function HapusRekening($id, $kodeKeg, $kodeIns)
+    public function HapusRekening($idRekening, $kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
-        $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $id);
+        $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $idRekening);
         if ($query != null) {
-            $this->session->set_flashdata('msgRekening', 'Berhasil Edit rekening');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('succ', 'Berhasil hapus rekening');
+            $this->session->set_flashdata('Rekening_Direct', "Direction");
+            $this->session->set_flashdata('Rekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('Rekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Rekening_KodeKegiatan', $kodeKegiatan);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('msgRekening', 'Gagal Edit rekening, segera hubungi admin');
-            $this->session->set_flashdata('kodeKegiatan', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('fail', 'Gagal hapus rekening, segera hubungi admin');
+            $this->session->set_flashdata('Rekening_Direct', "Direction");
+            $this->session->set_flashdata('Rekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('Rekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Rekening_KodeKegiatan', $kodeKegiatan);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
     
@@ -320,42 +326,87 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function DataDetailRekening($idRekening,$kodeRekening,$kodeKegiatan) //Json DetailRekekning
+    public function DataDetailRekening($kodeRekening) //Json DetailRekekning
     {
         header("Content-Type: application/json");
-        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$idRekening,$kodeRekening,$kodeKegiatan);
+        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$kodeRekening);
     }
 
     public function TambahDetailRekening()
     {
         $p = $this->input->post();
-        $id = $this->generateKodeDetailRekening($p['KodeRekeningDetailRekening'], $p['IdRekening']);
-        $data = array(
-            'kode_detail_rekening' => $p['KodeRekeningDetailRekening'] .".". $id,
-            'kode_instansi' => $p['KodeInstansiDetailRekening'],
-            'kode_program' => $p['KodeProgramDetailRekening'],
-            'kode_kegiatan' => $p['KodeKegiatanDetailRekening'],
-            'kode_rekening' => $p['KodeRekeningDetailRekening'],
-            'jenis' => $p['addJenis'],
-            'uraian' => $p['addUraian'],
-            'sasaran' => $p['addSasaran'],
-            'lokasi' => $p['addLokasi'],
-            'dana' => $p['addDana']
-        );
-        $query = $this->ProgramModel->ActionInsert('tb_detail_rekening',$data);
-        $kodeKeg = $p['KodeKegiatanDetailRekening'];
-        $kodeRek = $p['KodeRekeningDetailRekening'];
-        $kodeIns = $p['KodeInstansiDetailRekening'];
+        $kodeInstansi = $p['KodeInstansiDetailRekening'];
+        $kodeProgram = $p['KodeProgramDetailRekening'];
+        $kodeKegiatan = $p['KodeKegiatanDetailRekening'];
+        $kodeRekening = $p['KodeRekeningDetailRekening'];
+        if ($p['actionTypeDetailRekening'] == "add") {
+            $id = $this->generateKodeDetailRekening($p['KodeRekeningDetailRekening'], $p['IdRekening']);
+            $data = array(
+                'kode_detail_rekening' => $p['KodeRekeningDetailRekening'] .".". $id,
+                'kode_instansi' => $p['KodeInstansiDetailRekening'],
+                'kode_program' => $p['KodeProgramDetailRekening'],
+                'kode_kegiatan' => $p['KodeKegiatanDetailRekening'],
+                'kode_rekening' => $p['KodeRekeningDetailRekening'],
+                'jenis' => $p['addJenis'],
+                'uraian' => $p['addUraian'],
+                'sasaran' => $p['addSasaran'],
+                'lokasi' => $p['addLokasi'],
+                'dana' => $p['addDana']
+            );
+            $query = $this->ProgramModel->ActionInsert('tb_detail_rekening',$data);
+        }else {
+            $data = array(
+                'jenis' => $p['addJenis'],
+                'uraian' => $p['addUraian'],
+                'sasaran' => $p['addSasaran'],
+                'lokasi' => $p['addLokasi'],
+                'dana' => $p['addDana']
+            );
+            $mainID = $p['MainIdDetailRekening'];
+            $query = $this->ProgramModel->UpdateDetailRekening("tb_detail_rekening", $data, $mainID);
+        }
         if ($query != null) {
             $this->session->set_flashdata('succ', 'Berhasil tambah detail');
-            $this->session->set_flashdata('DetailRekening', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('DetailRekening_Direct', "Direction");
+            $this->session->set_flashdata('DetailRekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('DetailRekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('DetailRekening_KodeKegiatan', $kodeKegiatan);
+            $this->session->set_flashdata('DetailRekening_KodeRekening', $kodeRekening);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
             $this->session->set_flashdata('fail', 'Gagal tambah detail, segera hubungi admin');
-            $this->session->set_flashdata('DetailRekening', $kodeKeg);
-            redirect('ProgramCtrl/index/' . $kodeIns);
+            $this->session->set_flashdata('DetailRekening_Direct', "Direction");
+            $this->session->set_flashdata('DetailRekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('DetailRekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('DetailRekening_KodeKegiatan', $kodeKegiatan);
+            $this->session->set_flashdata('DetailRekening_KodeRekening', $kodeRekening);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
+
+    public function HapusDetailRekening($mainID, $kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening)
+    {
+        $query = $this->ProgramModel->DeleteDataRekening("tb_detail_rekening", $mainID);
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil hapus detail');
+            $this->session->set_flashdata('DetailRekening_Direct', "Direction");
+            $this->session->set_flashdata('DetailRekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('DetailRekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('DetailRekening_KodeKegiatan', $kodeKegiatan);
+            $this->session->set_flashdata('DetailRekening_KodeRekening', $kodeRekening);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('fail', 'Gagal hapus detail, segera hubungi admin');
+            $this->session->set_flashdata('DetailRekening_Direct', "Direction");
+            $this->session->set_flashdata('DetailRekening_KodeInstansi', $kodeInstansi);
+            $this->session->set_flashdata('DetailRekening_KodeProgram', $kodeProgram);
+            $this->session->set_flashdata('DetailRekening_KodeKegiatan', $kodeKegiatan);
+            $this->session->set_flashdata('DetailRekening_KodeRekening', $kodeRekening);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
+    
+
     public function ApiDataKegiatan($kodeKegiatan,$kodeInstansi)
     {
         $query = $this->db->select('nama_kegiatan')->from('tb_kegiatan')->where('kode_kegiatan',$kodeKegiatan)->where('kode_instansi',$kodeInstansi)->get()->result();

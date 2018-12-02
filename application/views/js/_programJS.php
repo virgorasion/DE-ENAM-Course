@@ -109,8 +109,8 @@
 	return tableRekening;
 	}
 
-	//Fungsi: untuk menggenerate table Rekening secara serverSide
-	function funcTableDetailRekening(idRekening, kodeRekening, kodeKegiatan) {
+	//Fungsi: Generate Table Detail Rekening
+	function funcTableDetailRekening(kodeRekening) {
 		tableDetailRekening = $("#tableDetailRekening").DataTable({
 			initComplete: function() {
 				var api = this.api();
@@ -125,7 +125,7 @@
 			},
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+idRekening+"/"+kodeRekening+"/"+kodeKegiatan, "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeRekening, "type": "POST"},
 					columns: [
 						{"data": null,
 							"orderable": false,
@@ -194,9 +194,20 @@
 } ?>
 
 	// Fungsi: Redirect ke Detail Rekening
-	<?php if (@$_SESSION['DetailRekening'] != null) { ?>
-		kodeRekening = "<?=@$_SESSION['DetailRekening']?>";
-
+	<?php if (@$_SESSION['DetailRekening_Direct'] != null) { ?>
+		kodeInstansi = "<?= @$_SESSION['DetailRekening_KodeInstansi'] ?>";
+		kodeProgram = "<?= @$_SESSION['DetailRekening_KodeProgram'] ?>";
+		kodeKegiatan = "<?= @$_SESSION['DetailRekening_KodeKegiatan'] ?>";
+		kodeRekening = "<?= @$_SESSION['DetailRekening_KodeRekening'] ?>";
+		$("#nav-tab-program-3").removeClass("hidden");
+		$("#nav-tab-program-2").removeClass("active");
+		$("#nav-tab-program-3").addClass("active");
+		$("#tabKodeRekening").removeClass("hidden");
+		$("#tabProgram").removeClass("active");
+		$("#tabKodeRekening").addClass("active");
+		$("#boxDetailRekening").removeClass("hidden");
+		funcTableRekening(kodeKegiatan);
+		funcTableDetailRekening(kodeRekening);
 	<?php } ?>
 
 	//Fungsi: untuk memunculkan data dan menampilkan box kegiatan & toggle
@@ -235,7 +246,7 @@
 	if ($('#boxDetailRekening').hasClass('hidden')) {
 			$("#boxDetailRekening").removeClass("hidden");
 			$("#boxDetailRekening").slideDown();
-			funcTableDetailRekening(idRekening,kodeRekening,kodeKeg);
+			funcTableDetailRekening(kodeRekening);
 		}else {
 			$('#boxDetailRekening').slideDown(1000);
 			$('#boxDetailRekening').addClass('hidden');
@@ -243,7 +254,7 @@
 		}
 	});
 
-	// Fungsi: Add Detail Rekening
+	// Fungsi: Insert Detail Rekening
 	$("#btnTambahDetailRekening").click(function(){
 		$("#modalDetailRekening").modal('show');
 		$.ajax({
@@ -410,7 +421,7 @@
 
 	//Fungsi: untuk delete ketika btn delete di tableRekening di klik
 	$('#tableRekening').on('click', '.delete_data', function () {
-      var id = $(this).data('id');
+      var idRekening = $(this).data('id');
 	  var nama = $(this).data('nama');
       console.log(nama);
       // $item.find("input[id$='no']").val();
@@ -425,7 +436,31 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + id +"/"+ kodeKegiatan +"/"+ kodeInstansi;
+              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + idRekening +"/"+ kodeInstansi +"/"+ kodeProgram +"/"+ kodeKegiatan;
+            }
+          }
+        }
+      });
+    });
+
+	//Fungsi: Delete Data Detail Rekening
+	$('#tableDetailRekening').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var nama = $(this).data('uraian');
+      console.log(nama);
+      // $item.find("input[id$='no']").val();
+      // alert("hai");
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Anggaran Ini ?',
+        content: 'Anggaran ' + nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusDetailRekening/') ?>" + id +"/"+ kodeInstansi +"/"+ kodeProgram +"/"+ kodeKegiatan +"/"+ kodeRekening;
             }
           }
         }

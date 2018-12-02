@@ -42,7 +42,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">Form Login</p>
 
-    <form action="<?=site_url("Auth/login")?>" method="post">
+    <form action="<?=site_url('Auth/login')?>" method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" name="username" placeholder="Username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

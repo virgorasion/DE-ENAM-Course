@@ -107,36 +107,54 @@ class ProgramModel extends CI_model
     
     public function EditDataRekening($table, $data, $id)
     {
-        return $this->db->update($table,$data, array('id' => $id));
+        return $this->db->update($table,$data, array('id' => $id)); //Edit Rekening gabung dengan Detail Rekening
     }
 
     public function DeleteDataRekening($table, $id)
     {
-        return $this->db->delete($table, array('id' => $id));
+        return $this->db->delete($table, array('id' => $id)); //Delete Rekening gabung dengan Detail Rekening
     }
     
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function getDetailRekening($table,$kodeRekening,$kodeKegiatan)
+    public function getDetailRekening($table,$kodeRekening)
     {
-        $this->datatables->select("tb_detail_rekening.*");
+        $this->datatables->select("tb_detail_rekening.id,
+                                    tb_detail_rekening.kode_detail_rekening,
+                                    tb_detail_rekening.kode_rekening,
+                                    tb_detail_rekening.jenis,
+                                    tb_detail_rekening.uraian,
+                                    tb_detail_rekening.sub_uraian,
+                                    tb_detail_rekening.sasaran,
+                                    tb_detail_rekening.lokasi,
+                                    tb_detail_rekening.dana,
+                                    tb_detail_rekening.satuan,
+                                    tb_detail_rekening.volume,
+                                    tb_detail_rekening.harga,
+                                    tb_detail_rekening.total,
+                                    tb_detail_rekening.keterangan");
         $this->datatables->from('tb_detail_rekening');
         $this->datatables->join('tb_rekening', 'tb_rekening.kode_rekening = tb_detail_rekening.kode_rekening');
         $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
-            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRekening="$3" data-kodeKeg="$9"><i class="fa fa-eye"></i></a>
-            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-rekening="$3" data-patokan="$2" data-uraian="$4" data-t1="$5" data-t2="$6" data-t3="$7" data-t4="$8"><i class="fa fa-pencil"></i></a> 
-            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-nama="$4"><i class="fa fa-remove"></i></a>',
+            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$4" data-uraian="$5" data-sasaran="$7" data-lokasi="$8" data-dana="$9"><i class="fa fa-pencil"></i></a> 
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$5"><i class="fa fa-remove"></i></a>',
             'id,
             kode_detail_rekening,
-            tb_detail_rekening.id_rekening,
+            kode_rekening,
             jenis,
             uraian,
             sub_uraian,
-            sasaran');
+            sasaran,
+            lokasi,
+            dana,
+            satuan,
+            volume,
+            harga,
+            total,
+            keterangan');
         return $this->datatables->generate();
     }
     
-
 }
