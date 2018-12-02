@@ -1,6 +1,6 @@
 <!-- Start Modal Tambah Program -->
 <?php if ($_SESSION['hakAkses'] != 3) { ?>
-<div class="modal fade" id="">
+<div class="modal fade" id="modal-tambah">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -253,7 +253,7 @@
 
 <?php if ($_SESSION['hakAkses'] != 2) { ?>
 <!-- Start Modal Action Detail Rekening -->
-<div class="modal fade" id="modal-tambah">
+<div class="modal fade" id="modalDetailRekening">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -280,6 +280,12 @@
 						<label for="addUraian" class="col-sm-2 control-label">Uraian</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="addUraian" name="addUraian" placeholder="Uraian">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addUraian" class="col-sm-2 control-label">Sub Uraian</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addSubUraian" name="addSubUraian" placeholder="Sub Uraian">
 						</div>
 					</div>
 					<div class="form-group">

@@ -349,21 +349,33 @@ class ProgramCtrl extends CI_controller
                 'kode_rekening' => $p['KodeRekeningDetailRekening'],
                 'jenis' => $p['addJenis'],
                 'uraian' => $p['addUraian'],
+                'sub_uraian' => $p['addSubUraian'],
                 'sasaran' => $p['addSasaran'],
                 'lokasi' => $p['addLokasi'],
-                'dana' => $p['addDana']
+                'dana' => $p['addDana'],
+                'satuan' => $p['addSatuan'],
+                'volume' => $p['addVolume'],
+                'harga' => $p['addHarga'],
+                'total' => $p['addTotal'],
+                'keterangan' => $p['addKeterangan']
             );
             $query = $this->ProgramModel->ActionInsert('tb_detail_rekening',$data);
         }else {
             $data = array(
                 'jenis' => $p['addJenis'],
                 'uraian' => $p['addUraian'],
+                'sub_uraian' => $p['addSubUraian'],
                 'sasaran' => $p['addSasaran'],
                 'lokasi' => $p['addLokasi'],
-                'dana' => $p['addDana']
+                'dana' => $p['addDana'],
+                'satuan' => $p['addSatuan'],
+                'volume' => $p['addVolume'],
+                'harga' => $p['addHarga'],
+                'total' => $p['addTotal'],
+                'keterangan' => $p['addKeterangan']
             );
             $mainID = $p['MainIdDetailRekening'];
-            $query = $this->ProgramModel->UpdateDetailRekening("tb_detail_rekening", $data, $mainID);
+            $query = $this->ProgramModel->EditDataRekening("tb_detail_rekening", $data, $mainID);
         }
         if ($query != null) {
             $this->session->set_flashdata('succ', 'Berhasil tambah detail');

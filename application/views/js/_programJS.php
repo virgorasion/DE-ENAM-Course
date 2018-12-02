@@ -347,6 +347,8 @@
 		$('#formActionRekening').find('#KodeRekeningRekening').val(rekeningID);
 	})
 
+	//Fungsi: Edit Detail Rekening
+
 	//Fungsi: untuk delete ketika btn delete di tableProgram di klik
 	$('#tableProgram').on('click', '#btnDelete', function () {
       var $item = $(this).closest("tr");
