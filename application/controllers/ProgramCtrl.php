@@ -356,7 +356,7 @@ class ProgramCtrl extends CI_controller
                 'satuan' => $p['addSatuan'],
                 'volume' => $p['addVolume'],
                 'harga' => $p['addHarga'],
-                'total' => $p['addTotal'],
+                'total' => str_replace(".", "",$p['addTotal']),
                 'keterangan' => $p['addKeterangan']
             );
             $query = $this->ProgramModel->ActionInsert('tb_detail_rekening',$data);

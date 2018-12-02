@@ -346,7 +346,7 @@
 					<input type="hidden" id="MainIdDetailRekening" name="MainIdDetailRekening">
 					<input type="hidden" id="actionTypeDetailRekening" name="actionTypeDetailRekening">
 					<button type="submit" class="btn btn-default">Cancel</button>
-					<button type="submit" class="btn btn-info pull-right">Sign in</button>
+					<button type="submit" class="btn btn-info pull-right">Submit</button>
 				</div>
 				<!-- /.box-footer -->
 			</form>

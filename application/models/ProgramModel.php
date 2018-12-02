@@ -121,15 +121,13 @@ class ProgramModel extends CI_model
     public function getDetailRekening($table,$kodeRekening)
     {
         $this->datatables->select("tb_detail_rekening.id,
-                                    tb_detail_rekening.kode_detail_rekening,
-                                    tb_detail_rekening.kode_rekening,
                                     tb_detail_rekening.jenis,
                                     tb_detail_rekening.uraian,
                                     tb_detail_rekening.sub_uraian,
                                     tb_detail_rekening.sasaran,
                                     tb_detail_rekening.lokasi,
-                                    tb_detail_rekening.dana,
                                     tb_detail_rekening.satuan,
+                                    tb_detail_rekening.dana,
                                     tb_detail_rekening.volume,
                                     tb_detail_rekening.harga,
                                     tb_detail_rekening.total,
@@ -138,18 +136,16 @@ class ProgramModel extends CI_model
         $this->datatables->join('tb_rekening', 'tb_rekening.kode_rekening = tb_detail_rekening.kode_rekening');
         $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
-            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$4" data-uraian="$5" data-sasaran="$7" data-lokasi="$8" data-dana="$9"><i class="fa fa-pencil"></i></a> 
+            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$2" data-uraian="$3" data-suburaian="$4" data-sasaran="$5" data-lokasi="$6" data-dana="$7" data-satuan="$8" data-volume="$9" data-harga="$10" data-total="$11" data-ket="$12"><i class="fa fa-pencil"></i></a> 
             <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$5"><i class="fa fa-remove"></i></a>',
             'id,
-            kode_detail_rekening,
-            kode_rekening,
             jenis,
             uraian,
             sub_uraian,
             sasaran,
             lokasi,
-            dana,
             satuan,
+            dana,
             volume,
             harga,
             total,
