@@ -79,7 +79,7 @@ $dataModal['patokan'] = $patokan;
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAdd" id="btnAdd" class="btn btn-primary">Tambah Data</a>
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah Data</a>
 										</div>
 									</div>
 								</div>

@@ -513,5 +513,12 @@
 		})
 	}
 
+	//Fungsi: Insert Detail Rekening input Total Real-Time
+	$("#addVolume, #addHarga").keyup(function(){
+		var volume = $("#addVolume").val();
+		var harga = $("#addHarga").val();
+		$("#addTotal").val(volume * harga);
+	})
+
 
 </script>

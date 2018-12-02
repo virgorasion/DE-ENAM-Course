@@ -1,6 +1,6 @@
 <!-- Start Modal Tambah Program -->
 <?php if ($_SESSION['hakAkses'] != 3) { ?>
-<div class="modal fade" id="modal-tambah">
+<div class="modal fade" id="">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -253,7 +253,7 @@
 
 <?php if ($_SESSION['hakAkses'] != 2) { ?>
 <!-- Start Modal Action Detail Rekening -->
-<div class="modal fade" id="modalDetailRekening">
+<div class="modal fade" id="modal-tambah">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -266,38 +266,32 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Jenis</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="addJenis" name="addJenis" placeholder="Email">
-						</div>
-						<div class="col-md-1"></div>
-					<div class="form-check form-check-inline">
-						<label class="form-check-label">
-							Lampiran <input class="form-check-input" type="checkbox" name="addLampiran" id="addLampiran" value="1">
-						</label>
-					</div>
+							<input type="text" class="form-control" id="addJenis" name="addJenis" placeholder="Jenis">
+						</div>					
 					</div>
 					
 					<div class="form-group">
 						<label for="addKegiatan" class="col-sm-2 control-label">Kegiatan</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addKegiatan" name="addKegiatan" placeholder="Password">
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addKegiatan" name="addKegiatan" placeholder="Kegiatan">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addUraian" class="col-sm-2 control-label">Uraian</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addUraian" name="addUraian" placeholder="Password">
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addUraian" name="addUraian" placeholder="Uraian">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addSasaran" class="col-sm-2 control-label">Sasaran</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addSasaran" name="addSasaran" placeholder="Password">
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addSasaran" name="addSasaran" placeholder="Sasaran">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addLokasi" class="col-sm-2 control-label">Lokasi</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addLokasi" name="addLokasi" placeholder="Password">
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addLokasi" name="addLokasi" placeholder="Lokasi">
 						</div>
 					</div>
 					<div class="form-group">
@@ -306,6 +300,34 @@
 							<select class="form-control" name="addDana" id="addDana">
 								<option value="1">APBD</option>
 							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Satuan</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="addSatuan" name="addSatuan" placeholder="Satuan">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Volume</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="addVolume" name="addVolume" placeholder="Volume">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Harga</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="addHarga" name="addHarga" placeholder="Harga">
+						</div>
+						<label for="inputEmail3" class="col-sm-1 control-label">Total</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control inputMask" id="addTotal" name="addTotal" placeholder="Total" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addUraian" class="col-sm-2 control-label">Keterangan</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="addKeterangan" name="addKeterangan" placeholder="Keterangan">
 						</div>
 					</div>
 				</div>
