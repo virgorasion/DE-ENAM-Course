@@ -305,6 +305,7 @@
 						<div class="col-sm-4">
 							<select class="form-control" name="addDana" id="addDana">
 								<option value="1">APBD</option>
+								<option value="2">APBN</option>
 							</select>
 						</div>
 					</div>

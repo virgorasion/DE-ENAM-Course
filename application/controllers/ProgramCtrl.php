@@ -225,7 +225,8 @@ class ProgramCtrl extends CI_controller
                 'triwulan_1' => $r1,
                 'triwulan_2' => $r2,
                 'triwulan_3' => $r3,
-                'triwulan_4' => $r4
+                'triwulan_4' => $r4,
+                'total' => $r1+$r2+$r3+$r4
             );
             $query = $this->ProgramModel->ActionInsert('tb_rekening', $data);
         }else{
@@ -240,7 +241,8 @@ class ProgramCtrl extends CI_controller
                 'triwulan_1' => $r1,
                 'triwulan_2' => $r2,
                 'triwulan_3' => $r3,
-                'triwulan_4' => $r4
+                'triwulan_4' => $r4,
+                'total' => $r1+$r2+$r3+$r4
             );
             $mainID = $p['IDRekening'];
             $query = $this->ProgramModel->EditDataRekening('tb_rekening', $data, $mainID);
@@ -343,10 +345,10 @@ class ProgramCtrl extends CI_controller
             $id = $this->generateKodeDetailRekening($p['KodeRekeningDetailRekening'], $p['IdRekening']);
             $data = array(
                 'kode_detail_rekening' => $p['KodeRekeningDetailRekening'] .".". $id,
-                'kode_instansi' => $p['KodeInstansiDetailRekening'],
-                'kode_program' => $p['KodeProgramDetailRekening'],
-                'kode_kegiatan' => $p['KodeKegiatanDetailRekening'],
-                'kode_rekening' => $p['KodeRekeningDetailRekening'],
+                'kode_instansi' => $kodeInstansi,
+                'kode_program' => $kodeProgram,
+                'kode_kegiatan' => $kodeKegiatan,
+                'kode_rekening' => $kodeRekening,
                 'jenis' => $p['addJenis'],
                 'uraian' => $p['addUraian'],
                 'sub_uraian' => $p['addSubUraian'],
@@ -371,7 +373,7 @@ class ProgramCtrl extends CI_controller
                 'satuan' => $p['addSatuan'],
                 'volume' => $p['addVolume'],
                 'harga' => $p['addHarga'],
-                'total' => $p['addTotal'],
+                'total' => str_replace(".", "", $p['addTotal']),
                 'keterangan' => $p['addKeterangan']
             );
             $mainID = $p['MainIdDetailRekening'];

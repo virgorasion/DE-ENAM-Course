@@ -34,10 +34,27 @@ class ProgramModel extends CI_model
 
     public function getDataKegiatan($kodeInstansi, $kodeProgram)
     {
-        $this->datatables->select('id,kode_instansi,kode_program,kode_kegiatan,nama_kegiatan,total_rekening,total_rinci,keterangan');
+        $this->datatables->select('id,kode_instansi,kode_program,kode_kegiatan,nama_kegiatan,total_rekening,keterangan,
+        (select FORMAT(SUM(total),0) from tb_rekening where tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) as total_rinci,
+        (select SUM(total) from tb_rekening where tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) as tot_rinci');
         $this->datatables->from('tb_kegiatan');
         $this->datatables->where('kode_instansi = "' . $kodeInstansi . '"');
         $this->datatables->where('kode_program = "' . $kodeProgram . '"');
+        //kode untuk mengubah label jika total & rinci tidak sama
+        function callback_label($total, $total_rinci)
+        {
+            if ($total == $total_rinci) {
+                return "label label-success";
+            } else {
+                return "label label-danger";
+            }
+        }
+        $this->datatables->add_column(
+            'total_rinci',
+            '<center><span class="$2" style="font-size:12px">$1</span></center>',
+            'total_rinci,
+            callback_label(tot_rekening,total_rinci)'
+        );
         $this->datatables->add_column('action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
             <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-program="$3" data-kode="$4" data-nama="$5" data-ket="$8"><i class="fa fa-pencil"></i></a> 
@@ -78,11 +95,24 @@ class ProgramModel extends CI_model
                                     tb_rekening.triwulan_3,
                                     tb_rekening.triwulan_4,
                                     tb_kegiatan.kode_kegiatan,
-                                    (tb_rekening.triwulan_1+tb_rekening.triwulan_2+tb_rekening.triwulan_3+tb_rekening.triwulan_4) as total,
-                                    tb_rekening.total_rinci');
+                                    tb_rekening.total,
+                                    (select SUM(total) from tb_detail_rekening where tb_detail_rekening.kode_rekening = tb_rekening.kode_rekening) as tot_rinci,
+                                    (select FORMAT(SUM(total),0) from tb_detail_rekening where tb_detail_rekening.kode_rekening = tb_rekening.kode_rekening) as total_rinci');
         $this->datatables->from('tb_rekening');
         $this->datatables->join('tb_kegiatan', 'tb_kegiatan.kode_kegiatan = tb_rekening.kode_kegiatan');
         $this->datatables->where('tb_rekening.kode_kegiatan', $kodeKegiatan);
+        //kode untuk mengubah label jika total & rinci tidak sama
+        function callback_label($total,$total_rinci){
+            if ($total == $total_rinci) {
+                return "label label-success";
+            }else{
+                return "label label-danger";
+            }
+        }
+        $this->datatables->add_column('total_rinci',
+        '<center><span class="$2" style="font-size:12px">$1</span></center>',
+        'total_rinci,
+        callback_label(total,tot_rinci)');
         $this->datatables->add_column(
             'action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRek="$3" data-kodeKeg="$9"><i class="fa fa-eye"></i></a>
@@ -105,11 +135,13 @@ class ProgramModel extends CI_model
         return $this->db->select('*')->from('tb_patokan_rekening')->get()->result();
     }
     
+    // Dipakai untuk edit rekening & detail rekening
     public function EditDataRekening($table, $data, $id)
     {
         return $this->db->update($table,$data, array('id' => $id)); //Edit Rekening gabung dengan Detail Rekening
     }
 
+    // Dipakai untuk edit rekening & detail rekening
     public function DeleteDataRekening($table, $id)
     {
         return $this->db->delete($table, array('id' => $id)); //Delete Rekening gabung dengan Detail Rekening
@@ -136,14 +168,14 @@ class ProgramModel extends CI_model
         $this->datatables->join('tb_rekening', 'tb_rekening.kode_rekening = tb_detail_rekening.kode_rekening');
         $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
-            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$2" data-uraian="$3" data-suburaian="$4" data-sasaran="$5" data-lokasi="$6" data-dana="$7" data-satuan="$8" data-volume="$9" data-harga="$10" data-total="$11" data-ket="$12"><i class="fa fa-pencil"></i></a> 
+            '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$2" data-uraian="$3" data-suburaian="$4" data-sasaran="$5" data-lokasi="$6" data-dana="$8" data-satuan="$7" data-volume="$9" data-harga="$10" data-total="$11" data-ket="$12"><i class="fa fa-pencil"></i></a> 
             <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$5"><i class="fa fa-remove"></i></a>',
             'id,
             jenis,
             uraian,
             sub_uraian,
-            sasaran,
             lokasi,
+            sasaran,
             satuan,
             dana,
             volume,

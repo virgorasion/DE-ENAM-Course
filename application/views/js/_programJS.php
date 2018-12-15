@@ -52,7 +52,7 @@
 						{"data": "nama_kegiatan"},
 						{"data": "keterangan"},
 						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
-						{"data": "total_rinci", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total_rinci", "orderabel": false, "searchable": false},
 						{"data": "action", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -94,7 +94,7 @@
 						{"data": "triwulan_3", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "triwulan_4", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "total", render: $.fn.dataTable.render.number(',', '.', '')},
-						{"data": "total_rinci", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total_rinci", "orderable": false, "searchable": false},
 						{"data": "action", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -271,7 +271,7 @@
 		$("#FormDetailRekening").find("#addSubUraian").val("");
 		$("#FormDetailRekening").find("#addSasaran").val("");
 		$("#FormDetailRekening").find("#addLokasi").val("");
-		$("#FormDetailRekening").find("#addDana").val("");
+		$("#FormDetailRekening").find("#addDana").val("1");
 		$("#FormDetailRekening").find("#addSatuan").val("");
 		$("#FormDetailRekening").find("#addVolume").val("");
 		$("#FormDetailRekening").find("#addHarga").val("");
@@ -360,6 +360,7 @@
 
 	//Fungsi: Edit Detail Rekening
 	$("#tableDetailRekening").on('click', '.edit_data', function(){
+		// mengubah action type menjadi edit
 		$("#FormDetailRekening").find("#actionTypeDetailRekening").val("edit");
 		var id = $(this).data('id');
 		var jenis = $(this).data('jenis');
@@ -373,6 +374,7 @@
 		var harga = $(this).data('harga');
 		var total = $(this).data('total');
 		var ket = $(this).data('ket');
+		console.log(uraian);
 		$.ajax({
 			url: "<?= site_url('ProgramCtrl/ApiDataKegiatan/') ?>"+kodeKegiatan+"/"+kodeInstansi,
 			type: "POST",
@@ -382,6 +384,8 @@
 			}
 		})
 		$("#modalDetailRekening").modal("show");
+		// harus menggunakan ID bukan KodeDetailRekening
+		$("#FormDetailRekening").find("#MainIdDetailRekening").val(id);
 		$("#FormDetailRekening").find("#addJenis").val(jenis);
 		$("#FormDetailRekening").find("#addUraian").val(uraian);
 		$("#FormDetailRekening").find("#addSubUraian").val(suburaian);
@@ -393,10 +397,10 @@
 		$("#FormDetailRekening").find("#addHarga").val(harga);
 		$("#FormDetailRekening").find("#addTotal").val(total);
 		$("#FormDetailRekening").find("#addKeterangan").val(ket);
-		$('#formActionRekening').find('#KodeKegiatanDetailRekening').val(kodeKegiatan);
-		$('#formActionRekening').find('#KodeInstansiDetailRekening').val(kodeInstansi);
-		$('#formActionRekening').find('#KodeProgramDetailRekening').val(kodeProgram);
-		$('#formActionRekening').find('#KodeRekeningDetailRekening').val(kodeRekening);
+		$('#FormDetailRekening').find('#KodeKegiatanDetailRekening').val(kodeKegiatan);
+		$('#FormDetailRekening').find('#KodeInstansiDetailRekening').val(kodeInstansi);
+		$('#FormDetailRekening').find('#KodeProgramDetailRekening').val(kodeProgram);
+		$('#FormDetailRekening').find('#KodeRekeningDetailRekening').val(kodeRekening);
 	})
 
 	//Fungsi: untuk delete ketika btn delete di tableProgram di klik
