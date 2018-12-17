@@ -224,11 +224,6 @@
 	$('#btnHidden').click(function(){
 		$('#boxDetail').fadeOut(1000);
 		$('#boxDetail').addClass('hidden');
-		if ($('.tabKodeRekening').hasClass('hidden')) {
-			//Emang Kosong kok :)
-		}else{
-			$('.tabKodeRekening').addClass('hidden');
-		}
 		tableKegiatan.destroy();
 	});
 
@@ -277,18 +272,6 @@
 		$("#FormDetailRekening").find("#KodeKegiatanDetailRekening").val(kodeKegiatan);
 		$("#FormDetailRekening").find("#KodeRekeningDetailRekening").val(kodeRekening);
 	})
-
-	//Fungsi: untuk menghilangkan box Kegiatan
-	$('#btnHidden').click(function(){
-		$('#boxDetailRekening').fadeOut(1000);
-		$('#boxDetailRekening').addClass('hidden');
-		if ($('.tabKodeRekening').hasClass('hidden')) {
-			//Emang Kosong kok :)
-		}else{
-			$('.tabKodeRekening').addClass('hidden');
-		}
-		tableKegiatan.destroy();
-	});
 
 	//Fungsi: untuk memunculkan data ketika btn edit di tableKegiatan diklik
     $('#tableKegiatan').on('click', '.edit_data', function(){
