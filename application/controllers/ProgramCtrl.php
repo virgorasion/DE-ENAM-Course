@@ -193,23 +193,20 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Coding untuk menu tab Rekening
 
-    public function DataAPIRekening($kodeKegiatan)
+    public function DataAPIRekening($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
         header('Content-Type: application/json');
-        echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeKegiatan);
+        echo $this->ProgramModel->getAllRekening('tb_rekening', $kodeInstansi, $kodeProgram, $kodeKegiatan);
     }
 
     public function ActionRekening()
     {
         $p = $this->input->post();
-        $t1 = explode('.',$p['AddT1']);
-        $r1 = implode('',$t1);
-        $t2 = explode('.',$p['AddT2']);
-        $r2 = implode('',$t2);
-        $t3 = explode('.',$p['AddT3']);
-        $r3 = implode('',$t3);
-        $t4 = explode('.',$p['AddT4']);
-        $r4 = implode('',$t4);
+
+        $r1 = str_replace(".","",$p['AddT1']);
+        $r2 = str_replace(".","",$p['AddT2']);
+        $r3 = str_replace(".","",$p['AddT3']);
+        $r4 = str_replace(".","",$p['AddT4']);
         $kodeInstansi = $p['KodeInstansiRekening'];
         $kodeProgram = $p['KodeProgramRekening'];
         $kodeKegiatan = $p['KodeKegiatanRekening'];
@@ -247,6 +244,7 @@ class ProgramCtrl extends CI_controller
             $mainID = $p['IDRekening'];
             $query = $this->ProgramModel->EditDataRekening('tb_rekening', $data, $mainID);
         }
+        $this->ProgramModel->SyncTotalRekening($kodeInstansi,$kodeProgram,$kodeKegiatan);
         if ($query != null) {
             $this->session->set_flashdata('succ', 'Berhasil menambah rekening');
             $this->session->set_flashdata('Rekening_Direct', "Direction");
@@ -328,10 +326,10 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function DataDetailRekening($kodeRekening) //Json DetailRekekning
+    public function DataDetailRekening($kodeInstansi,$kodeRekening) //Json DetailRekekning
     {
         header("Content-Type: application/json");
-        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$kodeRekening);
+        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening",$kodeInstansi,$kodeRekening);
     }
 
     public function TambahDetailRekening()
@@ -342,7 +340,7 @@ class ProgramCtrl extends CI_controller
         $kodeKegiatan = $p['KodeKegiatanDetailRekening'];
         $kodeRekening = $p['KodeRekeningDetailRekening'];
         if ($p['actionTypeDetailRekening'] == "add") {
-            $id = $this->generateKodeDetailRekening($p['KodeRekeningDetailRekening'], $p['IdRekening']);
+            $id = $this->generateKodeDetailRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening);
             $data = array(
                 'kode_detail_rekening' => $p['KodeRekeningDetailRekening'] .".". $id,
                 'kode_instansi' => $kodeInstansi,
@@ -379,6 +377,8 @@ class ProgramCtrl extends CI_controller
             $mainID = $p['MainIdDetailRekening'];
             $query = $this->ProgramModel->EditDataRekening("tb_detail_rekening", $data, $mainID);
         }
+        //untuk update total_rinci di tb_rekening
+        $this->ProgramModel->SyncTotalRinci($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening);
         if ($query != null) {
             $this->session->set_flashdata('succ', 'Berhasil tambah detail');
             $this->session->set_flashdata('DetailRekening_Direct', "Direction");
@@ -401,6 +401,8 @@ class ProgramCtrl extends CI_controller
     public function HapusDetailRekening($mainID, $kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening)
     {
         $query = $this->ProgramModel->DeleteDataRekening("tb_detail_rekening", $mainID);
+        //untuk update total_rekening di tb_instansi
+        $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         if ($query != null) {
             $this->session->set_flashdata('succ', 'Berhasil hapus detail');
             $this->session->set_flashdata('DetailRekening_Direct', "Direction");
@@ -428,9 +430,14 @@ class ProgramCtrl extends CI_controller
     }
     
 
-    public function generateKodeDetailRekening($kodeRekening,$idRekening)
+    public function generateKodeDetailRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
-        $query = $this->db->select_max('kode_detail_rekening')->from('tb_detail_rekening')->where('kode_rekening', $idRekening)->get();
+        $query = $this->db->select_max('kode_detail_rekening')->from('tb_detail_rekening')
+                        ->where('kode_rekening', $kodeRekening)
+                        ->where('kode_program', $kodeProgram)
+                        ->where('kode_kegiatan', $kodeKegiatan)
+                        ->where('kode_instansi', $kodeInstansi)
+                        ->get();
         $getKode = $query->row();
         $KodeRek = $getKode->kode_detail_rekening; //if(null): null ? 5.1.1.01.01
         $potong = substr($KodeRek, 9); // if(null): 1 ? 2

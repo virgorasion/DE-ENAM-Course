@@ -26,6 +26,7 @@
 		$('#boxDetail').fadeIn(1000);
 		$('#boxDetail').removeClass('hidden');
 		kodeInstansi = "<?= $kodeInstansi ?>";
+		console.log(kodeInstansi+"instansi");
 		// console.log(kodeProgram);
 		tableKegiatan = $("#tableKegiatan").DataTable({
 			initComplete: function() {
@@ -70,7 +71,7 @@
 	}
 
 	//Fungsi: untuk menggenerate table Rekening secara serverSide
-	function funcTableRekening(kodeKegiatan) {
+	function funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan) {
 		tableRekening = $("#tableRekening").DataTable({
 			initComplete: function() {
 				var api = this.api();
@@ -85,7 +86,7 @@
 			},
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/DataAPIRekening/') ?>"+kodeKegiatan, "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataAPIRekening/') ?>"+kodeInstansi+"/"+kodeProgram+"/"+kodeKegiatan, "type": "POST"},
 					columns: [
 						{"data": "kode_rekening"},
 						{"data": "uraian_rekening"},
@@ -110,7 +111,7 @@
 	}
 
 	//Fungsi: Generate Table Detail Rekening
-	function funcTableDetailRekening(kodeRekening) {
+	function funcTableDetailRekening(kodeInstansi,kodeRekening) {
 		tableDetailRekening = $("#tableDetailRekening").DataTable({
 			initComplete: function() {
 				var api = this.api();
@@ -121,11 +122,11 @@
 				});
 			},
 				oLanguage: {
-				sProcessing: 'Loading....'
+				sProcessing: 'Loading...'
 			},
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeRekening, "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeInstansi+"/"+kodeRekening, "type": "POST"},
 					columns: [
 						{"data": null,
 							"orderable": false,
@@ -147,11 +148,8 @@
 				var length = info.iLength;
 				var index = page * length + (iDisplayIndex + 1);
 				$('td:eq(0)', row).html(index);
-
 			}
-
 		});
-		// end setup datatables
 	return tableRekening;
 	}
 
@@ -189,7 +187,7 @@
 		$("#tabKodeRekening").removeClass("hidden");
 		$("#tabProgram").removeClass("active");
 		$("#tabKodeRekening").addClass("active");
-		funcTableRekening(kodeKegiatan);
+		funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
 	<?php 
 } ?>
 
@@ -206,8 +204,8 @@
 		$("#tabProgram").removeClass("active");
 		$("#tabKodeRekening").addClass("active");
 		$("#boxDetailRekening").removeClass("hidden");
-		funcTableRekening(kodeKegiatan);
-		funcTableDetailRekening(kodeRekening);
+		funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		funcTableDetailRekening(kodeInstansi,kodeRekening);
 	<?php } ?>
 
 	//Fungsi: untuk memunculkan data dan menampilkan box kegiatan & toggle
@@ -216,7 +214,6 @@
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
-			console.log(kodeProgram);
 		}else {
 			$('#boxDetail').slideDown(1000);
 			$('#boxDetail').addClass('hidden');
@@ -241,12 +238,10 @@
 		var kodeRek = $(this).data('koderek');
 		kodeRekening = kodeRek;
 		var kodeKeg = $(this).data('kodekeg');
-		console.log(kodeRekening);
-		console.log(kodeKeg);
 	if ($('#boxDetailRekening').hasClass('hidden')) {
 			$("#boxDetailRekening").removeClass("hidden");
 			$("#boxDetailRekening").slideDown();
-			funcTableDetailRekening(kodeRekening);
+			funcTableDetailRekening(kodeInstansi,kodeRekening);
 		}else {
 			$('#boxDetailRekening').slideDown(1000);
 			$('#boxDetailRekening').addClass('hidden');
@@ -441,16 +436,6 @@
 		$('#KodeProgramRekening').val(kodeProgram);
 	})
 
-	//Fungsi: Redirect langsung ke tableRekening setelah action
-	<?php if(@$_SESSION['msgRekening'] != null){?>
-		$('.tabProgram').removeClass('active');
-		$('#nav-tab-program-2').removeClass('active');
-		$('.tabKodeRekening').removeClass('hidden');
-		$('.tabKodeRekening').addClass('active');
-		$('#nav-tab-program-3').addClass('active');
-		funcTableRekening("<?=$_SESSION['kodeKegiatan']?>");
-	<?php } ?>
-
 	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
 	$('#tableKegiatan').on('click', '.delete_data', function () {
       var id = $(this).data('id');
@@ -553,7 +538,7 @@
 			tableKegiatan.destroy();
 		}
 		console.log(kodeKegiatan);
-		funcTableRekening(kodeKegiatan);
+		funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
 	});
 
 	// Fungsi: destroy tableRekening saat pindah tab

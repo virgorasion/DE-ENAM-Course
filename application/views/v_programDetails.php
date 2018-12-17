@@ -101,7 +101,12 @@ $dataModal['patokan'] = $patokan;
 									<tbody>
 										<?php
 									$no = 1;
-									foreach ($data as $item) :
+									foreach ($data as $item) {
+										if ($item->total_rekening != $item->total_rinci) {
+											$class = "label label-danger";
+										}else{
+											$class = "label label-success";
+										}
 									?>
 										<tr>
 											<td id="no">
@@ -117,10 +122,10 @@ $dataModal['patokan'] = $patokan;
 												<?= $item->plafon ?>
 											</td>
 											<td id="t_rek_program">
-												<?= $item->total_rekening ?>
+												<?= number_format((double)$item->total_rekening, 0, ".", ","); ?>
 											</td>
-											<td id="t_rinci_program">
-												<?= $item->total_rinci ?>
+											<td id="t_rinci_program" align="center">
+												<span class="<?=$class?>" style="font-size:12px"><?= number_format((double)$item->total_rinci,0,".",","); ?></span>
 											</td>
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
@@ -168,8 +173,7 @@ $dataModal['patokan'] = $patokan;
 											</td>
 											<?php } ?>
 										</tr>
-										<?php $no++;
-									endforeach; ?>
+										<?php $no++; }?>
 									</tbody>
 								</table>
 							</div>
