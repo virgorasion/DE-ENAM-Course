@@ -544,5 +544,10 @@
 		$("#addTotal").val(volume * harga);
 	})
 
+	// Fungsi:Insert Indikator
+	$("#btnAddIndikator").click(function(){
+		$("#modalAddIndikator").modal("show");
+	})
+
 
 </script>

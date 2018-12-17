@@ -267,9 +267,9 @@
 						<label for="inputEmail3" class="col-sm-2 control-label">Jenis</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="addJenis" name="addJenis" placeholder="Jenis">
-						</div>					
+						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="addKegiatan" class="col-sm-2 control-label">Kegiatan</label>
 						<div class="col-sm-9">
@@ -335,6 +335,80 @@
 						<label for="addUraian" class="col-sm-2 control-label">Keterangan</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="addKeterangan" name="addKeterangan" placeholder="Keterangan">
+						</div>
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<input type="hidden" id="KodeInstansiDetailRekening" name="KodeInstansiDetailRekening">
+					<input type="hidden" id="KodeProgramDetailRekening" name="KodeProgramDetailRekening">
+					<input type="hidden" id="KodeKegiatanDetailRekening" name="KodeKegiatanDetailRekening">
+					<input type="hidden" id="KodeRekeningDetailRekening" name="KodeRekeningDetailRekening">
+					<input type="hidden" id="MainIdDetailRekening" name="MainIdDetailRekening">
+					<input type="hidden" id="actionTypeDetailRekening" name="actionTypeDetailRekening">
+					<button type="submit" class="btn btn-default">Cancel</button>
+					<button type="submit" class="btn btn-info pull-right">Submit</button>
+				</div>
+				<!-- /.box-footer -->
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php 
+} ?>
+
+<?php if ($_SESSION['hakAkses'] != 2) { ?>
+<!-- Start Modal Action Detail Rekening -->
+<div class="modal fade" id="modalAddIndikator">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Action Indikator</h4>
+			</div>
+			<form id="FormAddIndikator" class="form-horizontal" method="POST" action="<?= site_url('ProgramCtrl/TambahIndikator') ?>">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Nomor</label>
+						<div class="col-sm-2">
+							<input type="number" class="form-control" id="addNomor" name="addNomor" placeholder="Nomor" value="1">
+						</div>
+						<label for="addJenis" class="col-sm-2 control-label">Jenis</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="addJenis" id="addJenis">
+								<option value="1">Capaian Program</option>
+								<option value="2">Hasil</option>
+								<option value="3">Pengaluaran</option>
+								<option value="4">Masukan</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addUraian" class="col-sm-2 control-label">Uraian</label>
+						<div class="col-sm-9">
+							<textarea name="addUraian" id="addUraian" class="form-control" rows="3" required="required"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addSatuan" class="col-sm-2 control-label">Satuan</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="addSatuan" name="addSatuan" placeholder="Satuan">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addTarget" class="col-sm-2 control-label">Target</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addTarget" name="addTarget" placeholder="Target">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addNilai" class="col-sm-2 control-label">Nilai</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addNilai" name="addNilai" placeholder="Nilai">
 						</div>
 					</div>
 				</div>
