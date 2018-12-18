@@ -51,7 +51,7 @@ class ProgramModel extends CI_model
             'total_rinci',
             '<center><span class="$2" style="font-size:12px">$1</span></center>',
             'total_rinci,
-            callback_label(tot_rekening,total_rinci)'
+            callback_label(total_rekening,tot_rinci)'
         );
         $this->datatables->add_column('action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 

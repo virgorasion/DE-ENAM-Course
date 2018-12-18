@@ -23,8 +23,8 @@
 
 	//Fungsi: untuk menggenerate table Kegiatan secara serverSide
 	function funcTableKegiatan(kodeProgram) {
-		$('#boxDetail').fadeIn(1000);
-		$('#boxDetail').removeClass('hidden');
+		$('#boxKegiatan').fadeIn(1000);
+		$('#boxKegiatan').removeClass('hidden');
 		kodeInstansi = "<?= $kodeInstansi ?>";
 		console.log(kodeInstansi+"instansi");
 		// console.log(kodeProgram);
@@ -210,20 +210,20 @@
 
 	//Fungsi: untuk memunculkan data dan menampilkan box kegiatan & toggle
 	$('#tableProgram').on('click', '#btnView', function () {
-		if ($('#boxDetail').hasClass('hidden')) {
+		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
 		}else {
-			$('#boxDetail').slideDown(1000);
-			$('#boxDetail').addClass('hidden');
+			$('#boxKegiatan').slideDown(1000);
+			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
 		}
 	});
 	//Fungsi: Hidden box Kegiatan
 	$('#btnHidden').click(function(){
-		$('#boxDetail').fadeOut(1000);
-		$('#boxDetail').addClass('hidden');
+		$('#boxKegiatan').fadeOut(1000);
+		$('#boxKegiatan').addClass('hidden');
 		tableKegiatan.destroy();
 	});
 
@@ -273,7 +273,7 @@
 		$("#FormDetailRekening").find("#KodeRekeningDetailRekening").val(kodeRekening);
 	})
 
-	//Fungsi: untuk memunculkan data ketika btn edit di tableKegiatan diklik
+	//Fungsi: Edit Kegiatan
     $('#tableKegiatan').on('click', '.edit_data', function(){
 		var id = $(this).data('id');
 		var k = $(this).data('kode');
@@ -302,8 +302,10 @@
 			success:function (result) {
 				var data = JSON.parse(result);
 				// console.log(data[0].tahun);
+				var kode = data[0].kode_program;
+				var res = kode.substr(4);
 				$('#programIdEdit').val(id);
-				$('#editKodeProgram').val(data[0].kode_program);
+				$('#editKodeProgram').val(res);
 				$('#editNamaProgram').val(data[0].nama_program);
 				$('#editPlafon').val(data[0].plafon);
 			}
@@ -513,14 +515,17 @@
 
 	// Fungsi: untuk menampikan Box Rekening
 	$('#tab-nav').on('click', '.tabKodeRekening', function(){
-		if ($('#boxDetail').hasClass('hidden')) {
+		if ($('#boxKegiatan').hasClass('hidden')) {
 			//Nothing
 		}else{
-			$('#boxDetail').slideUp(1000);
-			$('#boxDetail').addClass('hidden');
-			tableKegiatan.destroy();
+			$('#boxKegiatan').slideUp(1000);
+			$('#boxKegiatan').addClass('hidden');
+			// if (tableKegiatan instanceof $.fn.dataTable.Api) {
+			// 	tableKegiatan.destroy();
+			// }
 		}
 		console.log(kodeKegiatan);
+		//Funsgi: reinitialize tableRekening when click tab KodeRekening
 		if (tableRekening instanceof $.fn.dataTable.Api == false) {
 			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
 		}else {
@@ -529,20 +534,14 @@
 		}
 	});
 
-	// Fungsi: destroy tableRekening saat pindah tab
-	// $('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(event){
-	// 	if (tableRekening instanceof $.fn.dataTable.Api) {
-	// 		tableRekening.destroy();
-	// 	}
-	// });
-
-	// Fungsi: Show Box Kegiatan pas klik tabProgram
-	if ($('.tabKodeRekening').hasClass('hidden') != true) {
-		$('.tabProgram').click(function(){
-			$('#boxDetail').slideDown(1000);
-			$('#boxDetail').removeClass('hidden');
-		})
-	}
+	$("#tabProgram").click(function(){
+		$('#boxKegiatan').slideDown(1000);
+		$('#boxKegiatan').removeClass('hidden');
+		if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
+			funcTableKegiatan(kodeProgram);
+			console.log("kegiatan initialize");
+		}
+	})
 
 	//Fungsi: Insert Detail Rekening input Total Real-Time
 	$("#addVolume, #addHarga").keyup(function(){

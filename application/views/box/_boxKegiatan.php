@@ -1,4 +1,4 @@
-<div id="boxDetail" class="box hidden">
+<div id="boxKegiatan" class="box hidden">
 	<div class="box-header with-border">
 		<h3 class="box-title">Table Kegiatan</h3>
 

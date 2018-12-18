@@ -107,6 +107,11 @@ $dataModal['patokan'] = $patokan;
 										}else{
 											$class = "label label-success";
 										}
+										if ($item->total_rekening != $item->plafon) {
+											$alert = "label label-danger";
+										}else {
+											$alert = "label label-success";
+										}
 									?>
 										<tr>
 											<td id="no">
@@ -119,10 +124,10 @@ $dataModal['patokan'] = $patokan;
 												<?= $item->nama_program ?>
 											</td>
 											<td id="plafon">
-												<?= $item->plafon ?>
+												<?= number_format((double)$item->plafon,0,".",","); ?>
 											</td>
 											<td id="t_rek_program">
-												<?= number_format((double)$item->total_rekening, 0, ".", ","); ?>
+												<span class="<?= $alert ?>" style="font-size:12px"><?= number_format((double)$item->total_rekening, 0, ".", ","); ?></span>
 											</td>
 											<td id="t_rinci_program" align="center">
 												<span class="<?=$class?>" style="font-size:12px"><?= number_format((double)$item->total_rinci,0,".",","); ?></span>

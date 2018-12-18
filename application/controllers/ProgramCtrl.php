@@ -27,9 +27,11 @@ class ProgramCtrl extends CI_controller
     public function TambahProgram()
     {
         $kode = $this->input->post('addKodeProgram');
-        $kodeProgram = $this->GenerateKodeProgram($kode);
+        $kodeProgram = str_replace(" ", "", $this->GenerateKodeProgram($kode));
         $namaProgram = $this->input->post('addNamaProgram');
-        $plafon = $this->input->post('addPlafon');
+        $plafon = str_replace(".","",$this->input->post('addPlafon'));
+        echo $plafon;
+        die();
         $idInstansi = $this->input->post('idInstansi');
 
         if ($_SESSION['akses'] == 'Admin') {
@@ -58,19 +60,20 @@ class ProgramCtrl extends CI_controller
     public function EditProgram()
     {
         $post = $this->input->post();
+        $kodeProgram = "127.". str_replace(" ", "", $post['editKodeProgram']);
         if ($_SESSION['akses'] == 'Admin') {
             $data = array(
-                'kode_program' => $post['editKodeProgram'],
+                'kode_program' => $kodeProgram,
                 'nama_program' => $post['editNamaProgram'],
-                'plafon' => $post['editPlafon'],
+                'plafon' => str_replace(".","",$post['editPlafon']),
                 'kode_instansi' => $post['idInstansiEdit']
             );
         }else {
             $data = array(
                 'kode_admin' => $_SESSION['kode_admin'],
-                'kode_program' => $post['editKodeProgram'],
+                'kode_program' => $kodeProgram,
                 'nama_program' => $post['editNamaProgram'],
-                'plafon' => $post['editPlafon'],
+                'plafon' => str_replace(".","",$post['editPlafon']),
                 'kode_instansi' => $post['idInstansiEdit']
             );
         }
@@ -123,7 +126,7 @@ class ProgramCtrl extends CI_controller
     public function TambahKegiatan()
     {
         $post = $this->input->post();
-        $kodeKegiatan = $this->generateKodeKegiatan($post['addKodeKegiatan']);
+        $kodeKegiatan = str_replace(" ", "", $this->generateKodeKegiatan($post['addKodeKegiatan']));
         $data = array(
             'kode_instansi' => $post['kodeInstansi'],
             'kode_program' => $post['kodeProgram'],
@@ -150,7 +153,7 @@ class ProgramCtrl extends CI_controller
     {
         $post = $this->input->post();
         $data = array(
-            'kode_kegiatan' => htmlspecialchars("080.".$post['editKodeKegiatan']),
+            'kode_kegiatan' => htmlspecialchars("080.". str_replace(" ", "", $post['editKodeKegiatan'])),
             'nama_kegiatan' => htmlspecialchars($post['editNamaKegiatan']),
             'keterangan' => htmlspecialchars($post['editKeterangan'])
         );
