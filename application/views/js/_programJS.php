@@ -521,13 +521,20 @@
 			tableKegiatan.destroy();
 		}
 		console.log(kodeKegiatan);
-		funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		if (tableRekening instanceof $.fn.dataTable.Api == false) {
+			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		}else {
+			tableRekening.destroy();
+			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		}
 	});
 
 	// Fungsi: destroy tableRekening saat pindah tab
-	$('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(event){
-		// tableRekening.destory();
-	});
+	// $('#tab-nav').on('click','.tabProgram, .tabRekapitulasi, .tabCetak, .tabValidasi', function(event){
+	// 	if (tableRekening instanceof $.fn.dataTable.Api) {
+	// 		tableRekening.destroy();
+	// 	}
+	// });
 
 	// Fungsi: Show Box Kegiatan pas klik tabProgram
 	if ($('.tabKodeRekening').hasClass('hidden') != true) {
