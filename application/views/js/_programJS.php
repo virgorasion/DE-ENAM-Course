@@ -4,6 +4,7 @@
 	var kodeKegiatan = "";
 	var kodeRekening = "";
 	var tableKegiatan = "";
+	var tableIndikatorKegiatan = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
     // Setup datatables
@@ -68,6 +69,50 @@
 		});
 		// end setup datatables	
 	return tableKegiatan;
+	}
+
+	//Fungsi: untuk menggenerate table IndkatorKegiatan secara serverSide
+	function funcTableIndikator() {
+		$('#boxKegiatan').fadeIn(1000);
+		$('#boxKegiatan').removeClass('hidden');
+		tableIndikatorKegiatan = $("#tableIndikator").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/tableIndikatorAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
+					columns: [
+						{"data": "jenis"},
+						{
+							"data": null,
+							"orderable": false,
+							"searchable": false
+						},
+						{"data": "uraian"},
+						{"data": "target"},
+						{"data": "action", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(1)', row).html(index);
+			}
+
+		});
+		// end setup datatables	
+	return tableIndikatorKegiatan;
 	}
 
 	//Fungsi: untuk menggenerate table Rekening secara serverSide
@@ -226,6 +271,13 @@
 		$('#boxKegiatan').addClass('hidden');
 		tableKegiatan.destroy();
 	});
+
+	//Fungsi: Show Data IndikatorKegiatan
+    $("#tabIndikatorKegiatan").click(function(){
+		if (tableIndikatorKegiatan instanceof $.fn.dataTable.Api == false) {
+			funcTableIndikator();
+		}
+    })
 
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
@@ -534,6 +586,7 @@
 		}
 	});
 
+	//Fungsi: untuk show box kegiatan ketika klik tabProgram
 	$("#tabProgram").click(function(){
 		$('#boxKegiatan').slideDown(1000);
 		$('#boxKegiatan').removeClass('hidden');

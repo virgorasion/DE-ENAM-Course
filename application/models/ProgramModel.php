@@ -32,6 +32,9 @@ class ProgramModel extends CI_model
         return $this->db->delete($table, array('id'=> $idProgram));
     }
 
+    //==============================================================================>>
+    // Coding untuk box kegiatan
+
     public function getDataKegiatan($kodeInstansi, $kodeProgram)
     {
         $this->datatables->select('id,kode_instansi,kode_program,kode_kegiatan,nama_kegiatan,total_rekening,keterangan,total_rinci as tot_rinci, FORMAT(total_rinci,0) as total_rinci');
@@ -68,6 +71,22 @@ class ProgramModel extends CI_model
         return $this->datatables->generate();
         // <a href="javascript:void(0)" class="view btn btn-primary btn-xs" data-id="$1"><i class="fa fa-eye"></i></a>
     }
+
+    public function getDataIndikator($kodeInstansi,$kodeProgram)
+    {
+        $this->datatables->select("id,kode_indikator,kode_instansi,kode_program,kode_kegiatan,jenis,uraian,satuan,target");
+        $this->datatables->from("tb_indikator");
+        $this->datatables->where("kode_instansi", $kodeInstansi);
+        $this->datatables->where("kode_program", $kodeProgram);
+        $this->datatables->add_column("action",
+            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
+            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-program="$3" data-kode="$4" data-nama="$5" data-ket="$8"><i class="fa fa-pencil"></i></a> 
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-remove"></i></a>',
+            'id,kode_indikator,kode_instansi,kode_program,kode_kegiatan,jenis,uraian,satuan,target');
+        $this->datatables->group_by("id");
+        return $this->datatables->generate();
+    }
+    
 
     public function DeleteDataKegiatan($table,$idKegiatan)
     {
@@ -253,47 +272,6 @@ class ProgramModel extends CI_model
 
         if ($this->db->trans_status() == false) {
             log_message();
-        }else{
-            // $row = array(
-            //     'resultDetail' => $selDetail->row(),
-            //     'resultRekening' => $selRekening->row(),
-            //     'resultKegiatan' => $selKegiatan->row()
-            // );
-            // $this->db->trans_start();
-            // $this->db->query("update tb_rekening set total_rinci = ".$row['resultDetail']->total." 
-            //                     where kode_instansi = $kodeInstansi
-            //                     and kode_program = $kodeProgram
-            //                     and kode_kegiatan = $kodeKegiatan
-            //                     and kode_rekening = '" . $kodeRekening . "'");
-            // $this->db->query("update tb_kegiatan set total_rinci = " . $row['resultRekening']->total . " 
-            //                     where kode_instansi = $kodeInstansi
-            //                     and kode_program = $kodeProgram
-            //                     and kode_kegiatan = $kodeKegiatan");
-            // $this->db->query("update tb_program set total_rinci = " . $row['resultKegiatan']->total . " 
-            //                     where kode_instansi = $kodeInstansi
-            //                     and kode_program = $kodeProgram");
-            // $this->db->trans_complete();
         }
-
-        // $selDetail = $this->db->select("SUM(tb_detail_rekening.total) as total")
-        //     ->from("tb_detail_rekening")
-        //     ->where("tb_detail_rekening.kode_instansi", $kodeInstansi)
-        //     ->where("tb_detail_rekening.kode_program", $kodeProgram)
-        //     ->where("tb_detail_rekening.kode_kegiatan", $kodeInstansi)
-        //     ->where("tb_detail_rekening.kode_rekening", $kodeRekening)
-        //     ->get();
-        // $resDetail = $sel->row();
-        // $totalDetail = $res->total;
-        // $data = array(
-        //     'total_rinci' => $totalDetail
-        // );
-        // $where = array(
-        //     'tb_rekening.kode_rekening' => $kodeRekening,
-        //     'tb_rekening.kode_instansi' => $kodeInstansi
-        // );
-        // $update = $this->db->update("tb_rekening", $data, $where);
-
     }
-    
-    
 }

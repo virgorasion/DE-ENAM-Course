@@ -328,3 +328,4 @@ $this->load->view('template/_js');
 <script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
 <?php $this->load->view('js/_programJS', $dataModal) ?>
+<?php $this->load->view('js/_DataTablesJS') ?>

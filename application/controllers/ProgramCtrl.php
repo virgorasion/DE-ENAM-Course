@@ -122,6 +122,13 @@ class ProgramCtrl extends CI_controller
         header('Content-Type: application/json');
         echo $this->ProgramModel->getDataKegiatan($kodeInstansi, $kodeProgram);
     }
+    
+    public function tableIndikatorAPI($kodeInstansi,$kodeProgram)
+    {
+        header("Content-Type: application/json");
+        echo $this->ProgramModel->getDataIndikator($kodeInstansi,$kodeProgram);
+    }
+    
 
     public function TambahKegiatan()
     {
