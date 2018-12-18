@@ -283,7 +283,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="addUraian" class="col-sm-2 control-label">Sub Uraian</label>
+						<label for="addSubUraian" class="col-sm-2 control-label">Sub Uraian</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="addSubUraian" name="addSubUraian" placeholder="Sub Uraian">
 						</div>
@@ -332,7 +332,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="addUraian" class="col-sm-2 control-label">Keterangan</label>
+						<label for="addKeterangan" class="col-sm-2 control-label">Keterangan</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="addKeterangan" name="addKeterangan" placeholder="Keterangan">
 						</div>
@@ -362,7 +362,7 @@
 
 <?php if ($_SESSION['hakAkses'] != 2) { ?>
 <!-- Start Modal Action Detail Rekening -->
-<div class="modal fade" id="modalAddIndikator">
+<div class="modal fade" id="modalIndikator">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -377,9 +377,9 @@
 						<div class="col-sm-2">
 							<input type="number" class="form-control" id="addNomor" name="addNomor" placeholder="Nomor" value="1">
 						</div>
-						<label for="addJenis" class="col-sm-2 control-label">Jenis</label>
+						<label for="addJenisIndikator" class="col-sm-2 control-label">Jenis</label>
 						<div class="col-sm-3">
-							<select class="form-control" name="addJenis" id="addJenis">
+							<select class="form-control" name="addJenisIndikator" id="addJenisIndikator">
 								<option value="1">Capaian Program</option>
 								<option value="2">Hasil</option>
 								<option value="3">Pengaluaran</option>
@@ -388,15 +388,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="addUraian" class="col-sm-2 control-label">Uraian</label>
+						<label for="addUraianIndikator" class="col-sm-2 control-label">Uraian</label>
 						<div class="col-sm-9">
-							<textarea name="addUraian" id="addUraian" class="form-control" rows="3" required="required"></textarea>
+							<textarea name="addUraianIndikator" id="addUraianIndikator" class="form-control" rows="3" required="required"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="addSatuan" class="col-sm-2 control-label">Satuan</label>
+						<label for="addSatuanIndikator" class="col-sm-2 control-label">Satuan</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="addSatuan" name="addSatuan" placeholder="Satuan">
+							<input type="text" class="form-control" id="addSatuanIndikator" name="addSatuanIndikator" placeholder="Satuan">
 						</div>
 					</div>
 					<div class="form-group">
@@ -414,12 +414,11 @@
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
-					<input type="hidden" id="KodeInstansiDetailRekening" name="KodeInstansiDetailRekening">
-					<input type="hidden" id="KodeProgramDetailRekening" name="KodeProgramDetailRekening">
-					<input type="hidden" id="KodeKegiatanDetailRekening" name="KodeKegiatanDetailRekening">
-					<input type="hidden" id="KodeRekeningDetailRekening" name="KodeRekeningDetailRekening">
-					<input type="hidden" id="MainIdDetailRekening" name="MainIdDetailRekening">
-					<input type="hidden" id="actionTypeDetailRekening" name="actionTypeDetailRekening">
+					<input type="hidden" id="KodeInstansiIndikator" name="KodeInstansiIndikator">
+					<input type="hidden" id="KodeProgramIndikator" name="KodeProgramIndikator">
+					<input type="hidden" id="KodeKegiatanIndikator" name="KodeKegiatanIndikator">
+					<input type="hidden" id="MainIdIndikator" name="MainIdIndikator">
+					<input type="hidden" id="actionTypeIndikator" name="actionTypeIndikator">
 					<button type="submit" class="btn btn-default">Cancel</button>
 					<button type="submit" class="btn btn-info pull-right">Submit</button>
 				</div>

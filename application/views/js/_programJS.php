@@ -4,7 +4,7 @@
 	var kodeKegiatan = "";
 	var kodeRekening = "";
 	var tableKegiatan = "";
-	var tableIndikatorKegiatan = "";
+	var tableIndikator = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
     // Setup datatables
@@ -75,7 +75,7 @@
 	function funcTableIndikator() {
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
-		tableIndikatorKegiatan = $("#tableIndikator").DataTable({
+		tableIndikator = $("#tableIndikator").DataTable({
 			initComplete: function() {
 				var api = this.api();
 				$('#mytable_filter input')
@@ -91,7 +91,7 @@
 				serverSide: true,
 				ajax: {"url": "<?= site_url('ProgramCtrl/tableIndikatorAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
 					columns: [
-						{"data": "jenis"},
+						{"data": "c_jenis"},
 						{
 							"data": null,
 							"orderable": false,
@@ -112,7 +112,7 @@
 
 		});
 		// end setup datatables	
-	return tableIndikatorKegiatan;
+	return tableIndikator;
 	}
 
 	//Fungsi: untuk menggenerate table Rekening secara serverSide
@@ -274,7 +274,7 @@
 
 	//Fungsi: Show Data IndikatorKegiatan
     $("#tabIndikatorKegiatan").click(function(){
-		if (tableIndikatorKegiatan instanceof $.fn.dataTable.Api == false) {
+		if (tableIndikator instanceof $.fn.dataTable.Api == false) {
 			funcTableIndikator();
 		}
     })
@@ -342,6 +342,27 @@
         $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
     });
 
+	//Fungsi: Edit Indikator
+	$("#tableIndikator").on('click', '.edit_data',function(){
+		var id = $(this).data("id");
+		var kodeIndikator = $(this).data("indikator");
+		var kodeInstansi = $(this).data("instansi");
+		var kodeProgram = $(this).data("program");
+		var kodeKegiatan = $(this).data("kegiatan");
+		var jenis = $(this).data("jenis");
+		var uraian = $(this).data("uraian");
+		var satuan = $(this).data("satuan");
+		var target = $(this).data("target");
+		console.log(uraian);
+		$("#modalIndikator").modal('show');
+		$("#FormAddIndikator").find("#addNomor").val();
+		$("#FormAddIndikator").find("#addJenisIndikator").val(jenis);
+		$("#FormAddIndikator").find("#addUraianIndikator").val(uraian);
+		$("#FormAddIndikator").find("#addSatuanIndikator").val(satuan);
+		$("#FormAddIndikator").find("#addTarget").val(target);
+		$("#FormAddIndikator").find("#MainIdIndikator").val(id);
+		$("#FormAddIndikator").find("#actionTypeIndikator").val("edit");
+	})
 
 	//Fungsi: edit program
 	$('#tableProgram').on('click','#btnEdit',function(){
@@ -605,7 +626,7 @@
 
 	// Fungsi:Insert Indikator
 	$("#btnAddIndikator").click(function(){
-		$("#modalAddIndikator").modal("show");
+		$("#modalIndikator").modal("show");
 	})
 
 
