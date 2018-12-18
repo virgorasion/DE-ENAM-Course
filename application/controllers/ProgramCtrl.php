@@ -114,12 +114,14 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Coding untuk Box Kegiatan
 
+    //Datatable Kegiatan
     public function DataTableApi($kodeInstansi,$kodeProgram)
     {
         header('Content-Type: application/json');
         echo $this->ProgramModel->getDataKegiatan($kodeInstansi, $kodeProgram);
     }
     
+    //Datatable Indikator
     public function tableIndikatorAPI($kodeInstansi,$kodeProgram)
     {
         header("Content-Type: application/json");
@@ -152,6 +154,53 @@ class ProgramCtrl extends CI_controller
             redirect('ProgramCtrl/index/'.$kodeInstansi);
         }
     }
+
+    public function ActionIndikator()
+    {
+        $p = $this->input->post();
+        $kodeInstansi = $p['KodeInstansiIndikator'];
+        $kodeProgram = $p['KodeProgramIndikator'];
+        $MainID = $p['MainIdIndikator'];
+        if ($p['actionTypeIndikator'] == "add") {
+            $kode = $this->generateKodeIndikator($kodeInstansi,$kodeProgram);
+            $data = array(
+                'kode_indikator' => $kode,
+                'kode_instansi' => $kodeInstansi,
+                'kode_program' => $kodeProgram,
+                'jenis' => $p['addJenisIndikator'],
+                'uraian' => $p['addUraianIndikator'],
+                'satuan' => $p['addSatuanIndikator'],
+                'target' => $p['addTarget']
+            );
+            $query = $this->ProgramModel->ActionInsert("tb_indikator",$data);
+        }elseif ($p['actionTypeIndikator'] == "edit") {
+            $data = array(
+                'jenis' => $p['addJenisIndikator'],
+                'uraian' => $p['addUraianIndikator'],
+                'target' => $p['addTarget'],
+                'satuan' => $p['addSatuanIndikator']
+            );
+            $where = $MainID;
+            $query = $this->ProgramModel->updateDataProgram("tb_indikator",$data,$where);
+        }else{
+            $this->session->set_flashdata('err', 'Terdapat kesalahan silahkan reload halaman saat ini !');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/'. $kodeInstansi);
+        }
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil menambah Indikator');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('err', 'Gagal menambah Indikator, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
+    
 
     public function EditKegiatan()
     {
@@ -190,11 +239,38 @@ class ProgramCtrl extends CI_controller
         }
     }
 
+    public function HapusIndikator($idIndikator,$kodeProgram,$kodeInstansi)
+    {
+        $query = $this->ProgramModel->DeleteDataKegiatan('tb_indikator',$idIndikator);
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil menambah Indikator');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('err', 'Gagal menambah Indikator, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
+    
+
     private function generateKodeKegiatan($id)
     {
         $kode = "080.";
         $keygen = $kode . $id;
         return $keygen;
+    }
+    private function generateKodeIndikator($kodeInstansi,$kodeProgram)
+    {
+        $sel = $this->db->select_max("kode_indikator")->from("tb_indikator")->where("kode_instansi", $kodeInstansi)->where("kode_program", $kodeProgram)->get();
+        $result = $sel->row();
+        $tambahRes = $result->kode_indikator;
+        $potong = substr($tambahRes,-3);
+        $hasil = $potong +1;
+        $kode = "1.". str_pad($hasil,3,0,STR_PAD_LEFT);
+        return $kode;
     }
 
     //==============================================================================>>

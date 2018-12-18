@@ -370,7 +370,7 @@
 					<span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">Action Indikator</h4>
 			</div>
-			<form id="FormAddIndikator" class="form-horizontal" method="POST" action="<?= site_url('ProgramCtrl/TambahIndikator') ?>">
+			<form id="FormAddIndikator" class="form-horizontal" method="POST" action="<?= site_url('ProgramCtrl/ActionIndikator') ?>">
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Nomor</label>
@@ -416,7 +416,6 @@
 				<div class="box-footer">
 					<input type="hidden" id="KodeInstansiIndikator" name="KodeInstansiIndikator">
 					<input type="hidden" id="KodeProgramIndikator" name="KodeProgramIndikator">
-					<input type="hidden" id="KodeKegiatanIndikator" name="KodeKegiatanIndikator">
 					<input type="hidden" id="MainIdIndikator" name="MainIdIndikator">
 					<input type="hidden" id="actionTypeIndikator" name="actionTypeIndikator">
 					<button type="submit" class="btn btn-default">Cancel</button>

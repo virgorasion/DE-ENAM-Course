@@ -91,7 +91,7 @@
 				serverSide: true,
 				ajax: {"url": "<?= site_url('ProgramCtrl/tableIndikatorAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
 					columns: [
-						{"data": "c_jenis"},
+						{"data": "c_jenis", "searchable":false,"orderabel":false},
 						{
 							"data": null,
 							"orderable": false,
@@ -253,16 +253,18 @@
 		funcTableDetailRekening(kodeInstansi,kodeRekening);
 	<?php } ?>
 
-	//Fungsi: untuk memunculkan data dan menampilkan box kegiatan & toggle
+	//Fungsi: Show Box Kegiatan From btnView program
 	$('#tableProgram').on('click', '#btnView', function () {
 		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
+			funcTableIndikator();
 		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
+			tableIndikator.destroy();
 		}
 	});
 	//Fungsi: Hidden box Kegiatan
@@ -270,6 +272,7 @@
 		$('#boxKegiatan').fadeOut(1000);
 		$('#boxKegiatan').addClass('hidden');
 		tableKegiatan.destroy();
+		tableIndikator.destroy();
 	});
 
 	//Fungsi: Show Data IndikatorKegiatan
@@ -348,7 +351,6 @@
 		var kodeIndikator = $(this).data("indikator");
 		var kodeInstansi = $(this).data("instansi");
 		var kodeProgram = $(this).data("program");
-		var kodeKegiatan = $(this).data("kegiatan");
 		var jenis = $(this).data("jenis");
 		var uraian = $(this).data("uraian");
 		var satuan = $(this).data("satuan");
@@ -362,6 +364,8 @@
 		$("#FormAddIndikator").find("#addTarget").val(target);
 		$("#FormAddIndikator").find("#MainIdIndikator").val(id);
 		$("#FormAddIndikator").find("#actionTypeIndikator").val("edit");
+		$("#FormAddIndikator").find("#KodeInstansiIndikator").val(kodeInstansi);
+		$("#FormAddIndikator").find("#KodeProgramIndikator").val(kodeProgram);
 	})
 
 	//Fungsi: edit program
@@ -456,7 +460,7 @@
 		$('#FormDetailRekening').find('#KodeRekeningDetailRekening').val(kodeRekening);
 	})
 
-	//Fungsi: untuk delete ketika btn delete di tableProgram di klik
+	//Fungsi: Delete Program
 	$('#tableProgram').on('click', '#btnDelete', function () {
       var $item = $(this).closest("tr");
       var $nama = $.trim($item.find("#nama_program").text());
@@ -480,21 +484,7 @@
       });
     });
 
-	//Fungsi: untuk menampilkan modal tambah kegiatan
-	$('#btnAddKegiatan').click(function(){
-		$('#modalTambahKegiatan').modal('show');
-		$('#kodeProgram').val(kodeProgram);
-	})
-	//Fungsi: untuk menampilkan modal tambah Rekening
-	$('#btnAddRekening').click(function(){
-		$("#formActionRekening").find("#actionTypeRekening").val("add");
-		$('#modalRekening').modal('show');
-		$('#KodeKegiatanRekening').val(kodeKegiatan);
-		$('#KodeInstansiRekening').val(kodeInstansi);
-		$('#KodeProgramRekening').val(kodeProgram);
-	})
-
-	//Fungsi: untuk delete ketika btn delete di tableKegiatan di klik
+	//Fungsi: Delete Kegiatan
 	$('#tableKegiatan').on('click', '.delete_data', function () {
       var id = $(this).data('id');
 	  var nama = $(this).data('nama');
@@ -518,7 +508,28 @@
       });
     });
 
-	//Fungsi: untuk delete ketika btn delete di tableRekening di klik
+	//Fungsi: Delete Indikator
+	$('#tableIndikator').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var uraian = $(this).data('uraian');
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Indikator Ini ?',
+        content: uraian,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusIndikator/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
+            }
+          }
+        }
+      });
+    });
+
+	//Fungsi: Delete Rekening
 	$('#tableRekening').on('click', '.delete_data', function () {
       var idRekening = $(this).data('id');
 	  var nama = $(this).data('nama');
@@ -542,7 +553,7 @@
       });
     });
 
-	//Fungsi: Delete Data Detail Rekening
+	//Fungsi: Delete Detail Rekening
 	$('#tableDetailRekening').on('click', '.delete_data', function () {
       var id = $(this).data('id');
 	  var nama = $(this).data('uraian');
@@ -617,6 +628,20 @@
 		}
 	})
 
+	//Fungsi: Insert kegiatan
+	$('#btnAddKegiatan').click(function(){
+		$('#modalTambahKegiatan').modal('show');
+		$('#kodeProgram').val(kodeProgram);
+	})
+	//Fungsi: Insert Rekening
+	$('#btnAddRekening').click(function(){
+		$("#formActionRekening").find("#actionTypeRekening").val("add");
+		$('#modalRekening').modal('show');
+		$('#KodeKegiatanRekening').val(kodeKegiatan);
+		$('#KodeInstansiRekening').val(kodeInstansi);
+		$('#KodeProgramRekening').val(kodeProgram);
+	})
+
 	//Fungsi: Insert Detail Rekening input Total Real-Time
 	$("#addVolume, #addHarga").keyup(function(){
 		var volume = $("#addVolume").val();
@@ -627,6 +652,10 @@
 	// Fungsi:Insert Indikator
 	$("#btnAddIndikator").click(function(){
 		$("#modalIndikator").modal("show");
+		$("#FormAddIndikator").find("#actionTypeIndikator").val("add");
+		$("#FormAddIndikator").find("#KodeInstansiIndikator").val(kodeInstansi);
+		$("#FormAddIndikator").find("#KodeProgramIndikator").val(kodeProgram);
+		$("#FormAddIndikator").find("#actionTypeIndikator").val("add");
 	})
 
 
