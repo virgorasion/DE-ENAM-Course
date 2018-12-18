@@ -88,19 +88,19 @@
 					  <div class="row">
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">
-							  <input type="radio" class="form-check-input" name="hakAkses" id="AksesAdmin" value="1" checked>
+							  <input type="radio" class="flat-green" name="hakAkses" id="AksesAdmin" value="1" checked>
 							  Admin
 							</label>
 						  </div>
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">
-							  <input type="radio" class="form-check-input" name="hakAkses" id="AksesInstansi" value="2">
+							  <input type="radio" class="flat-green" name="hakAkses" id="AksesInstansi" value="2">
 							  Instansi
 							</label>
 						  </div>
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">
-							  <input type="radio" class="form-check-input" name="hakAkses" id="AksesSiswa" value="3">
+							  <input type="radio" class="flat-green" name="hakAkses" id="AksesSiswa" value="3">
 							  Siswa
 							</label>
 						  </div>
@@ -136,6 +136,9 @@
 	<script src="<?= base_url('assets/cssLogin/vendor/countdowntime/countdowntime.js') ?>"></script>
 <!--===============================================================================================-->
 	<script src="<?= base_url('assets/cssLogin/js/main.js') ?>"></script>
+<!--===============================================================================================-->
+	<script src="<?= base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
+
 
 	<!-- jQuery 3 -->
   <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.min.js')?>"></script>
@@ -160,6 +163,11 @@
 				$(".alert").slideUp(500);
 			});
 		})
+
+	 //Flat red color scheme for iCheck
+    $('input[type="radio"].flat-red').iCheck({
+      radioClass   : 'iradio_flat-green'
+    })
 
 	</script>
 </body>

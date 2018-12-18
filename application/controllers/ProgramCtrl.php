@@ -30,10 +30,7 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = str_replace(" ", "", $this->GenerateKodeProgram($kode));
         $namaProgram = $this->input->post('addNamaProgram');
         $plafon = str_replace(".","",$this->input->post('addPlafon'));
-        echo $plafon;
-        die();
         $idInstansi = $this->input->post('idInstansi');
-
         if ($_SESSION['akses'] == 'Admin') {
             $data = array(
                 'kode_admin' => $_SESSION['kode_admin'],
