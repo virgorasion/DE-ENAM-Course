@@ -431,3 +431,126 @@
 <!-- /.modal -->
 <?php 
 } ?>
+
+<div class="modal fade" id="modalPembahasan">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Pembahasan</h4>
+			</div>
+			<form id="FormAddPembahasan" class="form-horizontal" method="POST" action="<?= site_url('ProgramCtrl/ActionPembahasan') ?>">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Nomor</label>
+						<div class="col-sm-2">
+							<input type="number" class="form-control" id="addNomor" name="addNomor" placeholder="Nomor" value="1">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addNamaPembahasan" class="col-sm-2 control-label">Nama</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addNamaPembahasan" name="addNamaPembahasan" disabled>
+						</div>
+						<label for="addInstansiPembahasan" class="col-sm-2 control-label">Instansi</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addInstansiPembahasan" name="addInstansiPembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addprogramPembahasan" class="col-sm-2 control-label">Program</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addProgramPembahasan" name="addProgramPembahasan" disabled>
+						</div>
+						<label for="addPlafonPembahasan" class="col-sm-2 control-label">Plafon</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addPlafonPembahasan" name="addPlafonPembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addNamaRekeningPembahasan" class="col-sm-2 control-label">Nama Rekening</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="addNamaRekeningPembahasan" id="addNamaRekeningPembahasan">
+								<option>Pilih Rekening</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addTotalRekeningPembahasan" class="col-sm-2 control-label">Total Rekening</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addTotalRekeningPembahasan" name="addTotalRekeningPembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addT1RekeningPembahasan" class="col-sm-2 control-label">Triwulan 1</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT1RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+						</div>
+
+						<label for="addT1Pembahasan" class="col-sm-2 control-label">T1 ( 20% Total )</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT1Pembahasan" name="addT1Pembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addT2RekeningPembahasan" class="col-sm-2 control-label">Triwulan 2</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT2RekeningPembahasan" name="addT2RekeningPembahasan" disabled>
+						</div>
+
+
+						<label for="addT1Pembahasan" class="col-sm-2 control-label">T2 ( 35% Total )</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT2Pembahasan" name="addT2Pembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addT3RekeningPembahasan" class="col-sm-2 control-label">Triwulan 3</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT3RekeningPembahasan" name="addT3RekeningPembahasan" disabled>
+						</div>
+
+
+						<label for="addT3Pembahasan" class="col-sm-2 control-label">T3 ( 30% Total )</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT3Pembahasan" name="addT3Pembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addT4RekeningPembahasan" class="col-sm-2 control-label">Triwulan 4</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT4RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+						</div>
+
+
+						<label for="addT4Pembahasan" class="col-sm-2 control-label">T4 ( 15% Total )</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="addT4Pembahasan" name="addT4Pembahasan" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addNilaiPembahasan" class="col-sm-2 control-label">Nilai</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="addNilaiPembahasan" name="addNilaiPembahasan" placeholder="Nilai">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="addUraianIndikator" class="col-sm-2 control-label">Uraian</label>
+						<div class="col-sm-9">
+							<textarea name="addUraianPembahasan" id="addUraianPembahasan" class="form-control" rows="3" required="required"></textarea>
+						</div>
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="submit" class="btn btn-default">Cancel</button>
+					<button type="submit" class="btn btn-info pull-right">Submit</button>
+				</div>
+				<!-- /.box-footer -->
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
