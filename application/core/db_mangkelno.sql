@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Des 2018 pada 05.20
--- Versi server: 10.1.30-MariaDB
--- Versi PHP: 7.2.2
+-- Generation Time: 19 Des 2018 pada 06.14
+-- Versi Server: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -187,7 +187,22 @@ INSERT INTO `tb_patokan_rekening` (`kode_patokan`, `nama`) VALUES
 CREATE TABLE `tb_pembahasan` (
   `id` int(3) NOT NULL,
   `kode_pembahasan` varchar(10) NOT NULL,
-  `kode_kegiatan` varchar(10) NOT NULL,
+  `kode_instansi` varchar(10) NOT NULL,
+  `kode_program` varchar(10) NOT NULL,
+  `kode_rekening` varchar(15) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `nama_siswa` varchar(50) NOT NULL,
+  `plafon` varchar(15) NOT NULL,
+  `triwulan1_rekening` int(11) NOT NULL,
+  `triwulan2_rekening` int(11) NOT NULL,
+  `triwulan3_rekening` int(11) NOT NULL,
+  `triwulan4_rekening` int(11) NOT NULL,
+  `total_rekening` int(11) NOT NULL,
+  `triwulan1_pembahasan` int(11) NOT NULL,
+  `triwulan2_pembahasan` int(11) NOT NULL,
+  `triwulan3_pembahasan` int(11) NOT NULL,
+  `triwulan4_pembahasan` int(11) NOT NULL,
+  `nilai` int(3) NOT NULL,
   `uraian` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -283,14 +298,14 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 --
 
 --
--- Indeks untuk tabel `tb_admin`
+-- Indexes for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tb_detail_rekening`
+-- Indexes for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD PRIMARY KEY (`id`),
@@ -300,7 +315,7 @@ ALTER TABLE `tb_detail_rekening`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_indikator`
+-- Indexes for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   ADD PRIMARY KEY (`id`),
@@ -309,7 +324,7 @@ ALTER TABLE `tb_indikator`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_instansi`
+-- Indexes for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`),
@@ -317,7 +332,7 @@ ALTER TABLE `tb_instansi`
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tb_kegiatan`
+-- Indexes for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   ADD PRIMARY KEY (`id`),
@@ -327,21 +342,24 @@ ALTER TABLE `tb_kegiatan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_patokan_rekening`
+-- Indexes for table `tb_patokan_rekening`
 --
 ALTER TABLE `tb_patokan_rekening`
   ADD PRIMARY KEY (`kode_patokan`);
 
 --
--- Indeks untuk tabel `tb_pembahasan`
+-- Indexes for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_pembahasan` (`kode_pembahasan`),
-  ADD KEY `kode_kegiatan` (`kode_kegiatan`);
+  ADD KEY `kode_instansi` (`kode_instansi`),
+  ADD KEY `kode_program` (`kode_program`),
+  ADD KEY `kode_rekening` (`kode_rekening`),
+  ADD KEY `id_siswa` (`id_siswa`);
 
 --
--- Indeks untuk tabel `tb_program`
+-- Indexes for table `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`),
@@ -351,7 +369,7 @@ ALTER TABLE `tb_program`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_rekening`
+-- Indexes for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   ADD PRIMARY KEY (`id`),
@@ -362,7 +380,7 @@ ALTER TABLE `tb_rekening`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_siswa`
+-- Indexes for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`),
@@ -371,59 +389,59 @@ ALTER TABLE `tb_siswa`
   ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tb_admin`
+-- AUTO_INCREMENT for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
+-- AUTO_INCREMENT for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_indikator`
+-- AUTO_INCREMENT for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_instansi`
+-- AUTO_INCREMENT for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kegiatan`
+-- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_pembahasan`
+-- AUTO_INCREMENT for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_program`
+-- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_rekening`
+-- AUTO_INCREMENT for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_siswa`
+-- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
@@ -461,7 +479,10 @@ ALTER TABLE `tb_kegiatan`
 -- Ketidakleluasaan untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  ADD CONSTRAINT `tb_pembahasan_ibfk_1` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_pembahasan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_3` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_4` FOREIGN KEY (`id_siswa`) REFERENCES `tb_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_program`
