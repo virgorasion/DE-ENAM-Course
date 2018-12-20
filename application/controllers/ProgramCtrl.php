@@ -128,6 +128,37 @@ class ProgramCtrl extends CI_controller
         echo $this->ProgramModel->getDataIndikator($kodeInstansi,$kodeProgram);
     }
     
+    //Get data ketika klik btn tambah pembahasan
+    public function GetDataInsertPembahasanSatu($kode,$kodeInstansi,$kodeProgram)
+    {
+        $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram);
+        echo json_encode($query);
+    }
+    //Get data ketika ubah select kegiatan
+    public function GetDataInsertPembahasanDua($kode,$kodeInstansi,$kodeProgram)
+    {
+        $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram);
+        echo json_encode($query);
+    }
+    //get data total_rekening setelah select kegiatan
+    public function GetDataInsertPembahasanTiga($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan)
+    {
+        $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan);
+        echo json_encode($query);
+    }
+    //get data NamaRekening setelah select kegiatan
+    public function GetDataInsertPembahasanEmpat($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan)
+    {
+        $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan);
+        echo json_encode($query);
+    }
+    //get data Triwulan setelah select rekening
+    public function GetDataInsertPembahasanLima($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
+    {
+        $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening);
+        echo json_encode($query);
+    }
+    
 
     public function TambahKegiatan()
     {

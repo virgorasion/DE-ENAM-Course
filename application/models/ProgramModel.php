@@ -113,6 +113,57 @@ class ProgramModel extends CI_model
         return $this->datatables->generate();
     }
     
+    public function getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan = NULL,$kodeRekening = NULL)
+    {
+        if ($kode == "Satu") {
+            $query = $this->db->select("tb_instansi.nama_instansi,tb_program.nama_program,tb_program.plafon")
+                ->from("tb_instansi")
+                ->join("tb_program", "tb_program.kode_instansi = tb_instansi.kode_instansi")
+                ->where("tb_instansi.kode_instansi", $kodeInstansi)
+                ->where("tb_program.kode_instansi", $kodeInstansi)
+                ->where("tb_program.kode_program", $kodeProgram)
+                ->get()
+                ->result();
+            return $query;
+        }elseif ($kode == "Dua") {
+            $query = $this->db->select("kode_kegiatan,nama_kegiatan")
+                ->from("tb_kegiatan")
+                ->where("kode_instansi",$kodeInstansi)
+                ->where("kode_program",$kodeProgram)
+                ->get()
+                ->result();
+            return $query;
+        }elseif ($kode == "Tiga") {
+            $query = $this->db->select("total_rekening")
+                ->from("tb_kegiatan")
+                ->where("kode_instansi",$kodeInstansi)
+                ->where("kode_program",$kodeProgram)
+                ->where("kode_kegiatan",$kodeKegiatan)
+                ->get()
+                ->result();
+            return $query;
+        }elseif ($kode == "Empat") {
+            $query = $this->db->select("kode_rekening,uraian_rekening")
+                ->from("tb_rekening")
+                ->where("kode_instansi",$kodeInstansi)
+                ->where("kode_program",$kodeProgram)
+                ->where("kode_kegiatan",$kodeKegiatan)
+                ->get()
+                ->result();
+            return $query;
+        }elseif ($kode == "Lima") {
+            $query = $this->db->select("triwulan_1,triwulan_2,triwulan_3,triwulan_4")
+                ->from("tb_rekening")
+                ->where("kode_instansi", $kodeInstansi)
+                ->where("kode_program", $kodeProgram)
+                ->where("kode_kegiatan", $kodeKegiatan)
+                ->where("kode_rekening",$kodeRekening)
+                ->get()
+                ->result();
+            return $query;
+        }
+    }
+    
 
     public function DeleteDataKegiatan($table,$idKegiatan)
     {

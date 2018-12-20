@@ -660,6 +660,79 @@
 
 	//Fungsi: Insert Pembahasan
 	$("#btnAddPembahasan").click(function(){
+		$.ajax({
+			url: "<?=site_url('ProgramCtrl/GetDataInsertPembahasanSatu/')?>"+"Satu"+"/"+kodeInstansi+"/"+kodeProgram,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				$("#FormAddPembahasan").find("#addProgramPembahasan").val(data[0].nama_program);
+				$("#FormAddPembahasan").find("#addPlafonPembahasan").val(data[0].plafon);
+				$("#FormAddPembahasan").find("#addInstansiPembahasan").val(data[0].nama_instansi);
+				$.ajax({
+					url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanDua/') ?>"+"Dua"+"/"+kodeInstansi+"/"+kodeProgram,
+					type: "POST",
+					success:function(result){
+						var data = JSON.parse(result);
+						var html = "<option>Pilih Kegiatan</option>";
+						$.each(data,function(i){
+							html += '<option value="'+data[i].kode_kegiatan+'">'+data[i].nama_kegiatan+'</option>';
+							$("#addNamaKegiatanPembahasan").html(html);
+						})
+					}
+				})
+			}
+		});
+	})
+
+	//Fungsi: Change data rekening pembahasan
+	$("#addNamaKegiatanPembahasan").on('change', function(){
+		var kegiatanKode = $(this).val();
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanTiga/') ?>"+"Tiga"+"/"+kodeInstansi+"/"+kodeProgram+"/"+kegiatanKode,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				$("#addTotalRekeningPembahasan").val(data[0].total_rekening);
+				$("#addT1Pembahasan").val(data[0].total_rekening /100*20);
+				$("#addT2Pembahasan").val(data[0].total_rekening /100*35);
+				$("#addT3Pembahasan").val(data[0].total_rekening /100*30);
+				$("#addT4Pembahasan").val(data[0].total_rekening /100*15);
+
+			}
+		})
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanEmpat/') ?>"+"Empat"+"/"+kodeInstansi+"/"+kodeProgram+"/"+kegiatanKode,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				var html = "<option>Nama Rekening</option>";
+				$.each(data,function(i){
+					html += '<option value="'+data[i].kode_rekening+'">'+data[i].uraian_rekening+'</option>';
+					$("#addNamaRekeningPembahasan").html(html);
+				})
+			}
+		})
+	})
+
+	//Fungsi: Show data triwulan
+	$("#addNamaRekeningPembahasan").on("change",function(){
+		var kegiatanKode = $("#addNamaKegiatanPembahasan").val();
+		var rekeningKode = $(this).val();
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanLima/') ?>"+"Lima"+"/"+kodeInstansi+"/"+kodeProgram+"/"+kegiatanKode+"/"+rekeningKode,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				$("#addT1RekeningPembahasan").val(data[0].triwulan_1);
+				$("#addT2RekeningPembahasan").val(data[0].triwulan_2);
+				$("#addT3RekeningPembahasan").val(data[0].triwulan_3);
+				$("#addT4RekeningPembahasan").val(data[0].triwulan_4);
+			}
+		})
+	})
+
+	//Fungsi: Insert Pembahasan
+	$("#btnAddPembahasan").click(function(){
 		$("#modalPembahasan").modal("show");
 	})
 

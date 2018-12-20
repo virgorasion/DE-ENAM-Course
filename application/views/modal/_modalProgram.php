@@ -445,7 +445,7 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Nomor</label>
 						<div class="col-sm-2">
-							<input type="number" class="form-control" id="addNomor" name="addNomor" placeholder="Nomor" value="1">
+							<input type="number" class="form-control" id="addNomorPembahasan" name="addNomorPembahasan" placeholder="Nomor" value="1">
 						</div>
 					</div>
 					<div class="form-group">
@@ -465,68 +465,72 @@
 						</div>
 						<label for="addPlafonPembahasan" class="col-sm-2 control-label">Plafon</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addPlafonPembahasan" name="addPlafonPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addPlafonPembahasan" name="addPlafonPembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="addNamaKegiatanPembahasan" class="col-sm-2 control-label">Nama Kegiatan</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="addNamaKegiatanPembahasan" id="addNamaKegiatanPembahasan">
+							</select>
+						</div>
 						<label for="addNamaRekeningPembahasan" class="col-sm-2 control-label">Nama Rekening</label>
 						<div class="col-sm-3">
 							<select class="form-control" name="addNamaRekeningPembahasan" id="addNamaRekeningPembahasan">
-								<option>Pilih Rekening</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addTotalRekeningPembahasan" class="col-sm-2 control-label">Total Rekening</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addTotalRekeningPembahasan" name="addTotalRekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addTotalRekeningPembahasan" name="addTotalRekeningPembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT1RekeningPembahasan" class="col-sm-2 control-label">Triwulan 1</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT1RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT1RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
 						</div>
 
 						<label for="addT1Pembahasan" class="col-sm-2 control-label">T1 ( 20% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT1Pembahasan" name="addT1Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT1Pembahasan" name="addT1Pembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT2RekeningPembahasan" class="col-sm-2 control-label">Triwulan 2</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT2RekeningPembahasan" name="addT2RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT2RekeningPembahasan" name="addT2RekeningPembahasan" disabled>
 						</div>
 
 
 						<label for="addT1Pembahasan" class="col-sm-2 control-label">T2 ( 35% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT2Pembahasan" name="addT2Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT2Pembahasan" name="addT2Pembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT3RekeningPembahasan" class="col-sm-2 control-label">Triwulan 3</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT3RekeningPembahasan" name="addT3RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT3RekeningPembahasan" name="addT3RekeningPembahasan" disabled>
 						</div>
 
 
 						<label for="addT3Pembahasan" class="col-sm-2 control-label">T3 ( 30% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT3Pembahasan" name="addT3Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT3Pembahasan" name="addT3Pembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT4RekeningPembahasan" class="col-sm-2 control-label">Triwulan 4</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT4RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT4RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
 						</div>
 
 
 						<label for="addT4Pembahasan" class="col-sm-2 control-label">T4 ( 15% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addT4Pembahasan" name="addT4Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT4Pembahasan" name="addT4Pembahasan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
