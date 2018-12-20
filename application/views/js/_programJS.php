@@ -658,5 +658,9 @@
 		$("#FormAddIndikator").find("#actionTypeIndikator").val("add");
 	})
 
+	//Fungsi: Insert Pembahasan
+	$("#btnAddPembahasan").click(function(){
+		$("#modalPembahasan").modal("show");
+	})
 
 </script>
