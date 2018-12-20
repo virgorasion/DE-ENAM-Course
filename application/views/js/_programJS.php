@@ -260,7 +260,7 @@
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
 			funcTableIndikator();
-		}else {
+ 		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
