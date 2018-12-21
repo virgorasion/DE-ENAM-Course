@@ -660,6 +660,16 @@
 
 	//Fungsi: Insert Pembahasan
 	$("#btnAddPembahasan").click(function(){
+		$("#addNamaPembahasan").val("<?=$_SESSION['nama']?>");
+		$("#addTotalRekeningPembahasan").val("");
+		$("#addT1Pembahasan").val("");
+		$("#addT2Pembahasan").val("");
+		$("#addT3Pembahasan").val("");
+		$("#addT4Pembahasan").val("");
+		$("#addT1RekeningPembahasan").val("");
+		$("#addT2RekeningPembahasan").val("");
+		$("#addT3RekeningPembahasan").val("");
+		$("#addT4RekeningPembahasan").val("");
 		$.ajax({
 			url: "<?=site_url('ProgramCtrl/GetDataInsertPembahasanSatu/')?>"+"Satu"+"/"+kodeInstansi+"/"+kodeProgram,
 			type: "POST",
@@ -697,6 +707,10 @@
 				$("#addT2Pembahasan").val(data[0].total_rekening /100*35);
 				$("#addT3Pembahasan").val(data[0].total_rekening /100*30);
 				$("#addT4Pembahasan").val(data[0].total_rekening /100*15);
+				$("#addT1RekeningPembahasan").val("");
+				$("#addT2RekeningPembahasan").val("");
+				$("#addT3RekeningPembahasan").val("");
+				$("#addT4RekeningPembahasan").val("");
 
 			}
 		})
