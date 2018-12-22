@@ -127,6 +127,14 @@ class ProgramCtrl extends CI_controller
         header("Content-Type: application/json");
         echo $this->ProgramModel->getDataIndikator($kodeInstansi,$kodeProgram);
     }
+
+    //Datatable Pembahasan
+    public function tablePembahasanAPI($kodeInstansi,$kodeProgram)
+    {
+        header("Content-Tyoe: application/json");
+        echo $this->ProgramModel->getDataPembahasan($kodeInstansi,$kodeProgram);
+    }
+    
     
     //Get data ketika klik btn tambah pembahasan
     public function GetDataInsertPembahasanSatu($kode,$kodeInstansi,$kodeProgram)
@@ -228,6 +236,85 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('err', 'Gagal menambah Indikator, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
+    
+    public function ActionPembahasan()
+    {
+        $p = $this->input->post();
+        $kodeInstansi = $p['KodeInstansiPembahasan'];
+        $kodeProgram = $p['KodeProgramPembahasan'];
+        $T1Pembahasan = str_replace(".","",$p['addT1Pembahasan']);
+        $T2Pembahasan = str_replace(".","",$p['addT2Pembahasan']);
+        $T3Pembahasan = str_replace(".","",$p['addT3Pembahasan']);
+        $T4Pembahasan = str_replace(".","",$p['addT4Pembahasan']);
+        $T1Rekening = str_replace(".","",$p['addT1RekeningPembahasan']);
+        $T2Rekening = str_replace(".","",$p['addT2RekeningPembahasan']);
+        $T3Rekening = str_replace(".","",$p['addT3RekeningPembahasan']);
+        $T4Rekening = str_replace(".","",$p['addT4RekeningPembahasan']);
+        // echo $T1Rekening."<br>";
+        // echo $T1Pembahasan;
+        // die();
+        if ($p['actionTypePembahasan'] == "add") {
+            $data = array(
+                'kode_pembahasan' => rand(0,9999),
+                'kode_instansi' => $p['KodeInstansiPembahasan'],
+                'kode_program' => $p['KodeProgramPembahasan'],
+                'kode_kegiatan' => $p['addNamaKegiatanPembahasan'],
+                'kode_rekening' => $p['addNamaRekeningPembahasan'],
+                'id_siswa' => $p['IdSiswaPembahasan'],
+                'nama_siswa' => $p['addNamaPembahasan'],
+                'plafon' => $p['addPlafonPembahasan'],
+                'triwulan1_rekening' => $T1Rekening,
+                'triwulan2_rekening' => $T2Rekening,
+                'triwulan3_rekening' => $T3Rekening,
+                'triwulan4_rekenin' => $T4Rekening,
+                'total_rekening' => $p['addTotalRekeningPembahasan'],
+                'triwulan1_pembahasan' => $T1Pembahasan,
+                'triwulan2_pembahasan' => $T2Pembahasan,
+                'triwulan3_pembahasan' => $T3Pembahasan,
+                'triwulan4_pembahasan' => $T4Pembahasan,
+                'nilai' => $p['addNilaiPembahasan'],
+                'uraian' => $p['addUraianPembahasan']
+            );
+            $query = $this->ProgramModel->ActionInsert("tb_pembahasan",$data);
+        }elseif ($p['actionTypePembahasan'] == "edit") {
+            $data = array(
+                'kode_kegiatan' => $p['addNamaKegiatanPembahasan'],
+                'kode_rekening' => $p['addNamaRekeningPembahasan'],
+                'id_siswa' => $p['IdSiswaPembahasan'],
+                'nama_siswa' => $p['addNamaPembahasan'],
+                'plafon' => $p['addPlafonPembahasan'],
+                'triwulan1_rekening' => $T1Rekening,
+                'triwulan2_rekening' => $T2Rekening,
+                'triwulan3_rekening' => $T3Rekening,
+                'triwulan4_rekening' => $T4Rekening,
+                'total_rekening' => $p['addTotalRekeningPembahasan'],
+                'triwulan1_pembahasan' => $T1Pembahasan,
+                'triwulan2_pembahasan' => $T2Pembahasan,
+                'triwulan3_pembahasan' => $T3Pembahasan,
+                'triwulan4_pembahasan' => $T4Pembahasan,
+                'nilai' => $p['addNilaiPembahasan'],
+                'uraian' => $p['addUraianPembahasan']
+            );
+            $where = $p['MainIdPembahasan'];
+            $query = $this->ProgramModel->updateDataProgram("tb_pembahasan",$data,$where);
+        } else {
+            $this->session->set_flashdata('err', 'Terdapat kesalahan silahkan reload halaman saat ini !');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Pembahasan_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil menambah Pembahasan');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Pembahasan_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('err', 'Gagal menambah Pembahasan, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }

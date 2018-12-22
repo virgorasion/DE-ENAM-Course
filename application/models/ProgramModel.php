@@ -112,6 +112,61 @@ class ProgramModel extends CI_model
         $this->datatables->group_by("id");
         return $this->datatables->generate();
     }
+
+    public function getDataPembahasan($kodeInstansi,$kodeProgram)
+    {
+        $this->datatables->select("tb_pembahasan.id,
+                                    tb_pembahasan.kode_pembahasan,
+                                    tb_pembahasan.kode_instansi,
+                                    tb_pembahasan.kode_program,
+                                    tb_pembahasan.kode_kegiatan,
+                                    tb_pembahasan.kode_rekening,
+                                    tb_pembahasan.id_siswa,
+                                    tb_pembahasan.nama_siswa,
+                                    tb_pembahasan.plafon,
+                                    tb_pembahasan.triwulan1_rekening,
+                                    tb_pembahasan.triwulan2_rekening,
+                                    tb_pembahasan.triwulan3_rekening,
+                                    tb_pembahasan.triwulan4_rekening,
+                                    tb_pembahasan.total_rekening,
+                                    tb_pembahasan.triwulan1_pembahasan,
+                                    tb_pembahasan.triwulan2_pembahasan,
+                                    tb_pembahasan.triwulan3_pembahasan,
+                                    tb_pembahasan.triwulan4_pembahasan,
+                                    tb_pembahasan.nilai,
+                                    tb_pembahasan.uraian,
+                                    tb_instansi.nama_instansi");
+        $this->datatables->from("tb_pembahasan");
+        $this->datatables->join("tb_instansi", "tb_instansi.kode_instansi = tb_pembahasan.kode_instansi");
+        $this->datatables->where("tb_pembahasan.kode_instansi",$kodeInstansi);
+        $this->datatables->where("tb_pembahasan.kode_program",$kodeProgram);
+        $this->datatables->add_column(
+            'action',
+            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
+            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-indikator="$2" data-instansi="$3" data-program="$4" data-jenis="$5" data-uraian="$6" data-satuan="$7" data-target="$8"><i class="fa fa-pencil"></i></a> 
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$19"><i class="fa fa-remove"></i></a>',
+            'id,
+            kode_pembahasan,
+            kode_instansi,
+            kode_program,
+            kode_kegiatan,
+            kode_rekening,
+            id_siswa,
+            nama_siswa,
+            plafon,
+            triwulan1_rekening,
+            triwulan2_rekening,
+            triwulan3_rekening,
+            triwulan4_rekening,
+            total_rekening,
+            triwulan1_pembahasan,
+            triwulan2_pembahasan,
+            triwulan3_pembahasan,
+            triwulan4_pembahasan,
+            nilai,
+            uraian');
+        return $this->datatables->generate();
+    }
     
     public function getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan = NULL,$kodeRekening = NULL)
     {

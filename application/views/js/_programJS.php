@@ -5,6 +5,7 @@
 	var kodeRekening = "";
 	var tableKegiatan = "";
 	var tableIndikator = "";
+	var tablePembahasan = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
     // Setup datatables
@@ -22,7 +23,7 @@
         };
     };
 
-	//Fungsi: untuk menggenerate table Kegiatan secara serverSide
+	//Fungsi: untuk menggenerate table Kegiatan
 	function funcTableKegiatan(kodeProgram) {
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
@@ -71,7 +72,7 @@
 	return tableKegiatan;
 	}
 
-	//Fungsi: untuk menggenerate table IndkatorKegiatan secara serverSide
+	//Fungsi: untuk menggenerate table IndkatorKegiatan
 	function funcTableIndikator() {
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
@@ -115,7 +116,56 @@
 	return tableIndikator;
 	}
 
-	//Fungsi: untuk menggenerate table Rekening secara serverSide
+	//Fungsi: untuk menggenerate table IndkatorKegiatan
+	function funcTablePembahasan() {
+		$('#boxKegiatan').fadeIn(1000);
+		$('#boxKegiatan').removeClass('hidden');
+		tablePembahasan = $("#tablePembahasan").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/tablePembahasanAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
+					columns: [
+						{
+							"data": null,
+							"orderable": false,
+							"searchable": false
+						},
+						{"data": "nama_siswa"},
+						{"data": "nama_instansi"},
+						{"data": "plafon"},
+						{"data": "triwulan1_pembahasan"},
+						{"data": "triwulan2_pembahasan"},
+						{"data": "triwulan3_pembahasan"},
+						{"data": "triwulan4_pembahasan"},
+						{"data": "nilai"},
+						{"data": "action", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(0)', row).html(index);
+			}
+
+		});
+		// end setup datatables	
+	return tablePembahasan;
+	}
+
+	//Fungsi: untuk menggenerate table Rekening
 	function funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan) {
 		tableRekening = $("#tableRekening").DataTable({
 			initComplete: function() {
@@ -260,11 +310,13 @@
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
 			funcTableIndikator();
+			funcTablePembahasan();
  		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
 			tableIndikator.destroy();
+			tablePembahasan.destroy();
 		}
 	});
 	//Fungsi: Hidden box Kegiatan
@@ -273,6 +325,7 @@
 		$('#boxKegiatan').addClass('hidden');
 		tableKegiatan.destroy();
 		tableIndikator.destroy();
+		tablePembahasan.destroy();
 	});
 
 	//Fungsi: Show Data IndikatorKegiatan
@@ -660,6 +713,9 @@
 
 	//Fungsi: Insert Pembahasan
 	$("#btnAddPembahasan").click(function(){
+		$("#actionTypePembahasan").val("add");
+		$("#KodeInstansiPembahasan").val(kodeInstansi);
+		$("#KodeProgramPembahasan").val(kodeProgram);
 		$("#addNamaPembahasan").val("<?=$_SESSION['nama']?>");
 		$("#addTotalRekeningPembahasan").val("");
 		$("#addT1Pembahasan").val("");

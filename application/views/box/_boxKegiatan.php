@@ -85,7 +85,7 @@
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="form-inline col-md-2">
 								<br>
-								<?php if ($_SESSION['hakAkses'] == 1) { ?>
+								<?php if ($_SESSION['hakAkses'] != 2) { ?>
 								<div class="form-group col-sm-4">
 									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah
 										Pembahasan</a>

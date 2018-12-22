@@ -346,7 +346,7 @@
 					<input type="hidden" id="KodeRekeningDetailRekening" name="KodeRekeningDetailRekening">
 					<input type="hidden" id="MainIdDetailRekening" name="MainIdDetailRekening">
 					<input type="hidden" id="actionTypeDetailRekening" name="actionTypeDetailRekening">
-					<button type="submit" class="btn btn-default">Cancel</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="submit" class="btn btn-info pull-right">Submit</button>
 				</div>
 				<!-- /.box-footer -->
@@ -418,7 +418,7 @@
 					<input type="hidden" id="KodeProgramIndikator" name="KodeProgramIndikator">
 					<input type="hidden" id="MainIdIndikator" name="MainIdIndikator">
 					<input type="hidden" id="actionTypeIndikator" name="actionTypeIndikator">
-					<button type="submit" class="btn btn-default">Cancel</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="submit" class="btn btn-info pull-right">Submit</button>
 				</div>
 				<!-- /.box-footer -->
@@ -451,21 +451,21 @@
 					<div class="form-group">
 						<label for="addNamaPembahasan" class="col-sm-2 control-label">Nama</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addNamaPembahasan" name="addNamaPembahasan" disabled>
+							<input type="text" class="form-control" id="addNamaPembahasan" name="addNamaPembahasan" readonly>
 						</div>
 						<label for="addInstansiPembahasan" class="col-sm-2 control-label">Instansi</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addInstansiPembahasan" name="addInstansiPembahasan" disabled>
+							<input type="text" class="form-control" id="addInstansiPembahasan" name="addInstansiPembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addprogramPembahasan" class="col-sm-2 control-label">Program</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="addProgramPembahasan" name="addProgramPembahasan" disabled>
+							<input type="text" class="form-control" id="addProgramPembahasan" name="addProgramPembahasan" readonly>
 						</div>
 						<label for="addPlafonPembahasan" class="col-sm-2 control-label">Plafon</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addPlafonPembahasan" name="addPlafonPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addPlafonPembahasan" name="addPlafonPembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
@@ -483,54 +483,48 @@
 					<div class="form-group">
 						<label for="addTotalRekeningPembahasan" class="col-sm-2 control-label">Total Rekening</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addTotalRekeningPembahasan" name="addTotalRekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addTotalRekeningPembahasan" name="addTotalRekeningPembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT1RekeningPembahasan" class="col-sm-2 control-label">Triwulan 1</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT1RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT1RekeningPembahasan" name="addT1RekeningPembahasan" readonly>
 						</div>
 
 						<label for="addT1Pembahasan" class="col-sm-2 control-label">T1 ( 20% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT1Pembahasan" name="addT1Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT1Pembahasan" name="addT1Pembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT2RekeningPembahasan" class="col-sm-2 control-label">Triwulan 2</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT2RekeningPembahasan" name="addT2RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT2RekeningPembahasan" name="addT2RekeningPembahasan" readonly>
 						</div>
-
-
 						<label for="addT1Pembahasan" class="col-sm-2 control-label">T2 ( 35% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT2Pembahasan" name="addT2Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT2Pembahasan" name="addT2Pembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT3RekeningPembahasan" class="col-sm-2 control-label">Triwulan 3</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT3RekeningPembahasan" name="addT3RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT3RekeningPembahasan" name="addT3RekeningPembahasan" readonly>
 						</div>
-
-
 						<label for="addT3Pembahasan" class="col-sm-2 control-label">T3 ( 30% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT3Pembahasan" name="addT3Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT3Pembahasan" name="addT3Pembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="addT4RekeningPembahasan" class="col-sm-2 control-label">Triwulan 4</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT4RekeningPembahasan" name="addT1RekeningPembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT4RekeningPembahasan" name="addT4RekeningPembahasan" readonly>
 						</div>
-
-
 						<label for="addT4Pembahasan" class="col-sm-2 control-label">T4 ( 15% Total )</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control inputMask" id="addT4Pembahasan" name="addT4Pembahasan" disabled>
+							<input type="text" class="form-control inputMask" id="addT4Pembahasan" name="addT4Pembahasan" readonly>
 						</div>
 					</div>
 					<div class="form-group">
@@ -548,7 +542,12 @@
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
-					<button type="submit" class="btn btn-default">Cancel</button>
+					<input type="hidden" id="KodeInstansiPembahasan" name="KodeInstansiPembahasan">
+					<input type="hidden" id="KodeProgramPembahasan" name="KodeProgramPembahasan">
+					<input type="hidden" id="IdSiswaPembahasan" name="IdSiswaPembahasan" value="<?=@$_SESSION['id_siswa']?>">
+					<input type="hidden" id="MainIdPembahasan" name="MainIdPembahasan">
+					<input type="hidden" id="actionTypePembahasan" name="actionTypePembahasan">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="submit" class="btn btn-info pull-right">Submit</button>
 				</div>
 				<!-- /.box-footer -->
