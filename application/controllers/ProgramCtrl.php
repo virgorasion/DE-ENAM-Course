@@ -269,7 +269,7 @@ class ProgramCtrl extends CI_controller
                 'triwulan1_rekening' => $T1Rekening,
                 'triwulan2_rekening' => $T2Rekening,
                 'triwulan3_rekening' => $T3Rekening,
-                'triwulan4_rekenin' => $T4Rekening,
+                'triwulan4_rekening' => $T4Rekening,
                 'total_rekening' => $p['addTotalRekeningPembahasan'],
                 'triwulan1_pembahasan' => $T1Pembahasan,
                 'triwulan2_pembahasan' => $T2Pembahasan,

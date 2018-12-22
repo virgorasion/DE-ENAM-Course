@@ -102,7 +102,7 @@ $dataModal['patokan'] = $patokan;
 										<?php
 									$no = 1;
 									foreach ($data as $item) {
-										if ($item->total_rekening != $item->total_rinci) {
+										if ($item->total_rinci != $item->plafon) {
 											$class = "label label-danger";
 										}else{
 											$class = "label label-success";
