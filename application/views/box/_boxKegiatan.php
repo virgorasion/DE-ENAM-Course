@@ -24,10 +24,10 @@
 					<a href="#nav-tabs-kegiatan-2" data-toggle="tab">
 						<i class="fa fa-edit"></i> Indikator</a>
 				</li>
-				<li id="tabPJKegiatan">
+				<!-- <li id="tabPJKegiatan">
 					<a href="#nav-tabs-kegiatan-3" data-toggle="tab">
 						<i class="fa fa-edit"></i> Penanggung Jawab</a>
-				</li>
+				</li> -->
 				<li id="tabKegiatan" class="active">
 					<a href="#nav-tabs-kegiatan-4" data-toggle="tab">
 						<i class="fa fa-edit"></i> Rincian Kegiatan</a>
@@ -111,7 +111,6 @@
 					</div>
 
 					<!-- Start Pembahasan Tab -->
-
 					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
 						<?php if ($_SESSION['hakAkses'] == 1) { ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -150,7 +149,7 @@
 					</div>
 
 					<!-- Start Penanggung Jawab Tab -->
-					<div class="tab-pane fade" id="nav-tabs-kegiatan-3">
+					<!-- <div class="tab-pane fade" id="nav-tabs-kegiatan-3">
 						<h4 class="mar-btm text-thin">Tambah Data</h4>
 						<hr>
 						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
@@ -187,7 +186,7 @@
 								<input type="submit" value="Submit" class="btn btn-flat btn-primary">
 							</div>
 						</form>
-					</div>
+					</div> -->
 
 					<!-- Start Rincian Kegiatan Tab -->
 					<div class="tab-pane fade in active" id="nav-tabs-kegiatan-4">
