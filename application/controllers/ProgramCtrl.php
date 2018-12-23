@@ -131,10 +131,9 @@ class ProgramCtrl extends CI_controller
     //Datatable Pembahasan
     public function tablePembahasanAPI($kodeInstansi,$kodeProgram)
     {
-        header("Content-Tyoe: application/json");
+        header("Content-Type: application/json");
         echo $this->ProgramModel->getDataPembahasan($kodeInstansi,$kodeProgram);
     }
-    
     
     //Get data ketika klik btn tambah pembahasan
     public function GetDataInsertPembahasanSatu($kode,$kodeInstansi,$kodeProgram)
@@ -164,6 +163,12 @@ class ProgramCtrl extends CI_controller
     public function GetDataInsertPembahasanLima($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
         $query = $this->ProgramModel->getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening);
+        echo json_encode($query);
+    }
+    
+    public function GetDataInfoKegiatan($kodeInstansi,$kodeProgram)
+    {
+        $query = $this->ProgramModel->getDataInfoKegiatan($kodeInstansi,$kodeProgram);
         echo json_encode($query);
     }
     
@@ -245,17 +250,11 @@ class ProgramCtrl extends CI_controller
         $p = $this->input->post();
         $kodeInstansi = $p['KodeInstansiPembahasan'];
         $kodeProgram = $p['KodeProgramPembahasan'];
-        $T1Pembahasan = str_replace(".","",$p['addT1Pembahasan']);
-        $T2Pembahasan = str_replace(".","",$p['addT2Pembahasan']);
-        $T3Pembahasan = str_replace(".","",$p['addT3Pembahasan']);
-        $T4Pembahasan = str_replace(".","",$p['addT4Pembahasan']);
         $T1Rekening = str_replace(".","",$p['addT1RekeningPembahasan']);
         $T2Rekening = str_replace(".","",$p['addT2RekeningPembahasan']);
         $T3Rekening = str_replace(".","",$p['addT3RekeningPembahasan']);
         $T4Rekening = str_replace(".","",$p['addT4RekeningPembahasan']);
-        // echo $T1Rekening."<br>";
-        // echo $T1Pembahasan;
-        // die();
+        $totalRekening = str_replace(".","",$p['addTotalRekeningPembahasan']);
         if ($p['actionTypePembahasan'] == "add") {
             $data = array(
                 'kode_pembahasan' => rand(0,9999),
@@ -270,11 +269,11 @@ class ProgramCtrl extends CI_controller
                 'triwulan2_rekening' => $T2Rekening,
                 'triwulan3_rekening' => $T3Rekening,
                 'triwulan4_rekening' => $T4Rekening,
-                'total_rekening' => $p['addTotalRekeningPembahasan'],
-                'triwulan1_pembahasan' => $T1Pembahasan,
-                'triwulan2_pembahasan' => $T2Pembahasan,
-                'triwulan3_pembahasan' => $T3Pembahasan,
-                'triwulan4_pembahasan' => $T4Pembahasan,
+                'total_rekening' => $totalRekening,
+                'triwulan1_pembahasan' => $p['addT1Pembahasan'],
+                'triwulan2_pembahasan' => $p['addT2Pembahasan'],
+                'triwulan3_pembahasan' => $p['addT3Pembahasan'],
+                'triwulan4_pembahasan' => $p['addT4Pembahasan'],
                 'nilai' => $p['addNilaiPembahasan'],
                 'uraian' => $p['addUraianPembahasan']
             );
@@ -283,18 +282,15 @@ class ProgramCtrl extends CI_controller
             $data = array(
                 'kode_kegiatan' => $p['addNamaKegiatanPembahasan'],
                 'kode_rekening' => $p['addNamaRekeningPembahasan'],
-                'id_siswa' => $p['IdSiswaPembahasan'],
-                'nama_siswa' => $p['addNamaPembahasan'],
-                'plafon' => $p['addPlafonPembahasan'],
                 'triwulan1_rekening' => $T1Rekening,
                 'triwulan2_rekening' => $T2Rekening,
                 'triwulan3_rekening' => $T3Rekening,
                 'triwulan4_rekening' => $T4Rekening,
-                'total_rekening' => $p['addTotalRekeningPembahasan'],
-                'triwulan1_pembahasan' => $T1Pembahasan,
-                'triwulan2_pembahasan' => $T2Pembahasan,
-                'triwulan3_pembahasan' => $T3Pembahasan,
-                'triwulan4_pembahasan' => $T4Pembahasan,
+                'total_rekening' => $totalRekening,
+                'triwulan1_pembahasan' => $p['addT1Pembahasan'],
+                'triwulan2_pembahasan' => $p['addT2Pembahasan'],
+                'triwulan3_pembahasan' => $p['addT3Pembahasan'],
+                'triwulan4_pembahasan' => $p['addT4Pembahasan'],
                 'nilai' => $p['addNilaiPembahasan'],
                 'uraian' => $p['addUraianPembahasan']
             );
@@ -361,18 +357,33 @@ class ProgramCtrl extends CI_controller
     {
         $query = $this->ProgramModel->DeleteDataKegiatan('tb_indikator',$idIndikator);
         if ($query != null) {
-            $this->session->set_flashdata('succ', 'Berhasil menambah Indikator');
+            $this->session->set_flashdata('succ', 'Berhasil Hapus Indikator');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('err', 'Gagal menambah Indikator, segera hubungi admin');
+            $this->session->set_flashdata('err', 'Gagal Hapus Indikator, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
     
+    public function HapusPembahasan($idPembahasan,$kodeProgram,$kodeInstansi)
+    {
+        $this->ProgramModel->DeleteDatakegiatan("tb_pembahasan",$idPembahasan);
+        if ($query != null) {
+            $this->session->set_flashdata('succ', 'Berhasil Hapus Pembahasan');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Pembahasan_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        } else {
+            $this->session->set_flashdata('err', 'Gagal Hapus Pembahasan, segera hubungi admin');
+            $this->session->set_flashdata('kodeProgram', $kodeProgram);
+            $this->session->set_flashdata('Pembahasan_Direct', "Direction");
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }
+    }
 
     private function generateKodeKegiatan($id)
     {

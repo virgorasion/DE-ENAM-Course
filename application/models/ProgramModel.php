@@ -135,16 +135,18 @@ class ProgramModel extends CI_model
                                     tb_pembahasan.triwulan4_pembahasan,
                                     tb_pembahasan.nilai,
                                     tb_pembahasan.uraian,
-                                    tb_instansi.nama_instansi");
+                                    tb_instansi.nama_instansi,
+                                    tb_program.nama_program");
         $this->datatables->from("tb_pembahasan");
         $this->datatables->join("tb_instansi", "tb_instansi.kode_instansi = tb_pembahasan.kode_instansi");
+        $this->datatables->join("tb_program", "tb_program.kode_program = tb_pembahasan.kode_program");
         $this->datatables->where("tb_pembahasan.kode_instansi",$kodeInstansi);
         $this->datatables->where("tb_pembahasan.kode_program",$kodeProgram);
         $this->datatables->add_column(
             'action',
-            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
-            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-indikator="$2" data-instansi="$3" data-program="$4" data-jenis="$5" data-uraian="$6" data-satuan="$7" data-target="$8"><i class="fa fa-pencil"></i></a> 
-            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$19"><i class="fa fa-remove"></i></a>',
+            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs hidden" data-id="$1" data-pembahasan="$2" data-instansi="$3" data-program="$4" data-kegiatan="$5" data-rekening="$6" data-idsiswa="$7" data-namasiswa="$8" data-plafon="$9" data-t1rek="$10" data-t2rek="$11" data-t3rek="$12" data-t4rek="$13" data-totrek="$14" data-t1pem="$15" data-t2pem="$16" data-t3pem="$17" data-t4pem="$18" data-nilai="$19" data-uraian="$20" data-namainstansi="$21" data-namaprogram="$22"><i class="fa fa-eye"></i></a> 
+            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-pembahasan="$2" data-instansi="$3" data-program="$4" data-kegiatan="$5" data-rekening="$6" data-idsiswa="$7" data-namasiswa="$8" data-plafon="$9" data-t1rek="$10" data-t2rek="$11" data-t3rek="$12" data-t4rek="$13" data-totrek="$14" data-t1pem="$15" data-t2pem="$16" data-t3pem="$17" data-t4pem="$18" data-nilai="$19" data-uraian="$20" data-namainstansi="$21" data-namaprogram="$22"><i class="fa fa-pencil"></i></a> 
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$20"><i class="fa fa-remove"></i></a>',
             'id,
             kode_pembahasan,
             kode_instansi,
@@ -164,16 +166,20 @@ class ProgramModel extends CI_model
             triwulan3_pembahasan,
             triwulan4_pembahasan,
             nilai,
-            uraian');
+            uraian,
+            nama_instansi,
+            nama_program');
+        $this->datatables->group_by("tb_pembahasan.id");
         return $this->datatables->generate();
     }
     
     public function getDataInsert($kode,$kodeInstansi,$kodeProgram,$kodeKegiatan = NULL,$kodeRekening = NULL)
     {
         if ($kode == "Satu") {
-            $query = $this->db->select("tb_instansi.nama_instansi,tb_program.nama_program,tb_program.plafon")
+            $query = $this->db->select("tb_instansi.nama_instansi,tb_program.nama_program,tb_program.plafon,tb_program.id_siswa,tb_siswa.nama")
                 ->from("tb_instansi")
                 ->join("tb_program", "tb_program.kode_instansi = tb_instansi.kode_instansi")
+                ->join("tb_siswa", "tb_siswa.id_siswa = tb_program.id_siswa")
                 ->where("tb_instansi.kode_instansi", $kodeInstansi)
                 ->where("tb_program.kode_instansi", $kodeInstansi)
                 ->where("tb_program.kode_program", $kodeProgram)
@@ -219,7 +225,11 @@ class ProgramModel extends CI_model
         }
     }
     
-
+    public function getDataInfoKegiatan($kodeInstansi,$kodeProgram)
+    {
+        return $this->db->select("kode_program,nama_program,plafon")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
+    }
+    
     public function DeleteDataKegiatan($table,$idKegiatan)
     {
         return $this->db->delete($table,array('id'=>$idKegiatan));

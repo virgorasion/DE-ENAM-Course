@@ -544,7 +544,7 @@
 				<div class="box-footer">
 					<input type="hidden" id="KodeInstansiPembahasan" name="KodeInstansiPembahasan">
 					<input type="hidden" id="KodeProgramPembahasan" name="KodeProgramPembahasan">
-					<input type="hidden" id="IdSiswaPembahasan" name="IdSiswaPembahasan" value="<?=@$_SESSION['id_siswa']?>">
+					<input type="hidden" id="IdSiswaPembahasan" name="IdSiswaPembahasan">
 					<input type="hidden" id="MainIdPembahasan" name="MainIdPembahasan">
 					<input type="hidden" id="actionTypePembahasan" name="actionTypePembahasan">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

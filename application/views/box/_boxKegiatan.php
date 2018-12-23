@@ -44,6 +44,38 @@
 
 					<!-- Start Info Kegiatan Tab -->
 					<div class="tab-pane pad-btm fade " id="nav-tabs-kegiatan-1">
+						<table class="table">
+							<tr>
+								<td style="font-size:17px;width:300px">Jenis</td>
+								<td style="font-size:17px;width:5px">:</td>
+								<td style="font-size:17px" id="InfoJenis"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Kode Kegiatan</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="InfoKodeKegiatan"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Nama Kegiatan</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="InfoNamaKegiatan"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Uraian</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="InfoUraian"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Sasaran</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="InfoSasaran"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Plafon</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="InfoPlafon"></td>
+							</tr>
+						</table>
 					</div>
 
 					<!-- Start Indikator Tab -->
@@ -81,14 +113,13 @@
 					<!-- Start Pembahasan Tab -->
 
 					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
-						<?php if ($_SESSION['hakAkses'] != 2) { ?>
+						<?php if ($_SESSION['hakAkses'] == 1) { ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="form-inline col-md-2">
 								<br>
-								<?php if ($_SESSION['hakAkses'] != 2) { ?>
+								<?php if ($_SESSION['hakAkses'] == 1) { ?>
 								<div class="form-group col-sm-4">
-									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah
-										Pembahasan</a>
+									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah Pembahasan</a>
 								</div>
 								<?php } ?>
 							</div>

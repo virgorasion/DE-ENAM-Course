@@ -268,6 +268,8 @@
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
 		funcTableKegiatan(kodeProgram);
+		funcTableIndikator();
+		funcTablePembahasan();
 	<?php 
 } ?>
 
@@ -311,6 +313,19 @@
 			funcTableKegiatan(kodeProgram);
 			funcTableIndikator();
 			funcTablePembahasan();
+			$.ajax({
+				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
+				type: "POST",
+				success:function(result){
+					var data = JSON.parse(result);
+					$("#InfoJenis").text();
+					$("#InfoKodeKegiatan").text(data[0].kode_program);
+					$("#InfoNamaKegiatan").text(data[0].nama_program);
+					$("#InfoUraian").text("-");
+					$("#InfoSasaran").text();
+					$("#InfoPlafon").text(data[0].plafon);
+				}
+			})
  		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
@@ -419,6 +434,80 @@
 		$("#FormAddIndikator").find("#actionTypeIndikator").val("edit");
 		$("#FormAddIndikator").find("#KodeInstansiIndikator").val(kodeInstansi);
 		$("#FormAddIndikator").find("#KodeProgramIndikator").val(kodeProgram);
+	})
+
+	//Fungsi: Edit Pembahasan
+	$("#tablePembahasan").on("click",".edit_data", function(){
+		var id = $(this).data("id");
+		var kode_pembahasan = $(this).data('pembahasan');
+		var kode_instansi = $(this).data('instansi');
+		var kode_program = $(this).data('program');
+		var kode_kegiatan = $(this).data('kegiatan');
+		var kode_rekening = $(this).data('rekening');
+		var id_siswa = $(this).data('idsiswa');
+		var nama_siswa = $(this).data('namasiswa');
+		var plafon = $(this).data('plafon');
+		var T1Rekening = $(this).data('t1rek');
+		var T2Rekening = $(this).data('t2rek');
+		var T3Rekening = $(this).data('t3rek');
+		var T4Rekening = $(this).data('t4rek');
+		var total_rekening = $(this).data('totrek');
+		var T1Pembahasan = $(this).data('t1pem');
+		var T2Pembahasan = $(this).data('t2pem');
+		var T3Pembahasan = $(this).data('t3pem');
+		var T4Pembahasan = $(this).data('t4pem');
+		var nilai = $(this).data('nilai');
+		var uraian = $(this).data('uraian');
+		var instansi = $(this).data('namainstansi');
+		var program = $(this).data('namaprogram');
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanDua/') ?>"+"Dua"+"/"+kode_instansi+"/"+kode_program,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				var html = "<option>Pilih Kegiatan</option>";
+				$.each(data,function(i){
+					html += '<option value="'+data[i].kode_kegiatan+'">'+data[i].nama_kegiatan+'</option>';
+					$("#addNamaKegiatanPembahasan").html(html);
+				})
+			}
+		}).done(function(){
+			$("#addNamaKegiatanPembahasan").val(kode_kegiatan);
+		})
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanEmpat/') ?>"+"Empat"+"/"+kode_instansi+"/"+kode_program+"/"+kode_kegiatan,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				var html = "<option>Nama Rekening</option>";
+				$.each(data,function(i){
+					html += '<option value="'+data[i].kode_rekening+'">'+data[i].uraian_rekening+'</option>';
+					$("#addNamaRekeningPembahasan").html(html);
+				})
+			}
+		}).done(function(){
+			$("#addNamaRekeningPembahasan").val(kode_rekening);
+		})
+		$("#modalPembahasan").modal("show");
+		$("#actionTypePembahasan").val("edit");
+		$("#MainIdPembahasan").val(id);
+		$("#KodeInstansiPembahasan").val(kode_instansi);
+		$("#KodeProgramPembahasan").val(kode_program);
+		$("#addNamaPembahasan").val(nama_siswa);
+		$("#addInstansiPembahasan").val(instansi);
+		$("#addProgramPembahasan").val(program);
+		$("#addPlafonPembahasan").val(plafon);
+		$("#addTotalRekeningPembahasan").val(total_rekening);
+		$("#addT1RekeningPembahasan").val(T1Rekening);
+		$("#addT2RekeningPembahasan").val(T2Rekening);
+		$("#addT3RekeningPembahasan").val(T3Rekening);
+		$("#addT4RekeningPembahasan").val(T4Rekening);
+		$("#addT1Pembahasan").val(T1Pembahasan);
+		$("#addT2Pembahasan").val(T2Pembahasan);
+		$("#addT3Pembahasan").val(T3Pembahasan);
+		$("#addT4Pembahasan").val(T4Pembahasan);
+		$("#addNilaiPembahasan").val(nilai);
+		$("#addUraianPembahasan").val(uraian);
 	})
 
 	//Fungsi: edit program
@@ -580,6 +669,27 @@
           }
         }
       });
+	});
+	
+	//Fungsi: Delete Pembahasan
+	$('#tablePembahasan').on('click', '.delete_data', function () {
+      var id = $(this).data('id');
+	  var uraian = $(this).data('uraian');
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Pembahasan Ini ?',
+        content: uraian,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('ProgramCtrl/HapusPembahasan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
+            }
+          }
+        }
+      });
     });
 
 	//Fungsi: Delete Rekening
@@ -677,7 +787,6 @@
 		$('#boxKegiatan').removeClass('hidden');
 		if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
 			funcTableKegiatan(kodeProgram);
-			console.log("kegiatan initialize");
 		}
 	})
 
@@ -716,7 +825,7 @@
 		$("#actionTypePembahasan").val("add");
 		$("#KodeInstansiPembahasan").val(kodeInstansi);
 		$("#KodeProgramPembahasan").val(kodeProgram);
-		$("#addNamaPembahasan").val("<?=$_SESSION['nama']?>");
+		$("#addNamaPembahasan").val();
 		$("#addTotalRekeningPembahasan").val("");
 		$("#addT1Pembahasan").val("");
 		$("#addT2Pembahasan").val("");
@@ -734,6 +843,8 @@
 				$("#FormAddPembahasan").find("#addProgramPembahasan").val(data[0].nama_program);
 				$("#FormAddPembahasan").find("#addPlafonPembahasan").val(data[0].plafon);
 				$("#FormAddPembahasan").find("#addInstansiPembahasan").val(data[0].nama_instansi);
+				$("#FormAddPembahasan").find("#addNamaPembahasan").val(data[0].nama);
+				$("#FormAddPembahasan").find("#IdSiswaPembahasan").val(data[0].id_siswa);
 				$.ajax({
 					url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanDua/') ?>"+"Dua"+"/"+kodeInstansi+"/"+kodeProgram,
 					type: "POST",
@@ -805,5 +916,11 @@
 	$("#btnAddPembahasan").click(function(){
 		$("#modalPembahasan").modal("show");
 	})
+
+	//Fungsi: Show modal view pembahasan
+	// $("#tablePembahasan").on("click",".view_data",function(){
+	// 	$("#modalViewPembahasan").modal("show");
+
+	// })
 
 </script>
