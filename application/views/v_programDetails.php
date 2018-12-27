@@ -79,7 +79,8 @@ $dataModal['patokan'] = $patokan;
 									<div class="form-inline col-md-2">
 										<br>
 										<div class="form-group col-sm-4">
-											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah Data</a>
+											<a name="btnAdd" id="btnAdd" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Tambah
+												Data</a>
 										</div>
 									</div>
 								</div>
@@ -127,10 +128,12 @@ $dataModal['patokan'] = $patokan;
 												<?= number_format((double)$item->plafon,0,".",","); ?>
 											</td>
 											<td id="t_rek_program">
-												<span class="<?= $alert ?>" style="font-size:12px"><?= number_format((double)$item->total_rekening, 0, ".", ","); ?></span>
+												<span class="<?= $alert ?>" style="font-size:12px">
+													<?= number_format((double)$item->total_rekening, 0, ".", ","); ?></span>
 											</td>
 											<td id="t_rinci_program" align="center">
-												<span class="<?=$class?>" style="font-size:12px"><?= number_format((double)$item->total_rinci,0,".",","); ?></span>
+												<span class="<?=$class?>" style="font-size:12px">
+													<?= number_format((double)$item->total_rinci,0,".",","); ?></span>
 											</td>
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
@@ -218,42 +221,42 @@ $dataModal['patokan'] = $patokan;
 
 							<!-- Start Cetak Tab -->
 							<div class="tab-pane fade" id="nav-tab-program-4">
-								<h4 class="mar-btm text-thin">Tambah Data</h4>
-								<hr>
-								<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
-									<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Nama :</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control" name="addNama" placeholder="Nama">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Kategori</label>
-										<div class="col-lg-7">
-											<select class="form-control" name="addKategori" id="addKategori">
-												<option value="6">Donatur Tetap</option>
-												<option value="7">Donatur Tidak Tetap</option>
-												<option value="8">Infaq</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Tanggal :</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control datepicker" name="addTanggal" placeholder="Tanggal" autocomplete="off">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Jumlah</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control inputMask" name="addJumlah" placeholder="Jumlah">
-										</div>
-									</div>
-									<div class="col-lg-7 col-lg-offset-3">
-										<input type="submit" value="Submit" class="btn btn-flat btn-primary">
-									</div>
-								</form>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              						<h4>Data Siswa</h4>
+								</div>
+								<table id="tableSiswaCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>NISN</th>
+											<th>NIS</th>
+											<th>Nama</th>
+											<th>Instansi</th>
+											<th>Program</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h4>Data Kegiatan Siswa</h4>
+								</div>
+								<table id="tableKegiatanCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Kode</th>
+											<th>Uraian Kegiatan</th>
+											<th>Keterangan</th>
+											<th>Total Rek.</th>
+											<th>Tot. Rinci</th>
+											<th>Print</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
 							</div>
 
 							<!-- Start Validasi Tab -->

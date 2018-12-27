@@ -35,6 +35,23 @@ class ProgramModel extends CI_model
         return $this->db->delete($table, array('id'=> $idProgram));
     }
 
+    public function getDataSiswaCetak($hakAkses,$kodeInstansi = NULL)
+    {
+        $this->datatables->select("tb_siswa.id_siswa,tb_siswa.nisn,tb_siswa.nis,tb_siswa.nama,tb_instansi.nama_instansi,tb_program.nama_program");
+        $this->datatables->from("tb_siswa");
+        $this->datatables->join("tb_instansi","tb_instansi.kode_instansi = tb_siswa.kode_instansi");
+        $this->datatables->join("tb_program","tb_program.kode_program = tb_siswa.kode_program and tb_program.kode_instansi = tb_siswa.kode_instansi");
+        if ($hakAkses == 2) {
+            $this->datatables->where("tb_siswa.kode_instansi",$kodeInstansi);
+        }
+        $this->datatables->add_column("print",
+        '<a href="javascript:void(0)" class="delete_data btn btn-info btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-print"></i></a>',
+        'id_siswa,nama_instansi,nama');
+        // $this->datatables->group_by("tb_siswa.kode_program");
+        return $this->datatables->generate();
+    }
+    
+
     //==============================================================================>>
     // Coding untuk box kegiatan
 

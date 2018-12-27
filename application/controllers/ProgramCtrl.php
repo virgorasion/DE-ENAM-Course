@@ -24,6 +24,12 @@ class ProgramCtrl extends CI_controller
         }
     }
 
+    public function TableSiswaCetakAPI($hakAkses,$kodeInstansi)
+    {
+        header("Content-Type: application/json");
+        echo $this->ProgramModel->getDataSiswaCetak($hakAkses,$kodeInstansi);
+    }
+    
     public function TambahProgram()
     {
         $kode = $this->input->post('addKodeProgram');
