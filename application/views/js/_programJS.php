@@ -318,11 +318,11 @@
 				type: "POST",
 				success:function(result){
 					var data = JSON.parse(result);
-					$("#InfoJenis").text();
+					$("#InfoJenis").text(data[0].jenis);
 					$("#InfoKodeKegiatan").text(data[0].kode_program);
 					$("#InfoNamaKegiatan").text(data[0].nama_program);
-					$("#InfoUraian").text("-");
-					$("#InfoSasaran").text();
+					$("#InfoUraian").text(data[0].uraian);
+					$("#InfoSasaran").text(data[0].sasaran);
 					$("#InfoPlafon").text(data[0].plafon);
 				}
 			})
@@ -526,6 +526,9 @@
 				$('#programIdEdit').val(id);
 				$('#editKodeProgram').val(res);
 				$('#editNamaProgram').val(data[0].nama_program);
+				$('#editJenisProgram').val(data[0].jenis);
+				$('#editUraianProgram').val(data[0].uraian);
+				$('#editSasaranProgram').val(data[0].sasaran);
 				$('#editPlafon').val(data[0].plafon);
 			}
 		});
