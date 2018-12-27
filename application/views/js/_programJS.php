@@ -3,6 +3,7 @@
 	var kodeProgram = "";
 	var kodeKegiatan = "";
 	var kodeRekening = "";
+	var tableSiswaCetak = "";
 	var tableKegiatan = "";
 	var tableIndikator = "";
 	var tablePembahasan = "";
@@ -70,6 +71,47 @@
 		});
 		// end setup datatables	
 	return tableKegiatan;
+	}
+
+	//Fungsi: untuk menggenerate table Kegiatan
+	function funcTableSiswaCetak() {
+		$('#boxKegiatan').fadeIn(1000);
+		$('#boxKegiatan').removeClass('hidden');
+		kodeInstansi = "<?= $kodeInstansi ?>";
+		var hakAkses = "<?= $hakAkses ?>";
+		tableSiswaCetak = $("#tableSiswaCetak").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/TableSiswaCetakAPI/') ?>"+hakAkses+"/"+kodeInstansi, "type": "POST"},
+					columns: [
+						{"data": "nisn"},
+						{"data": "nis"},
+						{"data": "nama"},
+						{"data": "nama_instansi"},
+						{"data": "nama_program"},
+						{"data": "print", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+			}
+
+		});
+		// end setup datatables	
+	return tableSiswaCetak;
 	}
 
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
@@ -922,5 +964,8 @@
 	// 	$("#modalViewPembahasan").modal("show");
 
 	// })
+
+	//Fungsi: Initialize tableSiswaCetak
+	//TODO: buat script initialisasi table
 
 </script>
