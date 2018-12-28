@@ -37,19 +37,65 @@ class ProgramModel extends CI_model
 
     public function getDataSiswaCetak($hakAkses,$kodeInstansi = NULL)
     {
-        $this->datatables->select("tb_siswa.id_siswa,tb_siswa.nisn,tb_siswa.nis,tb_siswa.nama,tb_instansi.nama_instansi,tb_program.nama_program");
+        $this->datatables->select("tb_siswa.id_siswa,tb_siswa.nisn,tb_siswa.nis,tb_siswa.nama,tb_instansi.nama_instansi,tb_instansi.kode_instansi,tb_program.nama_program,tb_program.kode_program");
         $this->datatables->from("tb_siswa");
         $this->datatables->join("tb_instansi","tb_instansi.kode_instansi = tb_siswa.kode_instansi");
         $this->datatables->join("tb_program","tb_program.kode_program = tb_siswa.kode_program and tb_program.kode_instansi = tb_siswa.kode_instansi");
-        $this->datatables->where("tb_siswa.kode_instansi",$kodeInstansi);
-        $this->datatables->add_column("print",
-        '<a href="javascript:void(0)" class="delete_data btn btn-info btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-print"></i></a>',
-        'id_siswa,nama_instansi,nama');
+        if ($hakAkses == 2) {
+            $this->datatables->where("tb_siswa.kode_instansi", $kodeInstansi);
+        }
+        $this->datatables->add_column(
+            'view',
+            '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-program="$7" data-instansi="$8"><i class="fa fa-eye"></i></a></center>',
+            'id_siswa,
+            nisn,
+            nis,
+            nama,
+            nama_instansi,
+            nama_program,
+            kode_program,
+            kode_instansi'
+        );
         // $this->datatables->group_by("tb_siswa.kode_program");
         return $this->datatables->generate();
     }
     
-
+    public function getDataKegiatanCetak($kodeInstansi,$kodeProgram)
+    {
+        $this->datatables->select('id,kode_instansi,kode_program,kode_kegiatan,nama_kegiatan,total_rekening,keterangan,total_rinci as tot_rinci, FORMAT(total_rinci,0) as total_rinci');
+        $this->datatables->from('tb_kegiatan');
+        $this->datatables->where('kode_instansi = "' . $kodeInstansi . '"');
+        $this->datatables->where('kode_program = "' . $kodeProgram . '"');
+        //kode untuk mengubah label jika total & rinci tidak sama
+        function callback_label($total, $total_rinci)
+        {
+            if ($total == $total_rinci) {
+                return "label label-success";
+            } else {
+                return "label label-danger";
+            }
+        }
+        $this->datatables->add_column(
+            'total_rinci',
+            '<center><span class="$2" style="font-size:12px">$1</span></center>',
+            'total_rinci,
+            callback_label(total_rekening,tot_rinci)'
+        );
+        $this->datatables->add_column(
+            'action',
+            '<center><a href="javascript:void(0)" class="print_data btn btn-info btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-print"></i></a></center>',
+            'id,
+            kode_instansi,
+            kode_program,
+            kode_kegiatan,
+            nama_kegiatan,
+            total_rekening,
+            total_rinci,
+            keterangan'
+        );
+        return $this->datatables->generate();
+    }
+    
     //==============================================================================>>
     // Coding untuk box kegiatan
 

@@ -223,7 +223,7 @@ $dataModal['patokan'] = $patokan;
 							<!-- Start Cetak Tab -->
 							<div class="tab-pane fade" id="nav-tab-program-4">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              						<h4>Data Siswa</h4>
+              						<h4><b>Data Siswa</b></h4>
 								</div>
 								<table id="tableSiswaCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
@@ -233,31 +233,33 @@ $dataModal['patokan'] = $patokan;
 											<th>Nama</th>
 											<th>Instansi</th>
 											<th>Program</th>
+											<th class="text-center">View</th>
 										</tr>
 									</thead>
 									<tbody>
-
 									</tbody>
 								</table>
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<h4>Data Kegiatan Siswa</h4>
+								<div id="kegiatanCetak" style="display:none">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<h4><b>Data Kegiatan Siswa</b></h4>
+									</div>
+									<table id="tableKegiatanCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>Kode</th>
+												<th>Uraian Kegiatan</th>
+												<th>Keterangan</th>
+												<th>Total Rek.</th>
+												<th>Tot. Rinci</th>
+												<th class="text-center">Print</th>
+											</tr>
+										</thead>
+										<tbody>
+											<div id="tableKegiatanCetak_processing" class="dataTables_processing" style="display: none;">Loading....</div>
+										</tbody>
+									</table>
 								</div>
-								<table id="tableKegiatanCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-									<thead>
-										<tr>
-											<th>No</th>
-											<th>Kode</th>
-											<th>Uraian Kegiatan</th>
-											<th>Keterangan</th>
-											<th>Total Rek.</th>
-											<th>Tot. Rinci</th>
-											<th>Print</th>
-										</tr>
-									</thead>
-									<tbody>
-
-									</tbody>
-								</table>
 							</div>
 
 							<!-- Start Validasi Tab -->

@@ -4,6 +4,7 @@
 	var kodeKegiatan = "";
 	var kodeRekening = "";
 	var tableSiswaCetak = "";
+	var tableKegiatanCetak = "";
 	var tableKegiatan = "";
 	var tableIndikator = "";
 	var tablePembahasan = "";
@@ -73,10 +74,8 @@
 	return tableKegiatan;
 	}
 
-	//Fungsi: untuk menggenerate table Kegiatan
+	//Fungsi: untuk menggenerate table Siswa cetak
 	function funcTableSiswaCetak() {
-		$('#boxKegiatan').fadeIn(1000);
-		$('#boxKegiatan').removeClass('hidden');
 		kodeInstansi = "<?= $kodeInstansi ?>";
 		var hakAkses = "<?= $hakAkses ?>";
 		tableSiswaCetak = $("#tableSiswaCetak").DataTable({
@@ -100,7 +99,7 @@
 						{"data": "nama"},
 						{"data": "nama_instansi"},
 						{"data": "nama_program"},
-						{"data": "print", "orderable": false, "searchable": false}
+						{"data": "view", "searchable":false, "sortable":false}
 					],
 			order: [[1, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
@@ -112,6 +111,50 @@
 		});
 		// end setup datatables	
 	return tableSiswaCetak;
+	}
+
+	//Fungsi: untuk menggenerate table Kegiatan cetak
+	function funcTableKegiatanCetak(kodeInstansi,kodeProgram) {
+		tableKegiatanCetak = $("#tableKegiatanCetak").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/TableKegiatanCetakAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
+					columns: [
+						{
+							"data": null,
+							"orderable": false,
+							"searchable": false
+						},
+						{"data": "kode_kegiatan"},
+						{"data": "nama_kegiatan"},
+						{"data": "keterangan"},
+						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
+						{"data": "total_rinci", "orderabel": false, "searchable": false},
+						{"data": "action", "orderable": false, "searchable": false}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(0)', row).html(index);
+			}
+
+		});
+		// end setup datatables	
+	return tableKegiatanCetak;
 	}
 
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
@@ -966,6 +1009,23 @@
 	// })
 
 	//Fungsi: Initialize tableSiswaCetak
-	//TODO: buat script initialisasi table
+	$("#tabCetakProgram").click(function(){
+		if (tableSiswaCetak instanceof $.fn.dataTable.Api == false) {
+			funcTableSiswaCetak();
+		}
+	})
+
+	$("#tableSiswaCetak").on("click",".view_data", function(){
+		var programKode = $(this).data("program");
+		var instansiKode = $(this).data("instansi");
+		if (tableKegiatanCetak instanceof $.fn.dataTable.Api) {
+			tableKegiatanCetak.destroy();
+			funcTableKegiatanCetak(instansiKode,programKode);
+		}else {
+			$("#kegiatanCetak").slideDown(300);
+			// $("#kegiatanCetak").removeClass("hidden");
+			funcTableKegiatanCetak(instansiKode,programKode);
+		}
+	})
 
 </script>
