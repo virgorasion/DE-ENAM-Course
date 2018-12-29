@@ -288,7 +288,7 @@ class ProgramModel extends CI_model
     
     public function getDataInfoKegiatan($kodeInstansi,$kodeProgram)
     {
-        return $this->db->select("kode_program,nama_program,plafon")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
+        return $this->db->select("kode_program,nama_program,plafon,jenis,uraian,sasaran")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
     }
     
     public function DeleteDataKegiatan($table,$idKegiatan)

@@ -45,6 +45,9 @@ class ProgramCtrl extends CI_controller
         $kode = $this->input->post('addKodeProgram');
         $kodeProgram = str_replace(" ", "", $this->GenerateKodeProgram($kode));
         $namaProgram = $this->input->post('addNamaProgram');
+        $jenisProgram = $this->input->post('addJenisProgram');
+        $uraianProgram = $this->input->post('addUraianProgram');
+        $sasaranProgram = $this->input->post('addSasaranProgram');
         $plafon = str_replace(".","",$this->input->post('addPlafon'));
         $idInstansi = $this->input->post('idInstansi');
         if ($_SESSION['akses'] == 'Admin') {
@@ -52,6 +55,9 @@ class ProgramCtrl extends CI_controller
                 'kode_admin' => $_SESSION['kode_admin'],
                 'kode_instansi' => $idInstansi,
                 'kode_program' => $kodeProgram,
+                'jenis' => $jenisProgram,
+                'uraian' => $uraianProgram,
+                'sasaran' => $sasaranProgram,
                 'nama_program' => $namaProgram,
                 'plafon' => $plafon
             );
@@ -60,6 +66,10 @@ class ProgramCtrl extends CI_controller
                 'kode_admin' => 0,
                 'kode_instansi' => $idInstansi,
                 'kode_program' => $kodeProgram,
+                'nama_program' => $namaProgram,
+                'jenis' => $jenisProgram,
+                'uraian' => $uraianProgram,
+                'sasaran' => $sasaranProgram,
                 'nama_program' => $namaProgram,
                 'plafon' => $plafon
             );
@@ -78,6 +88,9 @@ class ProgramCtrl extends CI_controller
             $data = array(
                 'kode_program' => $kodeProgram,
                 'nama_program' => $post['editNamaProgram'],
+                'jenis'  => $post['editJenisProgram'],
+                'uraian' => $post['editUraianProgram'],
+                'sasaran' => $post['editSasaranProgram'],
                 'plafon' => str_replace(".","",$post['editPlafon']),
                 'kode_instansi' => $post['idInstansiEdit']
             );
@@ -86,6 +99,9 @@ class ProgramCtrl extends CI_controller
                 'kode_admin' => $_SESSION['kode_admin'],
                 'kode_program' => $kodeProgram,
                 'nama_program' => $post['editNamaProgram'],
+                'jenis'  => $post['editJenisProgram'],
+                'uraian' => $post['editUraianProgram'],
+                'sasaran' => $post['editSasaranProgram'],
                 'plafon' => str_replace(".","",$post['editPlafon']),
                 'kode_instansi' => $post['idInstansiEdit']
             );

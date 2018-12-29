@@ -23,8 +23,22 @@
 						<!-- <small id="helpId" class="text-muted"></small> -->
 					</div>
 					<div class="form-group">
+						<label for="addJenisProgram">Jenis Program</label>
+						<input required type="text" name="addJenisProgram" id="addJenisProgram" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
 						<label for="addNamaProgram">Nama Program</label>
 						<input required type="text" name="addNamaProgram" id="addNamaProgram" class="form-control" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="addUraianProgram">Uraian Program</label>
+						<input required type="text" name="addUraianProgram" id="addUraianProgram" class="form-control" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="addSasaranProgram">Sasaran Program</label>
+						<input required type="text" name="addSasaranProgram" id="addSasaranProgram" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="addPlafon">Plafon</label>
@@ -72,13 +86,27 @@
 						<!-- <small id="helpId" class="text-muted"></small> -->
 					</div>
 					<div class="form-group">
+						<label for="EditJenisProgram">Jenis Program</label>
+						<input required type="text" name="editJenisProgram" id="EditJenisProgram" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
 						<label for="editNamaProgram">Nama Program</label>
 						<input type="text" name="editNamaProgram" id="editNamaProgram" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="EditUraianProgram">Uraian Program</label>
+						<input required type="text" name="editUraianProgram" id="EditUraianProgram" class="form-control" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="EditSasaranProgram">Sasaran Program</label>
+						<input required type="text" name="editSasaranProgram" id="EditSasaranProgram" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="editPlafon">Plafon</label>
 						<input type="text" name="editPlafon" id="editPlafon" class="form-control" placeholder="-">
 					</div>
+
 				</div>
 				<input type="hidden" name="programIdEdit" id="programIdEdit" value="" />
 				<input type="hidden" name="idInstansiEdit" id="idInstansiEdit" value="<?= $kodeInstansi ?>" />
@@ -557,3 +585,59 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+
+<!-- <?php if ($_SESSION['hakAkses'] != 2) { ?>
+<div class="modal fade" id="modalInfoKegiatan">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Tambah Info Kegiatan</h4>
+			</div>
+			<form id="formTambah" method="post" action="<?= site_url('ProgramCtrl/TambahInfoKegiatan') ?>">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="addJenisInfoKegiatan">Jenis</label>
+						<select class="form-control" name="addJenisInfoKegiatan" id="addJenisInfoKegiatan" >
+							<option>Pilih Jenis</option>
+							<option>APBD</option>
+							<option>APBN</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="addInfoKodeKegiatan">Kode Kegiatan</label>
+						<select class="form-control" name="addInfoKodeKegiatan" id="addInfoKodeKegiatan"></select>
+					</div>
+					<div class="form-group">
+						<label for="addInfoNamaKegiatan">Nama Kegiatan</label>
+						<input type="text" name="addInfoNamaKegiatan" id="addInfoNamaKegiatan" class="form-control" disabled>
+					</div>
+					<div class="form-group">
+						<label for="addInfoUraianKegiatan">Uraian</label>
+						<input type="text" name="addInfoUraianKegiatan" id="addInfoUraianKegiatan" class="form-control" disabled>
+					</div>
+					<div class="form-group">
+						<label for="addInfoSasaranKegiatan">Sasaran</label>
+						<input type="text" name="addInfoSasaranKegiatan" id="addInfoSasaranKegiatan" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="addInfoPlafonKegiatan">Plafon</label>
+						<input type="text" name="addInfoPlafonKegiatan" id="addInfoPlafonKegiatan" class="form-control" disabled>
+					</div>
+				</div>
+				<input type="hidden" name="programIdTambah" id="programIdTambah" value="" />
+				<input type="hidden" name="idInstansi" id="idInstansi" value="<?= $kodeInstansi ?>" />
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<?php 
+} ?>
+<!-- /.modal --> -->

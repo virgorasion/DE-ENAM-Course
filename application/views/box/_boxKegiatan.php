@@ -18,16 +18,16 @@
 			<ul class="nav nav-tabs">
 				<li id="tabInfoKegiatan">
 					<a href="#nav-tabs-kegiatan-1" data-toggle="tab">
-						<i class="fa fa-history"></i> Info Kegiatan</a>
+						<i class="fa fa-history"></i> Info Program</a>
 				</li>
 				<li id="tabIndikatorKegiatan">
 					<a href="#nav-tabs-kegiatan-2" data-toggle="tab">
 						<i class="fa fa-edit"></i> Indikator</a>
 				</li>
-				<!-- <li id="tabPJKegiatan">
+				<li id="tabPJKegiatan">
 					<a href="#nav-tabs-kegiatan-3" data-toggle="tab">
 						<i class="fa fa-edit"></i> Penanggung Jawab</a>
-				</li> -->
+				</li>
 				<li id="tabKegiatan" class="active">
 					<a href="#nav-tabs-kegiatan-4" data-toggle="tab">
 						<i class="fa fa-edit"></i> Rincian Kegiatan</a>
@@ -44,7 +44,21 @@
 
 					<!-- Start Info Kegiatan Tab -->
 					<div class="tab-pane pad-btm fade " id="nav-tabs-kegiatan-1">
-						<table class="table">
+<!-- 						<?php if ($_SESSION['hakAkses'] != 2) { ?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="form-inline col-md-2">
+								<br>
+								<div class="form-group col-sm-4">
+									<a name="btnAddInfoKegiatan" id="btnAddInfoKegiatan" class="btn btn-primary">Tambah
+										Data</a>
+								</div>
+							</div>
+						</div>
+						<br><br>
+						<hr>
+						<?php 
+						} ?> -->
+						<table class="table" id="tableInfo">
 							<tr>
 								<td style="font-size:17px;width:300px">Jenis</td>
 								<td style="font-size:17px;width:5px">:</td>
