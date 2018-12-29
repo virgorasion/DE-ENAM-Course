@@ -166,7 +166,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td style="text-align:right;">(total)</td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="4">
                         <table>
                             <tr>
                                 <td>Triwulan 1</td>
@@ -194,6 +194,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td style="border:solid thin">(jumlah_semua_total_rek di rekening)</td>
                             </tr>
                         </table>
+                    </td>
+                    <td colspan="2">
+                    <center>
+                        <table>
+                            <tr>
+                                <td style="text-align:center;">(tempat dan tanggal)<br>(status_siswa)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;"><u><b>(nama_siswa)</b></u><br>(nis_siswa)</td>
+                            </tr>
+                        </table>
+                    </center>
                     </td>
                 </tr>
            </table>
