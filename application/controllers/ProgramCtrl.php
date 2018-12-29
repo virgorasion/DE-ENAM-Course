@@ -24,6 +24,11 @@ class ProgramCtrl extends CI_controller
         }
     }
 
+    public function export_excel()
+    {
+        $this->load->view("export");
+    }
+    
     public function TableSiswaCetakAPI($hakAkses,$kodeInstansi)
     {
         header("Content-Type: application/json");
