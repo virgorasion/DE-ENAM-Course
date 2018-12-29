@@ -419,6 +419,8 @@
 			tablePembahasan.destroy();
 		}
 	});
+
+	
 	//Fungsi: Hidden box Kegiatan
 	$('#btnHidden').click(function(){
 		$('#boxKegiatan').fadeOut(1000);
