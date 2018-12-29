@@ -24,9 +24,35 @@ class ProgramCtrl extends CI_controller
         }
     }
 
-    public function export_excel()
+    public function sasd()
     {
         $this->load->view("export");
+    }
+
+    public function view_export()
+    {
+        $data['rekening'] = $this->db->select("tb_rekening.uraian_rekening,tb_detail_rekening.uraian")
+                                        ->from("tb_rekening,tb_detail_rekening")
+                                        ->get()->result();
+        $data['count_rekening'] = $this->db->select("kode_rekening")
+                                        ->from("tb_rekening")
+                                        ->get()->result();
+        $this->load->view("export",$data);
+    }
+    
+    public function data_excel()
+    {
+        $rekening = $this->ProgramModel->getDataRekening("010.6531","127.3321","080.001");
+        $data = "";
+        foreach ($rekening as $item) {
+            $data .= "<b>".$item->uraian_rekening."</b><br>";
+            $detail = $this->ProgramModel->getDataDetailRekening("010.6531", "127.3321", "080.001", $item->kode_rekening);
+            foreach ($detail as $item) {
+                $data .= $item->uraian."<br>";
+            }
+            $data .= "<br>";
+        }
+        echo json_encode($data);
     }
     
     public function TableSiswaCetakAPI($hakAkses,$kodeInstansi)
