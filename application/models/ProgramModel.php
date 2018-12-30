@@ -10,25 +10,6 @@ class ProgramModel extends CI_model
             ->where('kode_instansi = "' . $kode . '" ')
             ->get();
     }
-
-    public function getDataRekening($kodeInstansi,$kodeProgram,$kodeKegiatan)
-    {
-        return $this->db->select('kode_rekening,uraian_rekening')->from("tb_rekening")
-                        ->where("kode_instansi",$kodeInstansi)
-                        ->where("kode_program",$kodeProgram)
-                        ->where("kode_kegiatan",$kodeKegiatan)
-                        ->get()->result();
-    }
-    
-    public function getDataDetailRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
-    {
-        return $this->db->select("uraian")->from("tb_detail_rekening")
-                    ->where("kode_instansi",$kodeInstansi)
-                    ->where("kode_program",$kodeProgram)
-                    ->where("kode_kegiatan",$kodeKegiatan)
-                    ->where("kode_rekening",$kodeRekening)
-                    ->get()->result();
-    }
     
     public function APIDataEditProgramInstansi($table,$id)
     {
