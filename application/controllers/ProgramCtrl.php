@@ -37,6 +37,7 @@ class ProgramCtrl extends CI_controller
         $data['data_instansi'] = $this->dataexcel->getDataInstansi($kodeInstansi);
         $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi,$kodeProgram);
         $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan);
+        $data['data_indikator'] = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
         $this->load->view("export_excel",$data);
     }
     
@@ -51,6 +52,8 @@ class ProgramCtrl extends CI_controller
         $data['data_instansi'] = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
         $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram,$kodeKegiatan);
+        $data['data_indikator'] = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
+
         $this->load->view("export", $data);
     }
 
@@ -186,6 +189,11 @@ class ProgramCtrl extends CI_controller
         echo $this->ProgramModel->getDataIndikator($kodeInstansi, $kodeProgram);
     }
 
+    public function tablePenanggungJawabAPI($kodeInstansi, $kodeProgram)
+    {
+        header("Content-Type: application/json");
+        echo $this->ProgramModel->getDataPenanggungJawab($kodeInstansi, $kodeProgram);
+    }
     //Datatable Pembahasan
     public function tablePembahasanAPI($kodeInstansi, $kodeProgram)
     {

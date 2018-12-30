@@ -44,6 +44,24 @@ class DataExcel
         return $data;
     }
 
+    public function getDataIndikator($kodeInstansi, $kodeProgram)
+    {
+        $query = $this->setDataIndikator($kodeInstansi,$kodeProgram);
+        var_dump($query);
+        return $query;
+    }
+
+    // public function getDataSatuanIndikator($kodeInstansi, $kodeProgram)
+    // {
+    //     $satuan = $this->setDataIndikator($kodeInstansi,$kodeProgram);
+    //     $data = "";
+    //     foreach ($satuan as $item) {
+    //         $data .= "<b>". $item->satuan . "</b><br>";
+    //         $detail = $this->setDataIndikator($kodeInstansi,$kodeProgram, $item->kode_indikator);
+    //     }
+    //     return $data;
+    // }
+
     public function getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
@@ -160,4 +178,11 @@ class DataExcel
                             ->get()->result();
     }
     
+    private function setDataIndikator($kodeInstansi,$kodeProgram)
+    {
+        return $this->ci->db->select("jenis,uraian,satuan,target")->from("tb_indikator")
+                            ->where("kode_instansi",$kodeInstansi)
+                            ->where("kode_program",$kodeProgram)
+                            ->get()->result();
+    }
 }

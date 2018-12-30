@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td>Capaian Program</td>
                     <td colspan="3">(uraian_indikator)</td>
                     <td></td>
-                    <td></td>
+                    <td><?=$data_indikator[0]->satuan?></td>
                 </tr>
                 <tr>
                     <td>Masukan</td>

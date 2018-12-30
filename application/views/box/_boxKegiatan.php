@@ -24,7 +24,7 @@
 					<a href="#nav-tabs-kegiatan-2" data-toggle="tab">
 						<i class="fa fa-edit"></i> Indikator</a>
 				</li>
-				<li id="tabPJKegiatan">
+				<li id="tabPenanggungJawabKegiatan">
 					<a href="#nav-tabs-kegiatan-3" data-toggle="tab">
 						<i class="fa fa-edit"></i> Penanggung Jawab</a>
 				</li>
@@ -116,6 +116,37 @@
 									<th>Uraian Indikator</th>
 									<th>Target</th>
 									<th>action</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Start Penanggung Jawab Tab -->
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-2">
+						<!-- <?php if ($_SESSION['hakAkses'] != 2) { ?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="form-inline col-md-2">
+								<br>
+								<div class="form-group col-sm-4">
+									<a name="btnAddIndikator" id="btnAddIndikator" class="btn btn-primary">Tambah
+										Data</a>
+								</div>
+							</div>
+						</div>
+						<br><br>
+						<hr>
+						<?php 
+						} ?> -->
+						<table id="tablePenanggungJawab" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Nama</th>
+									<th>Username</th>
+									<th>Nis</th>
+									<th>Nisn</th>
 								</tr>
 							</thead>
 							<tbody>

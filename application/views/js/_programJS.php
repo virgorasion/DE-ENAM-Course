@@ -7,6 +7,7 @@
 	var tableKegiatanCetak = "";
 	var tableKegiatan = "";
 	var tableIndikator = "";
+	var tablePenanggungJawab = "";
 	var tablePembahasan = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
@@ -201,6 +202,49 @@
 	return tableIndikator;
 	}
 
+	function funcTablePenanggungJawab() {
+		$('#boxKegiatan').fadeIn(1000);
+		$('#boxKegiatan').removeClass('hidden');
+		tablePenanggungJawab = $("#tablePenanggungJawab").DataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function() {
+						api.search(this.value).draw();
+				});
+			},
+				oLanguage: {
+				sProcessing: 'Loading....'
+			},
+				processing: true,
+				serverSide: true,
+				ajax: {"url": "<?= site_url('ProgramCtrl/tablePenanggungJawabAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
+					columns: [
+						{
+							"data": null,
+							"orderable": false,
+							"searchable": false
+						},
+						{"data": "nama"},
+						{"data": "username"},
+						{"data": "nis"},
+						{"data": "nisn"}
+					],
+			order: [[1, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(1)', row).html(index);
+			}
+
+		});
+		// end setup datatables	
+	return tablePenanggungJawab;
+	}
+
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
 	function funcTablePembahasan() {
 		$('#boxKegiatan').fadeIn(1000);
@@ -355,6 +399,7 @@
 		funcTableKegiatan(kodeProgram);
 		funcTableIndikator();
 		funcTablePembahasan();
+		funcTablePenanggungJawab();
 	<?php 
 } ?>
 
@@ -398,6 +443,7 @@
 			funcTableKegiatan(kodeProgram);
 			funcTableIndikator();
 			funcTablePembahasan();
+			funcTablePenanggungJawab();
 			$.ajax({
 				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
 				type: "POST",
@@ -417,6 +463,7 @@
 			tableKegiatan.destroy();
 			tableIndikator.destroy();
 			tablePembahasan.destroy();
+			tablePenanggungJawab.destroy();
 		}
 	});
 
@@ -428,6 +475,7 @@
 		tableKegiatan.destroy();
 		tableIndikator.destroy();
 		tablePembahasan.destroy();
+		tablePenanggungJawab.destroy();
 	});
 
 	//Fungsi: Show Data IndikatorKegiatan
@@ -437,6 +485,11 @@
 		}
     })
 
+    $("#tabPenanggungJawabKegiatan").click(function(){
+    	if (tablePenanggungJawab instanceof $.fn.dataTable.Api == false) {
+			funcTablePenanggungJawab();
+		}
+    })
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
 		var idRekening = $(this).data('id');

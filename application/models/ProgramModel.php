@@ -136,6 +136,14 @@ class ProgramModel extends CI_model
         // <a href="javascript:void(0)" class="view btn btn-primary btn-xs" data-id="$1"><i class="fa fa-eye"></i></a>
     }
 
+    public function getDataPenanggungJawab($kodeInstansi,$kodeProgram)
+    {
+        $this->datatables->select("nama,username,nis,nisn,kode_instansi,kode_program");
+        $this->datatables->from("tb_siswa");
+        $this->datatables->where("kode_instansi",$kode_instansi);
+        $this->datatables->where("kode_program",$kodeProgram);
+        return $this->datatables->generate();
+    }
     public function getDataIndikator($kodeInstansi,$kodeProgram)
     {
         $this->datatables->select("id,kode_indikator,kode_instansi,kode_program,jenis,uraian,satuan,target");
