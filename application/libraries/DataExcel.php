@@ -11,6 +11,24 @@ class DataExcel
         $this->ci =& get_instance();
     }
 
+    public function getDataInstansi($kodeInstansi)
+    {
+        $query = $this->setDataInstansi($kodeInstansi);
+        return $query;
+    }
+
+    public function getDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan)
+    {
+        $query = $this->setDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan);
+        return $query;
+    }
+
+    public function getDataProgram($kodeInstansi,$kodeProgram)
+    {
+        $query = $this->setDataProgram($kodeInstansi,$kodeProgram);
+        return $query;
+    }
+       
     public function getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
@@ -118,6 +136,28 @@ class DataExcel
             ->where("kode_kegiatan", $kodeKegiatan)
             ->where("kode_rekening", $kodeRekening)
             ->get()->result();
+    }
+
+    private function setDataInstansi($kodeInstansi)
+    {
+        return $this->ci->db->select("nama_instansi,versi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
+    }
+    
+    private function setDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan)
+    {
+        return $this->ci->db->select("nama_kegiatan,total_rinci,total_rekening")->from("tb_kegiatan")
+                        ->where("kode_instansi",$kodeInstansi)
+                        ->where("kode_program",$kodeProgram)
+                        ->where("kode_kegiatan",$kodeKegiatan)
+                        ->get()->result();
+    }
+    
+    private function setDataProgram($kodeInstansi,$kodeProgram)
+    {
+        return $this->ci->db->select("nama_program,plafon,total_rinci,total_rekening")->from("tb_program")
+                            ->where("kode_instansi",$kodeInstansi)
+                            ->where("kode_program",$kodeProgram)
+                            ->get()->result();
     }
     
 }

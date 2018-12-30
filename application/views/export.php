@@ -62,8 +62,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <tr>
                                 <td>Instansi</td>
                                 <td>:</td>
-                                <td>(kode_instansi)</td>
-                                <td>(nama_instansi)</td>
+                                <td></td>
+                                <td><?=$data_instansi[0]->nama_instansi?></td>
                             </tr>
                             <tr>
                                 <td>Sasaran RPJMD</td>
@@ -74,18 +74,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td>Program</td>
                                 <td>:</td>
                                 <td>(kode_program)</td>
-                                <td>(nama_program)</td>
+                                <td><?=$data_program[0]->nama_program?></td>
                             </tr>
                             <tr>
                                 <td>Kegiatan</td>
                                 <td>:</td>
                                 <td>(kode_kegiatan)</td>
-                                <td>(nama_kegiatan)</td>
+                                <td><?=$data_kegiatan[0]->nama_kegiatan?></td>
                             </tr>
                             <tr>
                                 <td>Lokasi Kegiatan</td>
                                 <td>:</td>
-                                <td colspan="2">(lokasi_kegiatan)</td>
+                                <td colspan="2">Jawa Timur</td>
                             </tr>
                             <tr>
                                 <td>Sumber Dana</td>
@@ -211,7 +211,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <center>
                         <table>
                             <tr>
-                                <td style="text-align:center;">(tempat dan tanggal)<br>(status_siswa)</td>
+                                <td style="text-align:center;">Surabaya, <?=date("d-M-Y")?><br>(status_siswa)</td>
                             </tr>
                             <tr>
                                 <td></td>

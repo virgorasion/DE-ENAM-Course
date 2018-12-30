@@ -92,14 +92,24 @@ header("Content-Disposition: attachment; filename=pencapaian_siswa.xls");
 		<td>6</td>
 	</tr>
 	<tr>
-		<td>(kode_rekening)</td>
+		<td>
+			<?= $data_kode ?>
+		</td>
 		<td>
 			<?= $data_uraian ?>
 		</td>
-		<td>(volume)</td>
-		<td>(satuan)</td>
-		<td>(harga_satuan)</td>
-		<td>(jumlah)</td>
+		<td>
+			<?= $data_volume ?>
+		</td>
+		<td>
+			<?= $data_satuan ?>
+		</td>
+		<td>
+			<?= $data_harga ?>
+		</td>
+		<td>
+			<?= $data_jumlah ?>
+		</td>
 	</tr>
 	<tr>
 		<td colspan="5">Jumlah</td>
