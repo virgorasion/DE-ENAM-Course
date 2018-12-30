@@ -1,12 +1,8 @@
 <?php
 
-// header("Content-type: application/vnd-ms-excel");
+header("Content-type: application/vnd-ms-excel");
 
-// header("Content-Disposition: attachment; filename=pencapaian_siswa.xls");
-
-// header("Pragma: no-cache");
-
-// header("Expires: 0");
+header("Content-Disposition: attachment; filename=pencapaian_siswa.xls");
 
 ?>
 <table border="1" width="100%">
@@ -98,16 +94,8 @@
 	<tr>
 		<td>(kode_rekening)</td>
 		<td>
-        <?php 
-            $count = count($count_rekening);
-            foreach ($count_rekening as $item) {
-                echo $item->kode_rekening."<br>";
-                foreach ($rekening as $rek) {
-                    $rek->uraian;
-                }
-            }
-        ?>
-        </td>
+			<?= $data_uraian ?>
+		</td>
 		<td>(volume)</td>
 		<td>(satuan)</td>
 		<td>(harga_satuan)</td>

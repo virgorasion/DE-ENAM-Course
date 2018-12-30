@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  <body>
       <main>
            <h1>Laporan Excel</h1>
-           <p><a href="<?php echo base_url('c_excel/export_excel') ?>">Export ke Excel</a></p>
+           <p><a href="<?= site_url('ProgramCtrl/export_excel') ?>">Export ke Excel</a></p>
            <table border="1" width="100%">
                 <tr>
                     <td colspan="4" rowspan="2" align="center"><h3><b>RENCANA KERJA DAN ANGGARAN</b> <br> <b>SATUAN KERJA PERANGKAT DAERAH</b></h3></td>
@@ -155,7 +155,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <td style="text-align:left"><b>(kode_rekening)</b><br>(kode_detail_rekening)</td>
-                    <td style="text-align:left:" id="test"></td>
+                    <td style="text-align:left:">
+                        <?=$data_uraian?>
+                    </td>
                     <td style="text-align:center">(volume)</td>
                     <td style="text-align:center:">(satuan)</td>
                     <td style="text-align:right;">(harga_satuan)</td>
@@ -224,15 +226,3 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </main>
  </body>
  </html>
-<?php $this->load->view('template/_js'); ?>
-<script>
-$.ajax({
-		url: "<?= site_url('ProgramCtrl/data_excel') ?>",
-		type: "POST",
-		success:function(result){
-			var data = JSON.parse(result);
-            console.log(data);
-            $("#test").html(data);
-		}
-	})
-</script>
