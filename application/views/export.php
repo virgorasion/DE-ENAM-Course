@@ -154,14 +154,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td><b>6</b></td>
                 </tr>
                 <tr>
-                    <td style="text-align:left"><b>(kode_rekening)</b><br>(kode_detail_rekening)</td>
+                    <td style="text-align:left">
+                        <?=$data_kode?>
+                    </td>
                     <td style="text-align:left:">
                         <?=$data_uraian?>
                     </td>
-                    <td style="text-align:center">(volume)</td>
-                    <td style="text-align:center:">(satuan)</td>
-                    <td style="text-align:right;">(harga_satuan)</td>
-                    <td style="text-align:right;">(jumlah)</td>
+                    <td style="text-align:center">
+                        <?=$data_volume?>
+                    </td>
+                    <td style="text-align:center:">
+                        <?=$data_satuan?>
+                    </td>
+                    <td style="text-align:right;">
+                        <?=$data_harga?>
+                    </td>
+                    <td style="text-align:right;">
+                        <?= $data_jumlah?>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="5" style="text-align:center;">Jumlah</td>

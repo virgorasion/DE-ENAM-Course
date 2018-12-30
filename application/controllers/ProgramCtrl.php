@@ -29,12 +29,18 @@ class ProgramCtrl extends CI_controller
     public function export_excel()
     {
         $data['data_uraian'] = $this->dataexcel->getDataUraian("010.6531", "127.3321", "080.001");
+        $data['data_kode'] = $this->dataexcel->getDataKode("010.6531", "127.3321", "080.001");
         $this->load->view("export_excel",$data);
     }
     
     public function view_export()
     {
         $data['data_uraian'] = $this->dataexcel->getDataUraian("010.6531", "127.3321", "080.001");
+        $data['data_kode'] = $this->dataexcel->getDataKode("010.6531", "127.3321", "080.001");
+        $data['data_volume'] = $this->dataexcel->getDataVolume("010.6531", "127.3321", "080.001");
+        $data['data_satuan'] = $this->dataexcel->getDataSatuan("010.6531", "127.3321", "080.001");
+        $data['data_harga'] = $this->dataexcel->getDataHarga("010.6531", "127.3321", "080.001");
+        $data['data_jumlah'] = $this->dataexcel->getDataJumlah("010.6531", "127.3321", "080.001");
         $this->load->view("export",$data);
     }
     
