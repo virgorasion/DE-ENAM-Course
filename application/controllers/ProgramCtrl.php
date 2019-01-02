@@ -26,23 +26,31 @@ class ProgramCtrl extends CI_controller
         }
     }
 
-    public function export_excel($kodeInstansi = "010.6531",$kodeProgram = "127.3321",$kodeKegiatan = "080.001")
+    public function export_excel($kodeInstansi = "010.03",$kodeProgram = "127.01",$kodeKegiatan = "080.01")
     {
-        $data['data_uraian'] = $this->dataexcel->getDataUraian($kodeInstansi,$kodeProgram,$kodeKegiatan);
-        $data['data_kode'] = $this->dataexcel->getDataKode($kodeInstansi,$kodeProgram,$kodeKegiatan);
-        $data['data_volume'] = $this->dataexcel->getDataVolume($kodeInstansi,$kodeProgram,$kodeKegiatan);
-        $data['data_satuan'] = $this->dataexcel->getDataSatuan($kodeInstansi,$kodeProgram,$kodeKegiatan);
+        $data['kodeInstansi'] = $kodeInstansi;
+        $data['kodeProgram'] = $kodeProgram;
+        $data['kodeKegiatan'] = $kodeKegiatan;
+        $data['data_uraian'] = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_kode'] = $this->dataexcel->getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_volume'] = $this->dataexcel->getDataVolume($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_satuan'] = $this->dataexcel->getDataSatuan($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_harga'] = $this->dataexcel->getDataHarga($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_jumlah'] = $this->dataexcel->getDataJumlah($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data['data_instansi'] = $this->dataexcel->getDataInstansi($kodeInstansi);
-        $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi,$kodeProgram);
-        $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan);
+        $data['data_instansi'] = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
+        $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_indikator'] = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
+        $data['data_triwulan'] = $this->dataexcel->getDataTriwulan($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_siswa'] = $this->dataexcel->getDataSiswa($kodeInstansi, $kodeProgram);
         $this->load->view("export_excel",$data);
     }
     
-    public function view_export($kodeInstansi = "010.6531", $kodeProgram = "127.3321", $kodeKegiatan = "080.001")
+    public function view_export($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
+        $data['kodeInstansi'] = $kodeInstansi;
+        $data['kodeProgram'] = $kodeProgram;
+        $data['kodeKegiatan'] = $kodeKegiatan;
         $data['data_uraian'] = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_kode'] = $this->dataexcel->getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data['data_volume'] = $this->dataexcel->getDataVolume($kodeInstansi, $kodeProgram, $kodeKegiatan);
@@ -53,6 +61,8 @@ class ProgramCtrl extends CI_controller
         $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
         $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram,$kodeKegiatan);
         $data['data_indikator'] = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
+        $data['data_triwulan'] = $this->dataexcel->getDataTriwulan($kodeInstansi,$kodeProgram,$kodeKegiatan);
+        $data['data_siswa'] = $this->dataexcel->getDataSiswa($kodeInstansi,$kodeProgram);
 
         $this->load->view("export", $data);
     }
@@ -718,7 +728,7 @@ class ProgramCtrl extends CI_controller
             ->get();
         $getKode = $query->row();
         $KodeRek = $getKode->kode_detail_rekening; //if(null): null ? 5.1.1.01.01
-        $potong = substr($KodeRek, 9); // if(null): 1 ? 2
+        $potong = substr($KodeRek, -2); // if(null): 1 ? 2
         $tambah = $potong + 1;
         $result = str_pad($tambah, 2, "0", STR_PAD_LEFT); //01
         return $result;

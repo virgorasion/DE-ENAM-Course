@@ -460,6 +460,7 @@
 <?php 
 } ?>
 
+<!-- Modal Pembahasan -->
 <div class="modal fade" id="modalPembahasan">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -640,4 +641,4 @@
 </div>
 <?php 
 } ?>
-<!-- /.modal --> -->
+<!-- /.modal -->

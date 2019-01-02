@@ -396,12 +396,33 @@
 	//Fungsi: untuk memunculkan Box Kegiatan seusai edit & delete
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
-		funcTableKegiatan(kodeProgram);
-		funcTableIndikator();
-		funcTablePembahasan();
-		funcTablePenanggungJawab();
 	<?php 
 } ?>
+
+	<?php if (@$_SESSION['Pembahasan_Direct'] != null) { ?>
+		funcTablePembahasan();
+		$("#tabKegiatan").removeClass("active");
+		$("#tabPembahasanKegiatan").addClass("active");
+		$("#nav-tabs-kegiatan-4").removeClass("avtive");
+		$("#nav-tabs-kegiatan-5").addClass("active");
+	<?php }?>
+	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
+		funcTableIndikator();
+		$("#tabKegiatan").removeClass("active");
+		$("#tabIndikatorPembahasan").addClass("active");
+		$("#nav-tabs-kegiatan-4").removeClss("avtive");
+		$("#nav-tabs-kegiatan-2").addClass("active");
+	<?php }?>
+	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
+		funcTableIndikator();
+		$("#tabKegiatan").removeClass("active");
+		$("#tabPenanggungJawabKegiatan").addClass("active");
+		$("#nav-tabs-kegiatan-4").removeClss("avtive");
+		$("#nav-tabs-kegiatan-3").addClass("active");
+	<?php }?>
+	<?php if (@$_SESSION['Kegiatan_Direct'] != null) { ?>
+		funcTableKegiatan(kodeProgram);
+	<?php }?>
 
 	// Fungsi: Redirect Rekening
 	<?php if (@$_SESSION['Rekening_Direct'] != null) { ?>
@@ -441,8 +462,6 @@
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			funcTableKegiatan(kodeProgram);
-			funcTableIndikator();
-			funcTablePembahasan();
 			funcTablePenanggungJawab();
 			$.ajax({
 				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
@@ -484,12 +503,21 @@
 			funcTableIndikator();
 		}
     })
-
     $("#tabPenanggungJawabKegiatan").click(function(){
     	if (tablePenanggungJawab instanceof $.fn.dataTable.Api == false) {
 			funcTablePenanggungJawab();
 		}
     })
+	$("#tabPembahasanKegiatan").click(function(){
+		if (tablePembahasan instanceof $.fn.dataTable.Api == false) {
+			funcTablePembahasan();
+		}
+	})
+	$("#tabKegiatan").click(function(){
+		if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
+			funcTableKegiatan();
+		}
+	})
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
 		var idRekening = $(this).data('id');
@@ -999,12 +1027,14 @@
 							$("#addNamaKegiatanPembahasan").html(html);
 						})
 					}
+				}).done(function(){
+					$("#modalPembahasan").modal("show");
 				})
 			}
 		});
 	})
 
-	//Fungsi: Change data rekening pembahasan
+	//Fungsi: Change data rekening pembahasan [Insert Pembahasan]
 	$("#addNamaKegiatanPembahasan").on('change', function(){
 		var kegiatanKode = $(this).val();
 		$.ajax({
@@ -1038,7 +1068,7 @@
 		})
 	})
 
-	//Fungsi: Show data triwulan
+	//Fungsi: Show data triwulan [Insert Pembahasan]
 	$("#addNamaRekeningPembahasan").on("change",function(){
 		var kegiatanKode = $("#addNamaKegiatanPembahasan").val();
 		var rekeningKode = $(this).val();
@@ -1055,11 +1085,6 @@
 		})
 	})
 
-	//Fungsi: Insert Pembahasan
-	$("#btnAddPembahasan").click(function(){
-		$("#modalPembahasan").modal("show");
-	})
-
 	//Fungsi: Show modal view pembahasan
 	// $("#tablePembahasan").on("click",".view_data",function(){
 	// 	$("#modalViewPembahasan").modal("show");
@@ -1073,6 +1098,7 @@
 		}
 	})
 
+	//Fungsi: show table print kegiatan
 	$("#tableSiswaCetak").on("click",".view_data", function(){
 		var programKode = $(this).data("program");
 		var instansiKode = $(this).data("instansi");
@@ -1084,6 +1110,14 @@
 			// $("#kegiatanCetak").removeClass("hidden");
 			funcTableKegiatanCetak(instansiKode,programKode);
 		}
+	})
+	
+	//Fungsi: export excel
+	$("#tableKegiatanCetak").on("click",".print_data",function(){
+		var instansiKode = $(this).data("instansi");
+		var programKode = $(this).data("program");
+		var kegiatanKode = $(this).data("kegiatan");		
+		window.location = "<?= site_url('ProgramCtrl/view_export/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode;
 	})
 
 </script>

@@ -44,20 +44,6 @@
 
 					<!-- Start Info Kegiatan Tab -->
 					<div class="tab-pane pad-btm fade " id="nav-tabs-kegiatan-1">
-<!-- 						<?php if ($_SESSION['hakAkses'] != 2) { ?>
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<div class="form-group col-sm-4">
-									<a name="btnAddInfoKegiatan" id="btnAddInfoKegiatan" class="btn btn-primary">Tambah
-										Data</a>
-								</div>
-							</div>
-						</div>
-						<br><br>
-						<hr>
-						<?php 
-						} ?> -->
 						<table class="table" id="tableInfo">
 							<tr>
 								<td style="font-size:17px;width:300px">Jenis</td>
@@ -125,76 +111,7 @@
 					</div>
 
 					<!-- Start Penanggung Jawab Tab -->
-					<div class="tab-pane fade" id="nav-tabs-kegiatan-2">
-						<!-- <?php if ($_SESSION['hakAkses'] != 2) { ?>
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<div class="form-group col-sm-4">
-									<a name="btnAddIndikator" id="btnAddIndikator" class="btn btn-primary">Tambah
-										Data</a>
-								</div>
-							</div>
-						</div>
-						<br><br>
-						<hr>
-						<?php 
-						} ?> -->
-						<table id="tablePenanggungJawab" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Nama</th>
-									<th>Username</th>
-									<th>Nis</th>
-									<th>Nisn</th>
-								</tr>
-							</thead>
-							<tbody>
-								
-							</tbody>
-						</table>
-					</div>
-
-					<!-- Start Pembahasan Tab -->
-					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
-						<?php if ($_SESSION['hakAkses'] == 1) { ?>
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<?php if ($_SESSION['hakAkses'] == 1) { ?>
-								<div class="form-group col-sm-4">
-									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah Pembahasan</a>
-								</div>
-								<?php } ?>
-							</div>
-						</div>
-						<br><br>
-						<hr>
-						<?php 
-						} ?>
-						<table id="tablePembahasan" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>Nama Siswa</th>
-									<th>Instansi</th>
-									<th>Plafon</th>
-									<th>T1</th>
-									<th>T2</th>
-									<th>T3</th>
-									<th>T4</th>
-									<th>Nilai</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								
-							</tbody>
-						</table>
-					</div>
-
-					<!-- Start Penanggung Jawab Tab -->
-					<!-- <div class="tab-pane fade" id="nav-tabs-kegiatan-3">
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-3">
 						<h4 class="mar-btm text-thin">Tambah Data</h4>
 						<hr>
 						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
@@ -231,7 +148,7 @@
 								<input type="submit" value="Submit" class="btn btn-flat btn-primary">
 							</div>
 						</form>
-					</div> -->
+					</div>
 
 					<!-- Start Rincian Kegiatan Tab -->
 					<div class="tab-pane fade in active" id="nav-tabs-kegiatan-4">
@@ -262,7 +179,45 @@
 							</tbody>
 						</table>
 					</div>
-
+					
+					<!-- Start Pembahasan Tab -->
+					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
+						<?php if ($_SESSION['hakAkses'] == 1) { ?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="form-inline col-md-2">
+								<br>
+								<?php if ($_SESSION['hakAkses'] == 1) { ?>
+								<div class="form-group col-sm-4">
+									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah Pembahasan</a>
+								</div>
+								<?php 
+						} ?>
+							</div>
+						</div>
+						<br><br>
+						<hr>
+						<?php } ?>
+						<table id="tablePembahasan" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Nama Siswa</th>
+									<th>Instansi</th>
+									<th>Plafon</th>
+									<th>T1</th>
+									<th>T2</th>
+									<th>T3</th>
+									<th>T4</th>
+									<th>Nilai</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					
 				</div>
 			</div>
 		</div>

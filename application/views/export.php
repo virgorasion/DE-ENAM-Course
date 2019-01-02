@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  <html lang="en">
  <head>
       <meta charset="utf-8">
-      <title><?php echo $title ?></title>
+      <title>asd</title>
       <style>
            ::selection { background-color: #E13300; color: white; }
            ::-moz-selection { background-color: #E13300; color: white; }
@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  <body>
       <main>
            <h1>Laporan Excel</h1>
-           <p><a href="<?= site_url('ProgramCtrl/export_excel') ?>">Export ke Excel</a></p>
+           <p><a href="<?= site_url('ProgramCtrl/export_excel/').$kodeInstansi.'/'.$kodeProgram.'/'.$kodeKegiatan ?>">Export ke Excel</a></p>
            <table border="1" width="100%">
                 <tr>
                     <td colspan="4" rowspan="2" align="center"><h3><b>RENCANA KERJA DAN ANGGARAN</b> <br> <b>SATUAN KERJA PERANGKAT DAERAH</b></h3></td>
@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td rowspan="2" align="center"><b>Formulir <br> RKA-SKPD 2.2.1</b></td>
                 </tr>
                 <tr>
-                    <td align="center"><b>(kode_kegiatan)</b></td>
+                    <td align="center"><b><?=$kodeKegiatan?></b></td>
                 </tr>
                 <tr>
                     <td colspan="6" align="center"><b>Pemerintah Provinsi Jawa Timur <br> 2018</b></td>
@@ -62,25 +62,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <tr>
                                 <td>Instansi</td>
                                 <td>:</td>
-                                <td></td>
-                                <td><?=$data_instansi[0]->nama_instansi?></td>
+                                <td>(<?=$kodeInstansi?>)</td>
+                                <td><?=(@$data_instansi[0]->nama_instansi != NULL) ? $data_instansi[0]->nama_instansi : "Kosong" ;?></td>
                             </tr>
                             <tr>
                                 <td>Sasaran RPJMD</td>
                                 <td>:</td>
-                                <td colspan="2">(sasaran_program)</td>
+                                <td colspan="2"><?=(@$data_program[0]->sasaran != NULL) ? $data_program[0]->sasaran : "Kosong" ;?></td>
                             </tr>
                             <tr>
                                 <td>Program</td>
                                 <td>:</td>
-                                <td>(kode_program)</td>
-                                <td><?=$data_program[0]->nama_program?></td>
+                                <td>(<?=$kodeProgram?>)</td>
+                                <td><?=(@$data_program[0]->nama_program != NULL) ? $data_program[0]->nama_program : "Kosong" ;?></td>
                             </tr>
                             <tr>
                                 <td>Kegiatan</td>
                                 <td>:</td>
-                                <td>(kode_kegiatan)</td>
-                                <td><?=$data_kegiatan[0]->nama_kegiatan?></td>
+                                <td>(<?=$kodeKegiatan?>)</td>
+                                <td><?=(@$data_kegiatan[0]->nama_kegiatan != NULL) ? $data_kegiatan[0]->nama_kegiatan : "Kosong" ;?></td>
                             </tr>
                             <tr>
                                 <td>Lokasi Kegiatan</td>
@@ -90,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <tr>
                                 <td>Sumber Dana</td>
                                 <td>:</td>
-                                <td colspan="2">(sumber_dana)</td>
+                                <td colspan="2"><?=(@$data_instansi[0]->versi != NULL) ? $data_instansi[0]->versi : "Kosong" ;?></td>
                             </tr>
                         </table>
                     </td>
@@ -106,30 +106,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <td>Capaian Program</td>
-                    <td colspan="3">(uraian_indikator)</td>
-                    <td></td>
-                    <td><?=$data_indikator[0]->satuan?></td>
+                    <td colspan="3"><?= (@$data_indikator['capaian'][0]->uraian != null) ? $data_indikator['capaian'][0]->uraian : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['capaian'][0]->target != null) ? $data_indikator['capaian'][0]->target : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['capaian'][0]->satuan != null) ? $data_indikator['capaian'][0]->satuan : "Kosong"; ?></td>
                 </tr>
                 <tr>
                     <td>Masukan</td>
-                    <td colspan="3">(uraian_indikator)</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"><?= (@$data_indikator['masukan'][0]->uraian != null) ? $data_indikator['masukan'][0]->uraian : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['masukan'][0]->target != null) ? $data_indikator['masukan'][0]->target : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['masukan'][0]->satuan != null) ? $data_indikator['masukan'][0]->satuan : "Kosong"; ?></td>
                 </tr>
                 <tr>
                     <td>Keluaran</td>
-                    <td colspan="3">(uraian_indikator)</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"><?= (@$data_indikator['keluaran'][0]->uraian != null) ? $data_indikator['keluaran'][0]->uraian : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['keluaran'][0]->target != null) ? $data_indikator['keluaran'][0]->target : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['keluaran'][0]->satuan != null) ? $data_indikator['keluaran'][0]->satuan : "Kosong"; ?></td>
                 </tr>
                 <tr>
                     <td>Hasil</td>
-                    <td colspan="3">(uraian_indikator)</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"><?= (@$data_indikator['hasil'][0]->uraian != null) ? $data_indikator['hasil'][0]->uraian : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['hasil'][0]->target != null) ? $data_indikator['hasil'][0]->target : "Kosong"; ?></td>
+                    <td><?= (@$data_indikator['hasil'][0]->satuan != null) ? $data_indikator['hasil'][0]->satuan : "Kosong"; ?></td>
                 </tr>
                 <tr>
-                    <td colspan="6">Kelompok Sasaran Kegiatan : (sasaran_kegiatan)</td>
+                    <td colspan="6">Kelompok Sasaran Kegiatan : <?=(@$data_program[0]->sasaran != NULL) ? $data_program[0]->sasaran : "Kosong" ;?></td>
                 </tr>
                 <tr>
                     <td colspan="6" align="center"><b>Rincian Rencana Kerja dan Anggaran <br> Program dan Per Kegiatan Satuan Kerja</b></td>
@@ -158,6 +158,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?=$data_kode?>
                     </td>
                     <td style="text-align:left:">
+                        <b>BELANJA LANGSUNG</b><br>
                         <?=$data_uraian?>
                     </td>
                     <td style="text-align:center">
@@ -170,12 +171,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?=$data_harga?>
                     </td>
                     <td style="text-align:right;">
+                        <b><?= ($data_kegiatan[0]->total_rinci != null) ? number_format((double)$data_kegiatan[0]->total_rinci, 0, ",", ".") : 0; ?></b><br>
                         <?= $data_jumlah?>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5" style="text-align:center;">Jumlah</td>
-                    <td style="text-align:right;">(total)</td>
+                    <td style="text-align:right;"><?= ($data_kegiatan[0]->total_rinci != null) ? number_format((double)$data_kegiatan[0]->total_rinci, 0, ",", ".") : 0; ?></td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -183,27 +185,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <tr>
                                 <td>Triwulan 1</td>
                                 <td>Rp</td>
-                                <td>(jumlah_semua_t1)</td>
+                                <td><?=($data_triwulan['T1'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T1'][0]->triwulan,0,",",".") : 0 ;?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 2</td>
                                 <td>Rp</td>
-                                <td>(jumlah_semua_t2)</td>
+                                <td><?= ($data_triwulan['T2'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T2'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 3</td>
                                 <td>Rp</td>
-                                <td>(jumlah_semua_t3)</td>
+                                <td><?= ($data_triwulan['T3'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T3'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 4</td>
                                 <td>Rp</td>
-                                <td>(jumlah_semua_t4)</td>
+                                <td><?= ($data_triwulan['T4'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T4'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Jumlah</td>
                                 <td>Rp</td>
-                                <td style="border:solid thin">(jumlah_semua_total_rek di rekening)</td>
+                                <td style="border:solid thin"><?= ($data_kegiatan[0]->total_rekening != NULL) ? number_format((double)$data_kegiatan[0]->total_rekening,0,",",".") : 0; ?></td>
                             </tr>
                         </table>
                     </td>
@@ -226,7 +228,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td></td>
                             </tr>
                             <tr>
-                                <td style="text-align:center;"><u><b>(nama_siswa)</b></u><br>(nis_siswa)</td>
+                                <td style="text-align:center;"><u><b><?=$data_siswa[0]->nama?></b></u><br><?=$data_siswa[0]->nis?></td>
                             </tr>
                         </table>
                     </center>

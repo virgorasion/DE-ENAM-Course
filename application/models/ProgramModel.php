@@ -83,7 +83,7 @@ class ProgramModel extends CI_model
         );
         $this->datatables->add_column(
             'action',
-            '<center><a href="javascript:void(0)" class="print_data btn btn-info btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-print"></i></a></center>',
+            '<center><a href="javascript:void(0)" class="print_data btn btn-info btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-print"></i></a></center>',
             'id,
             kode_instansi,
             kode_program,
