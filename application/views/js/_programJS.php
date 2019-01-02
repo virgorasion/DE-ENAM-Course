@@ -7,7 +7,6 @@
 	var tableKegiatanCetak = "";
 	var tableKegiatan = "";
 	var tableIndikator = "";
-	var tablePenanggungJawab = "";
 	var tablePembahasan = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
@@ -202,49 +201,6 @@
 	return tableIndikator;
 	}
 
-	function funcTablePenanggungJawab() {
-		$('#boxKegiatan').fadeIn(1000);
-		$('#boxKegiatan').removeClass('hidden');
-		tablePenanggungJawab = $("#tablePenanggungJawab").DataTable({
-			initComplete: function() {
-				var api = this.api();
-				$('#mytable_filter input')
-					.off('.DT')
-					.on('input.DT', function() {
-						api.search(this.value).draw();
-				});
-			},
-				oLanguage: {
-				sProcessing: 'Loading....'
-			},
-				processing: true,
-				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/tablePenanggungJawabAPI/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
-					columns: [
-						{
-							"data": null,
-							"orderable": false,
-							"searchable": false
-						},
-						{"data": "nama"},
-						{"data": "username"},
-						{"data": "nis"},
-						{"data": "nisn"}
-					],
-			order: [[1, 'asc']],
-			rowCallback: function(row, data, iDisplayIndex) {
-				var info = this.fnPagingInfo();
-				var page = info.iPage;
-				var length = info.iLength;
-				var index = page * length + (iDisplayIndex + 1);
-				$('td:eq(1)', row).html(index);
-			}
-
-		});
-		// end setup datatables	
-	return tablePenanggungJawab;
-	}
-
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
 	function funcTablePembahasan() {
 		$('#boxKegiatan').fadeIn(1000);
@@ -413,13 +369,6 @@
 		$("#nav-tabs-kegiatan-4").removeClss("avtive");
 		$("#nav-tabs-kegiatan-2").addClass("active");
 	<?php }?>
-	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
-		funcTableIndikator();
-		$("#tabKegiatan").removeClass("active");
-		$("#tabPenanggungJawabKegiatan").addClass("active");
-		$("#nav-tabs-kegiatan-4").removeClss("avtive");
-		$("#nav-tabs-kegiatan-3").addClass("active");
-	<?php }?>
 	<?php if (@$_SESSION['Kegiatan_Direct'] != null) { ?>
 		funcTableKegiatan(kodeProgram);
 	<?php }?>
@@ -461,8 +410,10 @@
 		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
+			var idSiswa = $item.find("#idSiswa").val();
+
+			console.log(idSiswa)
 			funcTableKegiatan(kodeProgram);
-			funcTablePenanggungJawab();
 			$.ajax({
 				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
 				type: "POST",
@@ -476,13 +427,26 @@
 					$("#InfoPlafon").text(data[0].plafon);
 				}
 			})
+			$.ajax({
+				url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
+				type: "POST",
+				success: (result) =>{
+					var data = JSON.parse(result);
+					console.log(data);
+					$("#nisnPJSiswa").text(data[0].nisn);
+					$("#nisPJSiswa").text(data[0].nis);
+					$("#namaPJSiswa").text(data[0].nama);
+					$("#userPJSiswa").text(data[0].username);
+					$("#instansiPJSiswa").text(data[0].nama_instansi);
+					$("#programPJSiswa").text(data[0].nama_program);
+				}
+			})
  		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
 			tableIndikator.destroy();
 			tablePembahasan.destroy();
-			tablePenanggungJawab.destroy();
 		}
 	});
 
@@ -494,18 +458,12 @@
 		tableKegiatan.destroy();
 		tableIndikator.destroy();
 		tablePembahasan.destroy();
-		tablePenanggungJawab.destroy();
 	});
 
 	//Fungsi: Show Data IndikatorKegiatan
     $("#tabIndikatorKegiatan").click(function(){
 		if (tableIndikator instanceof $.fn.dataTable.Api == false) {
 			funcTableIndikator();
-		}
-    })
-    $("#tabPenanggungJawabKegiatan").click(function(){
-    	if (tablePenanggungJawab instanceof $.fn.dataTable.Api == false) {
-			funcTablePenanggungJawab();
 		}
     })
 	$("#tabPembahasanKegiatan").click(function(){

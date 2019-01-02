@@ -43,7 +43,7 @@
 				<div class="tab-content">
 
 					<!-- Start Info Kegiatan Tab -->
-					<div class="tab-pane pad-btm fade " id="nav-tabs-kegiatan-1">
+					<div class="tab-pane pad-btm fade" id="nav-tabs-kegiatan-1">
 						<table class="table" id="tableInfo">
 							<tr>
 								<td style="font-size:17px;width:300px">Jenis</td>
@@ -112,42 +112,38 @@
 
 					<!-- Start Penanggung Jawab Tab -->
 					<div class="tab-pane fade" id="nav-tabs-kegiatan-3">
-						<h4 class="mar-btm text-thin">Tambah Data</h4>
-						<hr>
-						<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
-							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-							<div class="form-group">
-								<label class="col-lg-3 control-label">Nama :</label>
-								<div class="col-lg-7">
-									<input type="text" class="form-control" name="addNama" placeholder="Nama">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label">Kategori</label>
-								<div class="col-lg-7">
-									<select class="form-control" name="addKategori" id="addKategori">
-										<option value="6">Donatur Tetap</option>
-										<option value="7">Donatur Tidak Tetap</option>
-										<option value="8">Infaq</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label">Tanggal :</label>
-								<div class="col-lg-7">
-									<input type="text" class="form-control datepicker" name="addTanggal" placeholder="Tanggal" autocomplete="off">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label">Jumlah</label>
-								<div class="col-lg-7">
-									<input type="text" class="form-control inputMask" name="addJumlah" placeholder="Jumlah">
-								</div>
-							</div>
-							<div class="col-lg-7 col-lg-offset-3">
-								<input type="submit" value="Submit" class="btn btn-flat btn-primary">
-							</div>
-						</form>
+						<table class="table" id="tablePJ">
+							<tr>
+								<td style="font-size:17px;width:300px">NISN</td>
+								<td style="font-size:17px;width:5px">:</td>
+								<td style="font-size:17px" id="nisnPJSiswa"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px;width:300px">NIS</td>
+								<td style="font-size:17px;width:5px">:</td>
+								<td style="font-size:17px" id="nisPJSiswa"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Nama</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="namaPJSiswa"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Nama User</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="userPJSiswa"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Instansi</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="instansiPJSiswa"></td>
+							</tr>
+							<tr>
+								<td style="font-size:17px">Program</td>
+								<td style="font-size:17px">:</td>
+								<td style="font-size:17px" id="programPJSiswa"></td>
+							</tr>
+						</table>
 					</div>
 
 					<!-- Start Rincian Kegiatan Tab -->
@@ -217,7 +213,7 @@
 							</tbody>
 						</table>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

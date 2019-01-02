@@ -116,6 +116,7 @@ $dataModal['patokan'] = $patokan;
 										}
 									?>
 										<tr>
+											<input type="hidden" id="idSiswa" name="idSiswa" value="<?= $item->id_siswa ?>">
 											<td id="no">
 												<?= $no ?>
 											</td>
@@ -138,9 +139,8 @@ $dataModal['patokan'] = $patokan;
 											</td>
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
-												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>" <?php if
-												 ($_SESSION['id_siswa']==$item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi &&
-												$_SESSION['programSiswa'] == $item->kode_program) { ?>
+												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>">
+												<?php if ($_SESSION['id_siswa']==$item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="View"></span>
 													<button class="btn btn-info btn-xs btnView" data-title="View" id="btnView">
@@ -223,7 +223,7 @@ $dataModal['patokan'] = $patokan;
 							<!-- Start Cetak Tab -->
 							<div class="tab-pane fade" id="nav-tab-program-4">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              						<h4><b>Data Siswa</b></h4>
+									<h4><b>Data Siswa</b></h4>
 								</div>
 								<table id="tableSiswaCetak" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>

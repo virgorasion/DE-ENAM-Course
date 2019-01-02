@@ -136,13 +136,13 @@ class ProgramModel extends CI_model
         // <a href="javascript:void(0)" class="view btn btn-primary btn-xs" data-id="$1"><i class="fa fa-eye"></i></a>
     }
 
-    public function getDataPenanggungJawab($kodeInstansi,$kodeProgram)
+    public function getDataPenanggungJawab($idSiswa)
     {
-        $this->datatables->select("nama,username,nis,nisn,kode_instansi,kode_program");
-        $this->datatables->from("tb_siswa");
-        $this->datatables->where("kode_instansi",$kode_instansi);
-        $this->datatables->where("kode_program",$kodeProgram);
-        return $this->datatables->generate();
+        return $this->db->select("tb_siswa.nis,tb_siswa.nisn,tb_siswa.nama,tb_siswa.username,tb_instansi.nama_instansi,tb_program.nama_program")->from("tb_siswa")
+                            ->join("tb_instansi","tb_instansi.kode_instansi = tb_siswa.kode_instansi")
+                            ->join("tb_program","tb_program.kode_program = tb_siswa.kode_program")
+                            ->where("tb_siswa.id_siswa",$idSiswa)
+                            ->get()->result();
     }
     public function getDataIndikator($kodeInstansi,$kodeProgram)
     {

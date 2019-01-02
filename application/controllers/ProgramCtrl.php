@@ -199,10 +199,10 @@ class ProgramCtrl extends CI_controller
         echo $this->ProgramModel->getDataIndikator($kodeInstansi, $kodeProgram);
     }
 
-    public function tablePenanggungJawabAPI($kodeInstansi, $kodeProgram)
+    public function tablePenanggungJawabAPI($idSiswa)
     {
-        header("Content-Type: application/json");
-        echo $this->ProgramModel->getDataPenanggungJawab($kodeInstansi, $kodeProgram);
+        $json = $this->ProgramModel->getDataPenanggungJawab($idSiswa);
+        echo json_encode($json);
     }
     //Datatable Pembahasan
     public function tablePembahasanAPI($kodeInstansi, $kodeProgram)
