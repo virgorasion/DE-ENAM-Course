@@ -64,7 +64,7 @@ class ProgramCtrl extends CI_controller
         $data['data_triwulan'] = $this->dataexcel->getDataTriwulan($kodeInstansi,$kodeProgram,$kodeKegiatan);
         $data['data_siswa'] = $this->dataexcel->getDataSiswa($kodeInstansi,$kodeProgram);
 
-        $this->load->view("export", $data);
+        $this->load->view("export_excel", $data);
     }
 
     public function TableSiswaCetakAPI($hakAkses, $kodeInstansi)

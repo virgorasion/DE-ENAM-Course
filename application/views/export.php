@@ -185,22 +185,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <tr>
                                 <td>Triwulan 1</td>
                                 <td>Rp</td>
-                                <td><?=($data_triwulan['T1'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T1'][0]->triwulan,0,",",".") : 0 ;?></td>
+                                <td><?=(@$data_triwulan['T1'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T1'][0]->triwulan,0,",",".") : 0 ;?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 2</td>
                                 <td>Rp</td>
-                                <td><?= ($data_triwulan['T2'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T2'][0]->triwulan,0,",",".") : 0; ?></td>
+                                <td><?= (@$data_triwulan['T2'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T2'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 3</td>
                                 <td>Rp</td>
-                                <td><?= ($data_triwulan['T3'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T3'][0]->triwulan,0,",",".") : 0; ?></td>
+                                <td><?= (@$data_triwulan['T3'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T3'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Triwulan 4</td>
                                 <td>Rp</td>
-                                <td><?= ($data_triwulan['T4'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T4'][0]->triwulan,0,",",".") : 0; ?></td>
+                                <td><?= (@$data_triwulan['T4'][0]->triwulan != NULL) ? number_format((double)$data_triwulan['T4'][0]->triwulan,0,",",".") : 0; ?></td>
                             </tr>
                             <tr>
                                 <td>Jumlah</td>
