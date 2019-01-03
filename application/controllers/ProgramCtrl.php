@@ -67,6 +67,29 @@ class ProgramCtrl extends CI_controller
         $this->load->view("export_excel", $data);
     }
 
+    public function phpexcel($kodeInstansi = "010.03", $kodeProgram = "127.01", $kodeKegiatan = "080.01")
+    {
+        $data['date'] = date("Y");
+        $data['kodeInstansi'] = $kodeInstansi;
+        $data['kodeProgram'] = $kodeProgram;
+        $data['kodeKegiatan'] = $kodeKegiatan;
+        $data['data_uraian'] = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_kode'] = $this->dataexcel->getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_volume'] = $this->dataexcel->getDataVolume($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_satuan'] = $this->dataexcel->getDataSatuan($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_harga'] = $this->dataexcel->getDataHarga($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_jumlah'] = $this->dataexcel->getDataJumlah($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_instansi'] = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_program'] = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
+        $data['data_kegiatan'] = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_indikator'] = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
+        $data['data_triwulan'] = $this->dataexcel->getDataTriwulan($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data['data_siswa'] = $this->dataexcel->getDataSiswa($kodeInstansi, $kodeProgram);
+
+        // var_dump($data['data_indikator']);
+        $this->load->view("phpexcel", $data);
+    }
+    
     public function TableSiswaCetakAPI($hakAkses, $kodeInstansi)
     {
         header("Content-Type: application/json");

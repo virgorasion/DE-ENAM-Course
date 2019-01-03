@@ -195,7 +195,7 @@ class DataExcel
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",1)
-                            ->get()->result();
+                            ->get()->result_array();
     }
     private function setDataIndikator2($kodeInstansi,$kodeProgram)
     {
@@ -203,7 +203,7 @@ class DataExcel
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",2)
-                            ->get()->result();
+                            ->get()->result_array();
     }
     private function setDataIndikator3($kodeInstansi,$kodeProgram)
     {
@@ -211,7 +211,7 @@ class DataExcel
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",3)
-                            ->get()->result();
+                            ->get()->result_array();
     }
     private function setDataIndikator4($kodeInstansi,$kodeProgram)
     {
@@ -219,7 +219,7 @@ class DataExcel
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",4)
-                            ->get()->result();
+                            ->get()->result_array();
     }
     private function setDataTriwulan1($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
