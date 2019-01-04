@@ -38,14 +38,14 @@ class DataExcel
     public function getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . $item->uraian_rekening . "</b><br>";
+            $data[] = $item->uraian_rekening;
             $detail = $this->setDataDetailRekening($kodeInstansi,$kodeProgram,$kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= $item->uraian . "<br>";
+                $data[] = $item->uraian;
             }
-            $data .= "<br>";
+            $data[] = " ";
         }
         return $data;
     }
@@ -76,14 +76,14 @@ class DataExcel
     public function getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . $item->kode_rekening . "</b><br>";
+            $data[] = $item->kode_rekening;
             $detail = $this->setDataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= $item->kode_detail_rekening . "<br>";
+                $data[] = $item->kode_detail_rekening;
             }
-            $data .= "<br>";
+            $data[] = " ";
         }
         return $data;
     }
@@ -92,13 +92,14 @@ class DataExcel
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . "" . "</b><br>";
+            $data[] = "";
             $detail = $this->setDataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= $item->volume . "<br>";
+                $data[] = $item->volume;
             }
-            $data .= "<br>";
+            $data[] = " ";
         }
         return $data;
     }
@@ -106,45 +107,45 @@ class DataExcel
     public function getDataSatuan($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . "" . "</b><br>";
+            $data[] = "";
             $detail = $this->setDataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= $item->satuan . "<br>";
+                $data[] = $item->satuan;
             }
-            $data .= "<br>";
-        }
+            $data[] = " ";
+        }        
         return $data;
     }
     
     public function getDataHarga($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . "" . "</b><br>";
+            $data[] = "";
             $detail = $this->setDataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= number_format((double)$item->harga, 0, ".", ",") . "<br>";
+                $data[] = number_format((double)$item->harga, 0, ".", ",");
             }
-            $data .= "<br>";
-        }
+            $data[] = "";
+        }     
         return $data;
     }
     
     public function getDataJumlah($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $rekening = $this->setDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data = "";
+        $data = array();
         foreach ($rekening as $item) {
-            $data .= "<b>" . number_format((double)$item->total_rinci, 0, ".", ",") . "</b><br>";
+            $data[] = number_format((double)$item->total_rinci, 0, ".", ",");
             $detail = $this->setDataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $item->kode_rekening);
             foreach ($detail as $item) {
-                $data .= number_format((double)$item->harga, 0, ".", ",") . "<br>";
+                $data[] = number_format((double)$item->total, 0, ".", ",");
             }
-            $data .= "<br>";
-        }
+            $data[] = "";
+        }    
         return $data;
     }
     
@@ -159,7 +160,7 @@ class DataExcel
 
     private function setDataDetailRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
-        return $this->ci->db->select("kode_detail_rekening,uraian,volume,satuan,harga")->from("tb_detail_rekening")
+        return $this->ci->db->select("kode_detail_rekening,uraian,volume,satuan,harga,total")->from("tb_detail_rekening")
             ->where("kode_instansi", $kodeInstansi)
             ->where("kode_program", $kodeProgram)
             ->where("kode_kegiatan", $kodeKegiatan)
