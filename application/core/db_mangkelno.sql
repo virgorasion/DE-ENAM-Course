@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27 Des 2018 pada 18.13
--- Versi Server: 10.1.28-MariaDB
--- PHP Version: 7.1.10
+-- Waktu pembuatan: 04 Jan 2019 pada 16.17
+-- Versi server: 10.1.30-MariaDB
+-- Versi PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,7 +52,7 @@ INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `pa
 
 CREATE TABLE `tb_detail_rekening` (
   `id` int(11) NOT NULL,
-  `kode_detail_rekening` varchar(10) NOT NULL,
+  `kode_detail_rekening` varchar(15) NOT NULL,
   `kode_instansi` varchar(10) NOT NULL,
   `kode_program` varchar(10) NOT NULL,
   `kode_kegiatan` varchar(10) NOT NULL,
@@ -79,7 +79,11 @@ INSERT INTO `tb_detail_rekening` (`id`, `kode_detail_rekening`, `kode_instansi`,
 (21, '5.1.02.01', '010.6531', '127.3321', '080.001', '5.1.06', 'test input', 'aaskdgaskd', 'ajshd', 'ajsdh', 'kajsdh', '1', '124', 1241, 12412, 15403292, ''),
 (22, '5.1.02.01', '010.6531', '127.3321', '080.001', '5.1.06', 'tset', 'tset', 'as;kda', 'kjasbd', 'aksdn', '1', '12', 10, 2150000, 21500000, ''),
 (23, '5.01', '010.6531', '127.125', '080.653', '5.1.02', 'Belanja Daerah', 'Beli Printer', 'Printer Canon x1222', 'Dinas Kependudukan', 'Surabaya', '2', 'Buah', 1, 25220990, 25220990, ''),
-(24, '5.01.01', '010.03', '127.01', '080.01', '5.01', 'Belanja Daerah', 'Belanja Tahun Baru 2019', 'Tahun 2019', 'Rumah', 'Kapas Madya', '1', 'Paket', 2, 1000000, 2000000, 'Untuk Tahun 2019');
+(24, '5.01.01', '010.03', '127.01', '080.01', '5.01', 'Belanja Daerah', 'Belanja Tahun Baru 2019', 'Tahun 2019', 'Rumah', 'Kapas Madya', '1', 'Paket', 2, 1000000, 2000000, 'Untuk Tahun 2019'),
+(25, '5.1.1.01.01', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 1pcs pizza cheese bites', '', 'Perut', 'Surabaya', '1', 'pcs', 1, 140000, 140000, ''),
+(26, '5.1.1.01.02', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 2pcs pizza cheese bites', 'asdas', 'Perut', 'Surabaya', '1', 'pcs', 20, 14000, 280000, ''),
+(27, '5.1.1.01.03', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 3pcs pizza cheese bites', 'test', 'Perut', 'Surabaya', '1', '10', 3, 140000, 420000, ''),
+(28, '5.1.1.01.04', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 1pcs pizza cheese bites', 'test', 'Perut', 'Surabaya', '1', 'pcs', 1, 140000, 140000, '');
 
 -- --------------------------------------------------------
 
@@ -92,7 +96,7 @@ CREATE TABLE `tb_indikator` (
   `kode_indikator` varchar(10) NOT NULL,
   `kode_instansi` varchar(10) NOT NULL,
   `kode_program` varchar(10) NOT NULL,
-  `jenis` varchar(15) NOT NULL,
+  `jenis` varchar(15) NOT NULL COMMENT '1. Capaian Program, 2.Hasil, 3.Pengeluaran, 4.masukan',
   `uraian` varchar(50) NOT NULL,
   `satuan` varchar(10) NOT NULL,
   `target` int(3) NOT NULL
@@ -106,7 +110,7 @@ INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_progr
 (4, '1.001', '010.6531', '127.03', '1', 'Pencapaian Terbaru', 'Paket', 100),
 (6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100),
 (7, '1.001', '010.03', '127.01', '2', 'Capaian tahun 2018', 'Paket', 20),
-(9, '1.002', '010.03', '127.01', '1', 'Natal 2018', 'Buah', 10);
+(9, '1.002', '010.03', '127.01', '1', '', 'Buah', 10);
 
 -- --------------------------------------------------------
 
@@ -163,7 +167,7 @@ INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan
 (8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, 'Test diplicate data'),
 (9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, 'Rutinitas :v'),
 (10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, 'Baru'),
-(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2000000, 2000000, 'Tahun Baru'),
+(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, 'Tahun Baru'),
 (13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 0, 0, 'Tahun Baru');
 
 -- --------------------------------------------------------
@@ -207,13 +211,20 @@ CREATE TABLE `tb_pembahasan` (
   `triwulan3_rekening` int(11) NOT NULL,
   `triwulan4_rekening` int(11) NOT NULL,
   `total_rekening` int(11) NOT NULL,
-  `triwulan1_pembahasan` int(11) NOT NULL,
-  `triwulan2_pembahasan` int(11) NOT NULL,
-  `triwulan3_pembahasan` int(11) NOT NULL,
-  `triwulan4_pembahasan` int(11) NOT NULL,
+  `triwulan1_pembahasan` varchar(15) NOT NULL,
+  `triwulan2_pembahasan` varchar(15) NOT NULL,
+  `triwulan3_pembahasan` varchar(15) NOT NULL,
+  `triwulan4_pembahasan` varchar(15) NOT NULL,
   `nilai` int(3) NOT NULL,
   `uraian` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_pembahasan`
+--
+
+INSERT INTO `tb_pembahasan` (`id`, `kode_pembahasan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `id_siswa`, `nama_siswa`, `plafon`, `triwulan1_rekening`, `triwulan2_rekening`, `triwulan3_rekening`, `triwulan4_rekening`, `total_rekening`, `triwulan1_pembahasan`, `triwulan2_pembahasan`, `triwulan3_pembahasan`, `triwulan4_pembahasan`, `nilai`, `uraian`) VALUES
+(5, '3029', '010.03', '127.01', '080.01', '5.01', 7, 'Joo', '2.000.000', 500000, 500000, 500000, 500000, 2000000, '400.000', '700.000', '600.000', '300.000', 1, 'asd');
 
 -- --------------------------------------------------------
 
@@ -246,7 +257,7 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (11, '100.001', 0, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
 (14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
-(15, '100.001', 7, '010.03', '127.01', 'PEMBAHARUAN', 'Baru Diubah', 'UKM setempat', 'Hari Ini', '2000000', '2000000', '2000000');
+(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '2980000');
 
 -- --------------------------------------------------------
 
@@ -284,7 +295,8 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 (29, '5.1', '010.6531', '127.125', '080.01', '5.1.02', 'Peralatan Kantor', 1226295, 12048173, 9812410, 2134112, 25220990, 25220990),
 (30, '5', '010.03', '127.12', '080.001', '5.01', 'Honor Kepsek 1', 250000, 250000, 250000, 250000, 1000000, 0),
 (32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', 'Baru', 0, 0, 0, 0, 0, 0),
-(33, '5', '010.03', '127.01', '080.01', '5.01', 'Belanja Tahun Baru', 500000, 500000, 500000, 500000, 2000000, 2000000);
+(33, '5', '010.03', '127.01', '080.01', '5.01', 'Belanja Tahun Baru', 500000, 500000, 500000, 500000, 2000000, 2000000),
+(34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', 'Beli Pizza Hut ', 280000, 280000, 140000, 280000, 980000, 980000);
 
 -- --------------------------------------------------------
 
@@ -318,14 +330,14 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 --
 
 --
--- Indexes for table `tb_admin`
+-- Indeks untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indexes for table `tb_detail_rekening`
+-- Indeks untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD PRIMARY KEY (`id`),
@@ -335,7 +347,7 @@ ALTER TABLE `tb_detail_rekening`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_indikator`
+-- Indeks untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   ADD PRIMARY KEY (`id`),
@@ -344,7 +356,7 @@ ALTER TABLE `tb_indikator`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_instansi`
+-- Indeks untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`),
@@ -352,23 +364,22 @@ ALTER TABLE `tb_instansi`
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indexes for table `tb_kegiatan`
+-- Indeks untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_instansi` (`kode_instansi`),
-  ADD KEY `kode_instansi_2` (`kode_instansi`),
   ADD KEY `kode_program` (`kode_program`),
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_patokan_rekening`
+-- Indeks untuk tabel `tb_patokan_rekening`
 --
 ALTER TABLE `tb_patokan_rekening`
   ADD PRIMARY KEY (`kode_patokan`);
 
 --
--- Indexes for table `tb_pembahasan`
+-- Indeks untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   ADD PRIMARY KEY (`id`),
@@ -376,10 +387,11 @@ ALTER TABLE `tb_pembahasan`
   ADD KEY `kode_instansi` (`kode_instansi`),
   ADD KEY `kode_program` (`kode_program`),
   ADD KEY `id_siswa` (`id_siswa`),
-  ADD KEY `kode_rekening` (`kode_rekening`);
+  ADD KEY `kode_rekening` (`kode_rekening`),
+  ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_program`
+-- Indeks untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`),
@@ -389,7 +401,7 @@ ALTER TABLE `tb_program`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_rekening`
+-- Indeks untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   ADD PRIMARY KEY (`id`),
@@ -400,7 +412,7 @@ ALTER TABLE `tb_rekening`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_siswa`
+-- Indeks untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`),
@@ -409,59 +421,59 @@ ALTER TABLE `tb_siswa`
   ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_admin`
+-- AUTO_INCREMENT untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_detail_rekening`
+-- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `tb_indikator`
+-- AUTO_INCREMENT untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `tb_instansi`
+-- AUTO_INCREMENT untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `tb_kegiatan`
+-- AUTO_INCREMENT untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `tb_pembahasan`
+-- AUTO_INCREMENT untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `tb_program`
+-- AUTO_INCREMENT untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tb_rekening`
+-- AUTO_INCREMENT untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT for table `tb_siswa`
+-- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
@@ -499,11 +511,11 @@ ALTER TABLE `tb_kegiatan`
 -- Ketidakleluasaan untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  ADD CONSTRAINT `tb_pembahasan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_pembahasan_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_3` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_4` FOREIGN KEY (`id_siswa`) REFERENCES `tb_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_5` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_pembahasan_ibfk_5` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_6` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_7` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pembahasan_ibfk_8` FOREIGN KEY (`id_siswa`) REFERENCES `tb_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_program`
