@@ -155,24 +155,83 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        <?=$data_kode?>
+                        <?php 
+                            $lenght = count($data_kode);
+                            for ($i=0; $i < $lenght ; $i++) {
+                                if ($data_kode[$i] != "") {
+                                    echo $data_kode[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                     <td style="text-align:left:">
-                        <b>BELANJA LANGSUNG</b><br>
-                        <?=$data_uraian?>
+                        <?php 
+                            $lenght = count($data_uraian);
+                            for ($i=0; $i < $lenght ; $i++) {
+                                if ($data_uraian[$i] != "") {
+                                    echo $data_uraian[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                     <td style="text-align:center">
-                        <?=$data_volume?>
+                        <?php 
+                            $lenght = count($data_volume);
+                            for ($i=0; $i < $lenght ; $i++) {
+                                if ($data_volume[$i] != "") {
+                                    echo $data_volume[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                     <td style="text-align:center:">
-                        <?=$data_satuan?>
+                        <?php 
+                            $lenght = count($data_satuan);
+                            for ($i=0; $i < $lenght ; $i++) {
+                                if ($data_satuan[$i] != "") {
+                                    echo $data_satuan[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                     <td style="text-align:right;">
-                        <?=$data_harga?>
+                        <?php 
+                            $lenght = count($data_harga);
+                            for ($i=0; $i < $lenght ; $i++) {
+                                if ($data_harga[$i] != "") {
+                                    echo $data_harga[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                     <td style="text-align:right;">
                         <b><?= ($data_kegiatan[0]->total_rinci != null) ? number_format((double)$data_kegiatan[0]->total_rinci, 0, ",", ".") : 0; ?></b><br>
-                        <?= $data_jumlah?>
+                        <?php 
+                            $lenght = count($data_harga);
+                            for ($i=0; $i < $lenght; $i++) {
+                                if ($data_harga[$i] != "") {
+                                    echo $data_harga[$i];
+                                } else {
+                                    echo "<br>";
+                                }
+                                echo "<br>";
+                            }
+                        ?>
                     </td>
                 </tr>
                 <tr>

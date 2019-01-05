@@ -83,7 +83,7 @@ class DataExcel
             foreach ($detail as $item) {
                 $data[] = $item->kode_detail_rekening;
             }
-            $data[] = " ";
+            $data[] = "";
         }
         return $data;
     }
@@ -99,7 +99,7 @@ class DataExcel
             foreach ($detail as $item) {
                 $data[] = $item->volume;
             }
-            $data[] = " ";
+            $data[] = "";
         }
         return $data;
     }
@@ -114,7 +114,7 @@ class DataExcel
             foreach ($detail as $item) {
                 $data[] = $item->satuan;
             }
-            $data[] = " ";
+            $data[] = "";
         }        
         return $data;
     }

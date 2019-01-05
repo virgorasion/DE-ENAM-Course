@@ -1075,7 +1075,7 @@
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");		
-		window.location = "<?= site_url('ProgramCtrl/view_export/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode;
+		window.location = "<?= site_url('Export/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode;
 	})
 
 </script>
