@@ -1074,8 +1074,16 @@
 	$("#tableKegiatanCetak").on("click",".print_data",function(){
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
-		var kegiatanKode = $(this).data("kegiatan");		
-		window.location = "<?= site_url('Export/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode;
+		var kegiatanKode = $(this).data("kegiatan");
+		$.ajax({
+			url: window.location = "<?= site_url('Export/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
+			beforeSend:function(){
+				$("#modalLoading").modal("show");
+			},
+			success:function(result){
+				$("#modalLoading").modal("hide");
+			}
+		})
 	})
 
 </script>

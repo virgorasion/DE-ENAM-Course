@@ -397,7 +397,6 @@ class Export extends CI_controller
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
         exit();
-
     }
     
 }

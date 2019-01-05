@@ -311,6 +311,14 @@ $dataModal['patokan'] = $patokan;
 		</div>
 		<!-- End Box Program -->
 
+	<div class="modal fade" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="text-center" style="margin-top:50%">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
+      </div>
+    </div>
+
 		<!-- Box Kegiatan -->
 		<?php $this->load->view('box/_boxKegiatan') ?>
 		<!-- End Box Program Details -->
