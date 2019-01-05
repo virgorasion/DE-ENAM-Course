@@ -349,6 +349,11 @@
 		}
 	});
 
+	//Message Alert
+	$(".alert").fadeTo(2000, 500).slideUp(500, function(){
+	$(".alert").slideUp(500);
+	});
+
 	//Fungsi: untuk memunculkan Box Kegiatan seusai edit & delete
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
@@ -638,9 +643,9 @@
 				$('#programIdEdit').val(id);
 				$('#editKodeProgram').val(res);
 				$('#editNamaProgram').val(data[0].nama_program);
-				$('#editJenisProgram').val(data[0].jenis);
-				$('#editUraianProgram').val(data[0].uraian);
-				$('#editSasaranProgram').val(data[0].sasaran);
+				$('#EditJenisProgram').val(data[0].jenis);
+				$('#EditUraianProgram').val(data[0].uraian);
+				$('#EditSasaranProgram').val(data[0].sasaran);
 				$('#editPlafon').val(data[0].plafon);
 			}
 		});

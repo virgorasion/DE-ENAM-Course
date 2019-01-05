@@ -296,7 +296,12 @@ class Export extends CI_controller
         $sheet->getStyle("R25:T25")->applyFromArray($boderHeader);
         $sheet->setCellValue("R25", "6");
 
-        $row = 26; //untuk mengatur cell posisi data
+        $row = 27; //untuk mengatur cell posisi data
+        $sheet->mergeCells("D26:J26");
+        $sheet->setCellValue("D26", "BELANJA LANGSUNG"); //data kode rekening & detail [Khusus]
+        $sheet->mergeCells("R26:T26");
+        $sheet->setCellValue("R26", number_format((double)$data_kegiatan[0]->total_rinci, 0, ",", ",")); //data jumlah rekening & detail [Khusus]
+        $sheet->getStyle("R26:T26")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //rigth data jumlah
         //looping data rincian rencana kerja
         for ($array = 0; $array < $uraianLenght; $array++) {
             $sheet->mergeCells("A$row:C$row");
