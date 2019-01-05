@@ -390,7 +390,7 @@ class Export extends CI_controller
             ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Laporan_pencapaian.xlsx"');
+        header('Content-Disposition: attachment;filename="Laporan"'.@$data_siswa[0]->nama.'".xlsx"');
         header('Cache-Control: max-age=0');
 
         // Save it as an sheet 2003 file
