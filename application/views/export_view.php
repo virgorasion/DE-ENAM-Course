@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  <body>
       <main>
            <h1>Laporan Excel</h1>
-           <p><a href="<?= site_url('ProgramCtrl/export_excel/').$kodeInstansi.'/'.$kodeProgram.'/'.$kodeKegiatan ?>">Export ke Excel</a></p>
+           <p><a href="<?= site_url('Export/Excel/').$kodeInstansi.'/'.$kodeProgram.'/'.$kodeKegiatan ?>">Export ke Excel</a></p>
            <table border="1" width="100%">
                 <tr>
                     <td colspan="4" rowspan="2" align="center"><h3><b>RENCANA KERJA DAN ANGGARAN</b> <br> <b>SATUAN KERJA PERANGKAT DAERAH</b></h3></td>
