@@ -414,6 +414,8 @@
 
 			console.log(idSiswa)
 			funcTableKegiatan(kodeProgram);
+			funcTableIndikator();
+			funcTablePembahasan();
 			$.ajax({
 				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
 				type: "POST",
@@ -432,7 +434,7 @@
 				type: "POST",
 				success: (result) =>{
 					var data = JSON.parse(result);
-					console.log(data);
+					// console.log(data);
 					$("#nisnPJSiswa").text(data[0].nisn);
 					$("#nisPJSiswa").text(data[0].nis);
 					$("#namaPJSiswa").text(data[0].nama);
@@ -460,22 +462,6 @@
 		tablePembahasan.destroy();
 	});
 
-	//Fungsi: Show Data IndikatorKegiatan
-    $("#tabIndikatorKegiatan").click(function(){
-		if (tableIndikator instanceof $.fn.dataTable.Api == false) {
-			funcTableIndikator();
-		}
-    })
-	$("#tabPembahasanKegiatan").click(function(){
-		if (tablePembahasan instanceof $.fn.dataTable.Api == false) {
-			funcTablePembahasan();
-		}
-	})
-	$("#tabKegiatan").click(function(){
-		if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
-			funcTableKegiatan();
-		}
-	})
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
 		var idRekening = $(this).data('id');
