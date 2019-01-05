@@ -24,6 +24,23 @@ $dataModal['patokan'] = $patokan;
 	<!-- Main content -->
 	<section class="content">
 
+	<?php if (@$_SESSION['fail'] != null) { ?>
+		<div class="alert alert-danger alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h4><i class="icon fa fa-ban"></i> Failed!</h4>
+			<?= $_SESSION['fail'] ?>
+		</div>
+		<?php 
+} ?>
+		<?php if (@$_SESSION['succ'] != null) { ?>
+		<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h4><i class="icon fa fa-check"></i> Success! </h4>
+			<?= $_SESSION['succ'] ?>
+		</div>
+		<?php 
+} ?>
+
 		<!-- Box Program -->
 		<div class="box">
 			<div class="box-header with-border">

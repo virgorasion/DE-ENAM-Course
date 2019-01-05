@@ -17,10 +17,14 @@ class ProgramCtrl extends CI_controller
     public function index($kodeInstansi)
     {
         if ($_SESSION['username'] != null) {
-            $data['kode'] = $kodeInstansi;
-            $data['patokan'] = $this->ProgramModel->getPatokan();
-            $data['data'] = $this->ProgramModel->DataProgram($kodeInstansi)->result();
-            $this->load->view('v_programDetails', $data);
+            if (@$_SESSION['kode_instansi'] == $kodeInstansi || $_SESSION['hakAkses'] == 1) {
+                $data['kode'] = $kodeInstansi;
+                $data['patokan'] = $this->ProgramModel->getPatokan();
+                $data['data'] = $this->ProgramModel->DataProgram($kodeInstansi)->result();
+                $this->load->view('v_programDetails', $data);
+            }else{
+                redirect(site_url("ProgramCtrl/index/".@$_SESSION['kode_instansi']));
+            }
         } else {
             redirect('Auth');
         }
@@ -148,10 +152,10 @@ class ProgramCtrl extends CI_controller
     {
         $query = $this->ProgramModel->DeleteProgram('tb_program', $idProgram);
         if ($query == true) {
-            $this->session->set_flashdata('msg', "Program berhasil dihapus");
+            $this->session->set_flashdata('succ', "Program berhasil dihapus");
             redirect('ProgramCtrl/index/' . $idInstansi);
         } else {
-            $this->session->set_flashdata('msg', "Program gagal dihapus segera hubungi admin");
+            $this->session->set_flashdata('fail', "Program gagal dihapus segera hubungi admin");
             redirect('ProgramCtrl/index/' . $idInstansi);
         }
     }
@@ -246,11 +250,11 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = $post['kodeProgram'];
 
         if ($query != null) {
-            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            $this->session->set_flashdata('succ', 'Berhasil menambah kegiatan');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal menambah kegiatan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
@@ -284,7 +288,7 @@ class ProgramCtrl extends CI_controller
             $where = $MainID;
             $query = $this->ProgramModel->updateDataProgram("tb_indikator", $data, $where);
         } else {
-            $this->session->set_flashdata('err', 'Terdapat kesalahan silahkan reload halaman saat ini !');
+            $this->session->set_flashdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
@@ -295,7 +299,7 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('err', 'Gagal menambah Indikator, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal menambah Indikator, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
@@ -354,7 +358,7 @@ class ProgramCtrl extends CI_controller
             $where = $p['MainIdPembahasan'];
             $query = $this->ProgramModel->updateDataProgram("tb_pembahasan", $data, $where);
         } else {
-            $this->session->set_flashdata('err', 'Terdapat kesalahan silahkan reload halaman saat ini !');
+            $this->session->set_flashdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
@@ -365,7 +369,7 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('err', 'Gagal menambah Pembahasan, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal menambah Pembahasan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
@@ -386,11 +390,11 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = $post['kodeProgramEdit'];
         $query = $this->ProgramModel->EditKegiatan('tb_kegiatan', $data, $where);
         if ($query != null) {
-            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            $this->session->set_flashdata('succ', 'Berhasil menambah kegiatan');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal menambah kegiatan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
@@ -400,11 +404,11 @@ class ProgramCtrl extends CI_controller
     {
         $query = $this->ProgramModel->DeleteDataKegiatan('tb_kegiatan', $idKegiatan);
         if ($query != null) {
-            $this->session->set_flashdata('msgKegiatan', 'Berhasil menambah kegiatan');
+            $this->session->set_flashdata('succ', 'Berhasil menambah kegiatan');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('msgKegiatan', 'Gagal menambah kegiatan, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal menambah kegiatan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
@@ -419,7 +423,7 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('err', 'Gagal Hapus Indikator, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal Hapus Indikator, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Indikator_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
@@ -435,7 +439,7 @@ class ProgramCtrl extends CI_controller
             $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_flashdata('err', 'Gagal Hapus Pembahasan, segera hubungi admin');
+            $this->session->set_flashdata('fail', 'Gagal Hapus Pembahasan, segera hubungi admin');
             $this->session->set_flashdata('kodeProgram', $kodeProgram);
             $this->session->set_flashdata('Pembahasan_Direct', "Direction");
             redirect('ProgramCtrl/index/' . $kodeInstansi);

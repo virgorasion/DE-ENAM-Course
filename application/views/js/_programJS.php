@@ -897,13 +897,13 @@
 	});
 
 	//Fungsi: untuk show box kegiatan ketika klik tabProgram
-	$("#tabProgram").click(function(){
-		$('#boxKegiatan').slideDown(1000);
-		$('#boxKegiatan').removeClass('hidden');
-		if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
-			funcTableKegiatan(kodeProgram);
-		}
-	})
+	// $("#tabProgram").click(function(){
+	// 	$('#boxKegiatan').slideDown(1000);
+	// 	$('#boxKegiatan').removeClass('hidden');
+	// 	if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
+	// 		funcTableKegiatan(kodeProgram);
+	// 	}
+	// })
 
 	//Fungsi: Insert kegiatan
 	$('#btnAddKegiatan').click(function(){
