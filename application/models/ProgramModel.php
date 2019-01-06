@@ -43,6 +43,9 @@ class ProgramModel extends CI_model
         $this->datatables->join("tb_program","tb_program.kode_program = tb_siswa.kode_program and tb_program.kode_instansi = tb_siswa.kode_instansi");
         if ($hakAkses == 2) {
             $this->datatables->where("tb_siswa.kode_instansi", $kodeInstansi);
+        }else if($hakAkses ==3){
+            $this->datatables->where("tb_siswa.id_siswa", $_SESSION['id_siswa']);
+            $this->datatables->where("tb_siswa.kode_instansi", $_SESSION['kode_instansi']);
         }
         $this->datatables->add_column(
             'view',

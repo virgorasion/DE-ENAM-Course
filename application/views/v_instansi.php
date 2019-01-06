@@ -124,7 +124,7 @@
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 3) { ?>
 							<td>
-								<?php if ($_SESSION['instansiSiswa'] == $item->kode_instansi) { ?>
+								<?php if ($_SESSION['kode_instansi'] == $item->kode_instansi) { ?>
 								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
