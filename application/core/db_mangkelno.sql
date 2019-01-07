@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jan 2019 pada 16.17
--- Versi server: 10.1.30-MariaDB
--- Versi PHP: 7.2.2
+-- Generation Time: 07 Jan 2019 pada 13.15
+-- Versi Server: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -178,7 +178,7 @@ INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan
 
 CREATE TABLE `tb_patokan_rekening` (
   `kode_patokan` varchar(10) NOT NULL,
-  `nama` varchar(40) NOT NULL
+  `nama` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -188,7 +188,33 @@ CREATE TABLE `tb_patokan_rekening` (
 INSERT INTO `tb_patokan_rekening` (`kode_patokan`, `nama`) VALUES
 ('5', 'Belanja Daerah'),
 ('5.1', 'Belanja Tidak Langsung'),
-('5.1.1', 'Belanja Pegawai');
+('5.1.1', 'Belanja Pegawai'),
+('5.2', 'Honorarium Kegiatan PNS'),
+('5.2.1', 'Honorarium Kegiatan Non PNS'),
+('5.2.2', 'Honorarium Pengelola Keuangan, Barang Daerah, dan Sistem Informasi PNS'),
+('5.2.3', 'Honorarium Pegawai Tidak Tetap Non BLUD'),
+('5.3', 'Belanja Alat Tulis Kantor'),
+('5.3.1', 'Belanja Bahan Bakar Minyak/Gas/Pelumas Alat Operasional'),
+('5.3.2', 'Belanja Akomodasi dan Konsumsi'),
+('5.3.3', 'Belanja Jasa Dokumentasi dan Publikasi'),
+('5.3.4', 'Belanja Jasa Narasumber/Tenaga Ahli'),
+('5.3.5', 'Belanja iuran Jaminan Kesehatan/Kecelakaan Kerja/Kematian'),
+('5.3.6', 'Belanja Cetak dan/atau Penggandaan'),
+('5.3.7', 'Belanja makanan dan minuman rapat/kegiatan'),
+('5.3.8', 'Belanja Barang Praktek dan Percontohan'),
+('5.3.9', 'Belanja Langganan Multimedia'),
+('5.4', 'Belanja Jasa Paket Pengiriman'),
+('5.4.1', 'Belanja Jasa Outsourcing'),
+('5.4.2', 'Belanja Jasa Dokumentasi dan Publikasi'),
+('5.4.3', 'Belanja Jasa Dekorasi'),
+('5.4.4', 'Belanja Jasa Cleaning Service'),
+('5.4.5', 'Belanja Jasa Narasumber/Tenaga Ahli'),
+('5.4.6', 'Belanja Pakaian Khusus'),
+('5.5', 'Belanja Perjalanan Dinas Dalam Daerah'),
+('5.5.1', 'Belanja Perjalanan Dinas Luar Daerah'),
+('5.5.2', 'Belanja Pemeliharaan Peralatan dan Mesin'),
+('5.5.3', 'Belanja Modal Pengadaan Peralatan dan/Perlengkapan Kantor'),
+('5.5.4', 'Belanja Modal Pengadaan Alat-alat Studio');
 
 -- --------------------------------------------------------
 
@@ -224,7 +250,8 @@ CREATE TABLE `tb_pembahasan` (
 --
 
 INSERT INTO `tb_pembahasan` (`id`, `kode_pembahasan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `id_siswa`, `nama_siswa`, `plafon`, `triwulan1_rekening`, `triwulan2_rekening`, `triwulan3_rekening`, `triwulan4_rekening`, `total_rekening`, `triwulan1_pembahasan`, `triwulan2_pembahasan`, `triwulan3_pembahasan`, `triwulan4_pembahasan`, `nilai`, `uraian`) VALUES
-(5, '3029', '010.03', '127.01', '080.01', '5.01', 7, 'Joo', '2.000.000', 500000, 500000, 500000, 500000, 2000000, '400.000', '700.000', '600.000', '300.000', 1, 'asd');
+(5, '3029', '010.03', '127.01', '080.01', '5.01', 7, 'Joo', '2.000.000', 500000, 500000, 500000, 500000, 2000000, '400.000', '700.000', '600.000', '300.000', 1, 'asd'),
+(6, '341', '010.03', '127.01', '080.01', '5.1.1.04', 7, 'Joo', '2.980.000', 280000, 280000, 140000, 280000, 2980000, '596.000', '1.043.000', '894.000', '447.000', 80, 'Beli juga makanan yang sehat');
 
 -- --------------------------------------------------------
 
@@ -296,7 +323,8 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 (30, '5', '010.03', '127.12', '080.001', '5.01', 'Honor Kepsek 1', 250000, 250000, 250000, 250000, 1000000, 0),
 (32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', 'Baru', 0, 0, 0, 0, 0, 0),
 (33, '5', '010.03', '127.01', '080.01', '5.01', 'Belanja Tahun Baru', 500000, 500000, 500000, 500000, 2000000, 2000000),
-(34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', 'Beli Pizza Hut ', 280000, 280000, 140000, 280000, 980000, 980000);
+(34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', 'Beli Pizza Hut ', 280000, 280000, 140000, 280000, 980000, 980000),
+(35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', 'Honor Guru 1', 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -330,14 +358,14 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 --
 
 --
--- Indeks untuk tabel `tb_admin`
+-- Indexes for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tb_detail_rekening`
+-- Indexes for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD PRIMARY KEY (`id`),
@@ -347,7 +375,7 @@ ALTER TABLE `tb_detail_rekening`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_indikator`
+-- Indexes for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   ADD PRIMARY KEY (`id`),
@@ -356,7 +384,7 @@ ALTER TABLE `tb_indikator`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_instansi`
+-- Indexes for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`),
@@ -364,7 +392,7 @@ ALTER TABLE `tb_instansi`
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tb_kegiatan`
+-- Indexes for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   ADD PRIMARY KEY (`id`),
@@ -373,13 +401,13 @@ ALTER TABLE `tb_kegiatan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_patokan_rekening`
+-- Indexes for table `tb_patokan_rekening`
 --
 ALTER TABLE `tb_patokan_rekening`
   ADD PRIMARY KEY (`kode_patokan`);
 
 --
--- Indeks untuk tabel `tb_pembahasan`
+-- Indexes for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   ADD PRIMARY KEY (`id`),
@@ -391,7 +419,7 @@ ALTER TABLE `tb_pembahasan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indeks untuk tabel `tb_program`
+-- Indexes for table `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`),
@@ -401,7 +429,7 @@ ALTER TABLE `tb_program`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_rekening`
+-- Indexes for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   ADD PRIMARY KEY (`id`),
@@ -412,7 +440,7 @@ ALTER TABLE `tb_rekening`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indeks untuk tabel `tb_siswa`
+-- Indexes for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`),
@@ -421,59 +449,59 @@ ALTER TABLE `tb_siswa`
   ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tb_admin`
+-- AUTO_INCREMENT for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
+-- AUTO_INCREMENT for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_indikator`
+-- AUTO_INCREMENT for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_instansi`
+-- AUTO_INCREMENT for table `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kegiatan`
+-- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_pembahasan`
+-- AUTO_INCREMENT for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_program`
+-- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_rekening`
+-- AUTO_INCREMENT for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_siswa`
+-- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
