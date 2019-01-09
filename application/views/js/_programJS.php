@@ -349,6 +349,9 @@
 		}
 	});
 
+	//Fungsi: Initialize Select2
+	$(".select2").select2();
+
 	//Message Alert
 	$(".alert").fadeTo(2000, 500).slideUp(500, function(){
 	$(".alert").slideUp(500);
