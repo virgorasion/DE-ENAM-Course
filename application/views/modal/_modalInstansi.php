@@ -145,7 +145,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="addNamaSiswa">Nama</label>
-                        <input type="text" name="addNamaSiswa" id="addNamaSiswa" class="form-control" placeholder="M Nur Fauzan W" autofocus required>
+                        <input type="text" name="addNamaSiswa" id="addNamaSiswa" class="form-control" placeholder="Nama Siswa" autofocus required>
                     </div>
                     <div class="form-group">
                       <label for="addInstansiSiswa">Instansi</label>
@@ -157,8 +157,12 @@
                       </select>
                     </div>
                     <div class="form-group">
+                        <label for="addNisSiswa">Jurusan</label>
+                        <input type="text" name="addJurusanSiswa" id="addJurusanSiswa" max-lenght="5" class="form-control" placeholder="SMA : MIPA/IIS, SMK : Teknik Komputer dan Jaringan" required>
+                    </div>
+                    <div class="form-group">
                         <label for="addNisSiswa">NIS</label>
-                        <input type="number" name="addNisSiswa" id="addNisSiswa" max-lenght="5" class="form-control" placeholder="13234" required>
+                        <input type="text" name="addNisSiswa" id="addNisSiswa" max-lenght="5" class="form-control" placeholder="13234" required>
                     </div>
                     <div class="form-group">
                         <label for="addNisnSiswa">NISN</label>
@@ -170,6 +174,10 @@
                       </select>
                     </div>
                     <hr>
+                    <div class="form-group">
+                        <label for="addNisSiswa">Nomor Telepon</label>
+                        <input type="text" name="addHpSiswa" id="addHpSiswa" max-lenght="5" class="form-control" placeholder="08123456789" required>
+                    </div>
                     <div class="form-group">
                         <label for="addUserSiswa">Username</label>
                         <input type="text" name="addUserSiswa" id="addUserSiswa" class="form-control" placeholder="Virgorasion" required>

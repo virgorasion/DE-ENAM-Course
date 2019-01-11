@@ -32,6 +32,8 @@ class InstansiCtrl extends CI_controller
             'nis' => $post['addNisSiswa'],
             'nisn' => $post['addNisnSiswa'],
             'username' => $post['addUserSiswa'],
+            'jurusan'  => $post['addJurusanSiswa'],
+            'nomor_hp' => $post['addHpSiswa'],
             'password' => md5($post['addPassSiswa']),
         );
         $nisn = $post['addNisnSiswa'];
