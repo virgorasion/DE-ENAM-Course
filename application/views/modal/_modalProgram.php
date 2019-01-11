@@ -225,13 +225,13 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Tambah Rekening</h4>
+				<h4 class="modal-title">Action Rekening</h4>
 			</div>
 			<form id="formActionRekening" method="post" action="<?= site_url('ProgramCtrl/ActionRekening') ?>">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="addKodeRek">Jenis Pengeluaran</label>
-						<select class="form-control" name="addKodeRek" id="addKodeRek">
+						<select class="form-control select2" name="addKodeRek" id="addKodeRek" style="width: 100%;">
 							<?php foreach($patokan as $item){ ?>
 							<option value="<?=$item->kode_patokan?>">
 								<?=$item->nama?>

@@ -358,4 +358,6 @@ $this->load->view('template/_js');
 ?>
 <script src="<?= base_url('assets/plugins/input-mask/jquery.inputmask.bundle.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
+<!-- Select2 -->
+<script src="<?= base_url('assets/bower_components/select2/dist/js/select2.full.min.js') ?>"></script>
 <?php $this->load->view('js/_programJS', $dataModal) ?>

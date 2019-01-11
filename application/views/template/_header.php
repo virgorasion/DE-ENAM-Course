@@ -16,7 +16,8 @@
   <!-- DataTables -->
   <link href="<?=base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css')?>" rel="stylesheet">
 	<link href="<?=base_url('assets/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css')?>" rel="stylesheet">
-
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?= base_url('assets/bower_components/select2/dist/css/select2.min.css') ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('assets/dist/css/AdminLTE.css')?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins

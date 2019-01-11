@@ -155,6 +155,7 @@ class DataExcel
             ->where("kode_instansi", $kodeInstansi)
             ->where("kode_program", $kodeProgram)
             ->where("kode_kegiatan", $kodeKegiatan)
+            ->order_by("kode_rekening", "ASC")
             ->get()->result();
     }
 
