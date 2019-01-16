@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 07 Jan 2019 pada 13.15
+-- Generation Time: 11 Jan 2019 pada 13.34
 -- Versi Server: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -284,7 +284,8 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (11, '100.001', 0, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
 (14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
-(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '2980000');
+(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '2980000'),
+(16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', '');
 
 -- --------------------------------------------------------
 
@@ -341,17 +342,20 @@ CREATE TABLE `tb_siswa` (
   `username` varchar(15) NOT NULL,
   `password` varchar(32) NOT NULL,
   `nis` varchar(15) NOT NULL,
-  `nisn` varchar(15) NOT NULL
+  `nisn` varchar(15) NOT NULL,
+  `jurusan` varchar(50) NOT NULL,
+  `nomor_hp` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_siswa`
 --
 
-INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`) VALUES
-(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123'),
-(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123'),
-(7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111');
+INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`) VALUES
+(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123', '', ''),
+(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', ''),
+(7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', '', ''),
+(8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308');
 
 --
 -- Indexes for dumped tables
@@ -492,7 +496,7 @@ ALTER TABLE `tb_pembahasan`
 -- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tb_rekening`
@@ -504,7 +508,7 @@ ALTER TABLE `tb_rekening`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
