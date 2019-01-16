@@ -1070,7 +1070,7 @@
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");
 		$.ajax({
-			url: window.location = "<?= site_url('Export/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
+			url: window.location = "<?= site_url('Export_excel/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
 			beforeSend:function(){
 				$("#modalLoading").modal("show");
 			},

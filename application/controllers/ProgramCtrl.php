@@ -29,6 +29,11 @@ class ProgramCtrl extends CI_controller
             redirect('Auth');
         }
     }
+
+    function test()
+    {
+        $this->load->view("pdf");
+    }
     
     public function view_export($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {

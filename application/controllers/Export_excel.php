@@ -2,7 +2,7 @@
 
 defined('BASEPATH')or exit('ERROR');
 
-class Export extends CI_controller
+class Export_excel extends CI_controller
 {
     public function __construct()
     {
@@ -71,6 +71,11 @@ class Export extends CI_controller
                 )
             )
         );
+
+        $sheet->getPageSetup()
+            ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()
+            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
 
         //MergeCellsHeader
         $sheet->mergeCells('A3:N3');
