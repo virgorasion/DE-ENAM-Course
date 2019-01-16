@@ -99,7 +99,8 @@
 						{"data": "nama"},
 						{"data": "nama_instansi"},
 						{"data": "nama_program"},
-						{"data": "view", "searchable":false, "sortable":false}
+						{"data": "view", "searchable":false, "sortable":false},
+						{"data": "print", "searchable":false, "sortable":false}
 					],
 			order: [[1, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
@@ -141,7 +142,8 @@
 						{"data": "keterangan"},
 						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "total_rinci", "orderabel": false, "searchable": false},
-						{"data": "action", "orderable": false, "searchable": false}
+						{"data": "print_rek", "orderable": false, "searchable": false},
+						{"data": "print_cov", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
@@ -1063,9 +1065,23 @@
 			funcTableKegiatanCetak(instansiKode,programKode);
 		}
 	})
+
+	//Fungsi: Export PDF AKB
+	$("#tableSiswaCetak").on("click",".print_data",function(){
+		var programKode = $(this).data("program");
+		var instansiKode = $(this).data("instansi");
+		window.open("<?=site_url('Export_pdf/AKB/')?>"+instansiKode+'/'+programKode,"_blank");
+	})
+	//Fungsi: Export PDF Cover
+	$("#tableKegiatanCetak").on("click",".print_cover",function(){
+		var instansiKode = $(this).data("instansi");
+		var programKode = $(this).data("program");
+		var kegiatanKode = $(this).data("kegiatan");
+		window.open("<?=site_url('Export_pdf/Cover/')?>"+instansiKode+'/'+programKode+'/'+kegiatanKode,'_blank');
+	})
 	
 	//Fungsi: export excel
-	$("#tableKegiatanCetak").on("click",".print_data",function(){
+	$("#tableKegiatanCetak").on("click",".print_detail",function(){
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");

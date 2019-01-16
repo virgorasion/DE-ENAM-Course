@@ -49,15 +49,13 @@ class ProgramModel extends CI_model
         }
         $this->datatables->add_column(
             'view',
-            '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-program="$7" data-instansi="$8"><i class="fa fa-eye"></i></a></center>',
-            'id_siswa,
-            nisn,
-            nis,
-            nama,
-            nama_instansi,
-            nama_program,
-            kode_program,
-            kode_instansi'
+            '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-program="$1" data-instansi="$2"><i class="fa fa-eye"></i></a></center>',
+            'kode_program,kode_instansi'
+        );
+        $this->datatables->add_column(
+            'print',
+            '<center><a href="javascript:void(0)" class="print_data btn btn-info btn-xs" data-program="$1" data-instansi="$2"><i class="fa fa-print"></i></a></center>',
+            'kode_program,kode_instansi'
         );
         // $this->datatables->group_by("tb_siswa.kode_program");
         return $this->datatables->generate();
@@ -85,8 +83,8 @@ class ProgramModel extends CI_model
             callback_label(total_rekening,tot_rinci)'
         );
         $this->datatables->add_column(
-            'action',
-            '<center><a href="javascript:void(0)" class="print_data btn btn-info btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-print"></i></a></center>',
+            'print_rek',
+            '<center><a href="javascript:void(0)" class="print_detail btn btn-info btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-print"></i></a></center>',
             'id,
             kode_instansi,
             kode_program,
@@ -95,6 +93,13 @@ class ProgramModel extends CI_model
             total_rekening,
             total_rinci,
             keterangan'
+        );
+        $this->datatables->add_column(
+            'print_cov',
+            '<center><a href="javascript:void(0)" class="print_cover btn btn-info btn-xs" data-instansi="$1" data-program="$2" data-kegiatan="$3"><i class="fa fa-print"></i></a></center>',
+            'kode_instansi,
+            kode_program,
+            kode_kegiatan'
         );
         return $this->datatables->generate();
     }

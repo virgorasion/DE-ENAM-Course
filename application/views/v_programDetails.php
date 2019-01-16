@@ -251,6 +251,7 @@ $dataModal['patokan'] = $patokan;
 											<th>Instansi</th>
 											<th>Program</th>
 											<th class="text-center">View</th>
+											<th class="text-center">Print AKB</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -269,7 +270,8 @@ $dataModal['patokan'] = $patokan;
 												<th>Keterangan</th>
 												<th>Total Rek.</th>
 												<th>Tot. Rinci</th>
-												<th class="text-center">Print</th>
+												<th class="text-center">Print Rekening</th>
+												<th class="text-center">Print Cover</th>
 											</tr>
 										</thead>
 										<tbody>
