@@ -152,6 +152,10 @@
 						<input required type="text" name="addNamaKegiatan" id="addNamaKegiatan" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
+						<label for="addNamaKegiatan">Lokasi Kegiatan</label>
+						<input required type="text" name="addLokasiKegiatan" id="addLokasiKegiatan" class="form-control" placeholder="">
+					</div>
+					<div class="form-group">
 						<label for="addketerangan">Keterangan</label>
 						<input type="text" name="addKeterangan" id="addKeterangan" class="form-control" placeholder="-">
 					</div>

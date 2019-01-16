@@ -247,8 +247,9 @@ class ProgramCtrl extends CI_controller
             'kode_instansi' => $post['kodeInstansi'],
             'kode_program' => $post['kodeProgram'],
             'kode_kegiatan' => $kodeKegiatan,
-            'nama_kegiatan' => $post['addNamaKegiatan'],
-            'keterangan' => $post['addKeterangan']
+            'nama_kegiatan' => htmlspecialchars($post['addNamaKegiatan']),
+            'keterangan' => htmlspecialchars($post['addKeterangan']),
+            'lokasi' => htmlspecialchars($post['addLokasiKegiatan'])
         );
         $query = $this->ProgramModel->ActionInsert('tb_kegiatan', $data);
         $kodeInstansi = $post['kodeInstansi'];
