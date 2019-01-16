@@ -13,12 +13,38 @@ class Export_pdf extends CI_controller
         $this->load->library("DataExcel");
     }
 
-    function PDF_small($kodeInstansi = "010.03",$kodeProgram = "127.01",$kodeKegiatan = "080.01")
+    function Cover($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
         $data_siswa = $this->db->query("SELECT nisn,nis,nama,jurusan,nomor_hp FROM tb_siswa WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
         $data_sekolah = $this->db->query("SELECT nama_instansi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
-        $data_program = $this->db->query("SELECT nama_program FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
-        
+        $data_program = $this->db->query("SELECT nama_program,plafon FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
+        $data_kegiatan = $this->db->query("SELECT nama_kegiatan,lokasi FROM tb_kegiatan WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram AND kode_kegiatan = $kodeKegiatan")->result();
+        function Terbilang($nilai) {
+            $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+            if ($nilai < 12) {
+                return "" . $huruf[$nilai];
+            } elseif ($nilai < 20) {
+                return Terbilang($nilai - 10) . " Belas ";
+            } elseif ($nilai < 100) {
+                return Terbilang($nilai / 10) . " Puluh " . Terbilang($nilai % 10);
+            } elseif ($nilai < 200) {
+                return " Seratus " . Terbilang($nilai - 100);
+            } elseif ($nilai < 1000) {
+                return Terbilang($nilai / 100) . " Ratus " . Terbilang($nilai % 100);
+            } elseif ($nilai < 2000) {
+                return " Seribu " . Terbilang($nilai - 1000);
+            } elseif ($nilai < 1000000) {
+                return Terbilang($nilai / 1000) . " Ribu " . Terbilang($nilai % 1000);
+            } elseif ($nilai < 1000000000) {
+                return Terbilang($nilai / 1000000) . " Juta " . Terbilang($nilai % 1000000);
+            }elseif ($nilai < 1000000000000) {
+                return Terbilang($nilai / 1000000000) . " Milyar " . Terbilang($nilai % 1000000000);
+            }elseif ($nilai < 100000000000000) {
+                return Terbilang($nilai / 1000000000000) . " Trilyun " . Terbilang($nilai % 1000000000000);
+            }elseif ($nilai <= 100000000000000) {
+                return "Maaf Tidak Dapat di Proses Karena Jumlah nilai Terlalu Besar ";
+            }
+        }
 
         $pdf = new FPDF();
         $pdf->AddPage('L','A4');
@@ -56,31 +82,29 @@ class Export_pdf extends CI_controller
         $pdf->Cell(20,10,"KEGIATAN");
         $pdf->SetX(80);
         $pdf->Cell(5,10," : ",0,0,"C");
-        $pdf->Cell(30,10,"(11739)",0,0,"L");
-        $pdf->Cell(30,10,"Peningkatan Kekuatan Super");
+        $pdf->Cell(20,10,"(".@$kodeKegiatan.")",0,0,"L");
+        $pdf->Cell(30,10, @$data_kegiatan[0]->nama_kegiatan);
         $pdf->Ln(5);
         //LOKASI KEGIATAN
         $pdf->SetX(30);
         $pdf->Cell(20,10,"LOKASI KEGIATAN");
         $pdf->SetX(80);
         $pdf->Cell(5,10," : ",0,0,"C");
-        $pdf->Cell(30,10,"........................");
+        $pdf->Cell(30,10, @$data_kegiatan[0]->lokasi);
         $pdf->Ln(5);
         //JUMLAH ANGGARAN
         $pdf->SetX(30);
         $pdf->Cell(20,10,"JUMLAH ANGGARAN");
         $pdf->SetX(80);
         $pdf->Cell(5,10," : ",0,0,"C");
-        $pdf->Cell(30,10,"(11739)",0,0,"L");
-        $pdf->Cell(30,10,"Peningkatan Kekuatan Super");
+        $pdf->Cell(30,10, "Rp ". number_format((double)@$data_program[0]->plafon,0,",","."));
         $pdf->Ln(5);
         //TERBILANG
         $pdf->SetX(30);
         $pdf->Cell(20,10,"TERBILANG");
         $pdf->SetX(80);
         $pdf->Cell(5,10," : ",0,0,"C");
-        $pdf->Cell(30,10,"(11739)",0,0,"L");
-        $pdf->Cell(30,10,"Peningkatan Kekuatan Super");
+        $pdf->Cell(30,10,"(".Terbilang(@$data_program[0]->plafon).")");
         $pdf->Ln(10);
 
         //PENGGUNA ANGGARAN
@@ -124,8 +148,15 @@ class Export_pdf extends CI_controller
         $pdf->Cell(30,10, @$data_siswa[0]->nomor_hp);
         $pdf->Ln(5);
 
-        //New Page
+        $pdf->Output();
+    }
 
+    function AKB($kodeInstansi,$kodeProgram){
+        $data_siswa = $this->db->query("SELECT nis,nama FROM tb_siswa WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
+        $data_sekolah = $this->db->query("SELECT nama_instansi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
+        $data_program = $this->db->query("SELECT nama_program FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
+
+        $pdf = new FPDF();
         $pdf->AddPage('L','A4');
         $pdf->SetFont("Arial","B",12);
         $pdf->Cell(280,10,"MUSTIKA GRAHA DE ENAM",0,0,"C");
@@ -221,7 +252,6 @@ class Export_pdf extends CI_controller
         $pdf->Ln(5);
         $pdf->SetX(222);
         $pdf->Cell(40,0,@$data_siswa[0]->nis,0,1,"C");
-
         $pdf->Output();
     }
 
