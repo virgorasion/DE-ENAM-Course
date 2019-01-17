@@ -10,7 +10,7 @@ class Export_excel extends CI_controller
         $this->load->library("DataExcel");
     }
 
-    public function Excel($kodeInstansi, $kodeProgram, $kodeKegiatan)
+    public function Rekening($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $date = date("Y");
         $data_uraian = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
@@ -401,6 +401,285 @@ class Export_excel extends CI_controller
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Laporan '.$data_siswa[0]->nama.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Save it as an sheet 2003 file
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit();
+    }
+
+    public function AKB($kodeInstansi,$kodeProgram,$kodeKegiatan)
+    {
+        $data_instansi = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data_program = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
+        $data_kegiatan = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data_siswa = $this->dataexcel->getDataSiswa($kodeInstansi, $kodeProgram);
+
+
+        $this->load->library("phpexcel");
+        $this->load->library("PHPExcel/iofactory");
+
+        $objPHPExcel = new PHPExcel();
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setShowGridlines(true);
+
+        //Styling Border
+        $boderHeader = array(
+            'borders' => array(
+                'outline' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000')
+                )
+            ),
+            'font' => array(
+                'bold' => true,
+            )
+        );
+        $bold = array(
+            'font' => array(
+                'bold' => true
+            )
+        );
+        $jumlah = array(
+            'borders' => array(
+                'top' => array(
+                    'style' => PHPexcel_Style_Border::BORDER_THICK
+                ),
+                'bottom' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THICK
+                )
+            ),
+            'font' => array(
+                'bold' => true,
+            )
+        );
+        $boderUniv = array(
+            'borders' => array(
+                'outline' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
+
+        $sheet->getPageSetup()
+            ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()
+            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+        
+        //Header
+        $sheet->mergeCells("G1:J1");
+        $sheet->mergeCells("G2:J2");
+        $sheet->mergeCells("G3:J3");
+        //Header - Data
+        $sheet->SetCellValue("G1", "MUSTIKA GRAHA DE ENAM");
+        $sheet->getStyle("G1:J1")->applyFromArray($bold);
+        $sheet->SetCellValue("G2", "ANGGARAN KAS BELANJA");
+        $sheet->getStyle("G2:J2")->applyFromArray($bold);
+        $sheet->SetCellValue("G3", date("Y"));
+        $sheet->getStyle("G3:J3")->applyFromArray($bold);
+
+        //Header - Style
+        $sheet->getStyle('G1:J1')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('G2:J2')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('G3:J3')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        //End Header
+
+        //Keterangan Siswa
+        $sheet->mergeCells("B5:C5");
+        $sheet->mergeCells("B6:C6");
+        $sheet->mergeCells("B7:C7");
+        $sheet->getColumnDimension("D")->setWidth("3");
+        //Nama Siswa
+        $sheet->setCellValue("B5","Nama Siswa");
+        $sheet->setCellValue("D5",":");
+        $sheet->setCellValue("E5", $data_siswa[0]->nama);
+        //Program
+        $sheet->setCellValue("B6", "PROGRAM");
+        $sheet->setCellValue("D6", ":");
+        $sheet->SetCellValue("E6", $data_program[0]->nama_program);
+        //Sekolah
+        $sheet->setCellValue("B7", "Sekolah");
+        $sheet->setCellValue("D7", ":");
+        $sheet->setCellValue("E7", $data_instansi[0]->nama_instansi);
+        //End Keterangan Siswa
+
+        //Table AKB
+        $sheet->mergeCells("A9:B9");
+        $sheet->mergeCells("C9:G9");
+        $sheet->mergeCells("H9:I9");
+        $sheet->mergeCells("J9:K9");
+        $sheet->mergeCells("L9:M9");
+        $sheet->mergeCells("N9:O9");
+        $sheet->mergeCells("P9:Q9");
+        $sheet->mergeCells("A10:B10");
+        $sheet->mergeCells("C10:G10");
+        $sheet->mergeCells("H10:I10");
+        $sheet->mergeCells("J10:K10");
+        $sheet->mergeCells("L10:M10");
+        $sheet->mergeCells("N10:O10");
+        $sheet->mergeCells("P10:Q10");
+        $sheet->getColumnDimension("I")->setWidth("10");
+        //Style Header
+        $sheet->getStyle('A9:B9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('A9:B9')->applyFromArray($boderHeader);
+        $sheet->getStyle('C9:G9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('C9:G9')->applyFromArray($boderHeader);
+        $sheet->getStyle('H9:I9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('H9:I9')->applyFromArray($boderHeader);
+        $sheet->getStyle('J9:K9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('J9:K9')->applyFromArray($boderHeader);
+        $sheet->getStyle('L9:M9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('L9:M9')->applyFromArray($boderHeader);
+        $sheet->getStyle('N9:O9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('N9:O9')->applyFromArray($boderHeader);
+        $sheet->getStyle('P9:Q9')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('P9:Q9')->applyFromArray($boderHeader);
+        //Style Type
+        $sheet->getStyle('A10:B10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('A10:B10')->applyFromArray($boderUniv);
+        $sheet->getStyle('C10:G10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('C10:G10')->applyFromArray($boderUniv);
+        $sheet->getStyle('H10:I10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('H10:I10')->applyFromArray($boderUniv);
+        $sheet->getStyle('J10:K10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('J10:K10')->applyFromArray($boderUniv);
+        $sheet->getStyle('L10:M10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('L10:M10')->applyFromArray($boderUniv);
+        $sheet->getStyle('N10:O10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('N10:O10')->applyFromArray($boderUniv);
+        $sheet->getStyle('P10:Q10')->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle('P10:Q10')->applyFromArray($boderUniv);
+        //Header Table
+        $sheet->setCellValue("A9","Kode Rekening");
+        $sheet->setCellValue("C9","Uraian");
+        $sheet->setCellValue("H9","Anggaran Tahun Ini");
+        $sheet->setCellValue("J9","Triwulan I");
+        $sheet->setCellValue("L9","Triwulan II");
+        $sheet->setCellValue("N9","Triwulan III");
+        $sheet->setCellValue("P9","Triwulan IV");
+        //Data Type
+        $sheet->setCellValue("A10","1");
+        $sheet->setCellValue("C10","2");
+        $sheet->setCellValue("H10","3");
+        $sheet->setCellValue("J10","Rp");
+        $sheet->setCellValue("L10","Rp");
+        $sheet->setCellValue("N10","Rp");
+        $sheet->setCellValue("P10","Rp");
+        //Data Table
+        $dataTableKegiatan = $this->db->query("
+        SELECT tb_kegiatan.kode_kegiatan,tb_kegiatan.nama_kegiatan,tb_kegiatan.total_rinci,
+        (SELECT SUM(tb_rekening.triwulan_1) FROM tb_rekening WHERE tb_rekening.kode_instansi = tb_kegiatan.kode_instansi AND tb_rekening.kode_program = tb_kegiatan.kode_program AND tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) AS T1,
+        (SELECT SUM(tb_rekening.triwulan_2) FROM tb_rekening WHERE tb_rekening.kode_instansi = tb_kegiatan.kode_instansi AND tb_rekening.kode_program = tb_kegiatan.kode_program AND tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) AS T2,
+        (SELECT SUM(tb_rekening.triwulan_3) FROM tb_rekening WHERE tb_rekening.kode_instansi = tb_kegiatan.kode_instansi AND tb_rekening.kode_program = tb_kegiatan.kode_program AND tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) AS T3,
+        (SELECT SUM(tb_rekening.triwulan_4) FROM tb_rekening WHERE tb_rekening.kode_instansi = tb_kegiatan.kode_instansi AND tb_rekening.kode_program = tb_kegiatan.kode_program AND tb_rekening.kode_kegiatan = tb_kegiatan.kode_kegiatan) AS T4
+        FROM `tb_kegiatan` WHERE tb_kegiatan.kode_instansi = $kodeInstansi AND tb_kegiatan.kode_program = $kodeProgram")->result();
+        $row = 11;
+        foreach ($dataTableKegiatan as $kegiatan) {
+            $sheet->mergeCells("A$row:B$row");
+            $sheet->getStyle("A$row:B$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("A$row",@$kegiatan->kode_kegiatan);
+            $sheet->mergeCells("C$row:G$row");
+            $sheet->getStyle("C$row:G$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("C$row",@$kegiatan->nama_kegiatan);
+            $sheet->mergeCells("H$row:I$row");
+            $sheet->getStyle("H$row:I$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("H$row",@$kegiatan->total_rinci);
+            $sheet->mergeCells("J$row:K$row");
+            $sheet->getStyle("J$row:K$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("J$row",@$kegiatan->T1);
+            $sheet->mergeCells("L$row:M$row");
+            $sheet->getStyle("L$row:M$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("L$row",@$kegiatan->T2);
+            $sheet->mergeCells("N$row:O$row");
+            $sheet->getStyle("N$row:O$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("N$row",@$kegiatan->T4);
+            $sheet->mergeCells("P$row:Q$row");
+            $sheet->getStyle("P$row:Q$row")->applyFromArray($boderHeader);
+            $sheet->setCellValue("P$row",@$kegiatan->T4);
+            $dataTableRekening = $this->db->query("
+            SELECT tb_rekening.kode_patokan,tb_rekening.kode_rekening,tb_patokan_rekening.nama,SUM(tb_rekening.total_rinci) AS total_rinci,
+            SUM(tb_rekening.triwulan_1) AS T1,SUM(tb_rekening.triwulan_2) AS T2,
+            SUM(tb_rekening.triwulan_3) AS T3,SUM(tb_rekening.triwulan_4) AS T4
+            FROM tb_rekening INNER JOIN tb_patokan_rekening ON tb_patokan_rekening.kode_patokan = tb_rekening.kode_patokan
+            WHERE tb_rekening.kode_instansi = $kodeInstansi AND tb_rekening.kode_program = $kodeProgram AND tb_rekening.kode_kegiatan = $kegiatan->kode_kegiatan
+            GROUP BY tb_rekening.kode_patokan")->result();
+            $row++;
+            foreach ($dataTableRekening as $rekening) {
+                $sheet->mergeCells("A$row:B$row");
+                $sheet->getStyle("A$row:B$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("A$row",@$rekening->kode_patokan."  |  ".@$rekening->kode_rekening);
+                $sheet->mergeCells("C$row:G$row");
+                $sheet->getStyle("C$row:G$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("C$row",$rekening->nama);
+                $sheet->mergeCells("H$row:I$row");
+                $sheet->getStyle("H$row:I$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("H$row",$rekening->total_rinci);
+                $sheet->mergeCells("J$row:K$row");
+                $sheet->getStyle("J$row:K$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("J$row",$rekening->T1);
+                $sheet->mergeCells("L$row:M$row");
+                $sheet->getStyle("L$row:M$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("L$row",$rekening->T2);
+                $sheet->mergeCells("N$row:O$row");
+                $sheet->getStyle("N$row:O$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("N$row",$rekening->T4);
+                $sheet->mergeCells("P$row:Q$row");
+                $sheet->getStyle("P$row:Q$row")->applyFromArray($boderUniv);
+                $sheet->setCellValue("P$row",$rekening->T4);
+                $row++;
+            }
+        }
+        //End Data Table
+
+        //Tempat, Tanggal
+        $row++;
+        $sheet->mergeCells("N$row:P$row");
+        $sheet->getStyle("N$row:P$row")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $date = date("d F Y");
+        $sheet->setCellValue("N$row", "Sidoarjo, $date");
+        //Nama Instansi
+        $row++;
+        $sheet->mergeCells("N$row:P$row");
+        $sheet->getStyle("N$row:P$row")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->setCellValue("N$row", $data_instansi[0]->nama_instansi);
+        //Nama Siswa
+        $row = $row+4; 
+        $sheet->mergeCells("N$row:P$row");
+        $sheet->getStyle("N$row:P$row")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->setCellValue("N$row", $data_siswa[0]->nama);
+        $sheet->getStyle("N$row")->applyFromArray(array('font' => array('bold' => true, 'underline' => 'single'))); //style bold & italic siswa
+        //NIS
+        $row++;
+        $sheet->mergeCells("N$row:P$row");
+        $sheet->getStyle("N$row:P$row")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->setCellValue("N$row", $data_siswa[0]->nis);
+
+
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Anggaran Kas Belanja '.$data_siswa[0]->nama.'.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Save it as an sheet 2003 file

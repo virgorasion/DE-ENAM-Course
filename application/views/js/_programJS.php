@@ -1067,10 +1067,24 @@
 	})
 
 	//Fungsi: Export PDF AKB
-	$("#tableSiswaCetak").on("click",".print_data",function(){
+	$("#tableSiswaCetak").on("click",".print_akb_pdf",function(){
 		var programKode = $(this).data("program");
 		var instansiKode = $(this).data("instansi");
 		window.open("<?=site_url('Export_pdf/AKB/')?>"+instansiKode+'/'+programKode,"_blank");
+	})
+	//Fungsi: Export Excel AKB
+	$("#tableSiswaCetak").on("click",".print_akb_excel",function(){
+		var instansiKode = $(this).data("instansi");
+		var programKode = $(this).data("program");
+		$.ajax({
+			url: window.location = "<?= site_url('Export_excel/AKB/') ?>"+instansiKode+"/"+programKode,
+			beforeSend:function(){
+				$("#modalLoading").modal("show");
+			},
+			success:function(result){
+				$("#modalLoading").modal("hide");
+			}
+		})
 	})
 	//Fungsi: Export PDF Cover
 	$("#tableKegiatanCetak").on("click",".print_cover",function(){
@@ -1081,12 +1095,12 @@
 	})
 	
 	//Fungsi: export excel
-	$("#tableKegiatanCetak").on("click",".print_detail",function(){
+	$("#tableKegiatanCetak").on("click",".print_rek_excel",function(){
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");
 		$.ajax({
-			url: window.location = "<?= site_url('Export_excel/Excel/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
+			url: window.location = "<?= site_url('Export_excel/Rekening/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
 			beforeSend:function(){
 				$("#modalLoading").modal("show");
 			},
