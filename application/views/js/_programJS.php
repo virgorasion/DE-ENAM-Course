@@ -142,7 +142,7 @@
 						{"data": "keterangan"},
 						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
 						{"data": "total_rinci", "orderabel": false, "searchable": false},
-						{"data": "print_rek", "orderable": false, "searchable": false},
+						{"data": "print_rka", "orderable": false, "searchable": false},
 						{"data": "print_cov", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -1093,9 +1093,16 @@
 		var kegiatanKode = $(this).data("kegiatan");
 		window.open("<?=site_url('Export_pdf/Cover/')?>"+instansiKode+'/'+programKode+'/'+kegiatanKode,'_blank');
 	})
-	
-	//Fungsi: export excel
-	$("#tableKegiatanCetak").on("click",".print_rek_excel",function(){
+
+	//Fungsi: Export PDF RKA
+	$("#tableKegiatanCetak").on("click",".print_rka_p",function(){
+		var instansiKode = $(this).data("instansi");
+		var programKode = $(this).data("program");
+		var kegiatanKode = $(this).data("kegiatan");
+		window.open("<?=site_url('Export_pdf/RKA/')?>"+instansiKode+'/'+programKode+'/'+kegiatanKode,'_blank');
+	})
+	//Fungsi: Export Excel RKA
+	$("#tableKegiatanCetak").on("click",".print_rka_e",function(){
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");

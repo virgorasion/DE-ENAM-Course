@@ -84,9 +84,9 @@ class ProgramModel extends CI_model
             callback_label(total_rekening,tot_rinci)'
         );
         $this->datatables->add_column(
-            'print_rek',
-            '<center><a href="javascript:void(0)" class="print_rek_pdf btn btn-danger btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-pdf-o"></i></a>
-            <a href="javascript:void(0)" class="print_rek_excel btn btn-success btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-excel-o"></i></a></center>',
+            'print_rka',
+            '<center><a href="javascript:void(0)" class="print_rka_p btn btn-danger btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-pdf-o"></i></a>
+            <a href="javascript:void(0)" class="Print_rka_e btn btn-success btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-excel-o"></i></a></center>',
             'id,
             kode_instansi,
             kode_program,
@@ -432,8 +432,6 @@ class ProgramModel extends CI_model
                                     tb_detail_rekening.total,
                                     tb_detail_rekening.keterangan");
         $this->datatables->from('tb_detail_rekening');
-        $this->datatables->join('tb_instansi', 'tb_instansi.kode_instansi = tb_detail_rekening.kode_instansi');
-        $this->datatables->join('tb_rekening', 'tb_rekening.kode_rekening = tb_detail_rekening.kode_rekening');
         $this->datatables->where('tb_detail_rekening.kode_instansi',$kodeInstansi);
         $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
@@ -458,41 +456,6 @@ class ProgramModel extends CI_model
     public function SyncTotalRinci($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
         //Fungsi: update total_rinci rekening
-        $this->db->trans_start();
-        $selDetail = $this->db->query("select SUM(total) as total from tb_detail_rekening 
-                                        where kode_instansi = $kodeInstansi
-                                        and kode_program = $kodeProgram
-                                        and kode_kegiatan = $kodeKegiatan
-                                        and kode_rekening = '".$kodeRekening."' ");
-        $row = $selDetail->row();
-        $this->db->query("update tb_rekening set total_rinci = " . $row->total . " 
-                                where kode_instansi = $kodeInstansi
-                                and kode_program = $kodeProgram
-                                and kode_kegiatan = $kodeKegiatan
-                                and kode_rekening = '" . $kodeRekening . "'");
-
-        $selRekening = $this->db->query("select SUM(total_rinci) as total from tb_rekening
-                                        where kode_instansi = $kodeInstansi
-                                        and kode_program = $kodeProgram
-                                        and kode_kegiatan = $kodeKegiatan");
-        $row = $selRekening->row();
-        $this->db->query("update tb_kegiatan set total_rinci = " . $row->total . " 
-                                where kode_instansi = $kodeInstansi
-                                and kode_program = $kodeProgram
-                                and kode_kegiatan = $kodeKegiatan");
-
-        $selKegiatan = $this->db->query("select SUM(total_rinci) as total from tb_kegiatan 
-                                        where kode_instansi = $kodeInstansi
-                                        and kode_program = $kodeProgram");
-        $row = $selKegiatan->row();
-        $this->db->query("update tb_program set total_rinci = " . $row->total . " 
-                                where kode_instansi = $kodeInstansi
-                                and kode_program = $kodeProgram");
-        
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() == false) {
-            log_message();
-        }
+        $this->db->query("CALL SyncTotalRinci('".$kodeInstansi."','".$kodeProgram."','".$kodeKegiatan."','".$kodeRekening."',@a,@b,@c)");
     }
 }
