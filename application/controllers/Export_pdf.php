@@ -363,6 +363,13 @@ class Export_pdf extends CI_controller
         $pdf->Cell(50,6,"5",1,0,"C");
         $pdf->Cell(55,6,"6",1,1,"C");
         //Data Utama
+        $pdf->SetFont("Arial","B",11);
+        $pdf->Cell(50,6,"","LR",0,"C");
+        $pdf->Cell(120,6,"BELANJA LANGSUNG","LR",0,"C");
+        $pdf->Cell(30,6,"","LR",0,"C");
+        $pdf->Cell(30,6,"","LR",0,"C");
+        $pdf->Cell(50,6,"","LR",0,"C");
+        $pdf->Cell(55,6,@$rekening->total_rinci,"LR",1,"C");
         $dataRekening = $this->db->query("SELECT kode_rekening,uraian_rekening,total,total_rinci FROM tb_rekening
                                             WHERE kode_instansi = $kodeInstansi
                                             AND kode_program = $kodeProgram
@@ -374,7 +381,7 @@ class Export_pdf extends CI_controller
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(50,6,"","LR",0,"C");
-            $pdf->Cell(55,6,@$rekening->total_rinci,"LR",1,"C");
+            $pdf->Cell(55,6,@$rekening->total_rinci,"LR",1,"R");
             $dataDetail = $this->db->query("SELECT kode_detail_rekening,uraian,volume,satuan,harga,total FROM tb_detail_rekening
                                             WHERE kode_instansi = $kodeInstansi
                                             AND kode_program = $kodeProgram
@@ -386,8 +393,8 @@ class Export_pdf extends CI_controller
                 $pdf->Cell(120,6,$detail->uraian,"LR",0,"C");
                 $pdf->Cell(30,6,$detail->volume,"LR",0,"C");
                 $pdf->Cell(30,6,$detail->satuan,"LR",0,"C");
-                $pdf->Cell(50,6,$detail->harga,"LR",0,"C");
-                $pdf->Cell(55,6,$detail->total,"LR",1,"C");
+                $pdf->Cell(50,6,$detail->harga,"LR",0,"R");
+                $pdf->Cell(55,6,$detail->total,"LR",1,"R");
             }
                 $pdf->Cell(50,6,"","LR",0,"C");
                 $pdf->Cell(120,6,"","LR",0,"C");
