@@ -10,7 +10,7 @@ class Export_excel extends CI_controller
         $this->load->library("DataExcel");
     }
 
-    public function Rekening($kodeInstansi, $kodeProgram, $kodeKegiatan)
+    public function RKA($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $date = date("Y");
         $data_uraian = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
@@ -75,7 +75,7 @@ class Export_excel extends CI_controller
         $sheet->getPageSetup()
             ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->getPageSetup()
-            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL);
 
         //MergeCellsHeader
         $sheet->mergeCells('A3:N3');
@@ -409,11 +409,10 @@ class Export_excel extends CI_controller
         exit();
     }
 
-    public function AKB($kodeInstansi,$kodeProgram,$kodeKegiatan)
+    public function AKB($kodeInstansi,$kodeProgram)
     {
-        $data_instansi = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
+        $data_instansi = $this->dataexcel->getDataInstansi($kodeInstansi);
         $data_program = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
-        $data_kegiatan = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data_siswa = $this->dataexcel->getDataSiswa($kodeInstansi, $kodeProgram);
 
 
@@ -465,7 +464,7 @@ class Export_excel extends CI_controller
         $sheet->getPageSetup()
             ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->getPageSetup()
-            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL);
         
         //Header
         $sheet->mergeCells("G1:J1");

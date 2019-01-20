@@ -1107,7 +1107,7 @@
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");
 		$.ajax({
-			url: window.location = "<?= site_url('Export_excel/Rekening/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
+			url: window.location = "<?= site_url('Export_excel/RKA/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
 			beforeSend:function(){
 				$("#modalLoading").modal("show");
 			},

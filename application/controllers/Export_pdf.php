@@ -131,7 +131,7 @@ class Export_pdf extends CI_controller
         $pdf->Cell(5,5," : ",0,0,"C");
         $pdf->Cell(30,5, @$data_siswa[0]->nomor_hp,0,1);
 
-        $pdf->Output();
+        $pdf->Output("I","Cover ".$data_siswa[0]->nama." ".$data_kegiatan[0]->nama_kegiatan);
     }
 
     function AKB($kodeInstansi,$kodeProgram){
@@ -236,7 +236,7 @@ class Export_pdf extends CI_controller
         $pdf->Ln(5);
         $pdf->SetX(222);
         $pdf->Cell(40,0,@$data_siswa[0]->nis,0,1,"C");
-        $pdf->Output();
+        $pdf->Output("I","Anggaran Kas Belanja ".$data_siswa[0]->nama);
     }
 
     public function RKA($kodeInstansi,$kodeProgram,$kodeKegiatan)
@@ -445,7 +445,7 @@ class Export_pdf extends CI_controller
         $pdf->Cell(335,6,"","BLR");
 
 
-        $pdf->Output();
+        $pdf->Output("I","Rencana Kerja dan Anggaran ".$Siswa[0]->nama);
     }
 
 }

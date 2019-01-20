@@ -86,7 +86,7 @@ class ProgramModel extends CI_model
         $this->datatables->add_column(
             'print_rka',
             '<center><a href="javascript:void(0)" class="print_rka_p btn btn-danger btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-pdf-o"></i></a>
-            <a href="javascript:void(0)" class="Print_rka_e btn btn-success btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-excel-o"></i></a></center>',
+            <a href="javascript:void(0)" class="print_rka_e btn btn-success btn-xs" data-id="$1" data-nama="$5" data-instansi="$2" data-program="$3" data-kegiatan="$4"><i class="fa fa-file-excel-o"></i></a></center>',
             'id,
             kode_instansi,
             kode_program,
