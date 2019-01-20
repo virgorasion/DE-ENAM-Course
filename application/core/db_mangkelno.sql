@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2019 at 02:11 AM
+-- Generation Time: Jan 20, 2019 at 12:14 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -169,6 +169,7 @@ CREATE TABLE `tb_instansi` (
   `hak_akses` int(1) NOT NULL,
   `nama_instansi` varchar(50) NOT NULL,
   `versi` varchar(20) NOT NULL,
+  `kota_lokasi` varchar(15) NOT NULL,
   `keterangan` varchar(50) DEFAULT '-',
   `tahun` int(4) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -179,10 +180,10 @@ CREATE TABLE `tb_instansi` (
 -- Dumping data for table `tb_instansi`
 --
 
-INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `keterangan`, `tahun`, `username`, `password`) VALUES
-(3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
-(4, '100.001', '010.0001', 2, 'SMK Siang', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3'),
-(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', NULL, 2018, 'smk10', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `kota_lokasi`, `keterangan`, `tahun`, `username`, `password`) VALUES
+(3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
+(4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3'),
+(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', '21232f297a57a5a743894a0e4a801fc3');
 
 -- --------------------------------------------------------
 
@@ -198,6 +199,7 @@ CREATE TABLE `tb_kegiatan` (
   `nama_kegiatan` varchar(40) NOT NULL,
   `total_rekening` int(11) NOT NULL DEFAULT '0',
   `total_rinci` int(11) NOT NULL DEFAULT '0',
+  `lokasi` varchar(15) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -205,14 +207,15 @@ CREATE TABLE `tb_kegiatan` (
 -- Dumping data for table `tb_kegiatan`
 --
 
-INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
-(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 36732012, 36903292, 'Cek Edit Kegiatan'),
-(6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, 'Cek tambah kegiatan untuk rekening'),
-(8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, 'Test diplicate data'),
-(9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, 'Rutinitas :v'),
-(10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, 'Baru'),
-(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, 'Tahun Baru'),
-(13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 0, 0, 'Tahun Baru');
+INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `lokasi`, `keterangan`) VALUES
+(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 36732012, 36903292, '', 'Cek Edit Kegiatan'),
+(6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, '', 'Cek tambah kegiatan untuk rekening'),
+(8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, '', 'Test diplicate data'),
+(9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, '', 'Rutinitas :v'),
+(10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, '', 'Baru'),
+(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, '', 'Tahun Baru'),
+(13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 21768216, 0, '', 'Tahun Baru'),
+(14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, 'Surabaya', '');
 
 -- --------------------------------------------------------
 
@@ -294,8 +297,7 @@ CREATE TABLE `tb_pembahasan` (
 --
 
 INSERT INTO `tb_pembahasan` (`id`, `kode_pembahasan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `id_siswa`, `nama_siswa`, `plafon`, `triwulan1_rekening`, `triwulan2_rekening`, `triwulan3_rekening`, `triwulan4_rekening`, `total_rekening`, `triwulan1_pembahasan`, `triwulan2_pembahasan`, `triwulan3_pembahasan`, `triwulan4_pembahasan`, `nilai`, `uraian`) VALUES
-(5, '3029', '010.03', '127.01', '080.01', '5.01', 7, 'Joo', '2.000.000', 500000, 500000, 500000, 500000, 2000000, '400.000', '700.000', '600.000', '300.000', 1, 'asd'),
-(6, '341', '010.03', '127.01', '080.01', '5.1.1.04', 7, 'Joo', '2.980.000', 280000, 280000, 140000, 280000, 2980000, '596.000', '1.043.000', '894.000', '447.000', 80, 'Beli juga makanan yang sehat');
+(6, '341', '010.03', '127.01', '080.01', '5.01', 7, 'Joo', '2.980.000', 500000, 500000, 500000, 500000, 2980000, '596.000', '1.043.000', '894.000', '447.000', 80, 'Beli juga makanan yang sehat');
 
 -- --------------------------------------------------------
 
@@ -328,7 +330,7 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (11, '100.001', 0, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
 (14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
-(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '2980000'),
+(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', '');
 
 -- --------------------------------------------------------
@@ -369,7 +371,8 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 (32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', 'Baru', 0, 0, 0, 0, 0, 0),
 (33, '5', '010.03', '127.01', '080.01', '5.01', 'Belanja Tahun Baru', 500000, 500000, 500000, 500000, 2000000, 2000000),
 (34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', 'Beli Pizza Hut ', 280000, 280000, 140000, 280000, 980000, 980000),
-(35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', 'Honor Guru 1', 0, 0, 0, 0, 0, 0);
+(35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', 'Honor Guru 1', 0, 0, 0, 0, 0, 0),
+(36, '5.5.2', '010.03', '127.01', '080.02', '5.5.2.01', 'test error kode_rekening', 9981237, 9812731, 987124, 987124, 21768216, 0);
 
 -- --------------------------------------------------------
 
@@ -528,13 +531,13 @@ ALTER TABLE `tb_instansi`
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_program`
@@ -546,7 +549,7 @@ ALTER TABLE `tb_program`
 -- AUTO_INCREMENT for table `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `tb_siswa`
@@ -576,41 +579,6 @@ ALTER TABLE `tb_indikator`
 --
 ALTER TABLE `tb_instansi`
   ADD CONSTRAINT `tb_instansi_ibfk_1` FOREIGN KEY (`kode_admin`) REFERENCES `tb_admin` (`kode_admin`) ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_kegiatan`
---
-ALTER TABLE `tb_kegiatan`
-  ADD CONSTRAINT `tb_kegiatan_ibfk_1` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_pembahasan`
---
-ALTER TABLE `tb_pembahasan`
-  ADD CONSTRAINT `tb_pembahasan_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_5` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_6` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_7` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_8` FOREIGN KEY (`id_siswa`) REFERENCES `tb_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_program`
---
-ALTER TABLE `tb_program`
-  ADD CONSTRAINT `tb_program_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_rekening`
---
-ALTER TABLE `tb_rekening`
-  ADD CONSTRAINT `tb_rekening_ibfk_1` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_rekening_ibfk_2` FOREIGN KEY (`kode_patokan`) REFERENCES `tb_patokan_rekening` (`kode_patokan`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_siswa`
---
-ALTER TABLE `tb_siswa`
-  ADD CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
