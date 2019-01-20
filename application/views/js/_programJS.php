@@ -401,7 +401,7 @@
 		funcTableIndikator();
 		infoKegiatan();
 		$("#tabKegiatan").removeClass("active");
-		$("#nav-tabs-kegiatan-4").removeClss("active");
+		$("#nav-tabs-kegiatan-4").removeClass("active");
 		$("#tabIndikatorPembahasan").addClass("active");
 		$("#nav-tabs-kegiatan-2").addClass("active");
 	<?php }?>
