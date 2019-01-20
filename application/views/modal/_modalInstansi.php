@@ -34,6 +34,10 @@
                         <input type="text" name="addVersi" id="addVersi" class="form-control" placeholder="-">
                     </div>
                     <div class="form-group">
+                        <label for="addLokasi">Versi</label>
+                        <input type="text" name="addLokasi" id="addLokasi" class="form-control" placeholder="-">
+                    </div>
+                    <div class="form-group">
                         <label for="addKet">Keterangan</label>
                         <textarea class="form-control" name="addKet" id="addKet" rows="3" placeholder="Keterangan"></textarea>
                     </div>
@@ -98,6 +102,10 @@
                     <div class="form-group">
                         <label for="editVersi">Versi</label>
                         <input type="text" name="editVersi" id="editVersi" class="form-control" placeholder="-">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLokasi">Versi</label>
+                        <input type="text" name="editLokasi" id="editLokasi" class="form-control" placeholder="-">
                     </div>
                     <div class="form-group">
                         <label for="editKet">Keterangan</label>

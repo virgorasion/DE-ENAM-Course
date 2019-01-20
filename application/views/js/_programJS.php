@@ -10,6 +10,7 @@
 	var tablePembahasan = "";
 	var tableRekening = "";
 	var tableDetailRekening = "";
+	var idSiswa = "";
     // Setup datatables
 	$.fn.dataTableExt.errMode = 'none';
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -161,6 +162,7 @@
 
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
 	function funcTableIndikator() {
+		kodeInstansi = "<?= $kodeInstansi ?>";
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
 		tableIndikator = $("#tableIndikator").DataTable({
@@ -205,6 +207,7 @@
 
 	//Fungsi: untuk menggenerate table IndkatorKegiatan
 	function funcTablePembahasan() {
+		kodeInstansi = "<?= $kodeInstansi ?>";
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
 		tablePembahasan = $("#tablePembahasan").DataTable({
@@ -335,6 +338,23 @@
 	return tableRekening;
 	}
 
+	function infoKegiatan(kodeInstansi,kodeProgram){
+		$.ajax({
+			url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
+			type: "POST",
+			success:function(result){
+				var data = JSON.parse(result);
+				$("#InfoJenis").text(data[0].jenis);
+				$("#InfoKodeKegiatan").text(data[0].kode_program);
+				$("#InfoNamaKegiatan").text(data[0].nama_program);
+				$("#InfoUraian").text(data[0].uraian);
+				$("#InfoSasaran").text(data[0].sasaran);
+				$("#InfoPlafon").text(data[0].plafon);
+			}
+		})
+	}
+
+
 	// Fungsi: datatable pada tableProgram
 	// -----------------------------------------------------------------
 	var rowSelection = $('#tableProgram').DataTable({
@@ -359,28 +379,31 @@
 	$(".alert").slideUp(500);
 	});
 
-	//Fungsi: untuk memunculkan Box Kegiatan seusai edit & delete
+	//Fungsi: Set variable kodeProgram setiap action dijalankan
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
 	<?php 
 } ?>
 
 	<?php if (@$_SESSION['Pembahasan_Direct'] != null) { ?>
+		funcTableKegiatan(kodeProgram);
+		funcTableIndikator();
 		funcTablePembahasan();
+		infoKegiatan();
 		$("#tabKegiatan").removeClass("active");
 		$("#tabPembahasanKegiatan").addClass("active");
-		$("#nav-tabs-kegiatan-4").removeClass("avtive");
+		$("#nav-tabs-kegiatan-4").removeClass("active");
 		$("#nav-tabs-kegiatan-5").addClass("active");
 	<?php }?>
 	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
-		funcTableIndikator();
-		$("#tabKegiatan").removeClass("active");
-		$("#tabIndikatorPembahasan").addClass("active");
-		$("#nav-tabs-kegiatan-4").removeClss("avtive");
-		$("#nav-tabs-kegiatan-2").addClass("active");
-	<?php }?>
-	<?php if (@$_SESSION['Kegiatan_Direct'] != null) { ?>
+		funcTablePembahasan();
 		funcTableKegiatan(kodeProgram);
+		funcTableIndikator();
+		infoKegiatan();
+		$("#tabKegiatan").removeClass("active");
+		$("#nav-tabs-kegiatan-4").removeClss("active");
+		$("#tabIndikatorPembahasan").addClass("active");
+		$("#nav-tabs-kegiatan-2").addClass("active");
 	<?php }?>
 
 	// Fungsi: Redirect Rekening
@@ -420,39 +443,28 @@
 		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
-			var idSiswa = $item.find("#idSiswa").val();
+			idSiswa = $item.find("#idSiswa").val();
+
 
 			console.log(idSiswa)
-			funcTableKegiatan(kodeProgram);
+			funcTableKegiatan(kodeProgram,idSiswa);
 			funcTableIndikator();
 			funcTablePembahasan();
+			infoKegiatan();
 			$.ajax({
-				url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
-				type: "POST",
-				success:function(result){
-					var data = JSON.parse(result);
-					$("#InfoJenis").text(data[0].jenis);
-					$("#InfoKodeKegiatan").text(data[0].kode_program);
-					$("#InfoNamaKegiatan").text(data[0].nama_program);
-					$("#InfoUraian").text(data[0].uraian);
-					$("#InfoSasaran").text(data[0].sasaran);
-					$("#InfoPlafon").text(data[0].plafon);
-				}
-			})
-			$.ajax({
-				url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
-				type: "POST",
-				success: (result) =>{
-					var data = JSON.parse(result);
-					// console.log(data);
-					$("#nisnPJSiswa").text(data[0].nisn);
-					$("#nisPJSiswa").text(data[0].nis);
-					$("#namaPJSiswa").text(data[0].nama);
-					$("#userPJSiswa").text(data[0].username);
-					$("#instansiPJSiswa").text(data[0].nama_instansi);
-					$("#programPJSiswa").text(data[0].nama_program);
-				}
-			})
+			url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
+			type: "POST",
+			success: (result) =>{
+				var data = JSON.parse(result);
+				// console.log(data);
+				$("#nisnPJSiswa").text(data[0].nisn);
+				$("#nisPJSiswa").text(data[0].nis);
+				$("#namaPJSiswa").text(data[0].nama);
+				$("#userPJSiswa").text(data[0].username);
+				$("#instansiPJSiswa").text(data[0].nama_instansi);
+				$("#programPJSiswa").text(data[0].nama_program);
+			}
+		})
  		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
@@ -582,6 +594,7 @@
 		var uraian = $(this).data('uraian');
 		var instansi = $(this).data('namainstansi');
 		var program = $(this).data('namaprogram');
+		console.log(kode_kegiatan+"Kegiatan");
 		$.ajax({
 			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanDua/') ?>"+"Dua"+"/"+kode_instansi+"/"+kode_program,
 			type: "POST",
@@ -596,12 +609,13 @@
 		}).done(function(){
 			$("#addNamaKegiatanPembahasan").val(kode_kegiatan);
 		})
+
 		$.ajax({
 			url: "<?= site_url('ProgramCtrl/GetDataInsertPembahasanEmpat/') ?>"+"Empat"+"/"+kode_instansi+"/"+kode_program+"/"+kode_kegiatan,
 			type: "POST",
 			success:function(result){
 				var data = JSON.parse(result);
-				var html = "<option>Nama Rekening</option>";
+				var html = "<option selected>Nama Rekening</option>";
 				$.each(data,function(i){
 					html += '<option value="'+data[i].kode_rekening+'">'+data[i].uraian_rekening+'</option>';
 					$("#addNamaRekeningPembahasan").html(html);
@@ -610,6 +624,8 @@
 		}).done(function(){
 			$("#addNamaRekeningPembahasan").val(kode_rekening);
 		})
+
+
 		$("#modalPembahasan").modal("show");
 		$("#actionTypePembahasan").val("edit");
 		$("#MainIdPembahasan").val(id);
@@ -960,6 +976,8 @@
 		$("#addT2RekeningPembahasan").val("");
 		$("#addT3RekeningPembahasan").val("");
 		$("#addT4RekeningPembahasan").val("");
+		$("#addNilaiPembahasan").val("");
+		$("#addUraianPembahasan").val("");
 		$.ajax({
 			url: "<?=site_url('ProgramCtrl/GetDataInsertPembahasanSatu/')?>"+"Satu"+"/"+kodeInstansi+"/"+kodeProgram,
 			type: "POST",
@@ -1013,10 +1031,17 @@
 			type: "POST",
 			success:function(result){
 				var data = JSON.parse(result);
-				var html = "<option>Nama Rekening</option>";
+				var html = "<option selected>Nama Rekening</option>";
 				$.each(data,function(i){
-					html += '<option value="'+data[i].kode_rekening+'">'+data[i].uraian_rekening+'</option>';
-					$("#addNamaRekeningPembahasan").html(html);
+					console.log(data);
+					if (data == null) {
+						console.log(data);
+						html += '<option value="">Kosong</option>';
+						$("#addNamaRekeningPembahasan").html(html);
+					}else {
+						html += '<option value="'+data[i].kode_rekening+'">'+data[i].uraian_rekening+'</option>';
+						$("#addNamaRekeningPembahasan").html(html);
+					}
 				})
 			}
 		})

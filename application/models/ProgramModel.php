@@ -290,7 +290,11 @@ class ProgramModel extends CI_model
                 ->where("kode_kegiatan",$kodeKegiatan)
                 ->get()
                 ->result();
-            return $query;
+            if ($query == null) {
+                return NULL;
+            }else {
+                return $query;
+            }
         }elseif ($kode == "Lima") {
             $query = $this->db->select("triwulan_1,triwulan_2,triwulan_3,triwulan_4")
                 ->from("tb_rekening")

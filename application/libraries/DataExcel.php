@@ -171,7 +171,7 @@ class DataExcel
 
     private function setDataInstansi($kodeInstansi)
     {
-        return $this->ci->db->select("nama_instansi,versi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
+        return $this->ci->db->select("nama_instansi,versi,kota_lokasi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
     }
     
     private function setDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan)

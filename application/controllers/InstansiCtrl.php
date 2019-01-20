@@ -64,6 +64,7 @@ class InstansiCtrl extends CI_controller
         $kode = $this->GenerateKodeInstansi($id);
         $instansi = $this->input->post('addInstansi');
         $versi = $this->input->post('addVersi');
+        $lokasi = $this->input->post('addLokasi');
         $ket = $this->input->post('Ket');
         $user = $this->input->post('addUser');
         $pass = $this->input->post('addPass');
@@ -75,6 +76,7 @@ class InstansiCtrl extends CI_controller
             'kode_instansi' => $kode,
             'nama_instansi' => $instansi,
             'versi' => $versi,
+            'kota_lokasi' => $lokasi,
             'keterangan' => $ket,
             'username' => $user,
             'password' => md5($pass)
@@ -97,6 +99,7 @@ class InstansiCtrl extends CI_controller
         $kodeInstansi = $this->input->post('editId');
         $namaInstansi = $this->input->post('editInstansi');
         $versi = $this->input->post('editVersi');
+        $lokasi = $this->input->post('editLokasi');
         $keterangan = $this->input->post('editKet');
         $user = $this->input->post('editUser');
         $pass = $this->input->post('editPass');
@@ -108,6 +111,7 @@ class InstansiCtrl extends CI_controller
                 'kode_instansi' => $kodeInstansi,
                 'nama_instansi' => $namaInstansi,
                 'versi' => $versi,
+                'kota_lokasi' => $lokasi,
                 'keterangan' => $keterangan,
                 'username' => $user,
             );
@@ -117,6 +121,7 @@ class InstansiCtrl extends CI_controller
                 'kode_instansi' => $kodeInstansi,
                 'nama_instansi' => $namaInstansi,
                 'versi' => $versi,
+                'kota_lokasi' => $lokasi,
                 'keterangan' => $keterangan,
                 'username' => $user,
                 'password' => md5($pass)

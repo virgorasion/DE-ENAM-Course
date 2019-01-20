@@ -176,9 +176,13 @@ class ProgramCtrl extends CI_controller
     // Coding untuk Box Kegiatan
 
     //Datatable Kegiatan
-    public function DataTableApi($kodeInstansi, $kodeProgram)
+    public function DataTableApi($kodeInstansi, $kodeProgram, $idSiswa = NULL)
     {
         header('Content-Type: application/json');
+        if (@$_SESSION['id_siswa'] != $idSiswa) {
+            $this->session->unset_userdata('id_siswa');
+            $this->session->set_userdata('id_siswa', $idSiswa);
+        }
         echo $this->ProgramModel->getDataKegiatan($kodeInstansi, $kodeProgram);
     }
     
@@ -439,7 +443,7 @@ class ProgramCtrl extends CI_controller
 
     public function HapusPembahasan($idPembahasan, $kodeProgram, $kodeInstansi)
     {
-        $this->ProgramModel->DeleteDatakegiatan("tb_pembahasan", $idPembahasan);
+        $query = $this->ProgramModel->DeleteDatakegiatan("tb_pembahasan", $idPembahasan);
         if ($query != null) {
             $this->session->set_tempdata('succ', 'Berhasil Hapus Pembahasan',10);
             $this->session->set_tempdata('kodeProgram', $kodeProgram,10);

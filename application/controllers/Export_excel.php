@@ -395,7 +395,7 @@ class Export_excel extends CI_controller
         $row = $row - 6;
         $date = date("d F Y");
         $sheet->mergeCells("O$row:T$row");
-        $sheet->setCellValue("O$row", "Sidoarjo, $date"); // data tempat & tanggal
+        $sheet->setCellValue("O$row", $data_instansi[0]->kota_lokasi.", ".$date); // data tempat & tanggal
         $sheet->getStyle("O$row:T$row")->getAlignment()
             ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
@@ -654,7 +654,7 @@ class Export_excel extends CI_controller
         $sheet->getStyle("N$row:P$row")->getAlignment()
             ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
         $date = date("d F Y");
-        $sheet->setCellValue("N$row", "Sidoarjo, $date");
+        $sheet->setCellValue("N$row", $data_instansi[0]->kota_lokasi.", ".$date);
         //Nama Instansi
         $row++;
         $sheet->mergeCells("N$row:P$row");
