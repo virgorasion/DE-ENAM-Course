@@ -64,7 +64,7 @@
 			<div class="wrap-login100">
 				<form action="<?= site_url('Auth/login') ?>" method="post" class="login100-form validate-form">
 					<span class="login100-form-logo">
-						<i class="zmdi zmdi-landscape"></i>
+						<img style="height:120px; border-radius:50%;" src="<?= base_url('assets/images/icon.jpeg') ?>">
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">

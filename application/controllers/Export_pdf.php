@@ -136,7 +136,7 @@ class Export_pdf extends CI_controller
 
     function AKB($kodeInstansi,$kodeProgram){
         $data_siswa = $this->db->query("SELECT nis,nama FROM tb_siswa WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
-        $data_sekolah = $this->db->query("SELECT nama_instansi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
+        $data_sekolah = $this->db->query("SELECT nama_instansi,kota_lokasi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
         $data_program = $this->db->query("SELECT nama_program FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
 
         $pdf = new FPDF();
@@ -227,7 +227,7 @@ class Export_pdf extends CI_controller
             }
         }
         $pdf->SetX(212);
-        $pdf->Cell(60,10,"Sidoarjo, ".date("d F Y"),0,1,"C");
+        $pdf->Cell(60,10,@$data_sekolah[0]->kota_lokasi. ", " .date("d F Y"),0,1,"C");
         $pdf->SetX(222);
         $pdf->Cell(40,0,@$data_sekolah[0]->nama_instansi,0,1,"C");
         $pdf->Ln(20);
@@ -241,7 +241,7 @@ class Export_pdf extends CI_controller
 
     public function RKA($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
-        $Instansi = $this->db->select("nama_instansi,versi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
+        $Instansi = $this->db->select("nama_instansi,kota_lokasi,versi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
         $Program = $this->db->select("jenis,sasaran,nama_program,total_rinci")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
         $Kegiatan = $this->db->select("nama_kegiatan,total_rinci,total_rekening")->from("tb_kegiatan")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get()->result();
         $indikatorCapaian = $this->db->select("uraian,satuan,target")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",1)->get()->result();
@@ -419,7 +419,7 @@ class Export_pdf extends CI_controller
         $pdf->Cell(40,6,@$T1[0]->T1,0,0,"R");
         $pdf->Cell(150,6,"");
         //Tempat & Tanggal
-        $pdf->Cell(102,6,"Sidoarjo, ".date("d F Y"),"R",1,"C");
+        $pdf->Cell(102,6,@$Instansi[0]->kota_lokasi. ", " .date("d F Y"),"R",1,"C");
         //Triwulan 2
         $pdf->Cell(40,6,"Triwulan 2","L");
         $pdf->Cell(3,6,"Rp");
