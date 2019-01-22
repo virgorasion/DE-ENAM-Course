@@ -152,16 +152,13 @@
 						<input required type="text" name="addNamaKegiatan" id="addNamaKegiatan" class="form-control" placeholder="">
 					</div>
 					<div class="form-group">
-						<label for="addNamaKegiatan">Lokasi Kegiatan</label>
-						<input required type="text" name="addLokasiKegiatan" id="addLokasiKegiatan" class="form-control" placeholder="">
-					</div>
-					<div class="form-group">
 						<label for="addketerangan">Keterangan</label>
 						<input type="text" name="addKeterangan" id="addKeterangan" class="form-control" placeholder="-">
 					</div>
 				</div>
 				<input type="hidden" name="kodeInstansi" id="kodeInstansi" value="<?= $kodeInstansi ?>" />
 				<input type="hidden" name="kodeProgram" id="kodeProgram" value="" />
+				<input type="hidden" name="addKegiatanIdSiswa" id="addKegiatanIdSiswa" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>
@@ -209,6 +206,7 @@
 				<input type="hidden" name="kodeInstansiEdit" id="kodeInstansiEdit" value="<?= $kodeInstansi ?>" />
 				<input type="hidden" name="kodeProgramEdit" id="kodeProgramEdit" />
 				<input type="hidden" name="idKegiatanEdit" id="idKegiatanEdit" value="" />
+				<input type="hidden" name="editKegiatanIdSiswa" id="editKegiatanIdSiswa" value="" />
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-primary">Simpan</button>
@@ -392,8 +390,8 @@
 <?php 
 } ?>
 
+<!-- Start Modal Indikator -->
 <?php if ($_SESSION['hakAkses'] != 2) { ?>
-<!-- Start Modal Action Detail Rekening -->
 <div class="modal fade" id="modalIndikator">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -448,6 +446,7 @@
 				<div class="box-footer">
 					<input type="hidden" id="KodeInstansiIndikator" name="KodeInstansiIndikator">
 					<input type="hidden" id="KodeProgramIndikator" name="KodeProgramIndikator">
+					<input type="hidden" id="idSiswaIndikator" name="idSiswaIndikator">
 					<input type="hidden" id="MainIdIndikator" name="MainIdIndikator">
 					<input type="hidden" id="actionTypeIndikator" name="actionTypeIndikator">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

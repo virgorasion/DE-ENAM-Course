@@ -47,7 +47,7 @@
 			},
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/dataTableApi/') ?>"+kodeInstansi+"/"+kodeProgram, "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/dataTableApi/') ?>"+kodeInstansi+"/"+kodeProgram+"/"+idSiswa, "type": "POST"},
 					columns: [
 						{
 							"data": null,
@@ -344,12 +344,30 @@
 			type: "POST",
 			success:function(result){
 				var data = JSON.parse(result);
+				console.log(result);
 				$("#InfoJenis").text(data[0].jenis);
 				$("#InfoKodeKegiatan").text(data[0].kode_program);
 				$("#InfoNamaKegiatan").text(data[0].nama_program);
 				$("#InfoUraian").text(data[0].uraian);
 				$("#InfoSasaran").text(data[0].sasaran);
 				$("#InfoPlafon").text(data[0].plafon);
+			}
+		})
+	}
+
+	function penanggungJawab(idSiswa){
+		$.ajax({
+			url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
+			type: "POST",
+			success: (result) =>{
+				var data = JSON.parse(result);
+				console.log(data);
+				$("#nisnPJSiswa").text(data[0].nisn);
+				$("#nisPJSiswa").text(data[0].nis);
+				$("#namaPJSiswa").text(data[0].nama);
+				$("#userPJSiswa").text(data[0].username);
+				$("#instansiPJSiswa").text(data[0].nama_instansi);
+				$("#programPJSiswa").text(data[0].nama_program);
 			}
 		})
 	}
@@ -382,28 +400,31 @@
 	//Fungsi: Set variable kodeProgram setiap action dijalankan
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
 		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
-	<?php 
-} ?>
+	<?php } ?>
 
 	<?php if (@$_SESSION['Pembahasan_Direct'] != null) { ?>
+		idSiswa = "<?=@$_SESSION['idSiswa']?>";
 		funcTableKegiatan(kodeProgram);
 		funcTableIndikator();
+		infoKegiatan(kodeInstansi,kodeProgram);
+		penanggungJawab(idSiswa);
 		funcTablePembahasan();
-		infoKegiatan();
 		$("#tabKegiatan").removeClass("active");
+		$("#nav-tabs-kegiatan-4").removeClass("active in");
 		$("#tabPembahasanKegiatan").addClass("active");
-		$("#nav-tabs-kegiatan-4").removeClass("active");
-		$("#nav-tabs-kegiatan-5").addClass("active");
+		$("#nav-tabs-kegiatan-5").addClass("active in");
 	<?php }?>
 	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
+		idSiswa = "<?=@$_SESSION['idSiswa']?>";
 		funcTablePembahasan();
 		funcTableKegiatan(kodeProgram);
+		infoKegiatan(kodeInstansi,kodeProgram);
+		penanggungJawab(idSiswa);
 		funcTableIndikator();
-		infoKegiatan();
 		$("#tabKegiatan").removeClass("active");
-		$("#nav-tabs-kegiatan-4").removeClass("active");
+		$("#nav-tabs-kegiatan-4").removeClass("active in");
 		$("#tabIndikatorPembahasan").addClass("active");
-		$("#nav-tabs-kegiatan-2").addClass("active");
+		$("#nav-tabs-kegiatan-2").addClass("active in");
 	<?php }?>
 
 	// Fungsi: Redirect Rekening
@@ -446,25 +467,11 @@
 			idSiswa = $item.find("#idSiswa").val();
 
 
-			console.log(idSiswa)
 			funcTableKegiatan(kodeProgram,idSiswa);
 			funcTableIndikator();
 			funcTablePembahasan();
-			infoKegiatan();
-			$.ajax({
-			url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
-			type: "POST",
-			success: (result) =>{
-				var data = JSON.parse(result);
-				// console.log(data);
-				$("#nisnPJSiswa").text(data[0].nisn);
-				$("#nisPJSiswa").text(data[0].nis);
-				$("#namaPJSiswa").text(data[0].nama);
-				$("#userPJSiswa").text(data[0].username);
-				$("#instansiPJSiswa").text(data[0].nama_instansi);
-				$("#programPJSiswa").text(data[0].nama_program);
-			}
-		})
+			infoKegiatan(kodeInstansi,kodeProgram);
+			penanggungJawab(idSiswa);
  		}else {
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
@@ -545,6 +552,7 @@
         $('#formEditKegiatan').find('#editNamaKegiatan').val(nama);
         $('#formEditKegiatan').find('#editKeterangan').val(ket);
         $('#formEditKegiatan').find('#editKodeKegiatan').val(kode);
+        $('#formEditKegiatan').find('#addKegiatanIdSiswa').val(idSiswa);
     });
 
 	//Fungsi: Edit Indikator
@@ -560,6 +568,7 @@
 		console.log(uraian);
 		$("#modalIndikator").modal('show');
 		$("#FormAddIndikator").find("#addNomor").val();
+		$("#FormAddIndikator").find("#idSiswaIndikator").val(idSiswa);
 		$("#FormAddIndikator").find("#addJenisIndikator").val(jenis);
 		$("#FormAddIndikator").find("#addUraianIndikator").val(uraian);
 		$("#FormAddIndikator").find("#addSatuanIndikator").val(satuan);
@@ -629,6 +638,7 @@
 		$("#modalPembahasan").modal("show");
 		$("#actionTypePembahasan").val("edit");
 		$("#MainIdPembahasan").val(id);
+		$("#IdSiswaPembahasan").val(id_siswa);
 		$("#KodeInstansiPembahasan").val(kode_instansi);
 		$("#KodeProgramPembahasan").val(kode_program);
 		$("#addNamaPembahasan").val(nama_siswa);
@@ -784,7 +794,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
+              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi+"/"+idSiswa;
             }
           }
         }
@@ -805,7 +815,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusIndikator/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
+              window.location = "<?= site_url('ProgramCtrl/HapusIndikator/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi+"/"+idSiswa;
             }
           }
         }
@@ -826,7 +836,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusPembahasan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi;
+              window.location = "<?= site_url('ProgramCtrl/HapusPembahasan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi+"/"+idSiswa;
             }
           }
         }
@@ -958,7 +968,11 @@
 		$("#FormAddIndikator").find("#actionTypeIndikator").val("add");
 		$("#FormAddIndikator").find("#KodeInstansiIndikator").val(kodeInstansi);
 		$("#FormAddIndikator").find("#KodeProgramIndikator").val(kodeProgram);
-		$("#FormAddIndikator").find("#actionTypeIndikator").val("add");
+		$("#FormAddIndikator").find("#idSiswaIndikator").val(idSiswa);
+		$("#FormAddIndikator").find("#addJenisIndikator").val("");
+		$("#FormAddIndikator").find("#addUraianIndikator").val("");
+		$("#FormAddIndikator").find("#addSatuanIndikator").val("");
+		$("#FormAddIndikator").find("#addTarget").val("");
 	})
 
 	//Fungsi: Insert Pembahasan

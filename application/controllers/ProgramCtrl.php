@@ -104,7 +104,7 @@ class ProgramCtrl extends CI_controller
         }
 
         $this->ProgramModel->ActionInsert('tb_program', $data);
-        $this->session->set_tempdata('msg', 'Berhasil Menambahkan Program',10);
+        $this->session->set_tempdata('msg', 'Berhasil Menambahkan Program',5);
         redirect('ProgramCtrl/index/' . $idInstansi);
     }
 
@@ -138,10 +138,10 @@ class ProgramCtrl extends CI_controller
         $id = $post['programIdEdit'];
         $query = $this->ProgramModel->updateDataProgram('tb_program', $data, $id);
         if ($query != 0) {
-            $this->session->set_tempdata('succ', 'Berhasil edit data program',10);
+            $this->session->set_tempdata('succ', 'Berhasil edit data program',5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal edit data, segera hubungi admin',10);
+            $this->session->set_tempdata('fail', 'Gagal edit data, segera hubungi admin',5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -157,10 +157,10 @@ class ProgramCtrl extends CI_controller
     {
         $query = $this->ProgramModel->DeleteProgram('tb_program', $idProgram);
         if ($query == true) {
-            $this->session->set_tempdata('succ', "Program berhasil dihapus",10);
+            $this->session->set_tempdata('succ', "Program berhasil dihapus",5);
             redirect('ProgramCtrl/index/' . $idInstansi);
         } else {
-            $this->session->set_tempdata('fail', "Program gagal dihapus segera hubungi admin",10);
+            $this->session->set_tempdata('fail', "Program gagal dihapus segera hubungi admin",5);
             redirect('ProgramCtrl/index/' . $idInstansi);
         }
     }
@@ -176,13 +176,9 @@ class ProgramCtrl extends CI_controller
     // Coding untuk Box Kegiatan
 
     //Datatable Kegiatan
-    public function DataTableApi($kodeInstansi, $kodeProgram, $idSiswa = NULL)
+    public function DataTableApi($kodeInstansi, $kodeProgram)
     {
         header('Content-Type: application/json');
-        if (@$_SESSION['id_siswa'] != $idSiswa) {
-            $this->session->unset_userdata('id_siswa');
-            $this->session->set_userdata('id_siswa', $idSiswa);
-        }
         echo $this->ProgramModel->getDataKegiatan($kodeInstansi, $kodeProgram);
     }
     
@@ -247,35 +243,39 @@ class ProgramCtrl extends CI_controller
     {
         $post = $this->input->post();
         $kodeKegiatan = str_replace(" ", "", $this->generateKodeKegiatan($post['addKodeKegiatan']));
+        $idSiswa = $post['addKegiatanIdSiswa'];
         $data = array(
             'kode_instansi' => $post['kodeInstansi'],
             'kode_program' => $post['kodeProgram'],
             'kode_kegiatan' => $kodeKegiatan,
             'nama_kegiatan' => htmlspecialchars($post['addNamaKegiatan']),
-            'keterangan' => htmlspecialchars($post['addKeterangan']),
-            'lokasi' => htmlspecialchars($post['addLokasiKegiatan'])
+            'keterangan' => htmlspecialchars($post['addKeterangan'])
         );
         $query = $this->ProgramModel->ActionInsert('tb_kegiatan', $data);
         $kodeInstansi = $post['kodeInstansi'];
         $kodeProgram = $post['kodeProgram'];
 
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
+    // Fungsi insert & edit indikator
     public function ActionIndikator()
     {
         $p = $this->input->post();
         $kodeInstansi = $p['KodeInstansiIndikator'];
         $kodeProgram = $p['KodeProgramIndikator'];
         $MainID = $p['MainIdIndikator'];
+        $idSiswa = $p['idSiswaIndikator'];
         if ($p['actionTypeIndikator'] == "add") {
             $kode = $this->generateKodeIndikator($kodeInstansi, $kodeProgram);
             $data = array(
@@ -288,6 +288,19 @@ class ProgramCtrl extends CI_controller
                 'target' => $p['addTarget']
             );
             $query = $this->ProgramModel->ActionInsert("tb_indikator", $data);
+            if ($query != null) {
+                $this->session->set_tempdata('succ', 'Berhasil menambah Indikator',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                $this->session->set_tempdata('Indikator_Direct', "Direction",5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            } else {
+                $this->session->set_tempdata('fail', 'Gagal menambah Indikator, segera hubungi admin',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                $this->session->set_tempdata('Indikator_Direct', "Direction",5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            }
         } elseif ($p['actionTypeIndikator'] == "edit") {
             $data = array(
                 'jenis' => $p['addJenisIndikator'],
@@ -297,28 +310,33 @@ class ProgramCtrl extends CI_controller
             );
             $where = $MainID;
             $query = $this->ProgramModel->updateDataProgram("tb_indikator", $data, $where);
+            if ($query != null) {
+                $this->session->set_tempdata('succ', 'Berhasil edit Indikator',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                $this->session->set_tempdata('Indikator_Direct', "Direction",5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            } else {
+                $this->session->set_tempdata('fail', 'Gagal edit Indikator, segera hubungi admin',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                $this->session->set_tempdata('Indikator_Direct', "Direction",5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            }
         } else {
-            $this->session->set_tempdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Indikator_Direct', "Direction",10);
-            redirect('ProgramCtrl/index/' . $kodeInstansi);
-        }
-        if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah Indikator',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Indikator_Direct', "Direction",10);
-            redirect('ProgramCtrl/index/' . $kodeInstansi);
-        } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah Indikator, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Indikator_Direct', "Direction",10);
+            $this->session->set_tempdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Indikator_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
+    // Fungsi insert & edit Pembahasan
     public function ActionPembahasan()
     {
         $p = $this->input->post();
+        $idSiswa = $p['IdSiswaPembahasan'];
         $kodeInstansi = $p['KodeInstansiPembahasan'];
         $kodeProgram = $p['KodeProgramPembahasan'];
         $T1Rekening = str_replace(".", "", $p['addT1RekeningPembahasan']);
@@ -368,20 +386,23 @@ class ProgramCtrl extends CI_controller
             $where = $p['MainIdPembahasan'];
             $query = $this->ProgramModel->updateDataProgram("tb_pembahasan", $data, $where);
         } else {
-            $this->session->set_tempdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Pembahasan_Direct', "Direction",10);
+            $this->session->set_tempdata('fail', 'Terdapat kesalahan silahkan reload halaman saat ini !',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Pembahasan_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah Pembahasan',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Pembahasan_Direct', "Direction",10);
+            $this->session->set_tempdata('succ', 'Berhasil menambah Pembahasan',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Pembahasan_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah Pembahasan, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Pembahasan_Direct', "Direction",10);
+            $this->session->set_tempdata('fail', 'Gagal menambah Pembahasan, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Pembahasan_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -390,6 +411,7 @@ class ProgramCtrl extends CI_controller
     public function EditKegiatan()
     {
         $post = $this->input->post();
+        $idSiswa = $post['editKegiatanIdSiswa'];
         $data = array(
             'kode_kegiatan' => htmlspecialchars("080." . str_replace(" ", "", $post['editKodeKegiatan'])),
             'nama_kegiatan' => htmlspecialchars($post['editNamaKegiatan']),
@@ -400,59 +422,67 @@ class ProgramCtrl extends CI_controller
         $kodeProgram = $post['kodeProgramEdit'];
         $query = $this->ProgramModel->EditKegiatan('tb_kegiatan', $data, $where);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
-    public function HapusKegiatan($idKegiatan, $kodeProgram, $kodeInstansi)
+    public function HapusKegiatan($idKegiatan, $kodeProgram, $kodeInstansi,$idSiswa)
     {
         $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         $query = $this->ProgramModel->DeleteDataKegiatan('tb_kegiatan', $idKegiatan);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
+            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
-    public function HapusIndikator($idIndikator, $kodeProgram, $kodeInstansi)
+    public function HapusIndikator($idIndikator, $kodeProgram, $kodeInstansi, $idSiswa)
     {
         $query = $this->ProgramModel->DeleteDataKegiatan('tb_indikator', $idIndikator);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil Hapus Indikator',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Indikator_Direct', "Direction",10);
+            $this->session->set_tempdata('succ', 'Berhasil Hapus Indikator',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Indikator_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal Hapus Indikator, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Indikator_Direct', "Direction",10);
+            $this->session->set_tempdata('fail', 'Gagal Hapus Indikator, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Indikator_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
-    public function HapusPembahasan($idPembahasan, $kodeProgram, $kodeInstansi)
+    public function HapusPembahasan($idPembahasan, $kodeProgram, $kodeInstansi, $idSiswa)
     {
         $query = $this->ProgramModel->DeleteDatakegiatan("tb_pembahasan", $idPembahasan);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil Hapus Pembahasan',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Pembahasan_Direct', "Direction",10);
+            $this->session->set_tempdata('succ', 'Berhasil Hapus Pembahasan',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Pembahasan_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal Hapus Pembahasan, segera hubungi admin',10);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Pembahasan_Direct', "Direction",10);
+            $this->session->set_tempdata('fail', 'Gagal Hapus Pembahasan, segera hubungi admin',5);
+            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('idSiswa', $idSiswa,5);
+            $this->session->set_tempdata('Pembahasan_Direct', "Direction",5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -530,18 +560,18 @@ class ProgramCtrl extends CI_controller
         }
         $this->ProgramModel->SyncTotalRekening($kodeInstansi, $kodeProgram, $kodeKegiatan);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah rekening',10);
-            $this->session->set_tempdata('Rekening_Direct', "Direction",10);
-            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,10);
+            $this->session->set_tempdata('succ', 'Berhasil menambah rekening',5);
+            $this->session->set_tempdata('Rekening_Direct', "Direction",5);
+            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah rekening, segera hubungi admin',10);
-            $this->session->set_tempdata('Rekening_Direct', "Direction",10);
-            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,10);
+            $this->session->set_tempdata('fail', 'Gagal menambah rekening, segera hubungi admin',5);
+            $this->session->set_tempdata('Rekening_Direct', "Direction",5);
+            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -551,18 +581,18 @@ class ProgramCtrl extends CI_controller
         $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $idRekening);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil hapus rekening',10);
-            $this->session->set_tempdata('Rekening_Direct', "Direction",10);
-            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,10);
+            $this->session->set_tempdata('succ', 'Berhasil hapus rekening',5);
+            $this->session->set_tempdata('Rekening_Direct', "Direction",5);
+            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal hapus rekening, segera hubungi admin',10);
-            $this->session->set_tempdata('Rekening_Direct', "Direction",10);
-            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,10);
+            $this->session->set_tempdata('fail', 'Gagal hapus rekening, segera hubungi admin',5);
+            $this->session->set_tempdata('Rekening_Direct', "Direction",5);
+            $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -665,20 +695,20 @@ class ProgramCtrl extends CI_controller
         //untuk update total_rinci di tb_rekening
         $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil tambah detail',10);
-            $this->session->set_tempdata('DetailRekening_Direct', "Direction",10);
-            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,10);
-            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,10);
+            $this->session->set_tempdata('succ', 'Berhasil tambah detail',5);
+            $this->session->set_tempdata('DetailRekening_Direct', "Direction",5);
+            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,5);
+            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal tambah detail, segera hubungi admin',10);
-            $this->session->set_tempdata('DetailRekening_Direct', "Direction",10);
-            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,10);
-            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,10);
+            $this->session->set_tempdata('fail', 'Gagal tambah detail, segera hubungi admin',5);
+            $this->session->set_tempdata('DetailRekening_Direct', "Direction",5);
+            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,5);
+            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
@@ -689,20 +719,20 @@ class ProgramCtrl extends CI_controller
         //untuk update total_rekening di tb_instansi
         $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil hapus detail',10);
-            $this->session->set_tempdata('DetailRekening_Direct', "Direction",10);
-            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,10);
-            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,10);
+            $this->session->set_tempdata('succ', 'Berhasil hapus detail',5);
+            $this->session->set_tempdata('DetailRekening_Direct', "Direction",5);
+            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,5);
+            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal hapus detail, segera hubungi admin',10);
-            $this->session->set_tempdata('DetailRekening_Direct', "Direction",10);
-            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,10);
-            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,10);
-            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,10);
-            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,10);
+            $this->session->set_tempdata('fail', 'Gagal hapus detail, segera hubungi admin',5);
+            $this->session->set_tempdata('DetailRekening_Direct', "Direction",5);
+            $this->session->set_tempdata('DetailRekening_KodeInstansi', $kodeInstansi,5);
+            $this->session->set_tempdata('DetailRekening_KodeProgram', $kodeProgram,5);
+            $this->session->set_tempdata('DetailRekening_KodeKegiatan', $kodeKegiatan,5);
+            $this->session->set_tempdata('DetailRekening_KodeRekening', $kodeRekening,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
