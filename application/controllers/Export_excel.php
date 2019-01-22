@@ -13,19 +13,12 @@ class Export_excel extends CI_controller
     public function RKA($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
         $date = date("Y");
-        $data_uraian = $this->dataexcel->getDataUraian($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data_kode = $this->dataexcel->getDataKode($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data_volume = $this->dataexcel->getDataVolume($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data_satuan = $this->dataexcel->getDataSatuan($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data_harga = $this->dataexcel->getDataHarga($kodeInstansi, $kodeProgram, $kodeKegiatan);
-        $data_jumlah = $this->dataexcel->getDataJumlah($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data_instansi = $this->dataexcel->getDataInstansi($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data_program = $this->dataexcel->getDataProgram($kodeInstansi, $kodeProgram);
         $data_kegiatan = $this->dataexcel->getDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data_indikator = $this->dataexcel->getDataIndikator($kodeInstansi, $kodeProgram);
         $data_triwulan = $this->dataexcel->getDataTriwulan($kodeInstansi, $kodeProgram, $kodeKegiatan);
         $data_siswa = $this->dataexcel->getDataSiswa($kodeInstansi, $kodeProgram);
-        $uraianLenght = count($data_uraian);
 
         $this->load->library("phpexcel");
         $this->load->library("PHPExcel/iofactory");
@@ -307,26 +300,73 @@ class Export_excel extends CI_controller
         $sheet->mergeCells("R26:T26");
         $sheet->setCellValue("R26", number_format((double)$data_kegiatan[0]->total_rinci, 0, ",", ",")); //data jumlah rekening & detail [Khusus]
         $sheet->getStyle("R26:T26")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //rigth data jumlah
+
         //looping data rincian rencana kerja
-        for ($array = 0; $array < $uraianLenght; $array++) {
+        $data_rekening = $this->db->select('kode_rekening,uraian_rekening,total,total_rinci')->from("tb_rekening")
+                ->where("kode_instansi", $kodeInstansi)
+                ->where("kode_program", $kodeProgram)
+                ->where("kode_kegiatan", $kodeKegiatan)
+                ->order_by("kode_rekening", "ASC")
+                ->get()->result();
+        foreach ($data_rekening as $rekening) {
+            //data kode rekening & detail
             $sheet->mergeCells("A$row:C$row");
-            $sheet->setCellValue("A" . $row, $data_kode[$array]); //data kode rekening & detail
-            $sheet->getStyle("A$row:Q$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT); //left data kode
+            $sheet->getStyle("A$row:C$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT); //left data kode
+            $sheet->getStyle("A$row:C$row")->applyFromArray($bold); 
+            $sheet->setCellValue("A" . $row, $rekening->kode_rekening);
+            
+            //data uraian
             $sheet->mergeCells("D$row:J$row");
-            $sheet->setCellValue("D" . $row, $data_uraian[$array]); //data uraian
-            $sheet->mergeCells("K$row:L$row");
-            $sheet->setCellValue("K" . $row, $data_volume[$array]); //data volume
-            $sheet->getStyle("K$row:L$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center data volume
-            $sheet->mergeCells("M$row:N$row");
-            $sheet->setCellValue("M" . $row, $data_satuan[$array]); //data stauan
-            $sheet->getStyle("M$row:N$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center data satuan
-            $sheet->mergeCells("O$row:Q$row");
-            $sheet->setCellValue("O" . $row, $data_harga[$array]); //data harga
-            $sheet->getStyle("O$row:Q$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //right data harga
+            $sheet->getStyle("D$row:J$row")->applyFromArray($bold); 
+            $sheet->setCellValue("D" . $row, $rekening->uraian_rekening);
+
+            //data jumlah rekening & detail
             $sheet->mergeCells("R$row:T$row");
-            $sheet->setCellValue("R" . $row, $data_jumlah[$array]); //data jumlah rekening & detail
+            $sheet->getStyle("R$row:T$row")->applyFromArray($bold);
             $sheet->getStyle("R$row:T$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //rigth data jumlah
+            $sheet->setCellValue("R" . $row, $rekening->total_rinci); 
             $row++;
+            //Data detail rekening            
+            $detailRekening = $this->db->select("kode_detail_rekening,uraian,volume,satuan,harga,total")->from("tb_detail_rekening")
+                    ->where("kode_instansi", $kodeInstansi)
+                    ->where("kode_program", $kodeProgram)
+                    ->where("kode_kegiatan", $kodeKegiatan)
+                    ->where("kode_rekening", $rekening->kode_rekening)
+                    ->get()->result();
+            foreach ($detailRekening as $detail) {
+                //data kode rekening & detail
+                $sheet->mergeCells("A$row:C$row");
+                $sheet->getStyle("A$row:C$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT); //left data kode
+                $sheet->getStyle("A$row:C$row")->applyFromArray($bold); 
+                $sheet->setCellValue("A" . $row, $detail->kode_detail_rekening);
+                
+                //data Uraian
+                $sheet->mergeCells("D$row:J$row");
+                $sheet->getStyle("D$row:J$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT); //left data kode
+                $sheet->setCellValue("D" . $row, $detail->uraian);
+
+                //data Volume
+                $sheet->mergeCells("K$row:L$row");
+                $sheet->getStyle("K$row:L$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //left data kode
+                $sheet->setCellValue("K" . $row, $detail->volume);
+
+                //data kode Satuan
+                $sheet->mergeCells("M$row:N$row");
+                $sheet->getStyle("M$row:N$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //left data kode
+                $sheet->setCellValue("M" . $row, $detail->satuan);
+
+                //data Harga Satuan
+                $sheet->mergeCells("O$row:Q$row");
+                $sheet->getStyle("O$row:Q$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //left data kode
+                $sheet->setCellValue("O" . $row, $detail->harga);
+
+                //data kode rekening & detail
+                $sheet->mergeCells("R$row:T$row");
+                $sheet->getStyle("R$row:T$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT); //left data kode
+                $sheet->setCellValue("R" . $row, $detail->total);
+                $row++;
+            }
+            $row = $row+2;
         }
         //border untuk area data uraian dan sekitarnya
         $row--;
