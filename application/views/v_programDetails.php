@@ -60,10 +60,6 @@ $dataModal['patokan'] = $patokan;
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="tab-nav">
-						<li id="tabRekapProgram" class="tabRekapitulasi">
-							<a href="#nav-tab-program-1" data-toggle="tab">
-								<i class="fa fa-history"></i> Rekapitulasi</a>
-						</li>
 						<li id="tabProgram" class="tabProgram active">
 							<a href="#nav-tab-program-2" data-toggle="tab">
 								<i class="fa fa-edit"></i>Program</a>
@@ -76,19 +72,11 @@ $dataModal['patokan'] = $patokan;
 							<a href="#nav-tab-program-4" data-toggle="tab">
 								<i class="fa fa-edit"></i> Cetak</a>
 						</li>
-						<li id="tabValidaiProgram" class="tabValidasi">
-							<a href="#nav-tab-program-5" data-toggle="tab">
-								<i class="fa fa-edit"></i> Validasi</a>
-						</li>
 					</ul>
 
 					<!-- Tabs Content -->
 					<div id="demo-bv-bsc-tabs" class="form-horizontal">
 						<div class="tab-content">
-
-							<!-- Start Rekapitulasi Tab -->
-							<div class="tab-pane pad-btm fade" id="nav-tab-program-1">
-							</div>
 
 							<!-- Start Program Tab -->
 							<div class="tab-pane fade in active" id="nav-tab-program-2">
@@ -281,45 +269,6 @@ $dataModal['patokan'] = $patokan;
 								</div>
 							</div>
 
-							<!-- Start Validasi Tab -->
-							<div class="tab-pane fade" id="nav-tab-program-5">
-								<h4 class="mar-btm text-thin">Tambah Data</h4>
-								<hr>
-								<form action="<?php echo site_url('kas_ctrl/tambah'); ?>" method="POST">
-									<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Nama :</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control" name="addNama" placeholder="Nama">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Kategori</label>
-										<div class="col-lg-7">
-											<select class="form-control" name="addKategori" id="addKategori">
-												<option value="6">Donatur Tetap</option>
-												<option value="7">Donatur Tidak Tetap</option>
-												<option value="8">Infaq</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Tanggal :</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control datepicker" name="addTanggal" placeholder="Tanggal" autocomplete="off">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Jumlah</label>
-										<div class="col-lg-7">
-											<input type="text" class="form-control inputMask" name="addJumlah" placeholder="Jumlah">
-										</div>
-									</div>
-									<div class="col-lg-7 col-lg-offset-3">
-										<input type="submit" value="Submit" class="btn btn-flat btn-primary">
-									</div>
-								</form>
-							</div>
 						</div>
 					</div>
 				</div>
