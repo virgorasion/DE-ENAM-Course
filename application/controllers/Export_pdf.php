@@ -15,9 +15,9 @@ class Export_pdf extends CI_controller
     function Cover($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
         $data_siswa = $this->db->query("SELECT nisn,nis,nama,jurusan,nomor_hp FROM tb_siswa WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
-        $data_sekolah = $this->db->query("SELECT nama_instansi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
+        $data_sekolah = $this->db->query("SELECT nama_instansi,kota_lokasi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
         $data_program = $this->db->query("SELECT nama_program,plafon FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
-        $data_kegiatan = $this->db->query("SELECT nama_kegiatan,lokasi FROM tb_kegiatan WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram AND kode_kegiatan = $kodeKegiatan")->result();
+        $data_kegiatan = $this->db->query("SELECT nama_kegiatan FROM tb_kegiatan WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram AND kode_kegiatan = $kodeKegiatan")->result();
         function Terbilang($nilai) {
             $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
             if ($nilai < 12) {
@@ -87,7 +87,7 @@ class Export_pdf extends CI_controller
         $pdf->SetX(70);
         $pdf->Cell(40,10,"LOKASI KEGIATAN");
         $pdf->Cell(5,10," : ",0,0,"C");
-        $pdf->Cell(30,10, @$data_kegiatan[0]->lokasi);
+        $pdf->Cell(30,10, @$data_sekolah[0]->kota_lokasi);
         $pdf->Ln(5);
         //JUMLAH ANGGARAN
         $pdf->SetX(70);
@@ -297,7 +297,7 @@ class Export_pdf extends CI_controller
         //Lokasi Kegiatan
         $pdf->Cell(40,6,"Lokasi Kegiatan","L",0);
         $pdf->Cell(3,6,":","0",0);
-        $pdf->Cell(292,6,"Jawa Timur","R",1,"L");
+        $pdf->Cell(292,6,@$Instansi[0]->kota_lokasi,"R",1,"L");
 
         //Sumber Dana
         $pdf->Cell(40,6,"Sumber Dana","L",0);
@@ -376,8 +376,8 @@ class Export_pdf extends CI_controller
                                             AND kode_kegiatan = $kodeKegiatan")->result();
         foreach ($dataRekening as $rekening) {
             $pdf->SetFont("Arial","B",11);
-            $pdf->Cell(50,6,@$rekening->kode_rekening,"LR",0,"C");
-            $pdf->Cell(120,6,@$rekening->uraian_rekening,"LR",0,"C");
+            $pdf->Cell(50,6,@$rekening->kode_rekening,"LR",0,"L");
+            $pdf->Cell(120,6,@$rekening->uraian_rekening,"LR",0,"L");
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(50,6,"","LR",0,"C");
@@ -389,8 +389,8 @@ class Export_pdf extends CI_controller
                                             AND kode_rekening = '".@$rekening->kode_rekening."' ")->result();
             foreach ($dataDetail as $detail) {
                 $pdf->SetFont("Arial","",11);
-                $pdf->Cell(50,6,$detail->kode_detail_rekening,"LR",0,"C");
-                $pdf->Cell(120,6,$detail->uraian,"LR",0,"C");
+                $pdf->Cell(50,6,$detail->kode_detail_rekening,"LR",0,"L");
+                $pdf->Cell(120,6,$detail->uraian,"LR",0,"L");
                 $pdf->Cell(30,6,$detail->volume,"LR",0,"C");
                 $pdf->Cell(30,6,$detail->satuan,"LR",0,"C");
                 $pdf->Cell(50,6,$detail->harga,"LR",0,"R");
