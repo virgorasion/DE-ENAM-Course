@@ -480,7 +480,6 @@
 			tablePembahasan.destroy();
 		}
 	});
-
 	
 	//Fungsi: Hidden box Kegiatan
 	$('#btnHidden').click(function(){
@@ -490,6 +489,18 @@
 		tableIndikator.destroy();
 		tablePembahasan.destroy();
 	});
+	//Fungsi: Hidden box Detail Rekening
+	$('#btnHiddenBoxDetailRekening').click(function(){
+		$('#boxDetailRekening').fadeOut(1000);
+		$('#boxDetailRekening').addClass('hidden');
+		tableDetailRekening.destroy();
+	});
+	//Fungsi: untuk Hidden Box Detail Rekening ketika klik tabProgram
+	$("#tabProgram").click(function(){
+		$('#boxDetailRekening').slideDown(1000);
+		$('#boxDetailRekening').removeClass('hidden');
+		tableDetailRekening.destroy();		
+	})
 
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
