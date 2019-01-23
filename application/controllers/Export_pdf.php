@@ -143,11 +143,11 @@ class Export_pdf extends CI_controller
         $pdf->SetAuthor("D6 Course", true);
         $pdf->AddPage('L','LEGAL');
         $pdf->SetFont("Arial","B",12);
-        $pdf->Cell(280,10,"MUSTIKA GRAHA DE ENAM",0,0,"C");
+        $pdf->Cell(335,10,"MUSTIKA GRAHA DE ENAM",0,0,"C");
         $pdf->Ln(5);
-        $pdf->Cell(280,10,"ANGGARAN KAS BELANJA",0,0,"C");
+        $pdf->Cell(335,10,"ANGGARAN KAS BELANJA",0,0,"C");
         $pdf->Ln(5);
-        $pdf->Cell(280,10,date("Y"),0,0,"C");
+        $pdf->Cell(335,10,date("Y"),0,0,"C");
         $pdf->Ln();
 
         //Nama Siswa
@@ -174,7 +174,7 @@ class Export_pdf extends CI_controller
 
         //Data Table
         $header = array('Kode Rekening','Uraian','Anggaran Tahun Ini','Triwulan I','Triwulan II','Triwulan III','Triwulan IV');
-        $width = array('35','85','40','30','30','30','30');
+        $width = array('35','140','40','30','30','30','30');
         $arrLenght = count($header);
         //Header
         for ($i=0; $i < $arrLenght; $i++) { 
@@ -182,7 +182,7 @@ class Export_pdf extends CI_controller
         }
         $pdf->Ln();
         $pdf->Cell(35,5,"1",1,0,"C");
-        $pdf->Cell(85,5,"2",1,0,"C");
+        $pdf->Cell(140,5,"2",1,0,"C");
         $pdf->Cell(40,5,"3",1,0,"C");
         $pdf->Cell(30,5,'Rp',1,0,"C");
         $pdf->Cell(30,5,'Rp',1,0,"C");
@@ -200,7 +200,7 @@ class Export_pdf extends CI_controller
         foreach ($data_kegiatan as $kegiatan) {
             $pdf->SetFont("Arial","B",12);
             $pdf->Cell(35,5,@$kegiatan->kode_kegiatan,1,0);
-            $pdf->Cell(85,5,@$kegiatan->nama_kegiatan,1,0);
+            $pdf->Cell(140,5,@$kegiatan->nama_kegiatan,1,0);
             $pdf->Cell(40,5,@$kegiatan->total_rinci,1,0,"R");
             $pdf->Cell(30,5,@$kegiatan->T1,1,0,"R");
             $pdf->Cell(30,5,@$kegiatan->T2,1,0,"R");
@@ -217,7 +217,7 @@ class Export_pdf extends CI_controller
             foreach ($data_rekening as $rekening) {
                 $pdf->SetFont("Arial","",10);
                 $pdf->Cell(35,5,@$rekening->kode_patokan."  |  ".@$rekening->kode_rekening,1,0);
-                $pdf->Cell(85,5,@$rekening->nama,1,0);
+                $pdf->Cell(140,5,@$rekening->nama,1,0);
                 $pdf->Cell(40,5,@$rekening->total_rinci,1,0,"R");
                 $pdf->Cell(30,5,@$rekening->T1,1,0,"R");
                 $pdf->Cell(30,5,@$rekening->T2,1,0,"R");
