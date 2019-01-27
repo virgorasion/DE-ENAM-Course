@@ -19,7 +19,20 @@ class Auth extends CI_controller
                 'token' => $this->security->get_csrf_token_name(),
                 'hash' => $this->security->get_csrf_hash()
             );
-            $this->load->view('LoginNew', $data);
+            $this->load->view('LoginMember', $data);
+        }
+    }
+
+    public function Admin()
+    {
+        if (@$_SESSION['username'] != null) {
+            redirect(site_url('InstansiCtrl'));
+        }else {
+            $data['csrf'] = array(
+                'token' => $this->security->get_csrf_token_name(),
+                'hash' => $this->security->get_csrf_hash()
+            );
+            $this->load->view('LoginAdmin', $data);
         }
     }
 
