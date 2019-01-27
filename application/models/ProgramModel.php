@@ -98,7 +98,8 @@ class ProgramModel extends CI_model
         );
         $this->datatables->add_column(
             'print_cov',
-            '<center><a href="javascript:void(0)" class="print_cover btn btn-danger btn-xs" data-instansi="$1" data-program="$2" data-kegiatan="$3"><i class="fa fa-file-pdf-o"></i></a></center>',
+            '<center><a href="javascript:void(0)" class="cover_pdf btn btn-danger btn-xs" data-instansi="$1" data-program="$2" data-kegiatan="$3"><i class="fa fa-file-pdf-o"></i></a>
+            <a href="javascript:void(0)" class="cover_excel btn btn-success btn-xs" data-instansi="$1" data-program="$2" data-kegiatan="$3"><i class="fa fa-file-excel-o"></i></a></center>',
             'kode_instansi,
             kode_program,
             kode_kegiatan'

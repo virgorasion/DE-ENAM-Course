@@ -279,6 +279,7 @@ $dataModal['patokan'] = $patokan;
 		</div>
 		<!-- End Box Program -->
 
+	<!-- Loader -->
 	<div class="modal fade" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
       <div class="modal-dialog">
           <div class="text-center" style="margin-top:50%">

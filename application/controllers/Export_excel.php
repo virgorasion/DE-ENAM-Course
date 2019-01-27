@@ -726,5 +726,201 @@ class Export_excel extends CI_controller
         $objWriter->save('php://output');
         exit();
     }
+
+    public function Cover($kodeInstansi, $kodeProgram, $kodeKegiatan)
+    {
+        $data_siswa = $this->db->query("SELECT nisn,nis,nama,jurusan,nomor_hp FROM tb_siswa WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
+        $data_sekolah = $this->db->query("SELECT nama_instansi,kota_lokasi FROM tb_instansi WHERE kode_instansi = $kodeInstansi")->result();
+        $data_program = $this->db->query("SELECT nama_program,plafon FROM tb_program WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram")->result();
+        $data_kegiatan = $this->db->query("SELECT nama_kegiatan FROM tb_kegiatan WHERE kode_instansi = $kodeInstansi AND kode_program = $kodeProgram AND kode_kegiatan = $kodeKegiatan")->result();
+
+        function Terbilang($nilai) {
+            $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+            if ($nilai < 12) {
+                return "" . $huruf[$nilai];
+            } elseif ($nilai < 20) {
+                return Terbilang($nilai - 10) . " Belas ";
+            } elseif ($nilai < 100) {
+                return Terbilang($nilai / 10) . " Puluh " . Terbilang($nilai % 10);
+            } elseif ($nilai < 200) {
+                return " Seratus " . Terbilang($nilai - 100);
+            } elseif ($nilai < 1000) {
+                return Terbilang($nilai / 100) . " Ratus " . Terbilang($nilai % 100);
+            } elseif ($nilai < 2000) {
+                return " Seribu " . Terbilang($nilai - 1000);
+            } elseif ($nilai < 1000000) {
+                return Terbilang($nilai / 1000) . " Ribu " . Terbilang($nilai % 1000);
+            } elseif ($nilai < 1000000000) {
+                return Terbilang($nilai / 1000000) . " Juta " . Terbilang($nilai % 1000000);
+            }elseif ($nilai < 1000000000000) {
+                return Terbilang($nilai / 1000000000) . " Milyar " . Terbilang($nilai % 1000000000);
+            }elseif ($nilai < 100000000000000) {
+                return Terbilang($nilai / 1000000000000) . " Trilyun " . Terbilang($nilai % 1000000000000);
+            }elseif ($nilai <= 100000000000000) {
+                return "Maaf Tidak Dapat di Proses Karena Jumlah nilai Terlalu Besar ";
+            }
+        }
+
+        $this->load->library("phpexcel");
+        $this->load->library("PHPExcel/iofactory");
+
+        $objPHPExcel = new PHPExcel();
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setShowGridlines(false);
+
+        //Styling Border
+        $boderHeader = array(
+            'borders' => array(
+                'outline' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000')
+                )
+            ),
+            'font' => array(
+                'bold' => true,
+            )
+        );
+        $bold = array(
+            'font' => array(
+                'bold' => true
+            )
+        );
+        $fontHeader = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 16
+            )
+        );
+        $jumlah = array(
+            'borders' => array(
+                'top' => array(
+                    'style' => PHPexcel_Style_Border::BORDER_THICK
+                ),
+                'bottom' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THICK
+                )
+            ),
+            'font' => array(
+                'bold' => true,
+            )
+        );
+        $boderUniv = array(
+            'borders' => array(
+                'outline' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
+
+        $sheet->getPageSetup()
+            ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()
+            ->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL);
+
+        // Sumber Image
+        $gdImage = imagecreatefromjpeg(base_url("assets/images/icon.jpeg"));
+        // Pengaturan Image
+        $image = new PHPExcel_Worksheet_MemoryDrawing();
+        $image->setName('Icon');$image->setDescription('D6 Course');
+        $image->setImageResource($gdImage);
+        $image->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
+        $image->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_DEFAULT);
+        $image->setHeight(200);
+        $image->setWorksheet($sheet);
+        $image->setCoordinates('H1');
+
+        // Judul Kegiatan
+        $sheet->mergeCells("F11:L15");
+        $sheet->setCellValue("F11","RENCANA KERJA DAN ANGGARAN \n MUSTIKA GRAHA DE ENAM \n 2019");
+        $sheet->getStyle("F11")->getAlignment()->setWrapText(true);
+        $sheet->getStyle("F11")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $sheet->getStyle("F11")->applyFromArray($fontHeader);
+
+        $sheet->mergeCells("F16:L16");
+        $sheet->setCellValue("F16", "BELANJA LANGSUNG");
+        $sheet->getStyle("F16")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle("F16")->applyFromArray(array('font' => array('bold' => true, 'size' => 14)));
+
+        // Kode SK
+        $sheet->mergeCells("E17:F18");
+        $sheet->setCellValue("E17", "NO. SK : ");
+        $sheet->getStyle("E17")->applyFromArray($fontHeader);
+        $sheet->getStyle("E17")->getAlignment()
+            ->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $sheet->mergeCells("G17:G18");
+        $sheet->mergeCells("H17:H18");
+        $sheet->mergeCells("I17:I18");
+        $sheet->mergeCells("J17:J18");
+        $sheet->mergeCells("K17:K18");
+        $sheet->mergeCells("L17:L18");
+        // SK D6
+        $sheet->setCellValue("G17","D6");
+        $sheet->getStyle("G17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("G17:G18")->applyFromArray($boderUniv);
+        // SK 02
+        $sheet->setCellValue("H17","02");
+        $sheet->getStyle("H17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("H17:H18")->applyFromArray($boderUniv);
+        // SK 06
+        $sheet->setCellValue("I17","06");
+        $sheet->getStyle("I17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("I17:I18")->applyFromArray($boderUniv);
+        // SK MGE
+        $sheet->setCellValue("J17","MGE");
+        $sheet->getStyle("J17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("J17:J18")->applyFromArray($boderUniv);
+        // SK 92
+        $sheet->setCellValue("K17","92");
+        $sheet->getStyle("K17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("K17:K18")->applyFromArray($boderUniv);
+        // SK 1
+        $sheet->setCellValue("L17","1");
+        $sheet->getStyle("L17")->getAlignment()
+            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("L17:L18")->applyFromArray($boderUniv);
+
+        // Data Keterangan
+        $row = 20;
+        $dataB = array("PROGRAM","KEGIATAN","LOKASI KEGIATAN","JUMLAH ANGGARAN","TERBILANG","","PENGGUNA ANGGARAN","NAMA SISWA","NO REG SISWA","SEKOLAH","JURUSAN","NO HP");
+        $dataD = array(":",":",":",":",":","","",":",":",":",":",":");
+        $dataE = array("(".@$kodeProgram.")","(".@$kodeKegiatan.")",@$data_sekolah[0]->kota_lokasi,"Rp ". number_format((double)@$data_program[0]->plafon,0,",","."),"(".Terbilang(@$data_program[0]->plafon).")","","",@$data_siswa[0]->nama,@$data_siswa[0]->nisn,@$data_sekolah[0]->nama_instansi,@$data_siswa[0]->jurusan,@$data_siswa[0]->nomor_hp);
+        $dataF = array("","",@$data_sekolah[0]->kota_lokasi,"","","","","","","","","");
+        // Set Width C and D
+        $sheet->getColumnDimension("D")->setWidth("3");
+        $sheet->getColumnDimension("C")->setWidth("17");
+        //Data
+        for ($i=0; $i < 12; $i++) { 
+            $sheet->mergeCells("B$row:C$row");
+            $sheet->mergeCells("B$row:C$row");
+            if ($row >= 22) {
+                $sheet->mergeCells("E$row:J$row");
+            }
+            $sheet->setCellValue("B$row", $dataB[$i]);
+            $sheet->setCellValue("D$row", $dataD[$i]);
+            $sheet->setCellValue("E$row", $dataE[$i]);
+            $sheet->setCellValue("F$row", $dataF[$i]);
+            $row++;
+        }
+
+        
+        
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Cover '.$data_siswa[0]->nama.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Save it as an sheet 2003 file
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit();
+    }
     
 }

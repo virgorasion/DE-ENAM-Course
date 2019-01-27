@@ -1137,11 +1137,26 @@
 		})
 	})
 	//Fungsi: Export PDF Cover
-	$("#tableKegiatanCetak").on("click",".print_cover",function(){
+	$("#tableKegiatanCetak").on("click",".cover_pdf",function(){
 		var instansiKode = $(this).data("instansi");
 		var programKode = $(this).data("program");
 		var kegiatanKode = $(this).data("kegiatan");
 		window.open("<?=site_url('Export_pdf/Cover/')?>"+instansiKode+'/'+programKode+'/'+kegiatanKode,'_blank');
+	})
+	//Fungsi: Export Excel Cover
+	$("#tableKegiatanCetak").on("click",".cover_excel",function(){
+		var instansiKode = $(this).data("instansi");
+		var programKode = $(this).data("program");
+		var kegiatanKode = $(this).data("kegiatan");
+		$.ajax({
+			url: window.location = "<?= site_url('Export_excel/Cover/') ?>"+instansiKode+"/"+programKode+"/"+kegiatanKode,
+			beforeSend:function(){
+				$("#modalLoading").modal("show");
+			},
+			success:function(result){
+				$("#modalLoading").modal("hide");
+			}
+		})
 	})
 
 	//Fungsi: Export PDF RKA
