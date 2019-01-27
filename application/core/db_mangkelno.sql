@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2019 at 12:14 PM
+-- Generation Time: Jan 27, 2019 at 08:25 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -154,7 +154,9 @@ INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_progr
 (4, '1.001', '010.6531', '127.03', '1', 'Pencapaian Terbaru', 'Paket', 100),
 (6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100),
 (7, '1.001', '010.03', '127.01', '2', 'Capaian tahun 2018', 'Paket', 20),
-(9, '1.002', '010.03', '127.01', '1', '', 'Buah', 10);
+(10, '1.003', '010.03', '127.01', '3', 'jhf', '12', 2),
+(11, '1.004', '010.03', '127.01', '2', 'tset', 'alshd', 12),
+(12, '1.002', '010.03', '127.12', '2', 'Hasil', 'pcs', 10);
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,6 @@ CREATE TABLE `tb_kegiatan` (
   `nama_kegiatan` varchar(40) NOT NULL,
   `total_rekening` int(11) NOT NULL DEFAULT '0',
   `total_rinci` int(11) NOT NULL DEFAULT '0',
-  `lokasi` varchar(15) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -207,15 +208,15 @@ CREATE TABLE `tb_kegiatan` (
 -- Dumping data for table `tb_kegiatan`
 --
 
-INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `lokasi`, `keterangan`) VALUES
-(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 36732012, 36903292, '', 'Cek Edit Kegiatan'),
-(6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, '', 'Cek tambah kegiatan untuk rekening'),
-(8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, '', 'Test diplicate data'),
-(9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, '', 'Rutinitas :v'),
-(10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, '', 'Baru'),
-(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, '', 'Tahun Baru'),
-(13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 21768216, 0, '', 'Tahun Baru'),
-(14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, 'Surabaya', '');
+INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
+(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 36732012, 36903292, 'Cek Edit Kegiatan'),
+(6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, 'Cek tambah kegiatan untuk rekening'),
+(8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, 'Test diplicate data'),
+(9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, 'Rutinitas :v'),
+(10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, 'Baru'),
+(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, 'Tahun Baru'),
+(13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 21768216, 0, 'Tahun Baru'),
+(14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -519,7 +520,7 @@ ALTER TABLE `tb_detail_rekening`
 -- AUTO_INCREMENT for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_instansi`
@@ -537,7 +538,7 @@ ALTER TABLE `tb_kegiatan`
 -- AUTO_INCREMENT for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_program`
