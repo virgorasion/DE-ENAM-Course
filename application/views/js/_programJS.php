@@ -497,9 +497,9 @@
 	});
 	//Fungsi: untuk Hidden Box Detail Rekening ketika klik tabProgram
 	$("#tabProgram").click(function(){
-		$('#boxDetailRekening').slideDown(1000);
-		$('#boxDetailRekening').removeClass('hidden');
-		tableDetailRekening.destroy();		
+		$('#boxDetailRekening').fadeOut(1000);
+		$('#boxDetailRekening').addClass('hidden');
+		tableDetailRekening.destroy();
 	})
 
 	// Funngsi: Show box detail rekening

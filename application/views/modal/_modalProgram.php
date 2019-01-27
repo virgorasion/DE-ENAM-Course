@@ -446,6 +446,7 @@
 				<div class="box-footer">
 					<input type="hidden" id="KodeInstansiIndikator" name="KodeInstansiIndikator">
 					<input type="hidden" id="KodeProgramIndikator" name="KodeProgramIndikator">
+					<input type="hidden" id="idSiswaIndikator" name="idSiswaIndikator">
 					<input type="hidden" id="MainIdIndikator" name="MainIdIndikator">
 					<input type="hidden" id="actionTypeIndikator" name="actionTypeIndikator">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
