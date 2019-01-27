@@ -88,19 +88,13 @@
 					  <div class="row">
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">
-							  <input type="radio" class="flat-green" name="hakAkses" id="AksesAdmin" value="1" checked>
-							  Admin
-							</label>
-						  </div>
-						  <div class="form-check col-md-4">
-							 <label class="form-check-label" style="color:white;">
 							  <input type="radio" class="flat-green" name="hakAkses" id="AksesInstansi" value="2">
 							  Instansi
 							</label>
 						  </div>
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">
-							  <input type="radio" class="flat-green" name="hakAkses" id="AksesSiswa" value="3">
+							  <input type="radio" class="flat-green" name="hakAkses" id="AksesSiswa" value="3" checked>
 							  Siswa
 							</label>
 						  </div>
