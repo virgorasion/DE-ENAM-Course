@@ -64,6 +64,9 @@ class Auth extends CI_controller
                 foreach ($cek as $res) {
                     $this->session->set_userdata('hakAkses', $res->hak_akses);
                     $this->session->set_userdata('akses', "Instansi");
+                    $this->session->set_userdata('versi', $res->versi);
+                    $this->session->set_userdata('kota_lokasi', $res->kota_lokasi);
+                    $this->session->set_userdata('tahun', $res->tahun);
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nama', $res->nama_instansi);
                     $this->session->set_userdata('kode_instansi', $res->kode_instansi);
