@@ -13,6 +13,23 @@
 		</ol>
 	</section>
 
+	<?php if (@$_SESSION['fail'] != null) { ?>
+		<div class="alert alert-danger alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h4><i class="icon fa fa-ban"></i> Failed!</h4>
+			<?= $_SESSION['fail'] ?>
+		</div>
+		<?php 
+} ?>
+		<?php if (@$_SESSION['succ'] != null) { ?>
+		<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h4><i class="icon fa fa-check"></i> Success! </h4>
+			<?= $_SESSION['succ'] ?>
+		</div>
+		<?php 
+} ?>
+
 	<!-- Main content -->
 	<section class="content">
 
@@ -33,9 +50,15 @@
 							<li class="list-group-item">
 								<b>Kode Admin</b> <a class="pull-right"><?=@$_SESSION['kode_admin']?></a>
 							</li>
+							<li class="list-group-item">
+								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
+							</li>
+							<li class="list-group-item">
+								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+							</li>
 						</ul>
 
-						<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+						<a href="#" data-toggle="modal" data-target="#modalUbah" class="btn btn-primary btn-block"><b>Ubah</b></a>
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -59,9 +82,53 @@
 							<li class="list-group-item">
 								<b>Kota</b> <a class="pull-right"><?=@$_SESSION['kota_lokasi']?></a>
 							</li>
+							<li class="list-group-item">
+								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
+							</li>
+							<li class="list-group-item">
+								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+							</li>
 						</ul>
 
-						<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+						<a href="#" data-toggle="modal" data-target="#modalUbah" class="btn btn-primary btn-block"><b>Ubah</b></a>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<?php } ?>
+				<!-- /.box -->
+
+				<!-- Profile Image Siswa -->
+				<?php if (@$_SESSION['hakAkses'] == 3) { ?>
+				<div class="box box-primary">
+					<div class="box-body box-profile">
+						<img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/images/user.png')?>" alt="Empty.">
+
+						<h3 class="profile-username text-center"><?=@$_SESSION['nama']?></h3>
+
+						<p class="text-muted text-center">Siswa</p>
+
+						<ul class="list-group list-group-unbordered">
+							<li class="list-group-item">
+								<b>Instansi</b> <a class="pull-right"><?=@$data[0]->nama_instansi?></a>
+							</li>
+							<li class="list-group-item">
+								<b>Program</b> <a class="pull-right"><?=@$data[0]->nama_program?></a>
+							</li>
+							<li class="list-group-item">
+								<b>NIS</b> <a class="pull-right"><?=@$_SESSION['nis']?></a>
+							</li>
+							<li class="list-group-item">
+								<b>NISN</b> <a class="pull-right"><?=@$_SESSION['nisn']?></a>
+							</li>
+							<li class="list-group-item">
+								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
+							</li>
+							<li class="list-group-item">
+								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+							</li>
+						</ul>
+
+						<a href="#" data-toggle="modal" data-target="#modalUbah" class="btn btn-primary btn-block"><b>Ubah</b></a>
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -70,6 +137,7 @@
 
 			</div>
 			<!-- /.col -->
+			<?php if ($_SESSION['hakAkses'] != 3){ ?>
 			<div class="col-md-9">
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
@@ -117,9 +185,46 @@
 				</div>
 				<!-- /.nav-tabs-custom -->
 			</div>
+			<?php } ?>
 			<!-- /.col -->
 		</div>
 		<!-- /.row -->
+
+		<!-- Start Modal Tambah Program -->
+		<div class="modal fade" id="modalUbah">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Ubah Data</h4>
+					</div>
+					<form id="formUbah" method="post" action="<?= site_url('Profile/UbahData') ?>">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="ubahUsername">Username</label>
+								<input required type="text" name="ubahUsername" id="ubahUsername" class="form-control" value="<?=$_SESSION['username']?>">
+							</div>
+							<div class="form-group">
+								<label for="ubahPassword">Password</label>
+								<input type="text" name="ubahPassword" id="ubahPassword" class="form-control" placeholder="**************" value="">
+								<small class="text-muted">Password Boleh Kosong </small>
+							</div>
+							
+						</div>
+						<input type="hidden" name="typeUser" id="typeUser" value="<?=$_SESSION['hakAkses']?>" />
+						<input type="hidden" name="mainID" id="mainID" value="" />
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
 
 	</section>
 	<!-- /.content -->
@@ -131,6 +236,12 @@ $this->load->view('template/_js');
 ?>
 <script>
 	var kodeInstansi = "";
+
+	//Message Alert
+	$(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+	$(".alert-success").slideUp(500);
+	});
+
 
 	$.fn.dataTableExt.errMode = 'none';
 	$.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {

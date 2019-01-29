@@ -145,7 +145,7 @@ $dataModal['patokan'] = $patokan;
 											<?php if($_SESSION['hakAkses'] == 3) { ?>
 											<td>
 												<input type="hidden" id="idProgram" name="idProgram" value="<?= $item->id ?>">
-												<?php if ($_SESSION['id_siswa']==$item->id_siswa && $_SESSION['instansiSiswa'] == $item->kode_instansi && $_SESSION['programSiswa'] == $item->kode_program) { ?>
+												<?php if ($_SESSION['id_siswa']==$item->id_siswa && $_SESSION['kode_instansi'] == $item->kode_instansi && $_SESSION['kode_program'] == $item->kode_program) { ?>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="View"></span>
 													<button class="btn btn-info btn-xs btnView" data-title="View" id="btnView">
