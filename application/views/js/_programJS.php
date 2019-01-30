@@ -393,8 +393,8 @@
 	$(".select2").select2();
 
 	//Message Alert
-	$(".alert").fadeTo(2000, 500).slideUp(500, function(){
-	$(".alert").slideUp(500);
+	$(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+	$(".alert-success").slideUp(500);
 	});
 
 	//Fungsi: Set variable kodeProgram setiap action dijalankan
@@ -489,6 +489,14 @@
 		tableIndikator.destroy();
 		tablePembahasan.destroy();
 	});
+	//Fungsi: untuk Hidden Box Kegiatan ketika klik tabProgram
+	$("#tabProgram").click(function(){
+		$('#boxKegiatan').fadeOut(1000);
+		$('#boxKegiatan').addClass('hidden');
+		tableKegiatan.destroy();
+		tableIndikator.destroy();
+		tablePembahasan.destroy();
+	})
 	//Fungsi: Hidden box Detail Rekening
 	$('#btnHiddenBoxDetailRekening').click(function(){
 		$('#boxDetailRekening').fadeOut(1000);
