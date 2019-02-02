@@ -34,7 +34,7 @@
                         <input type="text" name="addVersi" id="addVersi" class="form-control" placeholder="-">
                     </div>
                     <div class="form-group">
-                        <label for="addLokasi">Versi</label>
+                        <label for="addLokasi">Lokasi</label>
                         <input type="text" name="addLokasi" id="addLokasi" class="form-control" placeholder="-">
                     </div>
                     <div class="form-group">

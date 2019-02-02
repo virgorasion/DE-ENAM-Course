@@ -463,4 +463,5 @@ class ProgramModel extends CI_model
         //Fungsi: update total_rinci rekening
         $this->db->query("CALL SyncTotalRinci('".$kodeInstansi."','".$kodeProgram."','".$kodeKegiatan."','".$kodeRekening."',@a,@b,@c)");
     }
+
 }
