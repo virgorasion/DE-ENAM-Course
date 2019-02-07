@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2019 at 03:29 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Waktu pembuatan: 07 Feb 2019 pada 07.55
+-- Versi server: 10.1.30-MariaDB
+-- Versi PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Procedures
+-- Prosedur
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SyncTotalRinci` (IN `kodeInstansi` VARCHAR(15), IN `kodeProgram` VARCHAR(15), IN `kodeKegiatan` VARCHAR(15), IN `kodeRekening` VARCHAR(15), OUT `resDetailRek` VARCHAR(15), OUT `resRek` VARCHAR(15), OUT `resKegiatan` VARCHAR(15))  BEGIN
 	#Select Detail Rekening
@@ -69,7 +69,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_admin`
+-- Struktur dari tabel `tb_admin`
 --
 
 CREATE TABLE `tb_admin` (
@@ -82,7 +82,7 @@ CREATE TABLE `tb_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_admin`
+-- Dumping data untuk tabel `tb_admin`
 --
 
 INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `password`) VALUES
@@ -91,7 +91,7 @@ INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `pa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_detail_rekening`
+-- Struktur dari tabel `tb_detail_rekening`
 --
 
 CREATE TABLE `tb_detail_rekening` (
@@ -115,7 +115,7 @@ CREATE TABLE `tb_detail_rekening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_detail_rekening`
+-- Dumping data untuk tabel `tb_detail_rekening`
 --
 
 INSERT INTO `tb_detail_rekening` (`id`, `kode_detail_rekening`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `jenis`, `uraian`, `sub_uraian`, `sasaran`, `lokasi`, `dana`, `satuan`, `volume`, `harga`, `total`, `keterangan`) VALUES
@@ -132,7 +132,7 @@ INSERT INTO `tb_detail_rekening` (`id`, `kode_detail_rekening`, `kode_instansi`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_indikator`
+-- Struktur dari tabel `tb_indikator`
 --
 
 CREATE TABLE `tb_indikator` (
@@ -147,7 +147,7 @@ CREATE TABLE `tb_indikator` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_indikator`
+-- Dumping data untuk tabel `tb_indikator`
 --
 
 INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `satuan`, `target`) VALUES
@@ -161,7 +161,7 @@ INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_progr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_instansi`
+-- Struktur dari tabel `tb_instansi`
 --
 
 CREATE TABLE `tb_instansi` (
@@ -179,19 +179,20 @@ CREATE TABLE `tb_instansi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_instansi`
+-- Dumping data untuk tabel `tb_instansi`
 --
 
 INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `kota_lokasi`, `keterangan`, `tahun`, `username`, `password`) VALUES
 (3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
 (4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3'),
 (5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', '21232f297a57a5a743894a0e4a801fc3'),
-(6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', '21232f297a57a5a743894a0e4a801fc3');
+(6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', '21232f297a57a5a743894a0e4a801fc3'),
+(7, '100.001', '010.81246', 2, 'SMK Biasa', 'APBD', 'surabaya', NULL, 2019, 'biasa', '21232f297a57a5a743894a0e4a801fc3');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_kegiatan`
+-- Struktur dari tabel `tb_kegiatan`
 --
 
 CREATE TABLE `tb_kegiatan` (
@@ -206,7 +207,7 @@ CREATE TABLE `tb_kegiatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_kegiatan`
+-- Dumping data untuk tabel `tb_kegiatan`
 --
 
 INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
@@ -217,12 +218,13 @@ INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan
 (10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, 'Baru'),
 (12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, 'Tahun Baru'),
 (13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 21768216, 0, 'Tahun Baru'),
-(14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, '');
+(14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, ''),
+(15, '010.81246', '127.971263', '080.7124', 'Kegiatan\'Q', 0, 0, '-');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_patokan_rekening`
+-- Struktur dari tabel `tb_patokan_rekening`
 --
 
 CREATE TABLE `tb_patokan_rekening` (
@@ -231,7 +233,7 @@ CREATE TABLE `tb_patokan_rekening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_patokan_rekening`
+-- Dumping data untuk tabel `tb_patokan_rekening`
 --
 
 INSERT INTO `tb_patokan_rekening` (`kode_patokan`, `nama`) VALUES
@@ -268,7 +270,7 @@ INSERT INTO `tb_patokan_rekening` (`kode_patokan`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_pembahasan`
+-- Struktur dari tabel `tb_pembahasan`
 --
 
 CREATE TABLE `tb_pembahasan` (
@@ -295,7 +297,7 @@ CREATE TABLE `tb_pembahasan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_pembahasan`
+-- Dumping data untuk tabel `tb_pembahasan`
 --
 
 INSERT INTO `tb_pembahasan` (`id`, `kode_pembahasan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `id_siswa`, `nama_siswa`, `plafon`, `triwulan1_rekening`, `triwulan2_rekening`, `triwulan3_rekening`, `triwulan4_rekening`, `total_rekening`, `triwulan1_pembahasan`, `triwulan2_pembahasan`, `triwulan3_pembahasan`, `triwulan4_pembahasan`, `nilai`, `uraian`) VALUES
@@ -304,7 +306,7 @@ INSERT INTO `tb_pembahasan` (`id`, `kode_pembahasan`, `kode_instansi`, `kode_pro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_program`
+-- Struktur dari tabel `tb_program`
 --
 
 CREATE TABLE `tb_program` (
@@ -323,7 +325,7 @@ CREATE TABLE `tb_program` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_program`
+-- Dumping data untuk tabel `tb_program`
 --
 
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `sasaran`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
@@ -334,12 +336,45 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
 (15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
-(17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', '');
+(17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
+(18, '0', 0, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
+(19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_rekening`
+-- Struktur dari tabel `tb_registrasi`
+--
+
+CREATE TABLE `tb_registrasi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `instansi` varchar(50) NOT NULL,
+  `jurusan` varchar(20) NOT NULL,
+  `nis` varchar(15) NOT NULL,
+  `nisn` varchar(15) NOT NULL,
+  `no_telp` varchar(14) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `foto` varchar(50) NOT NULL,
+  `waktu` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_registrasi`
+--
+
+INSERT INTO `tb_registrasi` (`id`, `nama`, `instansi`, `jurusan`, `nis`, `nisn`, `no_telp`, `username`, `foto`, `waktu`) VALUES
+(1, 'asdhb', 'asdv', 'akshdv', 'ahsdv', 'jahsvd', 'akshdv', 'asjdv', '0', '2019-02-07'),
+(2, 'akshgd', 'khasbd', 'khasbd', 'asdkb', 'akhsdb', 'khasbdkhasdb', 'akhdb', 'Surat Pernyataan.png', '2019-02-07'),
+(3, 'hkasdkashd', 'hasvd', 'abmsdv', 'jhasvd', 'jhavsd', 'kahsdasd', 'asjdv', 'ea4dc4917bf59fd45bb5df7ddce83b70', '2019-02-07'),
+(4, 'ahksdv', 'hasvd', 'jasvd', 'jahsvd', 'jasvd', 'khasvd', 'ahjsvd', '41b586905e6233e72b076191f8bf9512png', '2019-02-07'),
+(5, 'ashdv', 'hjavd', 'jvad', 'jhvad', 'jhvad', 'khavd', 'hvad', 'images5.png', '2019-02-07'),
+(6, 'aksbd', 'kb', 'kb', 'kb', 'kb', 'khab', 'khb', 'ab4e1fe2006ae2f54dd410f71a0f8958.png', '2019-02-07');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_rekening`
 --
 
 CREATE TABLE `tb_rekening` (
@@ -359,7 +394,7 @@ CREATE TABLE `tb_rekening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_rekening`
+-- Dumping data untuk tabel `tb_rekening`
 --
 
 INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `uraian_rekening`, `triwulan_1`, `triwulan_2`, `triwulan_3`, `triwulan_4`, `total`, `total_rinci`) VALUES
@@ -380,7 +415,7 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_siswa`
+-- Struktur dari tabel `tb_siswa`
 --
 
 CREATE TABLE `tb_siswa` (
@@ -398,7 +433,7 @@ CREATE TABLE `tb_siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_siswa`
+-- Dumping data untuk tabel `tb_siswa`
 --
 
 INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`) VALUES
@@ -406,21 +441,22 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 (6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', ''),
 (7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', '', ''),
 (8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308'),
-(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712');
+(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712'),
+(10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', '21232f297a57a5a743894a0e4a801fc3', '917264', '00091241', 'RPL', '009817241');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_admin`
+-- Indeks untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indexes for table `tb_detail_rekening`
+-- Indeks untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD PRIMARY KEY (`id`),
@@ -430,7 +466,7 @@ ALTER TABLE `tb_detail_rekening`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_indikator`
+-- Indeks untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   ADD PRIMARY KEY (`id`),
@@ -439,7 +475,7 @@ ALTER TABLE `tb_indikator`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_instansi`
+-- Indeks untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD PRIMARY KEY (`id`),
@@ -447,7 +483,7 @@ ALTER TABLE `tb_instansi`
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indexes for table `tb_kegiatan`
+-- Indeks untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
   ADD PRIMARY KEY (`id`),
@@ -456,13 +492,13 @@ ALTER TABLE `tb_kegiatan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_patokan_rekening`
+-- Indeks untuk tabel `tb_patokan_rekening`
 --
 ALTER TABLE `tb_patokan_rekening`
   ADD PRIMARY KEY (`kode_patokan`);
 
 --
--- Indexes for table `tb_pembahasan`
+-- Indeks untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   ADD PRIMARY KEY (`id`),
@@ -474,7 +510,7 @@ ALTER TABLE `tb_pembahasan`
   ADD KEY `kode_kegiatan` (`kode_kegiatan`);
 
 --
--- Indexes for table `tb_program`
+-- Indeks untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
   ADD PRIMARY KEY (`id`),
@@ -484,7 +520,14 @@ ALTER TABLE `tb_program`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_rekening`
+-- Indeks untuk tabel `tb_registrasi`
+--
+ALTER TABLE `tb_registrasi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kode_instansi` (`instansi`);
+
+--
+-- Indeks untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   ADD PRIMARY KEY (`id`),
@@ -495,7 +538,7 @@ ALTER TABLE `tb_rekening`
   ADD KEY `kode_program` (`kode_program`);
 
 --
--- Indexes for table `tb_siswa`
+-- Indeks untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`),
@@ -504,82 +547,88 @@ ALTER TABLE `tb_siswa`
   ADD KEY `kode_instansi` (`kode_instansi`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_admin`
+-- AUTO_INCREMENT untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_detail_rekening`
+-- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `tb_indikator`
+-- AUTO_INCREMENT untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `tb_instansi`
+-- AUTO_INCREMENT untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `tb_kegiatan`
+-- AUTO_INCREMENT untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tb_pembahasan`
+-- AUTO_INCREMENT untuk tabel `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tb_program`
+-- AUTO_INCREMENT untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `tb_rekening`
+-- AUTO_INCREMENT untuk tabel `tb_registrasi`
+--
+ALTER TABLE `tb_registrasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `tb_siswa`
+-- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `tb_detail_rekening`
+-- Ketidakleluasaan untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
   ADD CONSTRAINT `tb_detail_rekening_ibfk_1` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tb_indikator`
+-- Ketidakleluasaan untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
   ADD CONSTRAINT `tb_indikator_ibfk_2` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_indikator_ibfk_3` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tb_instansi`
+-- Ketidakleluasaan untuk tabel `tb_instansi`
 --
 ALTER TABLE `tb_instansi`
   ADD CONSTRAINT `tb_instansi_ibfk_1` FOREIGN KEY (`kode_admin`) REFERENCES `tb_admin` (`kode_admin`) ON UPDATE CASCADE;

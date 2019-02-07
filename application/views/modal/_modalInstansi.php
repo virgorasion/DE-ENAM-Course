@@ -139,7 +139,7 @@
 <!-- /.modal -->
 <?php } ?>
 
-<?php if ($_SESSION['hakAkses'] == 1) { ?>
+<?php if ($_SESSION['hakAkses'] != 3) { ?>
 <!-- Start Modal -->
 <div class="modal fade" id="modalTambahSiswa">
     <div class="modal-dialog">
@@ -153,11 +153,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="addNamaSiswa">Nama</label>
-                        <input type="text" name="addNamaSiswa" id="addNamaSiswa" class="form-control" placeholder="Nama Siswa" autofocus required>
+                        <input type="text" name="addNamaSiswa" id="addNamaSiswa" value="<?= set_value('addNamaSiswa')?>" class="form-control" placeholder="Nama Siswa" autofocus required>
                     </div>
                     <div class="form-group">
                       <label for="addInstansiSiswa">Instansi</label>
-                      <select class="form-control" name="addInstansiSiswa" id="addInstansiSiswa">
+                      <select class="form-control" name="addInstansiSiswa" value="<?= set_value('addInstansiSiswa')?>" id="addInstansiSiswa">
                         <option>- Pilih Instansi -</option>
                         <?php foreach($instansi as $item) { ?>
                         <option value="<?= $item->kode_instansi ?>"> <?= $item->nama_instansi ?> </option>
@@ -166,25 +166,25 @@
                     </div>
                     <div class="form-group">
                         <label for="addNisSiswa">Jurusan</label>
-                        <input type="text" name="addJurusanSiswa" id="addJurusanSiswa" max-lenght="5" class="form-control" placeholder="SMA : MIPA/IIS, SMK : Teknik Komputer dan Jaringan" required>
+                        <input type="text" name="addJurusanSiswa" id="addJurusanSiswa" max-lenght="5" value="<?= set_value('addJurusanSiswa')?>" class="form-control" placeholder="SMA : MIPA/IIS, SMK : Teknik Komputer dan Jaringan" required>
                     </div>
                     <div class="form-group">
                         <label for="addNisSiswa">NIS</label>
-                        <input type="text" name="addNisSiswa" id="addNisSiswa" max-lenght="5" class="form-control" placeholder="13234" required>
+                        <input type="text" name="addNisSiswa" id="addNisSiswa" max-lenght="5" class="form-control" value="<?= set_value('addNisSiswa')?>" placeholder="13234" required>
                     </div>
                     <div class="form-group">
                         <label for="addNisnSiswa">NISN</label>
-                        <input type="text" name="addNisnSiswa" id="addNisnSiswa" class="form-control" placeholder="0008096617" required>
+                        <input type="text" name="addNisnSiswa" id="addNisnSiswa" class="form-control" value="<?= set_value('addNisnSiswa')?>" placeholder="0008096617" required>
                     </div>
                     <div class="form-group">
                       <label for="addProgramSiswa">Program</label>
-                      <select class="form-control" name="addProgramSiswa" id="addProgramSiswa">
+                      <select class="form-control" name="addProgramSiswa" id="addProgramSiswa" value="<?= set_value('addProgramSiswa')?>">
                       </select>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label for="addNisSiswa">Nomor Telepon</label>
-                        <input type="text" name="addHpSiswa" id="addHpSiswa" max-lenght="5" class="form-control" placeholder="08123456789" required>
+                        <input type="text" name="addHpSiswa" id="addHpSiswa" max-lenght="5" class="form-control" value="<?= set_value('addHpSiswa')?>" placeholder="08123456789" required>
                     </div>
                     <div class="form-group">
                         <label for="addUserSiswa">Username</label>

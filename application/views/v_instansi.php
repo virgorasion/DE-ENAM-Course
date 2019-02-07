@@ -52,6 +52,12 @@
 						Siswa</button>
 				</div>
 				<?php } ?>
+				<?php if($_SESSION['hakAkses'] == 2){ ?>
+				<div class="form-group">
+					<button id="addBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahSiswa">Tambah
+						Siswa</button>
+				</div>
+				<?php } ?>
 				<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 					<thead>
 						<tr>

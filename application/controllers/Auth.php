@@ -36,6 +36,57 @@ class Auth extends CI_controller
         }
     }
 
+    public function Registrasi()
+    {
+        if (!isset($_POST['submit'])) {
+            $this->load->view("v_registrasi");
+        }else {
+            $post = $this->input->post();
+
+            $config['upload_path'] = "./assets/images/";
+            $config['allowed_types'] = "jpeg|jpg|png";
+            $config['encrypt_name'] = TRUE;
+            $config['max_size'] = 4096;
+            $config['max_width'] = 512;
+            $config['max_height'] = 512;
+
+            $this->load->library("upload", $config);
+
+            if (!$this->upload->do_upload('foto')) {
+                $error = array("error" => $this->upload->display_errors());
+                $this->load->view("v_registrasi",$error);
+            }else{
+                die();
+                $data = array(
+                    "nama" => $post['nama'],
+                    "instansi" => $post['instansi'],
+                    "jurusan" => $post['jurusan'],
+                    "nis" => $post['nis'],
+                    "nisn" => $post['nisn'],
+                    "no_telp" => $post['telpon'],
+                    "username" => $post['username'],
+                    "foto" => $this->upload->data("file_name"),
+                    "waktu" => date("Y-m-d")
+                );
+                $query = $this->db->insert("tb_registrasi", $data);
+    
+                if ($query) {
+                    //IKi lek bener melbu kene, dadi user e oleh informasi ngenteni di acc admin, keki redirect sisan tan
+                    $this->load->view("Success");
+                }else{
+                    //lek salah melbu kene maneh
+                    $this->load->view("v_registrasi");
+                    $this->session->set_tempflashdata("msg","Terdapat kesalahan saat registrasi, hubungi admin !",5);
+                }
+            }
+        }
+    }
+
+    private function _uploadImage($nama)
+    {
+       
+    }
+
     public function login()
     {
         $user = $this->input->post('username');

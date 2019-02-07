@@ -65,8 +65,8 @@ $('#datatable').on('click', '#btnEdit', function () {
 	});
 })
 
-$(".alert").fadeTo(2000, 500).slideUp(500, function(){
-	$(".alert").slideUp(500);
+$(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+	$(".alert-success").slideUp(500);
 });
 
 $('#formTambah').bootstrapValidator({

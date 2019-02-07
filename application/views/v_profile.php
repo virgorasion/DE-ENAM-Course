@@ -141,11 +141,32 @@
 			<div class="col-md-9">
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
+						<li id="tabRegistrasi"><a href="#register" data-toggle="tab">Register</a></li>
 						<li class="active" id="tabInstansi"><a href="#instansi" data-toggle="tab">Instansi</a></li>
 						<li class="hidden" id="tabSiswa"><a href="#siswa" data-toggle="tab">Siswa</a></li>
 					</ul>
 
 					<div class="tab-content">
+
+						<!-- Register -->
+						<div class="active tab-pane" id="register">
+							<table id="tableRegister" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Nama</th>
+										<th class="min-tablet">Instansi</th>
+										<th class="min-tablet">Kota</th>
+										<th class="min-desktop">Tahun</th>
+										<th class="min-desktop">Versi</th>
+										<th class="min-desktop">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- Instansi -->
 						<div class="active tab-pane" id="instansi">
 							<table id="tableInstansi" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 								<thead>
@@ -162,7 +183,8 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- /.tab-pane -->
+						
+						<!-- Siswa -->
 						<div class="tab-pane" id="siswa">
 							<table id="tableSiswa" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 								<thead>
@@ -178,8 +200,6 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- /.tab-pane -->
-
 					</div>
 					<!-- /.tab-content -->
 				</div>
