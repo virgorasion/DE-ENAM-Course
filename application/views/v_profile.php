@@ -101,8 +101,8 @@
 				<?php if (@$_SESSION['hakAkses'] == 3) { ?>
 				<div class="box box-primary">
 					<div class="box-body box-profile">
-						<img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/images/user.png')?>" alt="Empty.">
-
+						<img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/images/').@$data[0]->foto?>" alt="<?=base_url('assets/images/user.png')?>">
+						<?= var_dump($data) ?>
 						<h3 class="profile-username text-center"><?=@$_SESSION['nama']?></h3>
 
 						<p class="text-muted text-center">Siswa</p>
@@ -127,8 +127,6 @@
 								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
 							</li>
 						</ul>
-
-						<a href="#" data-toggle="modal" data-target="#modalUbah" class="btn btn-primary btn-block"><b>Ubah</b></a>
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -141,7 +139,7 @@
 			<div class="col-md-9">
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
-						<li id="tabRegistrasi"><a href="#register" data-toggle="tab">Register</a></li>
+						<li id="tabRegister"><a href="#register" data-toggle="tab">Register</a></li>
 						<li class="active" id="tabInstansi"><a href="#instansi" data-toggle="tab">Instansi</a></li>
 						<li class="hidden" id="tabSiswa"><a href="#siswa" data-toggle="tab">Siswa</a></li>
 					</ul>
@@ -153,12 +151,15 @@
 							<table id="tableRegister" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 								<thead>
 									<tr>
+										<th width="1%">No</th>
 										<th>Nama</th>
 										<th class="min-tablet">Instansi</th>
-										<th class="min-tablet">Kota</th>
-										<th class="min-desktop">Tahun</th>
-										<th class="min-desktop">Versi</th>
-										<th class="min-desktop">Action</th>
+										<th class="min-tablet">Jurusan</th>
+										<th class="min-desktop">NIS</th>
+										<th class="min-desktop">NISN</th>
+										<th class="min-desktop">Telpon</th>
+										<th class="min-desktop">Username</th>
+										<th class="min-desktop">Tambah</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -210,7 +211,7 @@
 		</div>
 		<!-- /.row -->
 
-		<!-- Start Modal Tambah Program -->
+		<!-- Start Modal Ubah Password -->
 		<div class="modal fade" id="modalUbah">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -246,6 +247,86 @@
 		</div>
 		<!-- /.modal -->
 
+		<!-- Start Modal Tambah Siswa Registrasi -->
+		<div class="modal fade" id="modalTambahSiswa">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Tambah Siswa</h4>
+					</div>
+					<form id="formTambahSiswa" method="post" action="<?= site_url('Profile/TambahSiswa') ?>">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="addNama">Nama</label>
+								<input required type="text" name="addNama" id="addNama" class="form-control">
+							</div>
+
+							 <div class="form-group">
+								<label>Instansi</label>
+								<select class="form-control select2" id="addInstansi" name="addInstansi" data-placeholder="Select a State"
+										style="width: 100%;">
+										<!-- Option diisi oleh JS -->
+								</select>
+							</div>
+
+							<div class="form-group">
+							  <label for="addProgram">Program</label>
+							  <select class="form-control" name="addProgram" id="addProgram">
+								<!-- Option Diisi oleh JS -->
+							  </select>
+							</div>
+
+							<div class="form-group">
+								<label for="addJurusan">Jurusan</label>
+								<input required type="text" name="addJurusan" id="addJurusan" class="form-control">
+							</div>
+
+							<div class="form-group">
+								<label for="addNis">Nis</label>
+								<input required type="text" name="addNis" id="addNis" class="form-control">
+							</div>
+							
+							<div class="form-group">
+								<label for="addNisn">Nisn</label>
+								<input required type="text" name="addNisn" id="addNisn" class="form-control">
+							</div>
+							
+							<div class="form-group">
+								<label for="addTelp">Telepon</label>
+								<input required type="text" name="addTelp" id="addTelp" class="form-control">
+							</div>
+							
+							<div class="form-group">
+								<label for="addUsername">Username</label>
+								<input required type="text" name="addUsername" id="addUsername" class="form-control">
+							</div>
+
+							<label for="addPassword">Passowrd</label>
+							<div class="input-group input-group-sm">
+								<input required type="password" id="addPassword" name="addPassword" class="form-control">
+									<span class="input-group-btn">
+									<button type="button" id="btnShowPassword" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
+									</span>
+							</div>
+
+							<input type="hidden" id="foto" name="foto">
+							<input type="hidden" id="idRegister" name="idRegister">
+							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
 	</section>
 	<!-- /.content -->
 </div>
@@ -254,6 +335,7 @@
 $this->load->view('template/_footer');
 $this->load->view('template/_js');
 ?>
+<script src="<?=base_url('assets/bower_components/select2/dist/js/select2.min.js')?>"></script>
 <script>
 	var kodeInstansi = "";
 
@@ -261,7 +343,8 @@ $this->load->view('template/_js');
 	$(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
 	$(".alert-success").slideUp(500);
 	});
-
+	
+	$("#addInstansi").select2();
 
 	$.fn.dataTableExt.errMode = 'none';
 	$.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {
@@ -275,6 +358,69 @@ $this->load->view('template/_js');
 			"iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
 		};
 	};
+
+	function funcTableRegister() {
+		tableRegister = $("#tableRegister").DataTable({
+			initComplete: function () {
+				var api = this.api();
+				$('#mytable_filter input')
+					.off('.DT')
+					.on('input.DT', function () {
+						api.search(this.value).draw();
+					});
+			},
+			oLanguage: {
+				sProcessing: 'Loading....'
+			},
+			processing: true,
+			serverSide: true,
+			ajax: {
+				"url": "<?= site_url('Profile/DataRegistrationAPI') ?>",
+				"type": "POST"
+			},
+			columns: [
+				{
+					"data": null, "searchable": false, "sortable": false
+				},
+				{
+					"data": "nama"
+				},
+				{
+					"data": "instansi"
+				},
+				{
+					"data": "jurusan"
+				},
+				{
+					"data": "nis"
+				},
+				{
+					"data": "nisn"
+				},
+				{
+					"data": "no_telp"
+				},
+				{
+					"data": "username"
+				},
+				{
+					"data": "Action"
+				}
+			],
+			order: [
+				[1, 'asc']
+			],
+			rowCallback: function (row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(0)', row).html(index);
+			}
+
+		});
+		return tableRegister;
+	}
 
 	function funcTableInstansi() {
 		kodeInstansi = "<?=@$_SESSION['kode_instansi']?>";
@@ -401,6 +547,85 @@ $this->load->view('template/_js');
 			funcTableSiswa(kode_instansi);
 		}else{
 			funcTableSiswa(kode_instansi);			
+		}
+	})
+
+	$("#tabRegister").click(function(){
+		if(tableRegister instanceof $.fn.dataTable.Api){
+			tableRegister.destroy();
+			funcTableRegister();
+		}else{
+			funcTableRegister();
+		}
+	})
+
+	$("#tableRegister").on("click",".btn_add",function(){
+		let id = $(this).data("id");
+		let nama = $(this).data("nama");
+		let instansi = $(this).data("instansi");
+		let jurusan = $(this).data("jurusan");
+		let nis = $(this).data("nis");
+		let nisn = $(this).data("nisn");
+		let telp = $(this).data("telp");
+		let username = $(this).data("username");
+		let img = $(this).data('foto');
+		$("#modalTambahSiswa").modal('show');
+	
+		// Isi Select Option addInstansi
+		$.ajax({
+			url: "<?= site_url('Profile/NamaInstansiAPI') ?>",
+			type: 'POST',
+			success:function(result){
+				// var data = JSON.parse(result);
+				// console.log(result);
+				var html = '';
+				$.each(result, function(i){
+					html += '<option value="'+result[i].kode_instansi+'">'+result[i].nama_instansi+'</option>';
+					$('#addInstansi').html(html);
+				})
+			}
+		}).done(function(){
+			$(".select2-search__field").val(instansi);
+		})
+
+		$("#modalTambahSiswa").find("#idRegister").val(id);
+		$("#modalTambahSiswa").find("#addNama").val(nama);
+		$("#modalTambahSiswa").find("#addJurusan").val(jurusan);
+		$("#modalTambahSiswa").find("#addNis").val(nis);
+		$("#modalTambahSiswa").find("#addNisn").val(nisn);
+		$("#modalTambahSiswa").find("#addTelp").val(telp);
+		$("#modalTambahSiswa").find("#addUsername").val(username);
+		$("#modalTambahSiswa").find("#foto").val(img);
+	})
+
+	// Isi Select Option addProgram
+	$('#addInstansi').on('change', function(){
+		var dataInstansi = $(this).val();
+		console.log(dataInstansi);
+		var url = "<?= site_url('InstansiCtrl/getDataProgramAPI/') ?>" + dataInstansi;
+		$.ajax({
+			url: url,
+			type: 'POST',
+			success:function(result){
+				var data = JSON.parse(result);
+				// console.log(data);
+				var html = '';
+				$.each(data, function(i){
+					html += '<option value="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
+					$('#addProgram').html(html);
+				})
+			}
+		})
+	})
+
+	//Fungsi show Password
+	$("#btnShowPassword").click(function(){
+		if ($("#addPassword").attr("type") == "password") {
+			$("#addPassword").prop("type","text");
+			$("#btnShowPassword").html("<i class='fa fa-eye-slash'></i>");
+		}else{
+			$("#addPassword").prop("type","password");
+			$("#btnShowPassword").html("<i class='fa fa-eye'></i>");
 		}
 	})
 

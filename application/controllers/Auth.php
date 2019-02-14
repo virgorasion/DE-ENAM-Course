@@ -47,8 +47,8 @@ class Auth extends CI_controller
             $config['allowed_types'] = "jpeg|jpg|png";
             $config['encrypt_name'] = TRUE;
             $config['max_size'] = 4096;
-            $config['max_width'] = 512;
-            $config['max_height'] = 512;
+            $config['max_width'] = 800;
+            $config['max_height'] = 1000;
 
             $this->load->library("upload", $config);
 
@@ -56,15 +56,14 @@ class Auth extends CI_controller
                 $error = array("error" => $this->upload->display_errors());
                 $this->load->view("v_registrasi",$error);
             }else{
-                die();
                 $data = array(
-                    "nama" => $post['nama'],
-                    "instansi" => $post['instansi'],
-                    "jurusan" => $post['jurusan'],
-                    "nis" => $post['nis'],
-                    "nisn" => $post['nisn'],
-                    "no_telp" => $post['telpon'],
-                    "username" => $post['username'],
+                    "nama" => htmlspecialchars($post['nama']),
+                    "instansi" => htmlspecialchars($post['instansi']),
+                    "jurusan" => htmlspecialchars($post['jurusan']),
+                    "nis" => htmlspecialchars($post['nis']),
+                    "nisn" => htmlspecialchars($post['nisn']),
+                    "no_telp" => htmlspecialchars($post['telpon']),
+                    "username" => htmlspecialchars($post['username']),
                     "foto" => $this->upload->data("file_name"),
                     "waktu" => date("Y-m-d")
                 );
@@ -80,11 +79,6 @@ class Auth extends CI_controller
                 }
             }
         }
-    }
-
-    private function _uploadImage($nama)
-    {
-       
     }
 
     public function login()

@@ -21,23 +21,6 @@ class InstansiModel extends CI_model
                 ->get()->result();
     }
 
-    public function insertUserSiswa($table, $data, $nisn, $dataProgram)
-    {
-        $this->db->where('username', $data['username']);
-        $query = $this->db->get($table);
-        if ($query->num_rows() == 0) {
-            //query untuk tambah siswa sekaligus update data program
-            $this->db->insert($table, $data);
-            $query = $this->db->select('id_siswa')->from($table)->where('nisn', $nisn)->get();
-            $row = $query->row();
-            $id_siswa = array('id_siswa' => $row->id_siswa);
-            $this->db->update('tb_program',$id_siswa, $dataProgram); 
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public function UpdateInstansi($table,$data,$id)
     {
         $this->db->set($data);

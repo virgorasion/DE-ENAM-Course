@@ -21,36 +21,6 @@ class InstansiCtrl extends CI_controller
         }
     }
 
-    public function TambahSiswa()
-    {
-        $post = $this->input->post();
-        $data = array(
-            'kode_instansi' => $post['addInstansiSiswa'],
-            'kode_program' => $post['addProgramSiswa'],
-            'nama' => $post['addNamaSiswa'],
-            'hak_akses' => 3,
-            'nis' => $post['addNisSiswa'],
-            'nisn' => $post['addNisnSiswa'],
-            'username' => $post['addUserSiswa'],
-            'jurusan'  => $post['addJurusanSiswa'],
-            'nomor_hp' => $post['addHpSiswa'],
-            'password' => md5($post['addPassSiswa']),
-        );
-        $nisn = $post['addNisnSiswa'];
-        $dataProgram = array(
-            'kode_instansi' => $post['addInstansiSiswa'],
-            'kode_program' => $post['addProgramSiswa']
-        );
-        $query = $this->InstansiModel->insertUserSiswa('tb_siswa', $data, $nisn, $dataProgram);
-        if ($query != false) {
-            $this->session->set_flashdata('succ', 'Berhasil menambah siswa');
-            redirect('InstansiCtrl');
-        }else {
-            $this->session->set_flashdata('fail', 'Username sudah dipakai');
-            redirect('InstansiCtrl');
-        }
-    }
-
     public function getDataProgramAPI($idInstansi)
     {
         $query = $this->InstansiModel->getDataProgram('tb_program', $idInstansi);

@@ -17,16 +17,19 @@ class Profile extends CI_controller
     public function index()
     {
         if (@$_SESSION['username'] != null) {
-            $data = "";
             if ($_SESSION['hakAkses'] == 1) {
-                $data = $this->ProfileModel->dataAdmin(@$_SESSION['kode_admin']);
+                $query = $this->ProfileModel->dataAdmin(@$_SESSION['kode_admin']);
+                $data['data'] = $query;
+                $this->load->view('v_profile',$data);
             }elseif ($_SESSION['hakAkses'] == 2) {
-                $data = $this->ProfileModel->dataInstansi(@$_SESSION['kode_instansi']);
+                $query = $this->ProfileModel->dataInstansi(@$_SESSION['kode_instansi']);
+                $data['data'] = $query;
+                $this->load->view('v_profile',$data);
             }elseif ($_SESSION['hakAkses'] == 3) {
-                $data = $this->ProfileModel->dataSiswa(@$_SESSION['id_siswa']);
+                $query = $this->ProfileModel->dataSiswa(@$_SESSION['id_siswa']);
+                $data['data'] = $query;
+                $this->load->view('v_profile',$data);
             }
-            $data['data'] = $data;
-            $this->load->view('v_profile',$data);
         }else {
             $data['csrf'] = array(
                 'token' => $this->security->get_csrf_token_name(),
@@ -46,6 +49,12 @@ class Profile extends CI_controller
     {
         header("Content-Type: application/json");
         echo $this->ProfileModel->getDataSiswa($kodeInstansi);
+    }
+
+    public function DataRegistrationAPI()
+    {
+        header("Content-Type: application/json");
+        echo $this->ProfileModel->getDataRegistration();
     }
 
     public function UbahData()
@@ -96,6 +105,45 @@ class Profile extends CI_controller
         }else {
             $this->session->set_tempdata('fail', 'Gagal Ubah Data Profile, hubungi admin !',5);
             redirect(site_url("Profile"));
+        }
+    }
+
+    public function NamaInstansiAPI()
+    {
+        header("Content-Type: application/json");
+        $query = $this->ProfileModel->getNamaInstansi();
+        echo json_encode($query);
+    }
+
+    public function TambahSiswa()
+    {
+        $post = $this->input->post();
+        $data = array(
+            'kode_instansi' => $post['addInstansi'],
+            'kode_program' => $post['addProgram'],
+            'nama' => $post['addNama'],
+            'hak_akses' => 3,
+            'nis' => $post['addNis'],
+            'nisn' => $post['addNisn'],
+            'username' => $post['addUsername'],
+            'jurusan'  => $post['addJurusan'],
+            'nomor_hp' => $post['addTelp'],
+            'foto' => $post['foto'],
+            'password' => md5($post['addPassword']),
+        );
+        $nisn = $post['addNisn'];
+        $id = array('id' => $post['idRegister']);
+        $dataProgram = array(
+            'kode_instansi' => $post['addInstansi'],
+            'kode_program' => $post['addProgram']
+        );
+        $query = $this->ProfileModel->insertUserSiswa('tb_siswa', $data, $nisn, $dataProgram, $id);
+        if ($query != false) {
+            $this->session->set_flashdata('succ', 'Berhasil menambah siswa');
+            redirect('Profile');
+        }else {
+            $this->session->set_flashdata('fail', 'Username sudah dipakai');
+            redirect('Profile');
         }
     }
 }

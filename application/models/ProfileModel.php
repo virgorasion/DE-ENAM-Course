@@ -30,6 +30,18 @@ class ProfileModel extends CI_model
         return $this->datatables->generate();
     }
 
+    public function getDataRegistration()
+    {
+        $this->datatables->select("id,nama,instansi,jurusan,nis,nisn,no_telp,username,foto,DATE_FORMAT(waktu, '%d %M %Y') as waktu");
+        $this->datatables->from("tb_registrasi");
+        $this->datatables->add_column(
+            'Action',
+            '<center><a href="javascript:void(0)" class="btn_add btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-instansi="$3" data-jurusan="$4" data-nis="$5" data-nisn="$6" data-telp="$7" data-username="$8" data-foto="$9"><i class="fa fa-plus-circle"></i></a></center>',
+            'id,nama,instansi,jurusan,nis,nisn,no_telp,username,foto'
+        );
+        return $this->datatables->generate();
+    }
+
     public function getDataSiswa($kodeInstansi)
     {
         $this->datatables->select("nama,nis,nisn,nomor_hp");
@@ -50,7 +62,7 @@ class ProfileModel extends CI_model
 
     public function dataSiswa($idSiswa)
     {
-        return $this->db->select('tb_siswa.password,tb_siswa.jurusan,tb_siswa.nomor_hp,tb_instansi.nama_instansi,tb_program.nama_program')
+        return $this->db->select('tb_siswa.password,tb_siswa.jurusan,tb_siswa.nomor_hp,tb_instansi.nama_instansi,tb_program.nama_program,tb_siswa.foto')
                         ->from('tb_siswa')
                         ->join("tb_instansi", "tb_instansi.kode_instansi = tb_siswa.kode_instansi")
                         ->join("tb_program", "tb_program.kode_program = tb_siswa.kode_program")
@@ -60,5 +72,26 @@ class ProfileModel extends CI_model
                         ->get()->result();
     }
 
-    
+    public function getNamaInstansi()
+    {
+        return $this->db->select("kode_instansi,nama_instansi")->from("tb_instansi")->get()->result();
+    }
+
+    public function insertUserSiswa($table, $data, $nisn, $dataProgram,$id)
+    {
+        $this->db->where('username', $data['username']);
+        $query = $this->db->get($table);
+        if ($query->num_rows() == 0) {
+            //query untuk tambah siswa sekaligus update data program
+            $this->db->insert($table, $data);
+            $query = $this->db->select('id_siswa')->from($table)->where('nisn', $nisn)->get();
+            $row = $query->row();
+            $id_siswa = array('id_siswa' => $row->id_siswa);
+            $this->db->update('tb_program',$id_siswa, $dataProgram);
+            $this->db->delete("tb_registrasi",$id);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
