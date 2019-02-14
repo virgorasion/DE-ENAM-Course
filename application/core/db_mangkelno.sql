@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Feb 2019 pada 07.55
+-- Waktu pembuatan: 14 Feb 2019 pada 08.23
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -331,13 +331,13 @@ CREATE TABLE `tb_program` (
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `sasaran`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
 (8, '100.001', 2, '010.6531', '127.3321', '', '', '', 'Program Makan Bersama', '50000', '36903292', '36732012'),
 (9, '100.001', 6, '010.6531', '127.03', '', '', '', 'Kerja Bakti 17 Agustus', '25220990', '25220990', '25220990'),
-(11, '100.001', 0, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
+(11, '100.001', 11, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
 (14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
 (15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
 (17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
-(18, '0', 0, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
+(18, '0', 12, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
 (19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', '');
 
 -- --------------------------------------------------------
@@ -429,20 +429,23 @@ CREATE TABLE `tb_siswa` (
   `nis` varchar(15) NOT NULL,
   `nisn` varchar(15) NOT NULL,
   `jurusan` varchar(50) NOT NULL,
-  `nomor_hp` varchar(14) NOT NULL
+  `nomor_hp` varchar(14) NOT NULL,
+  `foto` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_siswa`
 --
 
-INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`) VALUES
-(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123', '', ''),
-(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', ''),
-(7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', '', ''),
-(8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308'),
-(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712'),
-(10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', '21232f297a57a5a743894a0e4a801fc3', '917264', '00091241', 'RPL', '009817241');
+INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`, `foto`) VALUES
+(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123', '', '', ''),
+(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', '', ''),
+(7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', '', '', ''),
+(8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308', ''),
+(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712', ''),
+(10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', '21232f297a57a5a743894a0e4a801fc3', '917264', '00091241', 'RPL', '009817241', ''),
+(11, '010.0001', '127.3321', 3, 'test dafter', 'ahjsvd', '928f770e5cf7c99437e8492df593ff5c', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', ''),
+(12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', '21232f297a57a5a743894a0e4a801fc3', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg');
 
 --
 -- Indexes for dumped tables
@@ -596,7 +599,7 @@ ALTER TABLE `tb_program`
 -- AUTO_INCREMENT untuk tabel `tb_registrasi`
 --
 ALTER TABLE `tb_registrasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_rekening`
@@ -608,7 +611,7 @@ ALTER TABLE `tb_rekening`
 -- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
