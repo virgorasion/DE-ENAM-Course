@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Feb 2019 pada 08.23
+-- Waktu pembuatan: 17 Feb 2019 pada 16.21
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -96,11 +96,11 @@ INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `pa
 
 CREATE TABLE `tb_detail_rekening` (
   `id` int(11) NOT NULL,
-  `kode_detail_rekening` varchar(15) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
-  `kode_kegiatan` varchar(10) NOT NULL,
-  `kode_rekening` varchar(10) NOT NULL,
+  `kode_detail_rekening` varchar(30) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
+  `kode_kegiatan` varchar(30) NOT NULL,
+  `kode_rekening` varchar(30) NOT NULL,
   `jenis` varchar(20) NOT NULL,
   `uraian` varchar(100) NOT NULL,
   `sub_uraian` varchar(100) NOT NULL,
@@ -137,9 +137,9 @@ INSERT INTO `tb_detail_rekening` (`id`, `kode_detail_rekening`, `kode_instansi`,
 
 CREATE TABLE `tb_indikator` (
   `id` int(3) NOT NULL,
-  `kode_indikator` varchar(10) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
+  `kode_indikator` varchar(30) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
   `jenis` varchar(15) NOT NULL COMMENT '1. Capaian Program, 2.Hasil, 3.Pengeluaran, 4.masukan',
   `uraian` varchar(50) NOT NULL,
   `satuan` varchar(10) NOT NULL,
@@ -167,7 +167,7 @@ INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_progr
 CREATE TABLE `tb_instansi` (
   `id` int(11) NOT NULL,
   `kode_admin` varchar(10) NOT NULL,
-  `kode_instansi` varchar(20) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
   `hak_akses` int(1) NOT NULL,
   `nama_instansi` varchar(50) NOT NULL,
   `versi` varchar(20) NOT NULL,
@@ -197,9 +197,9 @@ INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `na
 
 CREATE TABLE `tb_kegiatan` (
   `id` int(11) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
-  `kode_kegiatan` varchar(10) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
+  `kode_kegiatan` varchar(30) NOT NULL,
   `nama_kegiatan` varchar(40) NOT NULL,
   `total_rekening` int(11) NOT NULL DEFAULT '0',
   `total_rinci` int(11) NOT NULL DEFAULT '0',
@@ -275,11 +275,11 @@ INSERT INTO `tb_patokan_rekening` (`kode_patokan`, `nama`) VALUES
 
 CREATE TABLE `tb_pembahasan` (
   `id` int(3) NOT NULL,
-  `kode_pembahasan` varchar(10) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
-  `kode_kegiatan` varchar(10) NOT NULL,
-  `kode_rekening` varchar(15) NOT NULL,
+  `kode_pembahasan` varchar(30) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
+  `kode_kegiatan` varchar(30) NOT NULL,
+  `kode_rekening` varchar(30) NOT NULL,
   `id_siswa` int(11) NOT NULL,
   `nama_siswa` varchar(50) NOT NULL,
   `plafon` varchar(15) NOT NULL,
@@ -313,8 +313,8 @@ CREATE TABLE `tb_program` (
   `id` int(11) NOT NULL,
   `kode_admin` varchar(10) NOT NULL,
   `id_siswa` int(11) NOT NULL,
-  `kode_instansi` varchar(25) NOT NULL,
-  `kode_program` varchar(20) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
   `jenis` varchar(20) NOT NULL,
   `uraian` varchar(50) NOT NULL,
   `sasaran` varchar(50) NOT NULL,
@@ -380,10 +380,10 @@ INSERT INTO `tb_registrasi` (`id`, `nama`, `instansi`, `jurusan`, `nis`, `nisn`,
 CREATE TABLE `tb_rekening` (
   `id` int(11) NOT NULL,
   `kode_patokan` varchar(10) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
-  `kode_kegiatan` varchar(10) NOT NULL,
-  `kode_rekening` varchar(15) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
+  `kode_kegiatan` varchar(30) NOT NULL,
+  `kode_rekening` varchar(30) NOT NULL,
   `uraian_rekening` varchar(50) NOT NULL,
   `triwulan_1` int(11) DEFAULT '0',
   `triwulan_2` int(11) DEFAULT '0',
@@ -420,8 +420,8 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 
 CREATE TABLE `tb_siswa` (
   `id_siswa` int(11) NOT NULL,
-  `kode_instansi` varchar(10) NOT NULL,
-  `kode_program` varchar(10) NOT NULL,
+  `kode_instansi` varchar(30) NOT NULL,
+  `kode_program` varchar(30) NOT NULL,
   `hak_akses` int(1) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `username` varchar(15) NOT NULL,
@@ -440,7 +440,7 @@ CREATE TABLE `tb_siswa` (
 INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`, `foto`) VALUES
 (5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123', '', '', ''),
 (6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', '', ''),
-(7, '010.03', '127.01', 3, 'Joo', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', '', '', ''),
+(7, '010.03', '127.01', 3, 'Joonokoto', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', 'RPL', '08127391', ''),
 (8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308', ''),
 (9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712', ''),
 (10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', '21232f297a57a5a743894a0e4a801fc3', '917264', '00091241', 'RPL', '009817241', ''),
