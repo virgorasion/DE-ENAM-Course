@@ -1,4 +1,5 @@
 <?php $this->load->view('template/_header'); ?>
+<link href="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.css') ?>" rel="stylesheet">
 <?php $this->load->view('template/_nav'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -135,6 +136,8 @@
 
 			</div>
 			<!-- /.col -->
+
+			<!-- Box Tabs -->
 			<?php if ($_SESSION['hakAkses'] != 3){ ?>
 			<div class="col-md-9">
 				<div class="nav-tabs-custom">
@@ -195,6 +198,9 @@
 										<th class="min-tablet">NIS</th>
 										<th class="min-desktop">NISN</th>
 										<th class="min-desktop">HP</th>
+										<?php if($_SESSION['hakAkses'] != 3){?>
+										<th class="min-desktop">Action</th>
+										<?php } ?>
 									</tr>
 								</thead>
 								<tbody>
@@ -327,6 +333,49 @@
 		</div>
 		<!-- /.modal -->
 
+		<!-- Start Modal Ubah Password -->
+		<div class="modal fade" id="modalUbahSiswa">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Ubah Data</h4>
+					</div>
+					<form id="formUbahSiswa" method="post" action="<?= site_url('Profile/UbahDataSiswa') ?>">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="ubahNama">Nama</label>
+								<input required type="text" name="ubahNama" id="ubahNama" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ubahJurusan">Jurusan</label>
+								<input required type="text" name="ubahJurusan" id="ubahJurusan" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ubahNope">Nomor HP</label>
+								<input required type="text" name="ubahNope" id="ubahNope" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ubahPasswordSiswa">Password</label>
+								<input type="password" name="ubahPasswordSiswa" id="ubahPasswordSiswa" class="form-control" placeholder="**************" value="">
+								<small class="text-muted">Password Boleh Kosong </small>
+							</div>
+							
+						</div>
+						<input type="hidden" name="idSiswa" id="idSiswa" value="" />
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
 	</section>
 	<!-- /.content -->
 </div>
@@ -335,6 +384,7 @@
 $this->load->view('template/_footer');
 $this->load->view('template/_js');
 ?>
+<script src="<?= base_url('assets/plugins/jquery-confirm/jquery-confirm.min.js') ?>"></script>
 <script src="<?=base_url('assets/bower_components/select2/dist/js/select2.min.js')?>"></script>
 <script>
 	var kodeInstansi = "";
@@ -513,6 +563,11 @@ $this->load->view('template/_js');
 				{
 					"data": "nomor_hp"
 				}
+				<?php if($_SESSION['hakAkses'] != 3){?>
+				,{
+					"data": "action"
+				}
+				<?php } ?>
 			],
 			order: [
 				[1, 'asc']
@@ -627,6 +682,43 @@ $this->load->view('template/_js');
 			$("#addPassword").prop("type","password");
 			$("#btnShowPassword").html("<i class='fa fa-eye'></i>");
 		}
+	})
+
+	// Fungsi Delete Siswa dari Table Siswa
+	$("#tableSiswa").on("click",".btn-delete",function(){
+		let id = $(this).data("id");
+		let nama = $(this).data("nama");
+		$.confirm({
+			theme: 'supervan',
+			title: 'Hapus Siswa Ini ?',
+			content: 'Nama Siswa : ' + nama,
+			autoClose: 'Cancel|10000',
+			buttons: {
+			Cancel: function () {},
+			delete: {
+				text: 'Delete',
+				action: function () {
+				window.location = "<?= site_url('Profile/hapus/') ?>" + id;
+				}
+			}
+			}
+		});
+	})
+
+	// Fungsi Edit Siswa dari Table Siswa
+	$("#tableSiswa").on("click",".btn-edit",function(){
+		let nama = $(this).data("nama");
+		let nis = $(this).data("nis");
+		let nisn = $(this).data("nisn");
+		let nope = $(this).data("nope");
+		let jurusan = $(this).data("jurusan");
+		let id = $(this).data("id");
+
+		$("#modalUbahSiswa").modal("show");
+		$("#ubahNama").val(nama);
+		$("#ubahNope").val(nope);
+		$("#ubahJurusan").val(jurusan);
+		$("#idSiswa").val(id);
 	})
 
 </script>

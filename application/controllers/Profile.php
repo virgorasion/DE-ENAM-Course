@@ -108,6 +108,35 @@ class Profile extends CI_controller
         }
     }
 
+    public function ubahDataSiswa()
+    {
+        $post = $this->input->post();
+        $data = "";
+        if($post['ubahPasswordSiswa'] == ""){
+            $data = [
+                'nama' => $post['ubahNama'],
+                'nomor_hp' => $post['ubahNope'],
+                'jurusan' => $post['ubahJurusan']
+            ];
+        }else{
+            $data = [
+                'nama' => $post['ubahNama'],
+                'nomor_hp' => $post['ubahNope'],
+                'jurusan' => $post['ubahJurusan'],
+                'password' => md5($post['ubahPasswordSiswa'])
+            ];
+        }
+        $key = array("id_siswa" => $post['idSiswa']);
+        $query = $this->db->update("tb_siswa",$data,$key);
+        if ($query) {
+            $this->session->set_tempdata('succ', 'Berhasil Ubah Data Siswa',5);
+            redirect(site_url("Profile"));
+        }else {
+            $this->session->set_tempdata('fail', 'Gagal Ubah Data Siswa, hubungi admin !',5);
+            redirect(site_url("Profile"));
+        }
+    }
+
     public function NamaInstansiAPI()
     {
         header("Content-Type: application/json");
@@ -138,11 +167,23 @@ class Profile extends CI_controller
             'kode_program' => $post['addProgram']
         );
         $query = $this->ProfileModel->insertUserSiswa('tb_siswa', $data, $nisn, $dataProgram, $id);
-        if ($query != false) {
-            $this->session->set_flashdata('succ', 'Berhasil menambah siswa');
+        if ($query) {
+            $this->session->set_tempdata('succ', 'Berhasil menambah siswa',5);
             redirect('Profile');
         }else {
-            $this->session->set_flashdata('fail', 'Username sudah dipakai');
+            $this->session->set_tempdata('fail', 'Username sudah dipakai',5);
+            redirect('Profile');
+        }
+    }
+
+    public function hapus($id)
+    {
+        $query = $this->db->query("DELETE FROM tb_siswa WHERE id_siswa = $id");
+        if ($query) {
+            $this->session->set_tempdata('succ', 'Berhasil hapus siswa',5);
+            redirect('Profile');
+        }else {
+            $this->session->set_tempdata('fail', 'Gagal hapus siswa, segera hubungi admin !',5);
             redirect('Profile');
         }
     }

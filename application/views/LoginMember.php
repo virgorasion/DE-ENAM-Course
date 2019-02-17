@@ -80,7 +80,7 @@
 						<input class="input100" type="password" name="password" placeholder="Password">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
-
+				
 					<div style="color:white; font-family:verdana;">
 					Login Sebagai :
 					</div>
@@ -96,9 +96,15 @@
 							 <label class="form-check-label" style="color:white;">
 							  <input type="radio" class="flat-green" name="hakAkses" id="AksesSiswa" value="3" checked>
 							  Siswa
-							</label>
-						  </div>
-					  </div><br><br>
+							</label>							
+						</div>
+
+					<div style="color:white; font-family:verdana;margin-left:15px">
+					Login Sebagai <a href="<?=site_url('Auth/Admin')?>">Admin ?</a>
+					</div>
+
+					
+					</div><br><br>
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
