@@ -171,7 +171,7 @@ class Profile extends CI_controller
             $this->session->set_tempdata('succ', 'Berhasil menambah siswa',5);
             redirect('Profile');
         }else {
-            $this->session->set_tempdata('fail', 'Username sudah dipakai',5);
+            $this->session->set_tempdata('fail', $this->db->error(),5);
             redirect('Profile');
         }
     }

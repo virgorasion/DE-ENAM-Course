@@ -244,10 +244,10 @@ class Export_pdf extends CI_controller
         $Instansi = $this->db->select("nama_instansi,kota_lokasi,versi")->from("tb_instansi")->where("kode_instansi",$kodeInstansi)->get()->result();
         $Program = $this->db->select("jenis,sasaran,nama_program,total_rinci")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
         $Kegiatan = $this->db->select("nama_kegiatan,total_rinci,total_rekening")->from("tb_kegiatan")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get()->result();
-        $indikatorCapaian = $this->db->select("uraian,satuan,target")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",1)->get()->result();
-        $indikatorHasil = $this->db->select("uraian,satuan,target")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",2)->get()->result();
-        $indikatorKeluaran = $this->db->select("uraian,satuan,target")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",3)->get()->result();
-        $indikatorMasukan = $this->db->select("uraian,satuan,target")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",4)->get()->result();
+        $indikatorCapaian = $this->db->select("uraian,satuan,nilai")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",1)->get()->result();
+        $indikatorHasil = $this->db->select("uraian,satuan,nilai")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",2)->get()->result();
+        $indikatorKeluaran = $this->db->select("uraian,satuan,nilai")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",3)->get()->result();
+        $indikatorMasukan = $this->db->select("uraian,satuan,nilai")->from("tb_indikator")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("jenis",4)->get()->result();
         $T1 = $this->db->select("SUM(triwulan_1) as T1")->from("tb_rekening")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get()->result();
         $T2 = $this->db->select("SUM(triwulan_2) as T2")->from("tb_rekening")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get()->result();
         $T3 = $this->db->select("SUM(triwulan_3) as T3")->from("tb_rekening")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get()->result();
@@ -382,7 +382,7 @@ class Export_pdf extends CI_controller
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(50,6,"","LR",0,"C");
             $pdf->Cell(55,6,@$rekening->total_rinci,"LR",1,"R");
-            $dataDetail = $this->db->query("SELECT kode_detail_rekening,uraian,volume,satuan,harga,total FROM tb_detail_rekening
+            $dataDetail = $this->db->query("SELECT kode_detail_rekening,uraian,sub_uraian,volume,satuan,harga,total FROM tb_detail_rekening
                                             WHERE kode_instansi = $kodeInstansi
                                             AND kode_program = $kodeProgram
                                             AND kode_kegiatan = $kodeKegiatan
@@ -390,7 +390,7 @@ class Export_pdf extends CI_controller
             foreach ($dataDetail as $detail) {
                 $pdf->SetFont("Arial","",11);
                 $pdf->Cell(50,6,$detail->kode_detail_rekening,"LR",0,"L");
-                $pdf->Cell(120,6,$detail->uraian,"LR",0,"L");
+                $pdf->Cell(120,6,$detail->uraian." | ".$detail->sub_uraian,"LR",0,"L");
                 $pdf->Cell(30,6,$detail->volume,"LR",0,"C");
                 $pdf->Cell(30,6,$detail->satuan,"LR",0,"C");
                 $pdf->Cell(50,6,$detail->harga,"LR",0,"R");

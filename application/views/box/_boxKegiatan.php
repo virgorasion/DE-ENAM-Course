@@ -97,8 +97,8 @@
 						<table id="tableIndikator" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>Jenis</th>
 									<th>No.</th>
+									<th>Jenis</th>
 									<th>Uraian Indikator</th>
 									<th>Target</th>
 									<th>action</th>

@@ -285,7 +285,8 @@ class ProgramCtrl extends CI_controller
                 'jenis' => $p['addJenisIndikator'],
                 'uraian' => $p['addUraianIndikator'],
                 'satuan' => $p['addSatuanIndikator'],
-                'target' => $p['addTarget']
+                'target' => $p['addTarget'],
+                'nilai' => $p['addNilai']
             );
             $query = $this->ProgramModel->ActionInsert("tb_indikator", $data);
             if ($query != null) {
@@ -306,6 +307,7 @@ class ProgramCtrl extends CI_controller
                 'jenis' => $p['addJenisIndikator'],
                 'uraian' => $p['addUraianIndikator'],
                 'target' => $p['addTarget'],
+                'nilai' => $p['addNilai'],
                 'satuan' => $p['addSatuanIndikator']
             );
             $where = $MainID;

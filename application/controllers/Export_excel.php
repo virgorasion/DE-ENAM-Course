@@ -179,7 +179,7 @@ class Export_excel extends CI_controller
         $sheet->getStyle("Q16:T16")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center row satuan
         $sheet->setCellValue("A16", "Capaian");
         $sheet->setCellValue("D16", @$data_indikator['capaian'][0]['uraian']);
-        $sheet->setCellValue("N16", @$data_indikator['capaian'][0]['target']);
+        $sheet->setCellValue("N16", @$data_indikator['capaian'][0]['nilai']);
         $sheet->setCellValue("Q16", @$data_indikator['capaian'][0]['satuan']);
 
         $sheet->getStyle("A17:C17")->applyFromArray($boderUniv);
@@ -193,7 +193,7 @@ class Export_excel extends CI_controller
         $sheet->getStyle("Q17:T17")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center row satuan
         $sheet->setCellValue("A17", "Masukan");
         $sheet->setCellValue("D17", @$data_indikator['masukan'][0]['uraian']);
-        $sheet->setCellValue("N17", @$data_indikator['masukan'][0]['target']);
+        $sheet->setCellValue("N17", @$data_indikator['masukan'][0]['nilai']);
         $sheet->setCellValue("Q17", @$data_indikator['masukan'][0]['satuan']);
 
         $sheet->getStyle("A18:C18")->applyFromArray($boderUniv);
@@ -207,7 +207,7 @@ class Export_excel extends CI_controller
         $sheet->getStyle("Q18:T18")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center row satuan
         $sheet->setCellValue("A18", "Keluaran");
         $sheet->setCellValue("D18", @$data_indikator['keluaran'][0]['uraian']);
-        $sheet->setCellValue("N18", @$data_indikator['keluaran'][0]['target']);
+        $sheet->setCellValue("N18", @$data_indikator['keluaran'][0]['nilai']);
         $sheet->setCellValue("Q18", @$data_indikator['keluaran'][0]['satuan']);
 
         $sheet->getStyle("A19:C19")->applyFromArray($boderUniv);
@@ -221,7 +221,7 @@ class Export_excel extends CI_controller
         $sheet->getStyle("Q19:T19")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //center row satuan
         $sheet->setCellValue("A19", "Hasil");
         $sheet->setCellValue("D19", @$data_indikator['hasil'][0]['uraian']);
-        $sheet->setCellValue("N19", @$data_indikator['hasil'][0]['target']);
+        $sheet->setCellValue("N19", @$data_indikator['hasil'][0]['nilai']);
         $sheet->setCellValue("Q19", @$data_indikator['hasil'][0]['satuan']);
         //END Content Indikator
 
@@ -327,7 +327,7 @@ class Export_excel extends CI_controller
             $sheet->setCellValue("R" . $row, $rekening->total_rinci); 
             $row++;
             //Data detail rekening            
-            $detailRekening = $this->db->select("kode_detail_rekening,uraian,volume,satuan,harga,total")->from("tb_detail_rekening")
+            $detailRekening = $this->db->select("kode_detail_rekening,uraian,sub_uraian,volume,satuan,harga,total")->from("tb_detail_rekening")
                     ->where("kode_instansi", $kodeInstansi)
                     ->where("kode_program", $kodeProgram)
                     ->where("kode_kegiatan", $kodeKegiatan)
@@ -343,7 +343,7 @@ class Export_excel extends CI_controller
                 //data Uraian
                 $sheet->mergeCells("D$row:J$row");
                 $sheet->getStyle("D$row:J$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT); //left data kode
-                $sheet->setCellValue("D" . $row, $detail->uraian);
+                $sheet->setCellValue("D" . $row, $detail->uraian." | ".$detail->sub_uraian);
 
                 //data Volume
                 $sheet->mergeCells("K$row:L$row");

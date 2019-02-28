@@ -463,6 +463,73 @@
 <?php 
 } ?>
 
+<!-- Start Modal View Indikator -->
+<?php if ($_SESSION['hakAkses'] != 2) { ?>
+<div class="modal fade" id="modalViewIndikator">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">View Indikator</h4>
+			</div>
+			<form class="form-horizontal">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Nomor</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="viewNomorIndikator" readonly>
+						</div>
+						<label for="viewJenisIndikator" class="col-sm-2 control-label">Jenis</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="viewJenisIndikator" readonly>
+								<option value="1">Capaian Program</option>
+								<option value="2">Hasil</option>
+								<option value="3">Pengaluaran</option>
+								<option value="4">Masukan</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="viewUraianIndikator" class="col-sm-2 control-label">Uraian</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" rows="3" id="viewUraianIndikator" readonly></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="viewSatuanIndikator" class="col-sm-2 control-label">Satuan</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="viewSatuanIndikator" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="viewTargetIndikator" class="col-sm-2 control-label">Target</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="viewTargetIndikator" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="viewNilaiIndikator" class="col-sm-2 control-label">Nilai</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="viewNilaiIndikator" readonly>
+						</div>
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</div>
+				<!-- /.box-footer -->
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php 
+} ?>
+
 <!-- Modal Pembahasan -->
 <div class="modal fade" id="modalPembahasan">
 	<div class="modal-dialog modal-lg">

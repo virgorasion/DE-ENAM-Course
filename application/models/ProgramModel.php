@@ -41,9 +41,8 @@ class ProgramModel extends CI_model
         $this->datatables->from("tb_siswa");
         $this->datatables->join("tb_instansi","tb_instansi.kode_instansi = tb_siswa.kode_instansi");
         $this->datatables->join("tb_program","tb_program.kode_program = tb_siswa.kode_program and tb_program.kode_instansi = tb_siswa.kode_instansi");
-        if ($hakAkses == 2) {
-            $this->datatables->where("tb_siswa.kode_instansi", $kodeInstansi);
-        }else if($hakAkses ==3){
+        $this->datatables->where("tb_siswa.kode_instansi", $kodeInstansi);
+        if($hakAkses ==3){
             $this->datatables->where("tb_siswa.id_siswa", $_SESSION['id_siswa']);
             $this->datatables->where("tb_siswa.kode_instansi", $_SESSION['kode_instansi']);
         }
@@ -157,7 +156,7 @@ class ProgramModel extends CI_model
     }
     public function getDataIndikator($kodeInstansi,$kodeProgram)
     {
-        $this->datatables->select("id,kode_indikator,kode_instansi,kode_program,jenis,uraian,satuan,target");
+        $this->datatables->select("id,kode_indikator,kode_instansi,kode_program,jenis,uraian,satuan,target,nilai");
         $this->datatables->from("tb_indikator");
         $this->datatables->where("kode_instansi", $kodeInstansi);
         $this->datatables->where("kode_program", $kodeProgram);
@@ -185,10 +184,10 @@ class ProgramModel extends CI_model
 
         $this->datatables->add_column("c_jenis","$1","callback_jenis(jenis)");
         $this->datatables->add_column("action",
-            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
-            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-indikator="$2" data-instansi="$3" data-program="$4" data-jenis="$5" data-uraian="$6" data-satuan="$7" data-target="$8"><i class="fa fa-pencil"></i></a> 
+            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-jenis="$5" data-uraian="$6" data-satuan="$7" data-target="$8" data-nilai="$9"><i class="fa fa-eye"></i></a> 
+            <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-indikator="$2" data-instansi="$3" data-program="$4" data-jenis="$5" data-uraian="$6" data-satuan="$7" data-target="$8" data-nilai="$9"><i class="fa fa-pencil"></i></a> 
             <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-uraian="$6"><i class="fa fa-remove"></i></a>',
-            'id,kode_indikator,kode_instansi,kode_program,jenis,uraian,satuan,target');
+            'id,kode_indikator,kode_instansi,kode_program,jenis,uraian,satuan,target,nilai');
         $this->datatables->group_by("id");
         return $this->datatables->generate();
     }

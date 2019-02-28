@@ -338,6 +338,7 @@
 	return tableRekening;
 	}
 
+	//Fungsi: Untuk generate tab Info Kegiatan
 	function infoKegiatan(kodeInstansi,kodeProgram){
 		$.ajax({
 			url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
@@ -355,6 +356,7 @@
 		})
 	}
 
+	//Fungsi: untuk generate tab Penanggung Jawab
 	function penanggungJawab(idSiswa){
 		$.ajax({
 			url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
@@ -423,7 +425,7 @@
 		funcTableIndikator();
 		$("#tabKegiatan").removeClass("active");
 		$("#nav-tabs-kegiatan-4").removeClass("active in");
-		$("#tabIndikatorPembahasan").addClass("active");
+		$("#tabIndikatorKegiatan").addClass("active");
 		$("#nav-tabs-kegiatan-2").addClass("active in");
 	<?php }?>
 
@@ -584,7 +586,7 @@
 		var uraian = $(this).data("uraian");
 		var satuan = $(this).data("satuan");
 		var target = $(this).data("target");
-		console.log(uraian);
+		var nilai = $(this).data("nilai");
 		$("#modalIndikator").modal('show');
 		$("#FormAddIndikator").find("#addNomor").val();
 		$("#FormAddIndikator").find("#idSiswaIndikator").val(idSiswa);
@@ -592,10 +594,27 @@
 		$("#FormAddIndikator").find("#addUraianIndikator").val(uraian);
 		$("#FormAddIndikator").find("#addSatuanIndikator").val(satuan);
 		$("#FormAddIndikator").find("#addTarget").val(target);
+		$("#FormAddIndikator").find("#addNilai").val(nilai);
 		$("#FormAddIndikator").find("#MainIdIndikator").val(id);
 		$("#FormAddIndikator").find("#actionTypeIndikator").val("edit");
 		$("#FormAddIndikator").find("#KodeInstansiIndikator").val(kodeInstansi);
 		$("#FormAddIndikator").find("#KodeProgramIndikator").val(kodeProgram);
+	})
+
+	// Fungsi: View Indikator
+	$("#tableIndikator").on("click",".view_data",function(){
+		var jenis = $(this).data("jenis");
+		var uraian = $(this).data("uraian");
+		var satuan = $(this).data("satuan");
+		var target = $(this).data("target");
+		var nilai = $(this).data("nilai");
+		$("#modalViewIndikator").modal("show");
+		$("#viewNomorIndikator").val(nilai);
+		$("#viewJenisIndikator").val(jenis);
+		$("#viewUraianIndikator").val(uraian);
+		$("#viewSatuanIndikator").val(satuan);
+		$("#viewTargetIndikator").val(target);
+		$("#viewNilaiIndikator").val(nilai);
 	})
 
 	//Fungsi: Edit Pembahasan
@@ -991,7 +1010,9 @@
 		$("#FormAddIndikator").find("#addJenisIndikator").val("");
 		$("#FormAddIndikator").find("#addUraianIndikator").val("");
 		$("#FormAddIndikator").find("#addSatuanIndikator").val("");
+		$("#FormAddIndikator").find("#addSatuanIndikator").val("");
 		$("#FormAddIndikator").find("#addTarget").val("");
+		$("#FormAddIndikator").find("#addNilai").val("");
 	})
 
 	//Fungsi: Insert Pembahasan

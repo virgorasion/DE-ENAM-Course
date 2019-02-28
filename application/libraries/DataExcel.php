@@ -96,7 +96,7 @@ class DataExcel
     
     private function setDataIndikator1($kodeInstansi,$kodeProgram)
     {
-        return $this->ci->db->select("uraian,satuan,target")->from("tb_indikator")
+        return $this->ci->db->select("uraian,satuan,nilai")->from("tb_indikator")
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",1)
@@ -104,7 +104,7 @@ class DataExcel
     }
     private function setDataIndikator2($kodeInstansi,$kodeProgram)
     {
-        return $this->ci->db->select("uraian,satuan,target")->from("tb_indikator")
+        return $this->ci->db->select("uraian,satuan,nilai")->from("tb_indikator")
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",2)
@@ -112,7 +112,7 @@ class DataExcel
     }
     private function setDataIndikator3($kodeInstansi,$kodeProgram)
     {
-        return $this->ci->db->select("uraian,satuan,target")->from("tb_indikator")
+        return $this->ci->db->select("uraian,satuan,nilai")->from("tb_indikator")
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",3)
@@ -120,7 +120,7 @@ class DataExcel
     }
     private function setDataIndikator4($kodeInstansi,$kodeProgram)
     {
-        return $this->ci->db->select("uraian,satuan,target")->from("tb_indikator")
+        return $this->ci->db->select("uraian,satuan,nilai")->from("tb_indikator")
                             ->where("kode_instansi",$kodeInstansi)
                             ->where("kode_program",$kodeProgram)
                             ->where("jenis",4)
