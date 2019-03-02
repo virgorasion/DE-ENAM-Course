@@ -364,12 +364,21 @@
 			success: (result) =>{
 				var data = JSON.parse(result);
 				console.log(data);
-				$("#nisnPJSiswa").text(data[0].nisn);
-				$("#nisPJSiswa").text(data[0].nis);
-				$("#namaPJSiswa").text(data[0].nama);
-				$("#userPJSiswa").text(data[0].username);
-				$("#instansiPJSiswa").text(data[0].nama_instansi);
-				$("#programPJSiswa").text(data[0].nama_program);
+				if (data != "") {
+					$("#nisnPJSiswa").text(data[0].nisn);
+					$("#nisPJSiswa").text(data[0].nis);
+					$("#namaPJSiswa").text(data[0].nama);
+					$("#userPJSiswa").text(data[0].username);
+					$("#instansiPJSiswa").text(data[0].nama_instansi);
+					$("#programPJSiswa").text(data[0].nama_program);
+				}else{
+					$("#nisnPJSiswa").text("");
+					$("#nisPJSiswa").text("");
+					$("#namaPJSiswa").text("");
+					$("#userPJSiswa").text("");
+					$("#instansiPJSiswa").text("");
+					$("#programPJSiswa").text("");
+				}
 			}
 		})
 	}
@@ -744,6 +753,12 @@
 		$('#formActionRekening').find('#KodeInstansiRekening').val(kodeInstansi);
 		$('#formActionRekening').find('#KodeProgramRekening').val(kodeProgram);
 		$('#formActionRekening').find('#KodeRekeningRekening').val(rekeningID);
+	})
+
+	// Fungsi input uraian rekening after change kode Jenis Pengeluaran (Action Rekening)
+	$("#addKodeRek").change	(function(){
+		var namaRekening = $("#addKodeRek option:selected").text().trim();
+		$('#formActionRekening').find('#addNamaRek').val(namaRekening);
 	})
 
 	//Fungsi: Edit Detail Rekening

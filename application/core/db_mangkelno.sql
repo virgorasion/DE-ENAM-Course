@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Feb 2019 pada 16.21
+-- Waktu pembuatan: 02 Mar 2019 pada 07.27
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -86,7 +86,7 @@ CREATE TABLE `tb_admin` (
 --
 
 INSERT INTO `tb_admin` (`id`, `kode_admin`, `hak_akses`, `nama`, `username`, `password`) VALUES
-(1, '100.001', 1, 'Fauzan', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+(1, '100.001', 1, 'Fauzan', 'admin', 'YWRtaW4=');
 
 -- --------------------------------------------------------
 
@@ -143,20 +143,21 @@ CREATE TABLE `tb_indikator` (
   `jenis` varchar(15) NOT NULL COMMENT '1. Capaian Program, 2.Hasil, 3.Pengeluaran, 4.masukan',
   `uraian` varchar(50) NOT NULL,
   `satuan` varchar(10) NOT NULL,
-  `target` int(3) NOT NULL
+  `target` int(3) NOT NULL,
+  `nilai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_indikator`
 --
 
-INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `satuan`, `target`) VALUES
-(4, '1.001', '010.6531', '127.03', '1', 'Pencapaian Terbaru', 'Paket', 100),
-(6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100),
-(7, '1.001', '010.03', '127.01', '2', 'Capaian tahun 2018', 'Paket', 20),
-(10, '1.003', '010.03', '127.01', '3', 'jhf', '12', 2),
-(11, '1.004', '010.03', '127.01', '2', 'tset', 'alshd', 12),
-(12, '1.002', '010.03', '127.12', '2', 'Hasil', 'pcs', 10);
+INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `satuan`, `target`, `nilai`) VALUES
+(4, '1.001', '010.6531', '127.03', '1', 'Pencapaian Terbaru', 'Paket', 100, 0),
+(6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100, 0),
+(7, '1.001', '010.03', '127.01', '2', 'Capaian tahun 2018', 'Paket', 20, 0),
+(10, '1.003', '010.03', '127.01', '3', 'jhf', '12', 2, 0),
+(12, '1.002', '010.03', '127.12', '2', 'Hasil', 'pcs', 10, 0),
+(13, '1.004', '010.03', '127.01', '1', 'Test', 'Paket', 20, 500);
 
 -- --------------------------------------------------------
 
@@ -338,7 +339,8 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
 (17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
 (18, '0', 12, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
-(19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', '');
+(19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', ''),
+(20, '100.001', 0, '010.0001', '127.172471249', 'test', 'tses', 'tseas', 'tese', '91283124', '', '');
 
 -- --------------------------------------------------------
 
@@ -569,7 +571,7 @@ ALTER TABLE `tb_detail_rekening`
 -- AUTO_INCREMENT untuk tabel `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_instansi`
@@ -593,13 +595,13 @@ ALTER TABLE `tb_pembahasan`
 -- AUTO_INCREMENT untuk tabel `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_registrasi`
 --
 ALTER TABLE `tb_registrasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_rekening`

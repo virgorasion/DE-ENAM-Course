@@ -243,7 +243,7 @@
 					</div>
 					<div class="form-group">
 						<label for="AddNamaRek">Nama Uraian</label>
-						<input type="text" name="addNamaRek" id="addNamaRek" class="form-control" placeholder="">
+						<input type="text" name="addNamaRek" id="addNamaRek" class="form-control" readonly placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="AddT1">T1</label>

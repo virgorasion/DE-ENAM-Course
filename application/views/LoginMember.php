@@ -84,7 +84,6 @@
 					<div style="color:white; font-family:verdana;">
 					Login Sebagai :
 					</div>
-	  
 					  <div class="row">
 						  <div class="form-check col-md-4">
 							 <label class="form-check-label" style="color:white;">

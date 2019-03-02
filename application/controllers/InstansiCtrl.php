@@ -49,7 +49,7 @@ class InstansiCtrl extends CI_controller
             'kota_lokasi' => $lokasi,
             'keterangan' => $ket,
             'username' => $user,
-            'password' => md5($pass)
+            'password' => base64_encode($pass)
         );
 
         $this->InstansiModel->InsertInstansi('tb_instansi',$data);
@@ -94,7 +94,7 @@ class InstansiCtrl extends CI_controller
                 'kota_lokasi' => $lokasi,
                 'keterangan' => $keterangan,
                 'username' => $user,
-                'password' => md5($pass)
+                'password' => base64_encode($pass)
             );
         }
         $this->InstansiModel->UpdateInstansi('tb_instansi',$data, $id);

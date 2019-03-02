@@ -84,7 +84,7 @@ class Auth extends CI_controller
     public function login()
     {
         $user = $this->input->post('username');
-        $pass = md5($this->input->post('password'));
+        $pass = base64_encode($this->input->post('password'));
         $hakAkses = $this->input->post('hakAkses');
         $cek = "";
         if ($hakAkses == 1) {

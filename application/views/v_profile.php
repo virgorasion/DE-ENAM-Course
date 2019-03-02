@@ -55,7 +55,7 @@
 								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
 							</li>
 							<li class="list-group-item">
-								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+								<b>Password </b> <button type="button" class="btnShowPasswordProfile btn btn-xs btn-default" title="Show Password"><i class="fa fa-eye"></i></button> <input style="text-align:right;border:none" readonly class="passwordProfile pull-right" type="password" value="<?= base64_decode(@$data[0]->password) ?>">
 							</li>
 						</ul>
 
@@ -87,7 +87,7 @@
 								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
 							</li>
 							<li class="list-group-item">
-								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+								<b>Password </b> <button type="button" class="btnShowPasswordProfile btn btn-xs btn-default" title="Show Password"><i class="fa fa-eye"></i></button> <input style="text-align:right;border:none" readonly class="passwordProfile pull-right" type="password" value="<?= base64_decode(@$data[0]->password) ?>">
 							</li>
 						</ul>
 
@@ -125,7 +125,7 @@
 								<b>Username</b> <a class="pull-right"><?=@$_SESSION['username']?></a>
 							</li>
 							<li class="list-group-item">
-								<b>Password</b> <a class="pull-right"><?=str_replace(substr(@$data[0]->password,0,20),'***********',substr(@$data[0]->password,0,20))?></a>
+								<b>Password </b> <button type="button" class="btnShowPasswordProfile btn btn-xs btn-default" title="Show Password"><i class="fa fa-eye"></i></button> <input style="text-align:right;border:none" readonly class="passwordProfile pull-right" type="password" value="<?= base64_decode(@$data[0]->password) ?>">
 							</li>
 						</ul>
 					</div>
@@ -673,7 +673,7 @@ $this->load->view('template/_js');
 		})
 	})
 
-	//Fungsi show Password
+	//Fungsi show Password (registrasi siswa)
 	$("#btnShowPassword").click(function(){
 		if ($("#addPassword").attr("type") == "password") {
 			$("#addPassword").prop("type","text");
@@ -681,6 +681,17 @@ $this->load->view('template/_js');
 		}else{
 			$("#addPassword").prop("type","password");
 			$("#btnShowPassword").html("<i class='fa fa-eye'></i>");
+		}
+	})
+
+	// Fungsi Show Password (Profile)
+	$(".btnShowPasswordProfile").click(function(){
+		if ($(".passwordProfile").attr("type") == "password") {
+			$(".passwordProfile").prop("type", "text");
+			$(".btnShowPasswordProfile").html("<i class='fa fa-eye-slash'></i>");
+		}else{
+			$(".passwordProfile").prop("type","password");
+			$(".btnShowPasswordProfile").html("<i class='fa fa-eye-slash'></i>");
 		}
 	})
 

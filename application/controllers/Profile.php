@@ -82,19 +82,19 @@ class Profile extends CI_controller
             if ($_SESSION['hakAkses'] == 1) {
                 $data = array(
                     'username' => $p['ubahUsername'],
-                    'password' => md5($p['ubahPassword'])
+                    'password' => base64_encode($p['ubahPassword'])
                 );
                 $query = $this->db->update("tb_admin",$data,array('kode_admin' => $_SESSION['kode_admin']));
             }elseif ($_SESSION['hakAkses'] == 2) {
                 $data = array(
                     'username' => $p['ubahUsername'],
-                    'password' => md5($p['ubahPassword'])
+                    'password' => base64_encode($p['ubahPassword'])
                 );
                 $query = $this->db->update("tb_instansi",$data,array('kode_instansi' => $_SESSION['kode_instansi']));
             }elseif ($_SESSION['hakAkses'] == 3) {
                 $data = array(
                     'username' => $p['ubahUsername'],
-                    'password' => md5($p['ubahPassword'])
+                    'password' => base64_encode($p['ubahPassword'])
                 );
                 $query = $this->db->update("tb_siswa",$data,array('id_siswa' => $_SESSION['id_siswa']));
             }
@@ -123,7 +123,7 @@ class Profile extends CI_controller
                 'nama' => $post['ubahNama'],
                 'nomor_hp' => $post['ubahNope'],
                 'jurusan' => $post['ubahJurusan'],
-                'password' => md5($post['ubahPasswordSiswa'])
+                'password' => base64_encode($post['ubahPasswordSiswa'])
             ];
         }
         $key = array("id_siswa" => $post['idSiswa']);
@@ -158,7 +158,7 @@ class Profile extends CI_controller
             'jurusan'  => $post['addJurusan'],
             'nomor_hp' => $post['addTelp'],
             'foto' => $post['foto'],
-            'password' => md5($post['addPassword']),
+            'password' => base64_encode($post['addPassword']),
         );
         $nisn = $post['addNisn'];
         $id = array('id' => $post['idRegister']);
