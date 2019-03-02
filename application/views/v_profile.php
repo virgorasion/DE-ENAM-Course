@@ -348,19 +348,45 @@
 								<label for="ubahNama">Nama</label>
 								<input required type="text" name="ubahNama" id="ubahNama" class="form-control">
 							</div>
+							<!-- Tekan kene seng nyar -->
+							<div class="form-group">
+								<label for="ubahNama">Instansi</label>
+								<select class="form-control">
+									<option></option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="ubahNama">Program</label>
+								<select class="form-control">
+									<option></option>
+								</select>
+							</div>
 							<div class="form-group">
 								<label for="ubahJurusan">Jurusan</label>
 								<input required type="text" name="ubahJurusan" id="ubahJurusan" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ubahNama">NIS</label>
+								<input required type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ubahNama">NISN</label>
+								<input required type="text" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="ubahNope">Nomor HP</label>
 								<input required type="text" name="ubahNope" id="ubahNope" class="form-control">
 							</div>
 							<div class="form-group">
+								<label for="ubahNama">Username</label>
+								<input required type="text" class="form-control">
+							</div>
+							<div class="form-group">
 								<label for="ubahPasswordSiswa">Password</label>
-								<input type="password" name="ubahPasswordSiswa" id="ubahPasswordSiswa" class="form-control" placeholder="**************" value="">
+								<input type="password" name="ubahPasswordSiswa" id="ubahPasswordSiswa" class="form-control" placeholder="Iki tampilno password ne" value="">
 								<small class="text-muted">Password Boleh Kosong </small>
 							</div>
+
 							
 						</div>
 						<input type="hidden" name="idSiswa" id="idSiswa" value="" />
@@ -383,17 +409,61 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Tambah Siswa</h4>
+						<h4 class="modal-title">Data Siswa</h4>
 					</div>
+					<form class="form-horizontal">
 						<div class="modal-body">
-
+						<center>
 						<img src="<?= base_url('assets/images/user.png')?>" class="img-circle" width="150" height="150" alt="Empty">
-						<!-- TODO: Buat desain view Siswa -->
+						</center><br><br>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Nama</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" readonly>
+								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Instansi</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Jurusan</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Nis</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">NISN</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Username</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control inputMask" readonly>
+							</div>
+						</div>
 
 						</div>
+				</form>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
-							<button type="submit" class="btn btn-primary">Simpan</button>
+							<button type="submit" class="btn btn-primary">OK</button>
 						</div>
 				</div>
 				<!-- /.modal-content -->
