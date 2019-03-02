@@ -15,10 +15,10 @@ class ProfileModel extends CI_model
         function callback_button($kode_instansi)
         {
             if (@$_SESSION['kode_instansi'] == $kode_instansi && @$_SESSION['hakAkses'] == 2) {
-                $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-eye"></i></a></center>';
+                $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-users"></i></a></center>';
                 return $btn;
             }elseif (@$_SESSION['hakAkses'] == 1) {
-                $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-eye"></i></a></center>';
+                $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-users"></i></a></center>';
                 return $btn;
             }
         }
@@ -44,14 +44,15 @@ class ProfileModel extends CI_model
 
     public function getDataSiswa($kodeInstansi)
     {
-        $this->datatables->select("id_siswa,nama,nis,nisn,nomor_hp,password");
+        $this->datatables->select("id_siswa,nama,nis,nisn,nomor_hp,password,jurusan");
         $this->datatables->from("tb_siswa");
         $this->datatables->where("kode_instansi", $kodeInstansi);
         if (@$_SESSION['hakAkses'] != 3) {
             $this->datatables->add_column(
                 'action',
-                '<center><a href="javascript:void(0)" class="btn-delete btn btn-danger btn-xs" data-id="$1" data-nama="$2"><i class="fa fa-remove"></i></a>
-                <a href="javascript:void(0)" class="btn-edit btn btn-warning btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7"><i class="fa fa-pencil"></i></a></center>',
+                '<center><a href="javascript:void(0)" class="btn-view btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7"><i class="fa fa-eye"></i></a>
+                <a href="javascript:void(0)" class="btn-edit btn btn-warning btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:void(0)" class="btn-delete btn btn-danger btn-xs" data-id="$1" data-nama="$2"><i class="fa fa-remove"></i></a></center>',
                 'id_siswa,nama,nis,nisn,nomor_hp,password,jurusan'
             );
         }
