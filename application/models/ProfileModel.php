@@ -44,19 +44,30 @@ class ProfileModel extends CI_model
 
     public function getDataSiswa($kodeInstansi)
     {
-        $this->datatables->select("id_siswa,nama,nis,nisn,nomor_hp,password,jurusan");
+        $this->datatables->select("tb_siswa.id_siswa,tb_siswa.nama,tb_siswa.nis,tb_siswa.nisn,tb_siswa.nomor_hp,tb_siswa.password,tb_siswa.jurusan,tb_instansi.nama_instansi,tb_siswa.foto,tb_siswa.username,tb_siswa.kode_instansi,tb_siswa.kode_program");
         $this->datatables->from("tb_siswa");
-        $this->datatables->where("kode_instansi", $kodeInstansi);
+        $this->datatables->join("tb_instansi", "tb_instansi.kode_instansi = tb_siswa.kode_instansi");
+        $this->datatables->where("tb_siswa.kode_instansi", $kodeInstansi);
         if (@$_SESSION['hakAkses'] != 3) {
+            function callback_password($password)
+            {
+                $result = base64_decode($password);
+                return $result;
+            }
             $this->datatables->add_column(
                 'action',
-                '<center><a href="javascript:void(0)" class="btn-view btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7"><i class="fa fa-eye"></i></a>
-                <a href="javascript:void(0)" class="btn-edit btn btn-warning btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7"><i class="fa fa-pencil"></i></a>
+                '<center><a href="javascript:void(0)" class="btn-view btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7" data-instansi="$8" data-foto="$9" data-username="$10"><i class="fa fa-eye"></i></a>
+                <a href="javascript:void(0)" class="btn-edit btn btn-warning btn-xs" data-id="$1" data-nama="$2" data-nis="$3" data-nisn="$4" data-nope="$5" data-password="$6" data-jurusan="$7" data-kodeInstansi="$11" data-username="$10" data-kodeProgram="$12"><i class="fa fa-pencil"></i></a>
                 <a href="javascript:void(0)" class="btn-delete btn btn-danger btn-xs" data-id="$1" data-nama="$2"><i class="fa fa-remove"></i></a></center>',
-                'id_siswa,nama,nis,nisn,nomor_hp,password,jurusan'
+                'id_siswa,nama,nis,nisn,nomor_hp,callback_password(password),jurusan,instansi,foto,username,kode_instansi,kode_program'
             );
         }
         return $this->datatables->generate();
+    }
+
+    public function getDataProgramAPI($kodeInstansi,$idSiswa)
+    {
+        return $this->db->select("nama_program,kode_program")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("id_siswa",0)->or_where("id_siswa",$idSiswa)->get()->result();
     }
 
     public function dataInstansi($kodeInstansi)

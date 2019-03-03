@@ -57,6 +57,12 @@ class Profile extends CI_controller
         echo $this->ProfileModel->getDataRegistration();
     }
 
+    public function DataProgramAPI($kodeInstansi,$idSiswa)
+    {
+        $query = $this->ProfileModel->getDataProgramAPI($kodeInstansi,$idSiswa);
+        echo json_encode($query);
+    }
+
     public function UbahData()
     {
         $p = $this->input->post();
@@ -111,29 +117,53 @@ class Profile extends CI_controller
     public function ubahDataSiswa()
     {
         $post = $this->input->post();
+        $idSiswa = $post['idSiswa'];
+        $oldKodeInstansi = $post['oldKodeInstansi'];
+        $oldKodeProgram = $post['oldKodeProgram'];
+        $kodeInstansi = $post['ubahInstansiSiswa'];
+        $kodeProgram = $post['ubahProgramSiswa'];
         $data = "";
-        if($post['ubahPasswordSiswa'] == ""){
+        if($post['ubahProgramSiswa'] == $post['oldKodeProgram']){
             $data = [
-                'nama' => $post['ubahNama'],
-                'nomor_hp' => $post['ubahNope'],
-                'jurusan' => $post['ubahJurusan']
-            ];
-        }else{
-            $data = [
-                'nama' => $post['ubahNama'],
-                'nomor_hp' => $post['ubahNope'],
-                'jurusan' => $post['ubahJurusan'],
+                'nama' => $post['ubahNamaSiswa'],
+                'kode_instansi' => $post['ubahInstansiSiswa'],
+                'kode_program' => $post['ubahProgramSiswa'],
+                'jurusan' => $post['ubahJurusanSiswa'],
+                'nis' => $post['ubahNisSiswa'],
+                'nisn' => $post['ubahNisnSiswa'],
+                'nomor_hp' => $post['ubahNopeSiswa'],
                 'password' => base64_encode($post['ubahPasswordSiswa'])
             ];
-        }
-        $key = array("id_siswa" => $post['idSiswa']);
-        $query = $this->db->update("tb_siswa",$data,$key);
-        if ($query) {
-            $this->session->set_tempdata('succ', 'Berhasil Ubah Data Siswa',5);
-            redirect(site_url("Profile"));
-        }else {
-            $this->session->set_tempdata('fail', 'Gagal Ubah Data Siswa, hubungi admin !',5);
-            redirect(site_url("Profile"));
+            $key = array("id_siswa" => $post['idSiswa']);
+            $query = $this->db->update("tb_siswa",$data,$key);
+            if ($query) {
+                $this->session->set_tempdata('succ', 'Berhasil Ubah Data Siswa',5);
+                redirect(site_url("Profile"));
+            }else {
+                $this->session->set_tempdata('fail', 'Gagal Ubah Data Siswa, hubungi admin !',5);
+                redirect(site_url("Profile"));
+            }
+        }else{
+            $data = [
+                'nama' => $post['ubahNamaSiswa'],
+                'kode_instansi' => $post['ubahInstansiSiswa'],
+                'kode_program' => $post['ubahProgramSiswa'],
+                'jurusan' => $post['ubahJurusanSiswa'],
+                'nis' => $post['ubahNisSiswa'],
+                'nisn' => $post['ubahNisnSiswa'],
+                'nomor_hp' => $post['ubahNopeSiswa'],
+                'password' => base64_encode($post['ubahPasswordSiswa'])
+            ];
+            $key = array("id_siswa" => $post['idSiswa']);
+            $query = $this->db->update("tb_siswa",$data,$key);
+            if ($query) {
+                $this->db->query("CALL UpdateProgramSiswa('".$idSiswa."','".$kodeProgram."','".$kodeInstansi."','".$oldKodeProgram."','".$oldKodeInstansi."')");
+                $this->session->set_tempdata('succ', 'Berhasil Ubah Data Siswa',5);
+                redirect(site_url("Profile"));
+            }else {
+                $this->session->set_tempdata('fail', 'Gagal Ubah Data Siswa, hubungi admin !',5);
+                redirect(site_url("Profile"));
+            }
         }
     }
 
