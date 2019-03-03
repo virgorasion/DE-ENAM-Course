@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Mar 2019 pada 07.27
+-- Waktu pembuatan: 03 Mar 2019 pada 11.58
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -26,7 +26,7 @@ DELIMITER $$
 --
 -- Prosedur
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SyncTotalRinci` (IN `kodeInstansi` VARCHAR(15), IN `kodeProgram` VARCHAR(15), IN `kodeKegiatan` VARCHAR(15), IN `kodeRekening` VARCHAR(15), OUT `resDetailRek` VARCHAR(15), OUT `resRek` VARCHAR(15), OUT `resKegiatan` VARCHAR(15))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SyncTotalRinci` (IN `kodeInstansi` VARCHAR(50), IN `kodeProgram` VARCHAR(50), IN `kodeKegiatan` VARCHAR(50), IN `kodeRekening` VARCHAR(50), OUT `resDetailRek` VARCHAR(50), OUT `resRek` VARCHAR(50), OUT `resKegiatan` VARCHAR(50))  BEGIN
 	#Select Detail Rekening
 	SELECT SUM(tb_detail_rekening.total) INTO resDetailRek
     FROM tb_detail_rekening 
@@ -62,6 +62,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SyncTotalRinci` (IN `kodeInstansi` 
     UPDATE tb_program SET tb_program.total_rinci = resKegiatan
 	WHERE tb_program.kode_instansi = kodeInstansi
     AND tb_program.kode_program = kodeProgram;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateProgramSiswa` (IN `idSiswa` INT(4), IN `kodeProgram` VARCHAR(50), IN `kodeInstansi` VARCHAR(50), IN `oldKodeProgram` VARCHAR(50), IN `oldKodeInstansi` VARCHAR(50))  BEGIN
+
+#Mengganti Program Siswa yang lama manjadi 0
+UPDATE tb_program SET id_siswa = 0 
+WHERE kode_instansi = oldKodeInstansi
+AND kode_program = oldKodeProgram;
+
+#Mengganti Program Siswa yang baru Menjadi milik idSiswa
+UPDATE tb_program SET id_siswa = idSiswa
+WHERE kode_instansi = kodeInstansi
+AND kode_program = kodeProgram;
+
 END$$
 
 DELIMITER ;
@@ -186,7 +200,7 @@ CREATE TABLE `tb_instansi` (
 INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `kota_lokasi`, `keterangan`, `tahun`, `username`, `password`) VALUES
 (3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
 (4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3'),
-(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', '21232f297a57a5a743894a0e4a801fc3'),
+(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', 'YWRtaW4='),
 (6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', '21232f297a57a5a743894a0e4a801fc3'),
 (7, '100.001', '010.81246', 2, 'SMK Biasa', 'APBD', 'surabaya', NULL, 2019, 'biasa', '21232f297a57a5a743894a0e4a801fc3');
 
@@ -212,7 +226,7 @@ CREATE TABLE `tb_kegiatan` (
 --
 
 INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
-(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 36732012, 36903292, 'Cek Edit Kegiatan'),
+(4, '010.6531', '127.3321', '080.001', 'Biaya makanan ringan', 59338636, 36903292, 'Cek Edit Kegiatan'),
 (6, '010.6531', '127.3321', '080.100', 'Kegiatan Baru', 0, 0, 'Cek tambah kegiatan untuk rekening'),
 (8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, 'Test diplicate data'),
 (9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, 'Rutinitas :v'),
@@ -330,12 +344,12 @@ CREATE TABLE `tb_program` (
 --
 
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `sasaran`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
-(8, '100.001', 2, '010.6531', '127.3321', '', '', '', 'Program Makan Bersama', '50000', '36903292', '36732012'),
+(8, '100.001', 2, '010.6531', '127.3321', '', '', '', 'Program Makan Bersama', '50000', '36903292', '59338636'),
 (9, '100.001', 6, '010.6531', '127.03', '', '', '', 'Kerja Bakti 17 Agustus', '25220990', '25220990', '25220990'),
 (11, '100.001', 11, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
-(14, '100.001', 0, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
-(15, '100.001', 7, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
+(14, '100.001', 7, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
+(15, '100.001', 0, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
 (17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
 (18, '0', 12, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
@@ -386,7 +400,7 @@ CREATE TABLE `tb_rekening` (
   `kode_program` varchar(30) NOT NULL,
   `kode_kegiatan` varchar(30) NOT NULL,
   `kode_rekening` varchar(30) NOT NULL,
-  `uraian_rekening` varchar(50) NOT NULL,
+  `uraian_rekening` varchar(100) NOT NULL,
   `triwulan_1` int(11) DEFAULT '0',
   `triwulan_2` int(11) DEFAULT '0',
   `triwulan_3` int(11) DEFAULT '0',
@@ -400,19 +414,21 @@ CREATE TABLE `tb_rekening` (
 --
 
 INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `kode_rekening`, `uraian_rekening`, `triwulan_1`, `triwulan_2`, `triwulan_3`, `triwulan_4`, `total`, `total_rinci`) VALUES
-(14, '5.1', '010.6531', '127.3321', '080.001', '5.1.01', 'Test Session', 124120, 39423, 123923, 87341, NULL, NULL),
-(19, '5.1', '010.6531', '127.3321', '080.001', '5.1.06', 'fix error tab id ', 9127631, 7723122, 9712512, 9861231, 36424496, 36903292),
-(23, '5', '010.6531', '127.3321', '080.001', '5.02', 'Test data', 0, 0, 0, 0, 0, 0),
-(24, '5', '010.6531', '127.3321', '080.001', '5.03', 'test data', 0, 0, 0, 0, 0, 0),
-(26, '5.1', '010.0001', '127.3321', '080.001', '5.1.01', 'test', 99999, 9999, 9999, 9999, 129996, 129996),
-(28, '5', '010.6531', '127.3321', '080.001', '5.04', 'test tok', 25235, 235235, 23523, 23523, 307516, 0),
-(29, '5.1', '010.6531', '127.125', '080.01', '5.1.02', 'Peralatan Kantor', 1226295, 12048173, 9812410, 2134112, 25220990, 25220990),
-(30, '5', '010.03', '127.12', '080.001', '5.01', 'Honor Kepsek 1', 250000, 250000, 250000, 250000, 1000000, 0),
-(32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', 'Baru', 0, 0, 0, 0, 0, 0),
-(33, '5', '010.03', '127.01', '080.01', '5.01', 'Belanja Tahun Baru', 500000, 500000, 500000, 500000, 2000000, 2000000),
-(34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', 'Beli Pizza Hut ', 280000, 280000, 140000, 280000, 980000, 980000),
-(35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', 'Honor Guru 1', 0, 0, 0, 0, 0, 0),
-(36, '5.5.2', '010.03', '127.01', '080.02', '5.5.2.01', 'test error kode_rekening', 9981237, 9812731, 987124, 987124, 21768216, 0);
+(14, '5.1', '010.6531', '127.3321', '080.001', '5.1.01', '', 124120, 39423, 123923, 87341, NULL, NULL),
+(19, '5.1', '010.6531', '127.3321', '080.001', '5.1.06', '', 9127631, 7723122, 9712512, 9861231, 36424496, 36903292),
+(23, '5', '010.6531', '127.3321', '080.001', '5.02', '', 0, 0, 0, 0, 0, 0),
+(24, '5', '010.6531', '127.3321', '080.001', '5.03', '', 0, 0, 0, 0, 0, 0),
+(26, '5.1', '010.0001', '127.3321', '080.001', '5.1.01', '', 99999, 9999, 9999, 9999, 129996, 129996),
+(28, '5', '010.6531', '127.3321', '080.001', '5.04', '', 25235, 235235, 23523, 23523, 307516, 0),
+(29, '5.1', '010.6531', '127.125', '080.01', '5.1.02', '', 1226295, 12048173, 9812410, 2134112, 25220990, 25220990),
+(30, '5', '010.03', '127.12', '080.001', '5.01', '', 250000, 250000, 250000, 250000, 1000000, 0),
+(32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', '', 0, 0, 0, 0, 0, 0),
+(33, '5', '010.03', '127.01', '080.01', '5.01', '', 500000, 500000, 500000, 500000, 2000000, 2000000),
+(34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', '', 280000, 280000, 140000, 280000, 980000, 980000),
+(35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', '', 0, 0, 0, 0, 0, 0),
+(36, '5.5.2', '010.03', '127.01', '080.02', '5.5.2.01', '', 9981237, 9812731, 987124, 987124, 21768216, 0),
+(37, '5.5.4', '010.6531', '127.3321', '080.001', '5.5.4.02', 'Belanja Modal Pengadaan Alat-a', 600000, 1082471, 182712, 1271212, 3136395, 0),
+(38, '5.2.2', '010.6531', '127.3321', '080.001', '5.2.2.01', 'Honorarium Pengelola Keuangan, Barang Daerah, dan Sistem Informasi PNS', 19249, 9849238, 872394, 8729348, 19470229, 0);
 
 -- --------------------------------------------------------
 
@@ -432,7 +448,7 @@ CREATE TABLE `tb_siswa` (
   `nisn` varchar(15) NOT NULL,
   `jurusan` varchar(50) NOT NULL,
   `nomor_hp` varchar(14) NOT NULL,
-  `foto` varchar(40) NOT NULL
+  `foto` varchar(40) NOT NULL DEFAULT 'user.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -440,14 +456,14 @@ CREATE TABLE `tb_siswa` (
 --
 
 INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`, `foto`) VALUES
-(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', '21232f297a57a5a743894a0e4a801fc3', '123123', '123123', '', '', ''),
-(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', '21232f297a57a5a743894a0e4a801fc3', '123', '123', '', '', ''),
-(7, '010.03', '127.01', 3, 'Joonokoto', 'joo123', '21232f297a57a5a743894a0e4a801fc3', '1111', '1111', 'RPL', '08127391', ''),
-(8, '010.03', '127.02', 3, 'Nathanael Ifanda', 'ethan', '7a56cb86e74d2afaacd7524253072fe3', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308', ''),
-(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', '21232f297a57a5a743894a0e4a801fc3', '87214', '00007124861', 'RPL', '0987124712', ''),
-(10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', '21232f297a57a5a743894a0e4a801fc3', '917264', '00091241', 'RPL', '009817241', ''),
-(11, '010.0001', '127.3321', 3, 'test dafter', 'ahjsvd', '928f770e5cf7c99437e8492df593ff5c', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', ''),
-(12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', '21232f297a57a5a743894a0e4a801fc3', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg');
+(5, '010.6531', '127.125', 3, 'Fauzam', 'Fauzan', 'YWRtaW4=', '123123', '123123', '', '', 'user.png'),
+(6, '010.03', '127.12', 3, 'Nathanael Ifanda', 'nathan', 'YWRtaW4=', '123', '123', '', '', 'user.png'),
+(7, '010.6531', '127.02', 3, 'M Nur Fauzan W', 'joo123', 'S2FsYWplbmdraW5n', '1270801', '0008096617', 'Rekayasa Perangkat Lunak', '083849575737', 'user.png'),
+(8, '010.03', '', 3, 'Nathanael Ifanda', 'ethan', 'YWRtaW4=', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308', 'user.png'),
+(9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', 'YWRtaW4=', '87214', '00007124861', 'RPL', '0987124712', 'user.png'),
+(10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', 'YWRtaW4=', '917264', '00091241', 'RPL', '009817241', 'user.png'),
+(11, '010.0001', '127.3321', 3, 'test dafter', 'ahjsvd', 'YWRtaW4=', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', 'user.png'),
+(12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', 'YWRtaW4=', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg');
 
 --
 -- Indexes for dumped tables
@@ -607,7 +623,7 @@ ALTER TABLE `tb_registrasi`
 -- AUTO_INCREMENT untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_siswa`
