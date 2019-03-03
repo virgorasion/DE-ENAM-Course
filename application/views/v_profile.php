@@ -333,7 +333,7 @@
 		</div>
 		<!-- /.modal -->
 
-		<!-- Start Modal Ubah Password -->
+		<!-- Start Modal Ubah Siswa -->
 		<div class="modal fade" id="modalUbahSiswa">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -346,50 +346,53 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="ubahNama">Nama</label>
-								<input required type="text" name="ubahNama" id="ubahNama" class="form-control">
+								<input type="text" name="ubahNamaSiswa" id="ubahNamaSiswa" class="form-control">
 							</div>
 							<!-- Tekan kene seng nyar -->
 							<div class="form-group">
-								<label for="ubahNama">Instansi</label>
-								<select class="form-control">
-									<option></option>
+								<label>Instansi</label>
+								<select class="form-control" id="ubahInstansiSiswa" name="ubahInstansiSiswa">
+									<!-- Diisi Ajax -->
 								</select>
 							</div>
 							<div class="form-group">
 								<label for="ubahNama">Program</label>
-								<select class="form-control">
-									<option></option>
+								<select class="form-control" id="ubahProgramSiswa" name="ubahProgramSiswa">
+									<!-- Diisi Ajax -->
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="ubahJurusan">Jurusan</label>
-								<input required type="text" name="ubahJurusan" id="ubahJurusan" class="form-control">
+								<label for="ubahJurusanSiswa">Jurusan</label>
+								<input type="text" name="ubahJurusanSiswa" id="ubahJurusanSiswa" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="ubahNama">NIS</label>
-								<input required type="text" class="form-control">
+								<label>NIS</label>
+								<input type="text" class="form-control" id="ubahNisSiswa" name="ubahNisSiswa">
 							</div>
 							<div class="form-group">
-								<label for="ubahNama">NISN</label>
-								<input required type="text" class="form-control">
+								<label>NISN</label>
+								<input type="text" class="form-control" id="ubahNisnSiswa" name="ubahNisnSiswa">
 							</div>
 							<div class="form-group">
-								<label for="ubahNope">Nomor HP</label>
-								<input required type="text" name="ubahNope" id="ubahNope" class="form-control">
+								<label for="ubahNopeSiswa">Nomor HP</label>
+								<input type="text" name="ubahNopeSiswa" id="ubahNopeSiswa" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="ubahNama">Username</label>
-								<input required type="text" class="form-control">
-							</div>
-							<div class="form-group">
-								<label for="ubahPasswordSiswa">Password</label>
-								<input type="password" name="ubahPasswordSiswa" id="ubahPasswordSiswa" class="form-control" placeholder="Iki tampilno password ne" value="">
-								<small class="text-muted">Password Boleh Kosong </small>
+								<label>Username</label>
+								<input type="text" class="form-control" id="ubahUsernameSiswa" name="ubahUsernameSiswa" readonly>
 							</div>
 
-							
+							<label for="ubahPasswordSiswa">Passowrd</label>
+							<div class="input-group input-group-sm">
+								<input required type="password" id="ubahPasswordSiswa" name="ubahPasswordSiswa" class="passwordProfile form-control">
+									<span class="input-group-btn">
+									<button type="button" class="btnShowUbahPasswordSiswa btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
+									</span>
+							</div>
 						</div>
 						<input type="hidden" name="idSiswa" id="idSiswa" value="" />
+						<input type="hidden" name="oldKodeProgram" id="oldKodeProgram" value="" />
+						<input type="hidden" name="oldKodeInstansi" id="oldKodeInstansi" value="" />
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 							<button type="submit" class="btn btn-primary">Simpan</button>
@@ -413,57 +416,55 @@
 					</div>
 					<form class="form-horizontal">
 						<div class="modal-body">
-						<center>
-						<img src="<?= base_url('assets/images/user.png')?>" class="img-circle" width="150" height="150" alt="Empty">
-						</center><br><br>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Nama</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" readonly>
+							<center>
+								<img src="<?= base_url('assets/images/user.png')?>" class="img-circle viewFoto" width="150" height="150" alt="Empty">
+							</center><br><br>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nama</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control viewNama" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Instansi</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewInstansi" readonly>
 								</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Instansi</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Jurusan</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewJurusan" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nis</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewNis" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">NISN</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewNisn" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Username</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewUsername" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Password</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control viewPassword" readonly>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Jurusan</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Nis</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">NISN</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Username</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-9">
-								<input type="text" class="form-control inputMask" readonly>
-							</div>
-						</div>
-
-						</div>
-				</form>
+					</form>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
-							<button type="submit" class="btn btn-primary">OK</button>
+							<button type="submit" class="btn btn-primary">Tutup</button>
 						</div>
 				</div>
 				<!-- /.modal-content -->
@@ -735,8 +736,6 @@ $this->load->view('template/_js');
 					$('#addInstansi').html(html);
 				})
 			}
-		}).done(function(){
-			$(".select2-search__field").val(instansi);
 		})
 
 		$("#modalTambahSiswa").find("#idRegister").val(id);
@@ -761,10 +760,14 @@ $this->load->view('template/_js');
 				var data = JSON.parse(result);
 				// console.log(data);
 				var html = '';
-				$.each(data, function(i){
-					html += '<option value="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
-					$('#addProgram').html(html);
-				})
+				if (data == ""){
+					$("#addProgram").html("<option disable>Tidak Ada Program Tersedia</option>");
+				}else{
+					$.each(data, function(i){
+						html += '<option value="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
+						$('#addProgram').html(html);
+					})
+				}
 			}
 		})
 	})
@@ -790,6 +793,16 @@ $this->load->view('template/_js');
 			$(".btnShowPasswordProfile").html("<i class='fa fa-eye-slash'></i>");
 		}
 	})
+	// Fungsi Show Password (Ubah Data Siswa)
+	$(".btnShowUbahPasswordSiswa").click(function(){
+		if ($("#ubahPasswordSiswa").attr("type") == "password") {
+			$("#ubahPasswordSiswa").prop("type", "text");
+			$(".btnShowUbahPasswordSiswa").html("<i class='fa fa-eye-slash'></i>");
+		}else{
+			$("#ubahPasswordSiswa").prop("type","password");
+			$(".btnShowUbahPasswordSiswa").html("<i class='fa fa-eye-slash'></i>");
+		}
+	})
 
 	// Fungsi Delete Siswa dari Table Siswa
 	$("#tableSiswa").on("click",".btn-delete",function(){
@@ -812,25 +825,104 @@ $this->load->view('template/_js');
 		});
 	})
 
-	// Fungsi Edit Siswa dari Table Siswa
+	// Fungsi Edit Siswa 
 	$("#tableSiswa").on("click",".btn-edit",function(){
+		let instansiKode = $(this).data("kodeinstansi");
+		let programKode = $(this).data("kodeprogram");
 		let nama = $(this).data("nama");
+		let jurusan = $(this).data("jurusan");
 		let nis = $(this).data("nis");
 		let nisn = $(this).data("nisn");
 		let nope = $(this).data("nope");
-		let jurusan = $(this).data("jurusan");
+		let username = $(this).data("username");
+		let password = $(this).data("password");
 		let id = $(this).data("id");
 
 		$("#modalUbahSiswa").modal("show");
-		$("#ubahNama").val(nama);
-		$("#ubahNope").val(nope);
-		$("#ubahJurusan").val(jurusan);
+		console.log(instansiKode+" | "+programKode);
+
+		$.ajax({
+			url: "<?= site_url('Profile/NamaInstansiAPI') ?>",
+			type: 'POST',
+			success:function(result){
+				var html = '';
+				$.each(result, function(i){
+					html += '<option value="'+result[i].kode_instansi+'">'+result[i].nama_instansi+'</option>';
+					$('#ubahInstansiSiswa').html(html);
+				})
+			}
+		}).done(function(result){
+			$("#ubahInstansiSiswa").val(instansiKode);
+		})
+
+		$.ajax({
+			url: "<?= site_url('Profile/DataProgramAPI/') ?>" + instansiKode +"/"+ id,
+			type: 'POST',
+			success:function(result){
+				var data = JSON.parse(result);
+				var html = '';
+				$.each(data, function(i){
+					html += '<option value="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
+					$('#ubahProgramSiswa').html(html);
+				})
+			}
+		}).done(function(){
+			$("#ubahProgramSiswa").val(programKode);
+		})
+
+		$("#modalUbahSiswa").find("#ubahNamaSiswa").val(nama);
+		$("#modalUbahSiswa").find("#ubahJurusanSiswa").val(jurusan);
+		$("#modalUbahSiswa").find("#ubahNisSiswa").val(nis);
+		$("#modalUbahSiswa").find("#ubahNisnSiswa").val(nisn);
+		$("#modalUbahSiswa").find("#ubahNopeSiswa").val(nope);
+		$("#modalUbahSiswa").find("#ubahUsernameSiswa").val(username);
+		$("#modalUbahSiswa").find("#ubahPasswordSiswa").val(password);
 		$("#idSiswa").val(id);
+		$("#oldKodeProgram").val(programKode);
+		$("#oldKodeInstansi").val(instansiKode);
+	})
+
+	// Isi Select Option ubahProgramSiswa
+	$('#ubahInstansiSiswa').on('change', function(){
+		var dataInstansi = $(this).val();
+		var url = "<?= site_url('InstansiCtrl/getDataProgramAPI/') ?>" + dataInstansi;
+		$.ajax({
+			url: url,
+			type: 'POST',
+			success:function(result){
+				var data = JSON.parse(result);
+				var html = '';
+				if (data == ""){
+					$("#ubahProgramSiswa").html("<option disable>Tidak Ada Program Tersedia</option>");
+				}else{
+					$.each(data, function(i){
+					html += '<option value="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
+					$('#ubahProgramSiswa').html(html);
+				})
+				}
+			}
+		})
 	})
 
 	// Fungsi Show modal View Siswa
 	$("#tableSiswa").on("click",".btn-view",function(){
+		let foto = $(this).data("foto");
+		let instansi = $(this).data("instansi");
+		let nama = $(this).data("nama");
+		let jurusan = $(this).data("jurusan");
+		let nis = $(this).data("nis");
+		let nisn = $(this).data("nisn");
+		let username = $(this).data("username");
+		let password = $(this).data("password");
 		$("#modalViewSiswa").modal("show");
+		$("#modalViewSiswa").find(".viewFoto").prop("src", "<?=base_url('assets/images/')?>"+foto);
+		$("#modalViewSiswa").find(".viewNama").val(nama);
+		$("#modalViewSiswa").find(".viewInstansi").val(instansi);
+		$("#modalViewSiswa").find(".viewJurusan").val(jurusan);
+		$("#modalViewSiswa").find(".viewNis").val(nis);
+		$("#modalViewSiswa").find(".viewNisn").val(nisn);
+		$("#modalViewSiswa").find(".viewUsername").val(username);
+		$("#modalViewSiswa").find(".viewPassword").val(password);
 	})
 
 </script>
