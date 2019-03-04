@@ -12,7 +12,7 @@
 	var tableDetailRekening = "";
 	var idSiswa = "";
     // Setup datatables
-	$.fn.dataTableExt.errMode = 'none';
+	// $.fn.dataTableExt.errMode = 'none';
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
         return {
@@ -309,6 +309,7 @@
 				oLanguage: {
 				sProcessing: 'Loading...'
 			},
+				destroy: true,
 				processing: true,
 				serverSide: true,
 				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeInstansi+"/"+kodeRekening, "type": "POST"},
@@ -335,7 +336,7 @@
 				$('td:eq(0)', row).html(index);
 			}
 		});
-	return tableRekening;
+	return tableDetailRekening;
 	}
 
 	//Fungsi: Untuk generate tab Info Kegiatan
@@ -476,11 +477,15 @@
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
 			idSiswa = $item.find("#idSiswa").val();
-
-
-			funcTableKegiatan(kodeProgram,idSiswa);
-			funcTableIndikator();
-			funcTablePembahasan();
+			if ($.fn.DataTable.isDataTable(tableKegiatan) == false) {
+				funcTableKegiatan(kodeProgram,idSiswa);
+			}
+			if ($.fn.DataTable.isDataTable(tableIndikator) == false) {
+				funcTableIndikator();
+			}
+			if ($.fn.DataTable.isDataTable(tablePembahasan) == false) {
+				funcTablePembahasan();
+			}
 			infoKegiatan(kodeInstansi,kodeProgram);
 			penanggungJawab(idSiswa);
  		}else {
@@ -501,24 +506,59 @@
 		tablePembahasan.destroy();
 	});
 	//Fungsi: untuk Hidden Box Kegiatan ketika klik tabProgram
-	$("#tabProgram").click(function(){
-		$('#boxKegiatan').fadeOut(1000);
-		$('#boxKegiatan').addClass('hidden');
-		tableKegiatan.destroy();
-		tableIndikator.destroy();
-		tablePembahasan.destroy();
-	})
+	// $("#tabProgram").click(function(){
+	// 	$('#boxKegiatan').fadeOut(1000);
+	// 	$('#boxKegiatan').addClass('hidden');
+	// 	tableKegiatan.destroy();
+	// 	tableIndikator.destroy();
+	// 	tablePembahasan.destroy();
+	// })
+	// Fungsi: Hidden Box Kegiatan ketika klik tab Cetak
+	// Fungsi: Initialize table cetak
+	$("#tabCetakProgram").click(function(){
+		if (tableSiswaCetak instanceof $.fn.DataTable.Api == false) {
+			funcTableSiswaCetak();
+		}
+		if (!$("#boxDetailRekening").hasClass("hidden")) {
+			$("#boxDetailRekening").fadeOut(1000);
+			$("#boxDetailRekening").addClass("hidden");
+			tableDetailRekening.destroy();
+		}
+		if (!$("#boxKegiatan").hasClass("hidden")) {
+			$("#boxKegiatan").fadeOut(1000);
+			$('#boxKegiatan').addClass('hidden');
+			tableKegiatan.destroy();
+			tableIndikator.destroy();
+			tablePembahasan.destroy();
+		}
+	});
 	//Fungsi: Hidden box Detail Rekening
 	$('#btnHiddenBoxDetailRekening').click(function(){
-		$('#boxDetailRekening').fadeOut(1000);
-		$('#boxDetailRekening').addClass('hidden');
-		tableDetailRekening.destroy();
+		if (tableDetailRekening instanceof $.fn.dataTable.Api) {
+			$('#boxDetailRekening').fadeOut(1000);
+			$('#boxDetailRekening').addClass('hidden');
+			tableDetailRekening.destroy();
+		}
 	});
+	//Fungsi: Destroy table kegiatan ketika klik tabProgram dari tabKodeRekening
+	$("#tabKodeRekening").click(function(){
+		if (tableKegiatan instanceof $.fn.DataTable.Api == true) {
+			tableKegiatan.destroy();
+		}
+		if (tablePembahasan instanceof $.fn.DataTable.Api == true) {
+			tablePembahasan.destroy();
+		}
+		if (tableIndikator instanceof $.fn.DataTable.Api == true) {
+			tableIndikator.destroy();
+		}
+	})
 	//Fungsi: untuk Hidden Box Detail Rekening ketika klik tabProgram
 	$("#tabProgram").click(function(){
 		$('#boxDetailRekening').fadeOut(1000);
 		$('#boxDetailRekening').addClass('hidden');
-		tableDetailRekening.destroy();
+		if ($.fn.DataTable.isDataTable(tableDetailRekening) == true) {
+			tableDetailRekening.destroy();
+		}
 	})
 
 	// Funngsi: Show box detail rekening
@@ -985,15 +1025,6 @@
 		}
 	});
 
-	//Fungsi: untuk show box kegiatan ketika klik tabProgram
-	// $("#tabProgram").click(function(){
-	// 	$('#boxKegiatan').slideDown(1000);
-	// 	$('#boxKegiatan').removeClass('hidden');
-	// 	if (tableKegiatan instanceof $.fn.dataTable.Api == false) {
-	// 		funcTableKegiatan(kodeProgram);
-	// 	}
-	// })
-
 	//Fungsi: Insert kegiatan
 	$('#btnAddKegiatan').click(function(){
 		$('#modalTambahKegiatan').modal('show');
@@ -1138,13 +1169,6 @@
 	// 	$("#modalViewPembahasan").modal("show");
 
 	// })
-
-	//Fungsi: Initialize tableSiswaCetak
-	$("#tabCetakProgram").click(function(){
-		if (tableSiswaCetak instanceof $.fn.dataTable.Api == false) {
-			funcTableSiswaCetak();
-		}
-	})
 
 	//Fungsi: show table print kegiatan
 	$("#tableSiswaCetak").on("click",".view_data", function(){
