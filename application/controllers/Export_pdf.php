@@ -319,22 +319,22 @@ class Export_pdf extends CI_controller
         $pdf->SetFont("Arial","",11);
         $pdf->Cell(50,6,"Capaian",1,0,"L");
         $pdf->Cell(180,6,@$indikatorCapaian[0]->uraian,1,0,"L");
-        $pdf->Cell(55,6,@$indikatorCapaian[0]->target,1,0,"C");
+        $pdf->Cell(55,6,@$indikatorCapaian[0]->nilai,1,0,"C");
         $pdf->Cell(50,6,@$indikatorCapaian[0]->satuan,1,1,"C");
         //Masukan
         $pdf->Cell(50,6,"Masukan",1,0,"L");
         $pdf->Cell(180,6,@$indikatorMasukan[0]->uraian,1,0,"L");
-        $pdf->Cell(55,6,@$indikatorMasukan[0]->target,1,0,"C");
+        $pdf->Cell(55,6,@$indikatorMasukan[0]->nilai,1,0,"C");
         $pdf->Cell(50,6,@$indikatorMasukan[0]->satuan,1,1,"C");
         //Keluaran
         $pdf->Cell(50,6,"Keluaran",1,0,"L");
         $pdf->Cell(180,6,@$indikatorKeluaran[0]->uraian,1,0,"L");
-        $pdf->Cell(55,6,@$indikatorKeluaran[0]->target,1,0,"C");
+        $pdf->Cell(55,6,@$indikatorKeluaran[0]->nilai,1,0,"C");
         $pdf->Cell(50,6,@$indikatorKeluaran[0]->satuan,1,1,"C");
         //Hasil
         $pdf->Cell(50,6,"Hasil",1,0,"L");
         $pdf->Cell(180,6,@$indikatorHasil[0]->uraian,1,0,"L");
-        $pdf->Cell(55,6,@$indikatorHasil[0]->target,1,0,"C");
+        $pdf->Cell(55,6,@$indikatorHasil[0]->nilai,1,0,"C");
         $pdf->Cell(50,6,@$indikatorHasil[0]->satuan,1,1,"C");
 
         //Kelompok Sasaran
@@ -377,7 +377,11 @@ class Export_pdf extends CI_controller
         foreach ($dataRekening as $rekening) {
             $pdf->SetFont("Arial","B",11);
             $pdf->Cell(50,6,@$rekening->kode_rekening,"LR",0,"L");
-            $pdf->Cell(120,6,@$rekening->uraian_rekening,"LR",0,"L");
+            if (strlen(@$rekening->uraian_rekening) >= 56){
+                $pdf->Cell(120,6,substr(@$rekening->uraian_rekening,0,-14)." ...","LR",0,"L");
+            }else{
+                $pdf->Cell(120,6,@$rekening->uraian_rekening,"LR",0,"L");
+            }
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(30,6,"","LR",0,"C");
             $pdf->Cell(50,6,"","LR",0,"C");
