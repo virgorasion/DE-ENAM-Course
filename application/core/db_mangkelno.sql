@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Mar 2019 pada 11.58
+-- Waktu pembuatan: 05 Mar 2019 pada 17.05
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -137,11 +137,12 @@ INSERT INTO `tb_detail_rekening` (`id`, `kode_detail_rekening`, `kode_instansi`,
 (21, '5.1.02.01', '010.6531', '127.3321', '080.001', '5.1.06', 'test input', 'aaskdgaskd', 'ajshd', 'ajsdh', 'kajsdh', '1', '124', 1241, 12412, 15403292, ''),
 (22, '5.1.02.01', '010.6531', '127.3321', '080.001', '5.1.06', 'tset', 'tset', 'as;kda', 'kjasbd', 'aksdn', '1', '12', 10, 2150000, 21500000, ''),
 (23, '5.01', '010.6531', '127.125', '080.653', '5.1.02', 'Belanja Daerah', 'Beli Printer', 'Printer Canon x1222', 'Dinas Kependudukan', 'Surabaya', '2', 'Buah', 1, 25220990, 25220990, ''),
-(24, '5.01.01', '010.03', '127.01', '080.01', '5.01', 'Belanja Daerah', 'Belanja Tahun Baru 2019', 'Tahun 2019', 'Rumah', 'Kapas Madya', '1', 'Paket', 2, 1000000, 2000000, 'Untuk Tahun 2019'),
+(24, '5.01.01', '010.03', '127.01', '080.01', '5.2.2.01', 'Belanja Daerah', 'Belanja Tahun Baru 2019', 'Tahun 2019', 'Rumah', 'Kapas Madya', '1', 'Paket', 2, 1000000, 2000000, 'Untuk Tahun 2019'),
 (25, '5.1.1.01.01', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 1pcs pizza cheese bites', '', 'Perut', 'Surabaya', '1', 'pcs', 1, 140000, 140000, ''),
 (26, '5.1.1.01.02', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 2pcs pizza cheese bites', 'asdas', 'Perut', 'Surabaya', '1', 'pcs', 20, 14000, 280000, ''),
 (27, '5.1.1.01.03', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 3pcs pizza cheese bites', 'test', 'Perut', 'Surabaya', '1', '10', 3, 140000, 420000, ''),
-(28, '5.1.1.01.04', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 1pcs pizza cheese bites', 'test', 'Perut', 'Surabaya', '1', 'pcs', 1, 140000, 140000, '');
+(28, '5.1.1.01.04', '010.03', '127.01', '080.01', '5.1.1.04', 'Pembelian', 'Beli 1pcs pizza cheese bites', 'test', 'Perut', 'Surabaya', '1', 'pcs', 1, 140000, 140000, ''),
+(29, '5.1.01.01', '010.03', '127.01', '080.01', '5.1.01', 'Test trigger', 'Test Duplicate', '', '', '', '1', '', 5, 50000, 250000, '');
 
 -- --------------------------------------------------------
 
@@ -167,10 +168,10 @@ CREATE TABLE `tb_indikator` (
 
 INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `satuan`, `target`, `nilai`) VALUES
 (4, '1.001', '010.6531', '127.03', '1', 'Pencapaian Terbaru', 'Paket', 100, 0),
-(6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100, 0),
+(6, '1.001', '010.03', '127.12', '1', 'Indikator Baru', 'OK', 100, 500),
 (7, '1.001', '010.03', '127.01', '2', 'Capaian tahun 2018', 'Paket', 20, 0),
 (10, '1.003', '010.03', '127.01', '3', 'jhf', '12', 2, 0),
-(12, '1.002', '010.03', '127.12', '2', 'Hasil', 'pcs', 10, 0),
+(12, '1.002', '010.03', '127.12', '2', 'Hasil', 'pcs', 10, 100),
 (13, '1.004', '010.03', '127.01', '1', 'Test', 'Paket', 20, 500);
 
 -- --------------------------------------------------------
@@ -231,7 +232,7 @@ INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan
 (8, '010.0001', '127.3321', '080.001', 'Kegiatan Testing', 0, 0, 'Test diplicate data'),
 (9, '010.6531', '127.03', '080.01', 'Kegiatan Test program', 25220990, 25220990, 'Rutinitas :v'),
 (10, '010.03', '127.12', '080.001', 'Honor Kepsek', 1000000, 0, 'Baru'),
-(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 2980000, 'Tahun Baru'),
+(12, '010.03', '127.01', '080.01', 'Kamis 27 Desember 2018', 2980000, 1230000, 'Tahun Baru'),
 (13, '010.03', '127.01', '080.02', 'Jumat 28 Desember 2018', 21768216, 0, 'Tahun Baru'),
 (14, '010.03', '127.01', '080.03', 'Sabtu 29 Desember 2018', 0, 0, ''),
 (15, '010.81246', '127.971263', '080.7124', 'Kegiatan\'Q', 0, 0, '-');
@@ -349,12 +350,12 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (11, '100.001', 11, '010.0001', '127.3321', '', '', '', 'Program testing', '9000000', '', ''),
 (12, '100.001', 6, '010.03', '127.12', '', '', '', 'Baru', '1000000', '', '1000000'),
 (14, '100.001', 7, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
-(15, '100.001', 0, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '2980000', '24748216'),
+(15, '100.001', 0, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '1230000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
 (17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
 (18, '0', 12, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
 (19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', ''),
-(20, '100.001', 0, '010.0001', '127.172471249', 'test', 'tses', 'tseas', 'tese', '91283124', '', '');
+(20, '100.001', 13, '010.0001', '127.172471249', 'test', 'tses', 'tseas', 'tese', '91283124', '', '');
 
 -- --------------------------------------------------------
 
@@ -380,12 +381,7 @@ CREATE TABLE `tb_registrasi` (
 --
 
 INSERT INTO `tb_registrasi` (`id`, `nama`, `instansi`, `jurusan`, `nis`, `nisn`, `no_telp`, `username`, `foto`, `waktu`) VALUES
-(1, 'asdhb', 'asdv', 'akshdv', 'ahsdv', 'jahsvd', 'akshdv', 'asjdv', '0', '2019-02-07'),
-(2, 'akshgd', 'khasbd', 'khasbd', 'asdkb', 'akhsdb', 'khasbdkhasdb', 'akhdb', 'Surat Pernyataan.png', '2019-02-07'),
-(3, 'hkasdkashd', 'hasvd', 'abmsdv', 'jhasvd', 'jhavsd', 'kahsdasd', 'asjdv', 'ea4dc4917bf59fd45bb5df7ddce83b70', '2019-02-07'),
-(4, 'ahksdv', 'hasvd', 'jasvd', 'jahsvd', 'jasvd', 'khasvd', 'ahjsvd', '41b586905e6233e72b076191f8bf9512png', '2019-02-07'),
-(5, 'ashdv', 'hjavd', 'jvad', 'jhvad', 'jhvad', 'khavd', 'hvad', 'images5.png', '2019-02-07'),
-(6, 'aksbd', 'kb', 'kb', 'kb', 'kb', 'khab', 'khb', 'ab4e1fe2006ae2f54dd410f71a0f8958.png', '2019-02-07');
+(29, 'asndb', 'kabd', 'kabsd', 'kasbd', 'kasbd', 'kasbd', '', '349f47221b34c3bfb5c22e64d7764ef8.jpg', '2019-03-05');
 
 -- --------------------------------------------------------
 
@@ -421,14 +417,14 @@ INSERT INTO `tb_rekening` (`id`, `kode_patokan`, `kode_instansi`, `kode_program`
 (26, '5.1', '010.0001', '127.3321', '080.001', '5.1.01', '', 99999, 9999, 9999, 9999, 129996, 129996),
 (28, '5', '010.6531', '127.3321', '080.001', '5.04', '', 25235, 235235, 23523, 23523, 307516, 0),
 (29, '5.1', '010.6531', '127.125', '080.01', '5.1.02', '', 1226295, 12048173, 9812410, 2134112, 25220990, 25220990),
-(30, '5', '010.03', '127.12', '080.001', '5.01', '', 250000, 250000, 250000, 250000, 1000000, 0),
+(30, '5.2.2', '010.03', '127.12', '080.001', '5.2.2.01', 'Honorarium Pengelola Keuangan, Barang Daerah, dan Sistem Informasi PNS', 250000, 250000, 250000, 250000, 1000000, 0),
 (32, '5.1', '010.6531', '127.125', '080.01', '5.1.01', '', 0, 0, 0, 0, 0, 0),
-(33, '5', '010.03', '127.01', '080.01', '5.01', '', 500000, 500000, 500000, 500000, 2000000, 2000000),
 (34, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.04', '', 280000, 280000, 140000, 280000, 980000, 980000),
 (35, '5.1.1', '010.03', '127.01', '080.01', '5.1.1.05', '', 0, 0, 0, 0, 0, 0),
 (36, '5.5.2', '010.03', '127.01', '080.02', '5.5.2.01', '', 9981237, 9812731, 987124, 987124, 21768216, 0),
 (37, '5.5.4', '010.6531', '127.3321', '080.001', '5.5.4.02', 'Belanja Modal Pengadaan Alat-a', 600000, 1082471, 182712, 1271212, 3136395, 0),
-(38, '5.2.2', '010.6531', '127.3321', '080.001', '5.2.2.01', 'Honorarium Pengelola Keuangan, Barang Daerah, dan Sistem Informasi PNS', 19249, 9849238, 872394, 8729348, 19470229, 0);
+(38, '5.2.2', '010.6531', '127.3321', '080.001', '5.2.2.01', 'Honorarium Pengelola Keuangan, Barang Daerah, dan Sistem Informasi PNS', 19249, 9849238, 872394, 8729348, 19470229, 0),
+(39, '5.1', '010.03', '127.01', '080.01', '5.1.01', 'Belanja Tidak Langsung', 500000, 500000, 500000, 500000, 2000000, 250000);
 
 -- --------------------------------------------------------
 
@@ -463,7 +459,8 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 (9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', 'YWRtaW4=', '87214', '00007124861', 'RPL', '0987124712', 'user.png'),
 (10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', 'YWRtaW4=', '917264', '00091241', 'RPL', '009817241', 'user.png'),
 (11, '010.0001', '127.3321', 3, 'test dafter', 'ahjsvd', 'YWRtaW4=', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', 'user.png'),
-(12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', 'YWRtaW4=', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg');
+(12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', 'YWRtaW4=', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg'),
+(13, '010.0001', '127.172471249', 3, 'Joonokoto', 'jookun', 'am9v', '091924', '0008124128', 'RPL', '081273124', 'bd767167664b684461349fe28352dfae.png');
 
 --
 -- Indexes for dumped tables
@@ -581,7 +578,7 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT untuk tabel `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_indikator`
@@ -617,19 +614,19 @@ ALTER TABLE `tb_program`
 -- AUTO_INCREMENT untuk tabel `tb_registrasi`
 --
 ALTER TABLE `tb_registrasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_rekening`
 --
 ALTER TABLE `tb_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
