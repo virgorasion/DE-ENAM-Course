@@ -217,4 +217,34 @@ class Profile extends CI_controller
             redirect('Profile');
         }
     }
+
+    public function HapusRegistrasiSiswa($id,$foto)
+    {
+        $this->load->helper("file");
+        $where = ['id' => $id];
+        $query = $this->ProfileModel->DeleteData("tb_registrasi", $where);;
+        if ($query) {
+            if ($this->DeleteFile("assets/images/".$foto)) {
+                echo "Berhasil";
+                $this->session->set_tempdata('succ', 'Berhasil hapus data registrasi siswa',5);
+                redirect('Profile');
+            }else{
+                echo "Gagal";
+            }
+        }else {
+            $this->session->set_tempdata('fail', 'Gagal hapus data registrasi siswa, segera hubungi admin !',5);
+            redirect('Profile');
+        }
+    }
+
+    private function DeleteFile($fileName)
+    {
+        if (file_exists($fileName)) {
+            if (unlink($fileName)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }

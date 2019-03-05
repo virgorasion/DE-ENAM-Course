@@ -36,7 +36,8 @@ class ProfileModel extends CI_model
         $this->datatables->from("tb_registrasi");
         $this->datatables->add_column(
             'Action',
-            '<center><a href="javascript:void(0)" class="btn_add btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-instansi="$3" data-jurusan="$4" data-nis="$5" data-nisn="$6" data-telp="$7" data-username="$8" data-foto="$9"><i class="fa fa-plus-circle"></i></a></center>',
+            '<center><a href="javascript:void(0)" class="btn_add btn btn-primary btn-xs" data-id="$1" data-nama="$2" data-instansi="$3" data-jurusan="$4" data-nis="$5" data-nisn="$6" data-telp="$7" data-username="$8" data-foto="$9"><i class="fa fa-plus-circle"></i></a>
+            <a href="javascript:void(0)" class="btn_delete btn btn-danger btn-xs" data-id="$1" data-nama="$2"><i class="fa fa-trash"></i></a></center>',
             'id,nama,instansi,jurusan,nis,nisn,no_telp,username,foto'
         );
         return $this->datatables->generate();

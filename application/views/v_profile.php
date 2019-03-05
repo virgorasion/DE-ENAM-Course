@@ -103,7 +103,6 @@
 				<div class="box box-primary">
 					<div class="box-body box-profile">
 						<img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/images/').@$data[0]->foto?>" alt="<?=base_url('assets/images/user.png')?>">
-						<?= var_dump($data) ?>
 						<h3 class="profile-username text-center"><?=@$_SESSION['nama']?></h3>
 
 						<p class="text-muted text-center">Siswa</p>
@@ -264,6 +263,9 @@
 					</div>
 					<form id="formTambahSiswa" method="post" action="<?= site_url('Profile/TambahSiswa') ?>">
 						<div class="modal-body">
+							<center>
+								<img src="" class="img-circle RegistrasiFoto" width="150" height="150" alt="Empty">
+							</center><br><br>
 							<div class="form-group">
 								<label for="addNama">Nama</label>
 								<input required type="text" name="addNama" id="addNama" class="form-control">
@@ -739,6 +741,7 @@ $this->load->view('template/_js');
 		})
 
 		$("#modalTambahSiswa").find("#idRegister").val(id);
+		$("#modalTambahSiswa").find(".RegistrasiFoto").prop("src","<?=base_url('assets/images/')?>"+img);
 		$("#modalTambahSiswa").find("#addNama").val(nama);
 		$("#modalTambahSiswa").find("#addJurusan").val(jurusan);
 		$("#modalTambahSiswa").find("#addNis").val(nis);
@@ -924,5 +927,26 @@ $this->load->view('template/_js');
 		$("#modalViewSiswa").find(".viewUsername").val(username);
 		$("#modalViewSiswa").find(".viewPassword").val(password);
 	})
+
+	//Fungsi: Delete Registrasi Siswa
+	$('#tableRegister').on('click', '.btn_delete', function () {
+      var id = $(this).data('id');
+	  var nama = $(this).data('nama');
+      $.confirm({
+        theme: 'supervan',
+        title: 'Hapus Siswa Ini ?',
+        content: 'Nama Siswa : ' + nama,
+        autoClose: 'Cancel|10000',
+        buttons: {
+          Cancel: function () {},
+          delete: {
+            text: 'Delete',
+            action: function () {
+              window.location = "<?= site_url('Profile/HapusRegistrasiSiswa/') ?>" +  id;
+            }
+          }
+        }
+      });
+    });
 
 </script>
