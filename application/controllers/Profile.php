@@ -224,13 +224,9 @@ class Profile extends CI_controller
         $where = ['id' => $id];
         $query = $this->ProfileModel->DeleteData("tb_registrasi", $where);;
         if ($query) {
-            if ($this->DeleteFile("assets/images/".$foto)) {
-                echo "Berhasil";
-                $this->session->set_tempdata('succ', 'Berhasil hapus data registrasi siswa',5);
-                redirect('Profile');
-            }else{
-                echo "Gagal";
-            }
+            $this->DeleteFile("assets/images/".$foto);
+            $this->session->set_tempdata('succ', 'Berhasil hapus data registrasi siswa',5);
+            redirect('Profile');
         }else {
             $this->session->set_tempdata('fail', 'Gagal hapus data registrasi siswa, segera hubungi admin !',5);
             redirect('Profile');
@@ -240,11 +236,11 @@ class Profile extends CI_controller
     private function DeleteFile($fileName)
     {
         if (file_exists($fileName)) {
-            if (unlink($fileName)) {
-                return true;
+            if ($fileName != "user.png") {
+                if (unlink($fileName)){
+                    return true;
+                }
             }
-            return false;
         }
-        return false;
     }
 }

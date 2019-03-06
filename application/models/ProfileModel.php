@@ -7,25 +7,30 @@ class ProfileModel extends CI_model
 {
     public function getDataInstansi($kodeInstansi = NULL)
     {
-        $this->datatables->select("kode_instansi,nama_instansi,versi,kota_lokasi as lokasi,tahun");
+        $this->datatables->select("kode_instansi,nama_instansi,versi,kota_lokasi as lokasi,keterangan,tahun,username,password,foto");
         $this->datatables->from("tb_instansi");
         if (@$_SESSION['hakAkses'] == 2) {
             $this->datatables->where("kode_instansi", $kodeInstansi);
         }
-        function callback_button($kode_instansi)
+        function callback_button($kode_instansi,$nama,$versi,$lokasi,$keterangan,$tahun,$username,$password,$foto)
         {
             if (@$_SESSION['kode_instansi'] == $kode_instansi && @$_SESSION['hakAkses'] == 2) {
                 $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-users"></i></a></center>';
                 return $btn;
             }elseif (@$_SESSION['hakAkses'] == 1) {
-                $btn = '<center><a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-users"></i></a></center>';
+                $pass = base64_decode($password);
+                $btn = '<center>
+                <a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-instansi="'.$kode_instansi.'" data-nama="'.$nama.'" data-versi="'.$versi.'" data-lokasi="'.$lokasi.'" data-keterangan="'.$keterangan.'" data-tahun="'.$tahun.'" data-username="'.$username.'" data-password="'.$pass.'" data-foto="'.$foto.'"><i class="fa fa-eye"></i></a>
+                <a href="javascript:void(0)" class="view_siswa btn btn-primary btn-xs" data-instansi="'.$kode_instansi.'"><i class="fa fa-users"></i></a>
+                <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-instansi="'.$kode_instansi.'" data-nama="'.$nama.'" data-versi="'.$versi.'" data-lokasi="'.$lokasi.'" data-keterangan="'.$keterangan.'" data-tahun="'.$tahun.'" data-username="'.$username.'" data-password="'.$pass.'" data-foto="'.$foto.'"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-instansi="'.$kode_instansi.'" data-nama="'.$nama.'"><i class="fa fa-trash"></i></a></center>';
                 return $btn;
             }
         }
         $this->datatables->add_column(
             'view',
             '$1',
-            'callback_button(kode_instansi)'
+            'callback_button(kode_instansi,nama_instansi,versi,lokasi,keterangan,tahun,username,password,foto)'
         );
         return $this->datatables->generate();
     }

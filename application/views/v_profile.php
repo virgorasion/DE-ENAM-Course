@@ -408,61 +408,17 @@
 		<!-- /.modal -->
 
 		<!-- Start Modal View Siswa -->
-		<div class="modal fade" id="modalViewSiswa">
+		<div class="modal fade" id="modalView">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Data Siswa</h4>
+						<h4 class="modal-title" id="modalTitle"></h4>
 					</div>
 					<form class="form-horizontal">
-						<div class="modal-body">
-							<center>
-								<img src="<?= base_url('assets/images/user.png')?>" class="img-circle viewFoto" width="150" height="150" alt="Empty">
-							</center><br><br>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Nama</label>
-									<div class="col-sm-9">
-										<input type="text" class="form-control viewNama" readonly>
-									</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Instansi</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewInstansi" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Jurusan</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewJurusan" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Nis</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewNis" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">NISN</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewNisn" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Username</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewUsername" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Password</label>
-									<div class="col-sm-9">
-									<input type="text" class="form-control viewPassword" readonly>
-								</div>
-							</div>
+						<div class="modal-body" id="viewModalBody">
+							<!-- Data diisi Ajax -->
 						</div>
 					</form>
 						<div class="modal-footer">
@@ -685,7 +641,7 @@ $this->load->view('template/_js');
 
 	funcTableInstansi();
 
-	$("#tableInstansi").on("click", ".view_data", function () {
+	$("#tableInstansi").on("click", ".view_siswa", function () {
 		var kode_instansi = $(this).data('instansi');
 
 		$("#tabSiswa").removeClass("hidden");
@@ -694,15 +650,79 @@ $this->load->view('template/_js');
 		$("#tabInstansi").removeClass("active");
 		$("#instansi").removeClass("active");
 
-		// console.log(kode_instansi);
-
 		if (tableSiswa instanceof $.fn.dataTable.Api) {
 			tableSiswa.destroy();
 			funcTableSiswa(kode_instansi);
 		}else{
 			funcTableSiswa(kode_instansi);			
 		}
-	})
+	});
+
+	$("#tableInstansi").on("click",".view_data",function(){
+		let kode_instansi = $(this).data('instansi');
+		let nama_instansi = $(this).data('nama');
+		let versi = $(this).data('versi');
+		let lokasi = $(this).data('lokasi');
+		let keterangan = $(this).data('keterangan');
+		let tahun = $(this).data('tahun');
+		let username = $(this).data('username');
+		let password = $(this).data('password');
+		let foto = $(this).data('foto');
+		$("#modalTitle").text("Data Instansi")
+		$("#modalView").modal("show");
+		let html = `<center>
+								<img src="<?= base_url('assets/images/')?>`+foto+`" class="img-circle" width="150" height="150" alt="Empty">
+							</center><br><br>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Kode Instansi</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+kode_instansi+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nama Instansi</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+nama_instansi+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Versi</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+versi+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Lokasi</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+lokasi+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Keterangan</label>
+									<div class="col-sm-9">
+										<textarea class="form-control" value="`+keterangan+`" readonly></textarea>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Tahun</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+tahun+`" rows="3" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Username</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+username+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Password</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+password+`" readonly>
+									</div>
+							</div>`;
+		$("#viewModalBody").html(html);
+	});
 
 	$("#tabRegister").click(function(){
 		if(tableRegister instanceof $.fn.dataTable.Api){
@@ -842,7 +862,6 @@ $this->load->view('template/_js');
 		let id = $(this).data("id");
 
 		$("#modalUbahSiswa").modal("show");
-		console.log(instansiKode+" | "+programKode);
 
 		$.ajax({
 			url: "<?= site_url('Profile/NamaInstansiAPI') ?>",
@@ -917,15 +936,54 @@ $this->load->view('template/_js');
 		let nisn = $(this).data("nisn");
 		let username = $(this).data("username");
 		let password = $(this).data("password");
-		$("#modalViewSiswa").modal("show");
-		$("#modalViewSiswa").find(".viewFoto").prop("src", "<?=base_url('assets/images/')?>"+foto);
-		$("#modalViewSiswa").find(".viewNama").val(nama);
-		$("#modalViewSiswa").find(".viewInstansi").val(instansi);
-		$("#modalViewSiswa").find(".viewJurusan").val(jurusan);
-		$("#modalViewSiswa").find(".viewNis").val(nis);
-		$("#modalViewSiswa").find(".viewNisn").val(nisn);
-		$("#modalViewSiswa").find(".viewUsername").val(username);
-		$("#modalViewSiswa").find(".viewPassword").val(password);
+		$("#modalView").modal("show");
+		$("#modalTitle").text("Data Siswa");
+		let html = `<center>
+								<img src="<?= base_url('assets/images/')?>`+foto+`" class="img-circle" width="150" height="150" alt="Empty">
+							</center><br><br>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nama</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" value="`+nama+`" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Instansi</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+instansi+`" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Jurusan</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+jurusan+`" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nis</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+nis+`" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">NISN</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+nisn+`" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Username</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+username+`" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Password</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" value="`+password+`" readonly>
+								</div>
+							</div>`;
+		$("#viewModalBody").html(html);
 	})
 
 	//Fungsi: Delete Registrasi Siswa
