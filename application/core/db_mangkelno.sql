@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Mar 2019 pada 17.05
+-- Waktu pembuatan: 06 Mar 2019 pada 14.49
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -191,19 +191,20 @@ CREATE TABLE `tb_instansi` (
   `keterangan` varchar(50) DEFAULT '-',
   `tahun` int(4) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(32) NOT NULL
+  `password` varchar(32) NOT NULL,
+  `foto` varchar(50) NOT NULL DEFAULT 'user.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_instansi`
 --
 
-INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `kota_lokasi`, `keterangan`, `tahun`, `username`, `password`) VALUES
-(3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', '21232f297a57a5a743894a0e4a801fc3'),
-(4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', '21232f297a57a5a743894a0e4a801fc3'),
-(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', 'YWRtaW4='),
-(6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', '21232f297a57a5a743894a0e4a801fc3'),
-(7, '100.001', '010.81246', 2, 'SMK Biasa', 'APBD', 'surabaya', NULL, 2019, 'biasa', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `nama_instansi`, `versi`, `kota_lokasi`, `keterangan`, `tahun`, `username`, `password`, `foto`) VALUES
+(3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', 'YWRtaW4=', 'user.png'),
+(4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', 'YWRtaW4=', 'user.png'),
+(5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', 'YWRtaW4=', 'user.png'),
+(6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', 'YWRtaW4=', 'user.png'),
+(7, '100.001', '010.81246', 2, 'SMK Biasa', 'APBD', 'surabaya', NULL, 2019, 'biasa', 'YWRtaW4=', 'user.png');
 
 -- --------------------------------------------------------
 
