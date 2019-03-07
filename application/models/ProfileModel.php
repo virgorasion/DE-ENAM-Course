@@ -121,6 +121,11 @@ class ProfileModel extends CI_model
         }
     }
 
+    public function editData($table,$data,$where)
+    {
+        return $this->db->update($table,$data,$where);
+    }
+
     public function DeleteData($table,$data)
     {
         return $this->db->delete($table,$data);

@@ -114,6 +114,30 @@ class Profile extends CI_controller
         }
     }
 
+    public function ubahDataInstansi()
+    {
+        $post = $this->input->post();
+        $kodeInstansi = $post['editKodeInstansi'];
+        $data = [
+            'nama_instansi' => $post['editNamaInstansi'],
+            'versi' => $post['editVersiInstansi'],
+            'kota_lokasi' => $post['editLokasiInstansi'],
+            'keterangan' => $post['editKeteranganInstansi'],
+            'tahun' => $post['editTahunInstansi'],
+            // 'username' => $psot['editUsernameInstansi'],
+            'password' => $post['editPasswordInstansi']
+        ];
+        $where = ['kode_instansi' => $kodeInstansi];
+        $query = $this->ProfileModel->editData("tb_instansi",$data,$where);
+        if ($query) {
+            $this->session->set_tempdata('succ', 'Berhasil Ubah Data Instansi',5);
+            redirect(site_url("Profile"));
+        }else {
+            $this->session->set_tempdata('fail', 'Gagal Ubah Data Instansi, hubungi admin !',5);
+            redirect(site_url("Profile"));
+        }
+    }
+
     public function ubahDataSiswa()
     {
         $post = $this->input->post();
@@ -214,6 +238,18 @@ class Profile extends CI_controller
             redirect('Profile');
         }else {
             $this->session->set_tempdata('fail', 'Gagal hapus siswa, segera hubungi admin !',5);
+            redirect('Profile');
+        }
+    }
+
+    public function hapusInstansi($kode_instansi)
+    {
+        $query = $this->db->query("CALL DeleteInstansi('".$kode_instansi."')");
+        if ($query) {
+            $this->session->set_tempdata('succ', 'Berhasil hapus Instansi',5);
+            redirect('Profile');
+        }else {
+            $this->session->set_tempdata('fail', 'Gagal hapus Instansi, segera hubungi admin !',5);
             redirect('Profile');
         }
     }

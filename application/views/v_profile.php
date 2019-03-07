@@ -216,7 +216,7 @@
 		</div>
 		<!-- /.row -->
 
-		<!-- Start Modal Ubah Password -->
+		<!-- Start Modal Edit Password -->
 		<div class="modal fade" id="modalUbah">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -335,7 +335,7 @@
 		</div>
 		<!-- /.modal -->
 
-		<!-- Start Modal Ubah Siswa -->
+		<!-- Start Modal Edit Siswa -->
 		<div class="modal fade" id="modalUbahSiswa">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -407,6 +407,84 @@
 		</div>
 		<!-- /.modal -->
 
+		<!-- Start Modal Edit Instansi -->
+		<div class="modal fade" id="modalEditInstansi">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Edit Instansi</h4>
+					</div>
+					<form class="form-horizontal" action="<?=site_url("Profile/ubahDataInstansi")?>" method="post" enctype="multipart/form-data">
+						<div class="modal-body">
+							<center>
+								<img src="" id="editFotoInstansi" class="img-circle" width="150" height="150" alt="Empty">
+								<!-- <input type="file" name="editFotoInstansi" id="editFotoInstansi" class="hidden"> -->
+							</center><br><br>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Kode Instansi</label>
+									<div class="col-sm-9">
+										<input type="text" name="editKodeInstansi" id="editKodeInstansi" class="form-control" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Nama Instansi</label>
+									<div class="col-sm-9">
+										<input type="text" name="editNamaInstansi" id="editNamaInstansi" class="form-control">
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Versi</label>
+									<div class="col-sm-9">
+										<input type="text" name="editVersiInstansi" id="editVersiInstansi" class="form-control">
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Lokasi</label>
+									<div class="col-sm-9">
+										<input type="text" name="editLokasiInstansi" id="editLokasiInstansi" class="form-control">
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Keterangan</label>
+									<div class="col-sm-9">
+										<input type="text" name="editKeteranganInstansi" id="editKeteranganInstansi" class="form-control">
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Tahun</label>
+									<div class="col-sm-9">
+										<input type="text" name="editTahunInstansi" id="editTahunInstansi" class="form-control">
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Username</label>
+									<div class="col-sm-9">
+										<input type="text" name="editUsernameInstansi" id="editUsernameInstansi" class="form-control" readonly>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Password</label>
+									<div class="col-sm-9">
+										<input type="text" name="editPasswordInstansi" id="editPasswordInstansi" class="form-control">
+									</div>
+							</div>
+							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
 		<!-- Start Modal View Siswa -->
 		<div class="modal fade" id="modalView">
 			<div class="modal-dialog">
@@ -422,7 +500,7 @@
 						</div>
 					</form>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">Tutup</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 						</div>
 				</div>
 				<!-- /.modal-content -->
@@ -722,6 +800,74 @@ $this->load->view('template/_js');
 									</div>
 							</div>`;
 		$("#viewModalBody").html(html);
+	});
+
+	// Fungsi: Edit Data Instansi (Admin)
+	$("#tableInstansi").on("click",".edit_data",function(){
+		let kode_instansi = $(this).data('instansi');
+		let nama_instansi = $(this).data('nama');
+		let versi = $(this).data('versi');
+		let lokasi = $(this).data('lokasi');
+		let keterangan = $(this).data('keterangan');
+		let tahun = $(this).data('tahun');
+		let username = $(this).data('username');
+		let password = $(this).data('password');
+		let foto = $(this).data('foto');
+		$("#modalEditInstansi").modal("show");
+		$("#editFotoInstansi").prop("src","<?=base_url("assets/images/")?>"+foto);
+		$("#editKodeInstansi").val(kode_instansi);
+		$("#editNamaInstansi").val(nama_instansi);
+		$("#editVersiInstansi").val(versi);
+		$("#editLokasiInstansi").val(lokasi);
+		$("#editKeteranganInstansi").val(keterangan);
+		$("#editTahunInstansi").val(tahun);
+		$("#editUsernameInstansi").val(username);
+		$("#editPasswordInstansi").val(password);
+	});
+
+	// Fungsi Delete Data Instansi (Admin)
+	$("#tableInstansi").on("click",".delete_data",function(){
+		let instansi_kode = $(this).data("instansi");
+		let nama_instansi = $(this).data("nama");
+		$.confirm({
+			theme: 'supervan',
+			title: 'WARNING !',
+			content: `MENGHAPUS INSTANSI INI AKAN MEMBUAT ANDA MENGHAPUS PULA DATA DIDALAMNYA 
+								<br> TERMASUK DATA PROGRAM, KEGIATAN, REKENING, DETAIL REKENING DAN SISWA 
+								<br> APAKAH ANDA YAKIN INGIN MENGHAPUS INSTANSI <br> `+" \""+ nama_instansi + "\" ",
+			buttons: {
+				Cancel: function () {},
+				delete: {
+					text: 'Delete',
+					action: function(){
+						$.confirm({
+							theme: 'supervan',
+							title: 'WARNING !',
+							content: 'APAKAH ANDA YAKIN ?',
+							buttons: {
+								Cancel: function(){},
+								Yakin: {
+									text: "Yakin",
+									action: function(){
+										$.confirm({
+											theme: 'supervan',
+											title: 'WARNING !',
+											content: 'TEKAN TOMBOL "OK"',
+											buttons: {
+												Cancel: function(){},
+												OK: function(){
+													window.location = "<?=site_url('Profile/hapusInstansi/')?>" + instansi_kode;
+												}
+											}
+										})
+									}
+								}
+							}
+						})
+					}
+				}
+			}
+		});
 	});
 
 	$("#tabRegister").click(function(){
