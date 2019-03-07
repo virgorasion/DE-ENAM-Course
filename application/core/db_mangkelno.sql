@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Mar 2019 pada 14.49
+-- Waktu pembuatan: 07 Mar 2019 pada 16.44
 -- Versi server: 10.1.30-MariaDB
 -- Versi PHP: 7.2.2
 
@@ -26,6 +26,21 @@ DELIMITER $$
 --
 -- Prosedur
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInstansi` (IN `kodeInstansi` VARCHAR(50))  BEGIN
+#Delete Instansi
+DELETE FROM tb_instansi WHERE tb_instansi.kode_instansi = kodeInstansi;
+#Delete Program
+DELETE FROM tb_program WHERE tb_program.kode_instansi = kodeInstansi;
+#Delete Kegiatan
+DELETE FROM tb_kegiatan WHERE tb_kegiatan.kode_instansi = kodeInstansi;
+#Delete Rekening
+DELETE FROM tb_rekening WHERE tb_rekening.kode_instansi = kodeInstansi;
+#Delete Detail Rekening
+DELETE FROM tb_detail_rekening WHERE tb_detail_rekening.kode_instansi = kodeInstansi;
+#Delete Siswa
+DELETE FROM tb_siswa WHERE tb_siswa.kode_instansi = kodeInstansi;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SyncTotalRinci` (IN `kodeInstansi` VARCHAR(50), IN `kodeProgram` VARCHAR(50), IN `kodeKegiatan` VARCHAR(50), IN `kodeRekening` VARCHAR(50), OUT `resDetailRek` VARCHAR(50), OUT `resRek` VARCHAR(50), OUT `resKegiatan` VARCHAR(50))  BEGIN
 	#Select Detail Rekening
 	SELECT SUM(tb_detail_rekening.total) INTO resDetailRek
@@ -203,7 +218,6 @@ INSERT INTO `tb_instansi` (`id`, `kode_admin`, `kode_instansi`, `hak_akses`, `na
 (3, '100.001', '010.6531', 2, 'SMKN 2 Surabaya', '', '', NULL, 2018, 'joo', 'YWRtaW4=', 'user.png'),
 (4, '100.001', '010.0001', 2, 'SMK Siang', '', '', NULL, 2017, 'siang', 'YWRtaW4=', 'user.png'),
 (5, '100.001', '010.03', 2, 'SMKN 10 Surabaya', 'APBD - 1', '', NULL, 2018, 'smk10', 'YWRtaW4=', 'user.png'),
-(6, '100.001', '010.1208410', 2, 'Sekolah Baru Buat', 'APBD -1', 'Surabaya', NULL, 2019, 'baru', 'YWRtaW4=', 'user.png'),
 (7, '100.001', '010.81246', 2, 'SMK Biasa', 'APBD', 'surabaya', NULL, 2019, 'biasa', 'YWRtaW4=', 'user.png');
 
 -- --------------------------------------------------------
@@ -353,8 +367,6 @@ INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode
 (14, '100.001', 7, '010.6531', '127.02', '', '', '', 'lama', '2000000', '', ''),
 (15, '100.001', 0, '010.03', '127.01', 'Program Baru', 'Hari ini', 'Semuanya', 'Hari Ini', '2980000', '1230000', '24748216'),
 (16, '100.001', 5, '010.03', '127.02', 'PEMBANGUNAN', 'Program ini dibuat pada 11 Januari 2019', 'Dinas Pendidikan', 'Untuk siswa Nathanael Ifanda', '1000000', '', ''),
-(17, '100.001', 9, '010.1208410', '127.28741', 'Program', 'Ini Program', 'Semuanya', 'Program Baru', '20000000', '', ''),
-(18, '0', 12, '010.1208410', '127.9817', 'tset', 'lajsd', 'ajbf', 'poras', '2000000', '', ''),
 (19, '100.001', 10, '010.81246', '127.971263', 'Program', 'Pasdaroh', 'semuanya', 'Progarm', '20000000', '', ''),
 (20, '100.001', 13, '010.0001', '127.172471249', 'test', 'tses', 'tseas', 'tese', '91283124', '', '');
 
@@ -459,7 +471,7 @@ INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`
 (8, '010.03', '', 3, 'Nathanael Ifanda', 'ethan', 'YWRtaW4=', '1122334455', '123123', 'Rekayasa Perangkat Lunak', '085755006308', 'user.png'),
 (9, '010.120841', '127.28741', 3, 'Siswa Baru', 'siswa', 'YWRtaW4=', '87214', '00007124861', 'RPL', '0987124712', 'user.png'),
 (10, '010.81246', '127.971263', 3, 'joo-kun', 'murid', 'YWRtaW4=', '917264', '00091241', 'RPL', '009817241', 'user.png'),
-(11, '010.0001', '127.3321', 3, 'test dafter', 'ahjsvd', 'YWRtaW4=', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', 'user.png'),
+(11, '010.0001', '127.3321', 3, 'Namamu Spo ?', 'ahjsvd', 'YWRtaW4=', 'jahsvd', 'jasvd', 'jasvd', 'khasvd', 'user.png'),
 (12, '010.120841', '127.9817', 3, 'Sony Adi Adriko', 'Tersearah', 'YWRtaW4=', '91294612', '238432', 'Treserah', '083849575737', '85ab08617470249a986ad29e4c85f1b7.jpg'),
 (13, '010.0001', '127.172471249', 3, 'Joonokoto', 'jookun', 'am9v', '091924', '0008124128', 'RPL', '081273124', 'bd767167664b684461349fe28352dfae.png');
 
