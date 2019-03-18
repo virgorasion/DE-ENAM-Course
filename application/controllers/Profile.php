@@ -269,6 +269,101 @@ class Profile extends CI_controller
         }
     }
 
+    public function GantiFotoProfile()
+    {
+        $post = $this->input->post();
+        // var_dump($post);
+        $config['upload_path'] = "./assets/images/";
+        $config['allowed_types'] = "jpeg|jpg|png|ico";
+        $config['encrypt_name'] = TRUE;
+        $config['max_size'] = 4096;
+        $config['max_width'] = 1000;
+        $config['max_height'] = 1000;
+
+        $this->load->library("upload", $config);
+
+        if (!$this->upload->do_upload('foto')) {
+            if ($_SESSION['hakAkses'] == 1) {
+                $query = $this->ProfileModel->dataAdmin(@$_SESSION['kode_admin']);
+                $data['data'] = $query;
+                $data['error'] = $this->upload->display_errors();
+                $this->load->view('v_profile',$data);
+            }elseif ($_SESSION['hakAkses'] == 2) {
+                $query = $this->ProfileModel->dataInstansi(@$_SESSION['kode_instansi']);
+                $data['data'] = $query;
+                $data['error'] = $this->upload->display_errors();
+                $this->load->view('v_profile',$data);
+            }elseif ($_SESSION['hakAkses'] == 3) {
+                $query = $this->ProfileModel->dataSiswa(@$_SESSION['id_siswa']);
+                $data['data'] = $query;
+                $data['error'] = $this->upload->display_errors();
+                $this->load->view('v_profile',$data);
+            }
+        }else{
+            $namaFoto = $this->upload->data("file_name");
+            $data = [
+                'foto' => $namaFoto
+            ];
+            $id = $post['idUser'];
+            switch ($post['hakAkses']) {
+                case '1':
+                    $where = [
+                        'id' => $id
+                    ];
+                    $query = $this->ProfileModel->editData("tb_admin",$data,$where);
+                    if ($query) {
+                        $this->session->set_tempdata("succ","Berhasil Mengganti Foto",5);
+                        $this->session->set_userdata('foto', $namaFoto);
+                        $this->DeleteFile($_SESSION['foto']);
+                        redirect(site_url("Profile"));
+                    }else{
+                        $this->session->set_tempdata("fail","Gagal mengganti foto, silahkan coba lagi");
+                        redirect(site_url("Profile"));
+                    }
+                    break;
+                case '2':
+                    $where = [
+                        'id' => $id
+                    ];
+                    $query = $this->ProfileModel->editData("tb_instansi",$data,$where);
+                    if ($query) {
+                        $this->session->set_tempdata("succ","Berhasil Mengganti Foto",5);
+                        $this->session->set_userdata('foto', $namaFoto);
+                        $this->DeleteFile($_SESSION['foto']);
+                        redirect(site_url("Profile"));
+                    }else{
+                        $this->session->set_tempdata("fail","Gagal mengganti foto, silahkan coba lagi");
+                        redirect(site_url("Profile"));
+                    }
+                    break;
+                case '3':
+                    $where = [
+                        'id_siswa' => $id
+                    ];
+                    $query = $this->ProfileModel->editData("tb_siswa",$data,$where);
+                    if ($query) {
+                        $this->session->set_tempdata("succ","Berhasil Mengganti Foto",5);
+                        $this->session->set_userdata('foto', $namaFoto);
+                        $this->DeleteFile($_SESSION['foto']);
+                        redirect(site_url("Profile"));
+                    }else{
+                        $this->session->set_tempdata("fail","Gagal mengganti foto, silahkan coba lagi");
+                        redirect(site_url("Profile"));
+                    }
+                    break;
+                default:
+                    $this->session->set_tempdata("fail","Kesalahan Tidak Dikenal",5);
+                    redirect(site_url("Profile"));
+                    break;
+            }
+        }
+    }
+
+    private function UploadFoto()
+    {
+        
+    }
+
     private function DeleteFile($fileName)
     {
         if (file_exists($fileName)) {

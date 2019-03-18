@@ -42,12 +42,12 @@ class Auth extends CI_controller
             $this->load->view("v_registrasi");
         }else {
             $post = $this->input->post();
-
+            die(var_dump($post));
             $config['upload_path'] = "./assets/images/";
-            $config['allowed_types'] = "jpeg|jpg|png";
+            $config['allowed_types'] = "jpeg|jpg|png|ico";
             $config['encrypt_name'] = TRUE;
             $config['max_size'] = 4096;
-            $config['max_width'] = 800;
+            $config['max_width'] = 1000;
             $config['max_height'] = 1000;
 
             $this->load->library("upload", $config);
@@ -97,6 +97,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('nama', $res->nama);
                     $this->session->set_userdata('id', $res->id);
                     $this->session->set_userdata('kode_admin', $res->kode_admin);
+                    $this->session->set_userdata('foto', $res->foto);
                     redirect(site_url('InstansiCtrl'));
                 }
             }else{
@@ -116,6 +117,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('nama', $res->nama_instansi);
                     $this->session->set_userdata('kode_instansi', $res->kode_instansi);
                     $this->session->set_userdata('id', $res->id);
+                    $this->session->set_userdata('foto', $res->foto);
                     redirect(site_url('InstansiCtrl'));
                 }
             }else{
@@ -135,6 +137,7 @@ class Auth extends CI_controller
                     $this->session->set_userdata('username', $res->username);
                     $this->session->set_userdata('nis', $res->nis);
                     $this->session->set_userdata('nisn', $res->nisn);
+                    $this->session->set_userdata('foto', $res->foto);
                     redirect(site_url('InstansiCtrl'));
                 }
             }else{
