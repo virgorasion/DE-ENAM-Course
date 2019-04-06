@@ -18,7 +18,7 @@ var faIcon = {
 }
 $('#datatable').on('click', '#btnView', function () {
 	var $item = $(this).closest('tr');
-	var $kode = $item.find('#kode').text();
+	var $kode = $(this).data("id");
 	// alert($kode+"asdasd");
 	window.location = "<?= site_url('ProgramCtrl/index/') ?>" + $kode;
 

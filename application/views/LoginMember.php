@@ -99,7 +99,7 @@
 						</div>
 
 					<div style="color:white; font-family:verdana;margin-left:15px">
-					Login Sebagai <a href="<?=site_url('Auth/Admin')?>">Admin ?</a>
+					Belum Daftar? <a href="<?=site_url('Auth/Registrasi')?>"><span style="color:white;">Daftar Sekarang!! </span></a>
 					</div>
 
 					
