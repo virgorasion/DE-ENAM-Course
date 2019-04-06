@@ -42,7 +42,6 @@ class Auth extends CI_controller
             $this->load->view("v_registrasi");
         }else {
             $post = $this->input->post();
-            die(var_dump($post));
             $config['upload_path'] = "./assets/images/";
             $config['allowed_types'] = "jpeg|jpg|png|ico";
             $config['encrypt_name'] = TRUE;

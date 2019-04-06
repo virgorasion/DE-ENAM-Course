@@ -106,18 +106,22 @@ class ProfileModel extends CI_model
     public function insertUserSiswa($table, $data, $nisn, $dataProgram,$id)
     {
         $this->db->where('username', $data['username']);
-        $query = $this->db->get($table);
-        if ($query->num_rows() == 0) {
+        $cekUsername = $this->db->get($table);
+        $this->db->where('nisn', $data['nisn']);
+        $cekNisn = $this->db->get($table);
+        if ($cekUsername->num_rows() > 0) {
+            return [false, "Username sudah digunakan !"] ;
+        }elseif ($cekNisn->num_rows() > 0) {
+            return [false, "NISN sudah digunakan !"];
+        }else {
             //query untuk tambah siswa sekaligus update data program
             $this->db->insert($table, $data);
             $query = $this->db->select('id_siswa')->from($table)->where('nisn', $nisn)->get();
             $row = $query->row();
             $id_siswa = array('id_siswa' => $row->id_siswa);
-            $this->db->update('tb_program',$id_siswa, $dataProgram);
-            $this->db->delete("tb_registrasi",$id);
-            return true;
-        }else{
-            return false;
+            $this->db->update('tb_program',$id_siswa, $dataProgram); // ubah data tb_program menjadi milik siswa
+            $this->db->delete("tb_registrasi",$id); // hapus data registrasi siswa
+            return array(true,"Berhasil menambah siswa");
         }
     }
 

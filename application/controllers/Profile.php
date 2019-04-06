@@ -221,11 +221,11 @@ class Profile extends CI_controller
             'kode_program' => $post['addProgram']
         );
         $query = $this->ProfileModel->insertUserSiswa('tb_siswa', $data, $nisn, $dataProgram, $id);
-        if ($query) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah siswa',5);
+        if ($query[0]) {
+            $this->session->set_tempdata('succ', $query[1],5);
             redirect('Profile');
         }else {
-            $this->session->set_tempdata('fail', $this->db->error(),5);
+            $this->session->set_tempdata('fail', $query[1],5);
             redirect('Profile');
         }
     }
