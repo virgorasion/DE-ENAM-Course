@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2019 at 10:51 AM
+-- Generation Time: Apr 07, 2019 at 11:07 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -187,13 +187,6 @@ CREATE TABLE `tb_indikator` (
   `nilai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_indikator`
---
-
-INSERT INTO `tb_indikator` (`id`, `kode_indikator`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `satuan`, `target`, `nilai`) VALUES
-(3, '1.001', '010.12983', '127.12973', '4', 'askjdh', '1', 100, 100);
-
 -- --------------------------------------------------------
 
 --
@@ -244,7 +237,7 @@ CREATE TABLE `tb_kegiatan` (
 --
 
 INSERT INTO `tb_kegiatan` (`id`, `kode_instansi`, `kode_program`, `kode_kegiatan`, `nama_kegiatan`, `total_rekening`, `total_rinci`, `keterangan`) VALUES
-(4, '010.12983', '127.12973', '080.23864', 'aljsbd', 0, 0, 'kasbd');
+(5, '010.12983', '127.12973', '080.23746', 'aljdnas', 0, 0, 'jasnd');
 
 -- --------------------------------------------------------
 
@@ -347,7 +340,7 @@ CREATE TABLE `tb_program` (
 --
 
 INSERT INTO `tb_program` (`id`, `kode_admin`, `id_siswa`, `kode_instansi`, `kode_program`, `jenis`, `uraian`, `sasaran`, `nama_program`, `plafon`, `total_rinci`, `total_rekening`) VALUES
-(5, '100.001', 7, '010.12983', '127.12973', 'Baru', '-', '-', 'Program Baru', '5000000', '', '');
+(5, '100.001', NULL, '010.12983', '127.12973', 'Baru', '-', '-', 'Program Baru', '5000000', '', '');
 
 -- --------------------------------------------------------
 
@@ -410,13 +403,6 @@ CREATE TABLE `tb_siswa` (
   `nomor_hp` varchar(14) NOT NULL,
   `foto` varchar(40) NOT NULL DEFAULT 'user.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_siswa`
---
-
-INSERT INTO `tb_siswa` (`id_siswa`, `kode_instansi`, `kode_program`, `hak_akses`, `nama`, `username`, `password`, `nis`, `nisn`, `jurusan`, `nomor_hp`, `foto`) VALUES
-(7, '010.12983', '127.12973', 3, 'M Nur Fauzan W', 'admin', 'YXNk', '817263', '01273', 'RPL', '23764', 'user.png');
 
 --
 -- Indexes for dumped tables
@@ -552,7 +538,7 @@ ALTER TABLE `tb_instansi`
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_pembahasan`
@@ -564,7 +550,7 @@ ALTER TABLE `tb_pembahasan`
 -- AUTO_INCREMENT for table `tb_program`
 --
 ALTER TABLE `tb_program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_registrasi`
@@ -592,14 +578,13 @@ ALTER TABLE `tb_siswa`
 -- Constraints for table `tb_detail_rekening`
 --
 ALTER TABLE `tb_detail_rekening`
-  ADD CONSTRAINT `tb_detail_rekening_ibfk_1` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_detail_rekening_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_indikator`
 --
 ALTER TABLE `tb_indikator`
-  ADD CONSTRAINT `tb_indikator_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_indikator_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_indikator_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_instansi`
@@ -611,17 +596,13 @@ ALTER TABLE `tb_instansi`
 -- Constraints for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  ADD CONSTRAINT `tb_kegiatan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_kegiatan_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_kegiatan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_pembahasan`
 --
 ALTER TABLE `tb_pembahasan`
-  ADD CONSTRAINT `tb_pembahasan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_3` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pembahasan_ibfk_4` FOREIGN KEY (`kode_rekening`) REFERENCES `tb_rekening` (`kode_rekening`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_pembahasan_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_program`
@@ -637,15 +618,13 @@ ALTER TABLE `tb_program`
 ALTER TABLE `tb_rekening`
   ADD CONSTRAINT `tb_rekening_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_rekening_ibfk_2` FOREIGN KEY (`kode_patokan`) REFERENCES `tb_patokan_rekening` (`kode_patokan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_rekening_ibfk_3` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_rekening_ibfk_4` FOREIGN KEY (`kode_kegiatan`) REFERENCES `tb_kegiatan` (`kode_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  ADD CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_siswa_ibfk_2` FOREIGN KEY (`kode_program`) REFERENCES `tb_program` (`kode_program`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`kode_instansi`) REFERENCES `tb_instansi` (`kode_instansi`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
