@@ -421,7 +421,7 @@ class ProgramModel extends CI_model
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function getDetailRekening($table,$kodeInstansi,$kodeRekening)
+    public function getDetailRekening($table, $kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening)
     {
         $this->datatables->select("tb_detail_rekening.id,
                                     tb_detail_rekening.jenis,
@@ -437,6 +437,8 @@ class ProgramModel extends CI_model
                                     tb_detail_rekening.keterangan");
         $this->datatables->from('tb_detail_rekening');
         $this->datatables->where('tb_detail_rekening.kode_instansi',$kodeInstansi);
+        $this->datatables->where('tb_detail_rekening.kode_program',$kodeProgram);
+        $this->datatables->where('tb_detail_rekening.kode_kegiatan',$kodeKegiatan);
         $this->datatables->where('tb_detail_rekening.kode_rekening',$kodeRekening);
         $this->datatables->add_column('action',
             '<a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-jenis="$2" data-uraian="$3" data-suburaian="$4" data-sasaran="$5" data-lokasi="$6" data-dana="$8" data-satuan="$7" data-volume="$9" data-harga="$10" data-total="$11" data-ket="$12"><i class="fa fa-pencil"></i></a> 
@@ -460,6 +462,8 @@ class ProgramModel extends CI_model
     public function SyncTotalRinci($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
         //Fungsi: update total_rinci rekening
+        // var_dump($kodeInstansi." ".$kodeProgram." ".$kodeKegiatan." ".$kodeRekening);
+        // die();
         $this->db->query("CALL SyncTotalRinci('".$kodeInstansi."','".$kodeProgram."','".$kodeKegiatan."','".$kodeRekening."',@a,@b,@c)");
     }
 

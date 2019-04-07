@@ -312,7 +312,7 @@
 				destroy: true,
 				processing: true,
 				serverSide: true,
-				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeInstansi+"/"+kodeRekening, "type": "POST"},
+				ajax: {"url": "<?= site_url('ProgramCtrl/DataDetailRekening/') ?>"+kodeInstansi+"/"+kodeProgram+"/"+kodeKegiatan+"/"+kodeRekening, "type": "POST"},
 					columns: [
 						{"data": null,
 							"orderable": false,
@@ -1037,6 +1037,14 @@
 		$('#KodeKegiatanRekening').val(kodeKegiatan);
 		$('#KodeInstansiRekening').val(kodeInstansi);
 		$('#KodeProgramRekening').val(kodeProgram);
+		$('#formActionRekening').find('#addKodeRek').val(patokanID);
+
+		$('#formActionRekening').find('#addNamaRek').val("");
+		$('#formActionRekening').find('#AddT1').val("");
+		$('#formActionRekening').find('#AddT2').val("");	
+		$('#formActionRekening').find('#AddT3').val("");
+		$('#formActionRekening').find('#AddT4').val("");
+		$('#formActionRekening').find('#IDRekening').val("");
 	})
 
 	//Fungsi: Insert Detail Rekening input Total Real-Time

@@ -612,7 +612,7 @@ class ProgramCtrl extends CI_controller
             $getRek = $query->row();
             $kodeRek = $getRek->kode_rekening; // if(null):null ? 5.1.1.01
             $potong = substr($kodeRek, -2); // 01
-            $tambah = $potong + 1; // 02
+            $tambah = (int)$potong + 1; // 02
             $pad = str_pad($tambah, 2, "0", STR_PAD_LEFT); //02
             $result = $kodePatokan . "." . $pad;
             return $result;
@@ -643,10 +643,10 @@ class ProgramCtrl extends CI_controller
     //==============================================================================>>
     // Detail Rekening Code
 
-    public function DataDetailRekening($kodeInstansi, $kodeRekening) //Json DetailRekekning
+    public function DataDetailRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening) //Json DetailRekekning
     {
         header("Content-Type: application/json");
-        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening", $kodeInstansi, $kodeRekening);
+        echo $this->ProgramModel->getDetailRekening("tb_detail_rekening", $kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
     }
 
     public function TambahDetailRekening()

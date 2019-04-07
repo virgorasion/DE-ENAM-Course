@@ -27,6 +27,37 @@ class InstansiCtrl extends CI_controller
         echo json_encode($query);
     }
 
+    public function TambahSiswa()
+    {
+        $post = $this->input->post();
+        $data = array(
+            'kode_instansi' => $post['addInstansiSiswa'],
+            'kode_program' => $post['addProgramSiswa'],
+            'nama' => $post['addNamaSiswa'],
+            'hak_akses' => 3,
+            'nis' => $post['addNisSiswa'],
+            'nisn' => $post['addNisnSiswa'],
+            'username' => $post['addUserSiswa'],
+            'jurusan'  => $post['addJurusanSiswa'],
+            'nomor_hp' => $post['addHpSiswa'],
+            'foto' => "user.png",
+            'password' => base64_encode($post['addPassSiswa']),
+        );
+        $nisn = $post['addNisnSiswa'];
+        $dataProgram = array(
+            'kode_instansi' => $post['addInstansiSiswa'],
+            'kode_program' => $post['addProgramSiswa']
+        );
+        $query = $this->InstansiModel->InsertSiswa('tb_siswa', $data, $nisn, $dataProgram);
+        if ($query[0]) {
+            $this->session->set_tempdata('succ', $query[1],5);
+            redirect('InstansiCtrl');
+        }else {
+            $this->session->set_tempdata('fail', $query[1],5);
+            redirect('InstansiCtrl');
+        }
+    }
+
     public function TambahInstansi()
     {
         $tahun = $this->input->post('addTahun');
@@ -51,10 +82,15 @@ class InstansiCtrl extends CI_controller
             'username' => $user,
             'password' => base64_encode($pass)
         );
-
-        $this->InstansiModel->InsertInstansi('tb_instansi',$data);
-        $this->session->set_flashdata('msg', 'Data berhasil ditambahkan');
-        redirect('InstansiCtrl');
+        $kodeInstansi = $kode;
+        $query = $this->InstansiModel->InsertInstansi('tb_instansi',$data,$kodeInstansi);
+        if ($query[0]) {
+            $this->session->set_flashdata('succ', $query[1]);
+            redirect('InstansiCtrl');
+        }else{
+            $this->session->set_flashdata('fail', $query[1]);
+            redirect('InstansiCtrl');
+        }
     }
 
     public function DataEdit($id)

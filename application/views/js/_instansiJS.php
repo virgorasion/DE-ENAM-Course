@@ -19,7 +19,7 @@ var faIcon = {
 $('#datatable').on('click', '#btnView', function () {
 	var $item = $(this).closest('tr');
 	var $kode = $(this).data("id");
-	// alert($kode+"asdasd");
+	// alert($kode+"kodeInstansi");
 	window.location = "<?= site_url('ProgramCtrl/index/') ?>" + $kode;
 
 });

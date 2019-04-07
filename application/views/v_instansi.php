@@ -96,7 +96,7 @@
 								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">
 								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
-									<button class="btn btn-primary btn-xs btnView" data-id="<?=$item->id?>" id="btnView">
+									<button class="btn btn-primary btn-xs btnView" data-id="<?=$item->kode_instansi?>" id="btnView">
 										<span class="fa fa-eye"></span>
 									</button>
 								</a>
