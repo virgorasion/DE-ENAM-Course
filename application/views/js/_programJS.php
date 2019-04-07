@@ -480,12 +480,6 @@
 			if ($.fn.DataTable.isDataTable(tableKegiatan) == false) {
 				funcTableKegiatan(kodeProgram,idSiswa);
 			}
-			if ($.fn.DataTable.isDataTable(tableIndikator) == false) {
-				funcTableIndikator();
-			}
-			if ($.fn.DataTable.isDataTable(tablePembahasan) == false) {
-				funcTablePembahasan();
-			}
 			infoKegiatan(kodeInstansi,kodeProgram);
 			penanggungJawab(idSiswa);
  		}else {
@@ -496,6 +490,19 @@
 			tablePembahasan.destroy();
 		}
 	});
+
+	// Initialize table indikator saat klik tabIndikator
+	$("#tabIndikatorKegiatan").click(function(){
+		if ($.fn.DataTable.isDataTable("#tableIndikator") == false) {
+				funcTableIndikator();
+			}
+	})
+	// Initialize table Pembahasan saat klik tabPembahasan
+	$("#tabPembahasanKegiatan").click(function(){
+		if ($.fn.DataTable.isDataTable("#tablePembahasan") == false) {
+			funcTablePembahasan();
+		}
+	})
 	
 	//Fungsi: Hidden box Kegiatan
 	$('#btnHidden').click(function(){
