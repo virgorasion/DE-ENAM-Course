@@ -740,9 +740,13 @@ class ProgramCtrl extends CI_controller
     }
 
 
-    public function ApiDataKegiatan($kodeKegiatan, $kodeInstansi)
+    public function ApiDataKegiatan($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
-        $query = $this->db->select('nama_kegiatan')->from('tb_kegiatan')->where('kode_kegiatan', $kodeKegiatan)->where('kode_instansi', $kodeInstansi)->get()->result();
+        $query = $this->db->select('nama_kegiatan')->from('tb_kegiatan')
+                            ->where('kode_instansi', $kodeInstansi)
+                            ->where('kode_program', $kodeProgram)
+                            ->where('kode_kegiatan', $kodeKegiatan)
+                            ->get()->result();
         echo json_encode($query);
     }
 

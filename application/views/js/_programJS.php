@@ -589,7 +589,7 @@
 	$("#btnTambahDetailRekening").click(function(){
 		$("#modalDetailRekening").modal('show');
 		$.ajax({
-			url: "<?=site_url('ProgramCtrl/ApiDataKegiatan/')?>"+kodeKegiatan+"/"+kodeInstansi,
+			url: "<?=site_url('ProgramCtrl/ApiDataKegiatan/')?>"+kodeInstansi+"/"+kodeProgram+"/"+kodeKegiatan,
 			type: "POST",
 			success:function(result){
 				var data = JSON.parse(result);
@@ -826,7 +826,7 @@
 		var ket = $(this).data('ket');
 		console.log(uraian);
 		$.ajax({
-			url: "<?= site_url('ProgramCtrl/ApiDataKegiatan/') ?>"+kodeKegiatan+"/"+kodeInstansi,
+			url: "<?= site_url('ProgramCtrl/ApiDataKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram+"/"+kodeKegiatan,
 			type: "POST",
 			success:function(result){
 				var data = JSON.parse(result);
