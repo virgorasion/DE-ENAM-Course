@@ -303,7 +303,7 @@
 					<div class="form-group">
 						<label for="addKegiatan" class="col-sm-2 control-label">Kegiatan</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="addKegiatan" name="addKegiatan" placeholder="Kegiatan">
+							<input type="text" class="form-control" id="addKegiatan" name="addKegiatan" placeholder="Kegiatan" disabled>
 						</div>
 					</div>
 					<div class="form-group">
@@ -409,7 +409,7 @@
 						</div>
 						<label for="addJenisIndikator" class="col-sm-2 control-label">Jenis</label>
 						<div class="col-sm-3">
-							<select class="form-control" name="addJenisIndikator" id="addJenisIndikator">
+							<select class="form-control" name="addJenisIndikator" id="addJenisIndikator" required>
 								<option value="1">Capaian Program</option>
 								<option value="2">Hasil</option>
 								<option value="3">Pengaluaran</option>
