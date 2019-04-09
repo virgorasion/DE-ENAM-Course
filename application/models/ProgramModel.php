@@ -150,7 +150,7 @@ class ProgramModel extends CI_model
     {
         return $this->db->select("tb_siswa.nis,tb_siswa.nisn,tb_siswa.nama,tb_siswa.username,tb_instansi.nama_instansi,tb_program.nama_program")->from("tb_siswa")
                             ->join("tb_instansi","tb_instansi.kode_instansi = tb_siswa.kode_instansi")
-                            ->join("tb_program","tb_program.kode_program = tb_siswa.kode_program")
+                            ->join("tb_program","tb_program.kode_program = tb_siswa.kode_program AND tb_program.kode_instansi = tb_siswa.kode_instansi")
                             ->where("tb_siswa.id_siswa",$idSiswa)
                             ->get()->result();
     }
@@ -324,6 +324,7 @@ class ProgramModel extends CI_model
         return $this->db->update($table,$data);
     }
 
+    // Sync data TotalRekening saat Rekening di edit
     public function SyncTotalRekening($kodeInstansi,$kodeProgram,$kodeKegiatan)
     {
         $this->db->trans_start();
@@ -387,7 +388,7 @@ class ProgramModel extends CI_model
             'action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRek="$3" data-kodeKeg="$9"><i class="fa fa-eye"></i></a>
             <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-rekening="$3" data-patokan="$2" data-uraian="$4" data-t1="$5" data-t2="$6" data-t3="$7" data-t4="$8"><i class="fa fa-pencil"></i></a> 
-            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-nama="$4"><i class="fa fa-remove"></i></a>',
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-nama="$4" data-rekening="$10" data-rinci="$11" data-koderek="$3"><i class="fa fa-remove"></i></a>',
             'id,
             kode_patokan,
             kode_rekening,
@@ -396,7 +397,9 @@ class ProgramModel extends CI_model
             triwulan_2,
             triwulan_3,
             triwulan_4,
-            kode_kegiatan');
+            kode_kegiatan,
+            total,
+            tot_rinci');
         $this->datatables->group_by("tb_rekening.id");
         return $this->datatables->generate();
     }
@@ -413,9 +416,12 @@ class ProgramModel extends CI_model
     }
 
     // Dipakai untuk edit rekening & detail rekening
-    public function DeleteDataRekening($table, $id)
+    public function DeleteDataRekening($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening, $totalRekening, $totalRinci)
     {
-        return $this->db->delete($table, array('id' => $id)); //Delete Rekening gabung dengan Detail Rekening
+        //Call procedure to delete Rekening & DetailRekening
+        //syncTotalRekening & TotalRinci
+        $this->db->query("CALL DeleteRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$kodeRekening')");
+        $this->db->query("CALL SyncTotalRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
     }
     
     //==============================================================================>>
@@ -459,11 +465,15 @@ class ProgramModel extends CI_model
         return $this->datatables->generate();
     }
 
+    public function DeleteDetailRekening($table,$id)
+    {
+        return $this->db->delete($table,['id'=>$id]);
+    }
+
+    // Sync data TotalRinci 
     public function SyncTotalRinci($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening)
     {
-        //Fungsi: update total_rinci rekening
-        // var_dump($kodeInstansi." ".$kodeProgram." ".$kodeKegiatan." ".$kodeRekening);
-        // die();
+        // Call Procedure on Database
         $this->db->query("CALL SyncTotalRinci('".$kodeInstansi."','".$kodeProgram."','".$kodeKegiatan."','".$kodeRekening."',@a,@b,@c)");
     }
 

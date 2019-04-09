@@ -486,8 +486,6 @@
 			$('#boxKegiatan').slideDown(1000);
 			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
-			tableIndikator.destroy();
-			tablePembahasan.destroy();
 		}
 	});
 
@@ -945,8 +943,10 @@
 
 	//Fungsi: Delete Rekening
 	$('#tableRekening').on('click', '.delete_data', function () {
-      var idRekening = $(this).data('id');
-	  var nama = $(this).data('nama');
+	  	let nama = $(this).data('nama');
+			let totRinci = $(this).data("rinci");
+			let totRekening = $(this).data("rekening");
+			let kodeRekening = $(this).data("koderek");
       console.log(nama);
       // $item.find("input[id$='no']").val();
       // alert("hai");
@@ -960,7 +960,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>" + idRekening +"/"+ kodeInstansi +"/"+ kodeProgram +"/"+ kodeKegiatan;
+              window.location = "<?= site_url('ProgramCtrl/HapusRekening/') ?>"+kodeInstansi+"/"+kodeProgram+"/"+kodeKegiatan+"/"+kodeRekening+"/"+totRekening+"/"+totRinci;
             }
           }
         }

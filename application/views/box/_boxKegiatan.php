@@ -82,13 +82,10 @@
 					<div class="tab-pane fade" id="nav-tabs-kegiatan-2">
 						<?php if ($_SESSION['hakAkses'] != 2) { ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<div class="form-group col-sm-4">
-									<a name="btnAddIndikator" id="btnAddIndikator" class="btn btn-primary">Tambah
-										Data</a>
-								</div>
-							</div>
+							<br>
+							<div class="col-md-11"></div>
+								<a name="btnAddIndikator" id="btnAddIndikator" class="btn btn-primary">Tambah
+									Data</a>
 						</div>
 						<br><br>
 						<hr>
@@ -149,12 +146,9 @@
 					<!-- Start Rincian Kegiatan Tab -->
 					<div class="tab-pane fade in active" id="nav-tabs-kegiatan-4">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<div class="form-group col-sm-4">
-									<a name="btnAddKegiatan" id="btnAddKegiatan" class="btn btn-primary">Tambah Data</a>
-								</div>
-							</div>
+							<br>
+							<div class="col-sm-11"></div>
+							<a name="btnAddKegiatan" id="btnAddKegiatan" class="btn btn-primary">Tambah Data</a>
 						</div>
 						<br><br>
 						<hr>
@@ -180,15 +174,11 @@
 					<div class="tab-pane fade" id="nav-tabs-kegiatan-5">
 						<?php if ($_SESSION['hakAkses'] == 1) { ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="form-inline col-md-2">
-								<br>
-								<?php if ($_SESSION['hakAkses'] == 1) { ?>
-								<div class="form-group col-sm-4">
-									<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah Pembahasan</a>
-								</div>
-								<?php 
-						} ?>
-							</div>
+							<br>
+							<?php if ($_SESSION['hakAkses'] == 1) { ?>
+								<div class="col-md-11"></div>
+								<a name="btnAddPembahasan" id="btnAddPembahasan" class="btn btn-primary">Tambah Data</a>
+							<?php } ?>
 						</div>
 						<br><br>
 						<hr>

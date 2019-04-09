@@ -578,10 +578,9 @@ class ProgramCtrl extends CI_controller
         }
     }
 
-    public function HapusRekening($idRekening, $kodeInstansi, $kodeProgram, $kodeKegiatan)
+    public function HapusRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening,$totalRekening,$totalRinci)
     {
-        $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
-        $query = $this->ProgramModel->DeleteDataRekening('tb_rekening', $idRekening);
+        $query = $this->ProgramModel->DeleteDataRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening,$totalRekening,$totalRinci);
         if ($query != null) {
             $this->session->set_tempdata('succ', 'Berhasil hapus rekening',5);
             $this->session->set_tempdata('Rekening_Direct', "Direction",5);
@@ -717,7 +716,7 @@ class ProgramCtrl extends CI_controller
 
     public function HapusDetailRekening($mainID, $kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening)
     {
-        $query = $this->ProgramModel->DeleteDataRekening("tb_detail_rekening", $mainID);
+        $query = $this->ProgramModel->DeleteDetailRekening("tb_detail_rekening", $mainID);
         //untuk update total_rekening di tb_instansi
         $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
         if ($query != null) {
