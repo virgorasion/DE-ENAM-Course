@@ -386,7 +386,7 @@ class ProgramModel extends CI_model
         callback_label(total,tot_rinci)');
         $this->datatables->add_column(
             'action',
-            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRek="$3" data-kodeKeg="$9"><i class="fa fa-eye"></i></a>
+            '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-id="$1" data-kodeRek="$3" data-kodeKeg="$9" data-nama="$4"><i class="fa fa-eye"></i></a>
             <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-rekening="$3" data-patokan="$2" data-uraian="$4" data-t1="$5" data-t2="$6" data-t3="$7" data-t4="$8"><i class="fa fa-pencil"></i></a> 
             <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-nama="$4" data-rekening="$10" data-rinci="$11" data-koderek="$3"><i class="fa fa-remove"></i></a>',
             'id,

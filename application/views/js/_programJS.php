@@ -11,6 +11,8 @@
 	var tableRekening = "";
 	var tableDetailRekening = "";
 	var idSiswa = "";
+	var namaKegiatan = "";
+	var uraianRekening = "";
     // Setup datatables
 	// $.fn.dataTableExt.errMode = 'none';
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -30,8 +32,8 @@
 	function funcTableKegiatan(kodeProgram) {
 		$('#boxKegiatan').fadeIn(1000);
 		$('#boxKegiatan').removeClass('hidden');
-		kodeInstansi = "<?= $kodeInstansi ?>";
-		console.log(kodeInstansi+"instansi");
+		// kodeInstansi = "<?= $kodeInstansi ?>";
+		// console.log(kodeInstansi+"instansi");
 		// console.log(kodeProgram);
 		tableKegiatan = $("#tableKegiatan").DataTable({
 			initComplete: function() {
@@ -401,6 +403,22 @@
 		}
 	});
 
+	//Ganti Title BoxProgram jadi nama instansi
+	function getNamaInstansi(){
+		kodeInstansi = "<?=$kodeInstansi?>";
+		// console.log(kodeInstansi+"instansi");
+		$.ajax({
+			url: "<?=site_url('ProgramCtrl/getDataInstansiAPI/')?>"+kodeInstansi,
+			type: "GET",
+			success: (result) =>{
+				let data = JSON.parse(result);
+				$("#titleBoxProgram").html('Instansi : '+data[0]['nama_instansi']);
+			}
+		})
+	}
+
+	getNamaInstansi();
+
 	//Fungsi: Initialize Select2
 	$(".select2").select2();
 
@@ -537,6 +555,7 @@
 			tableIndikator.destroy();
 			tablePembahasan.destroy();
 		}
+		$("#titleBoxProgram").html("Menu Cetak");
 	});
 	//Fungsi: Hidden box Detail Rekening
 	$('#btnHiddenBoxDetailRekening').click(function(){
@@ -557,6 +576,7 @@
 		if (tableIndikator instanceof $.fn.DataTable.Api == true) {
 			tableIndikator.destroy();
 		}
+		$("#titleBoxProgram").html("Rekening ("+namaKegiatan+")");
 	})
 	//Fungsi: untuk Hidden Box Detail Rekening ketika klik tabProgram
 	$("#tabProgram").click(function(){
@@ -565,14 +585,14 @@
 		if ($.fn.DataTable.isDataTable(tableDetailRekening) == true) {
 			tableDetailRekening.destroy();
 		}
+		getNamaInstansi();
 	})
 
 	// Funngsi: Show box detail rekening
 	$("#tableRekening").on('click','.view_data', function(){
 		var idRekening = $(this).data('id');
-		var kodeRek = $(this).data('koderek');
-		kodeRekening = kodeRek;
-		var kodeKeg = $(this).data('kodekeg');
+		kodeRekening = $(this).data('koderek');
+		uraianRekening = $(this).data('nama');
 	if ($('#boxDetailRekening').hasClass('hidden')) {
 			$("#boxDetailRekening").removeClass("hidden");
 			$("#boxDetailRekening").slideDown();
@@ -582,6 +602,7 @@
 			$('#boxDetailRekening').addClass('hidden');
 			tableDetailRekening.destroy();
 		}
+		$("#titleBoxDetailRekening").html("Detail Rekening ("+uraianRekening+")");
 	});
 
 	// Fungsi: Insert Detail Rekening
@@ -1009,6 +1030,7 @@
 		$('.tabKodeRekening').removeClass('hidden');
 		window.scrollTo(0,0);
 		kodeKegiatan = $(this).data('kegiatan');
+		namaKegiatan = $(this).data("nama");
 		console.log(kodeKegiatan);
 	})
 

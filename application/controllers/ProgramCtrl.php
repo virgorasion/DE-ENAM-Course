@@ -34,6 +34,12 @@ class ProgramCtrl extends CI_controller
     {
         $this->load->view("pdf");
     }
+
+    public function getDataInstansiAPI($kodeInstansi)
+    {
+        $query = $this->db->select('nama_instansi')->from('tb_instansi')->where('kode_instansi',$kodeInstansi)->get()->result();
+        echo json_encode($query);
+    }
     
     public function view_export($kodeInstansi, $kodeProgram, $kodeKegiatan)
     {
