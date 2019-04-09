@@ -58,7 +58,7 @@
 						{"data": "nama_kegiatan"},
 						{"data": "keterangan"},
 						{"data": "total_rekening", render: $.fn.dataTable.render.number(',', '.', '')},
-						{"data": "total_rinci", "orderabel": false, "searchable": false},
+						{"data": "total_rinci", "orderable": true, "searchable": true},
 						{"data": "action", "orderable": false, "searchable": false}
 					],
 			order: [[1, 'asc']],
@@ -343,7 +343,7 @@
 	function infoKegiatan(kodeInstansi,kodeProgram){
 		$.ajax({
 			url: "<?= site_url('ProgramCtrl/GetDataInfoKegiatan/') ?>"+kodeInstansi+"/"+kodeProgram,
-			type: "POST",
+			type: "GET",
 			success:function(result){
 				var data = JSON.parse(result);
 				console.log(result);
@@ -361,7 +361,7 @@
 	function penanggungJawab(idSiswa){
 		$.ajax({
 			url: "<?=site_url('ProgramCtrl/tablePenanggungJawabAPI/')?>"+idSiswa,
-			type: "POST",
+			type: "GET",
 			success: (result) =>{
 				var data = JSON.parse(result);
 				console.log(data);
@@ -451,8 +451,7 @@
 		$("#tabProgram").removeClass("active");
 		$("#tabKodeRekening").addClass("active");
 		funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
-	<?php 
-} ?>
+	<?php } ?>
 
 	// Fungsi: Redirect ke Detail Rekening
 	<?php if (@$_SESSION['DetailRekening_Direct'] != null) { ?>
@@ -476,7 +475,9 @@
 		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
 			kodeProgram = $.trim($item.find('#kode_program').text());
+			let namaProgram = $.trim($item.find('#nama_program').text());
 			idSiswa = $item.find("#idSiswa").val();
+			$("#boxKegiatanTitle").html('Kegiatan : '+namaProgram);
 			if ($.fn.DataTable.isDataTable(tableKegiatan) == false) {
 				funcTableKegiatan(kodeProgram,idSiswa);
 			}
