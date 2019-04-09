@@ -581,15 +581,15 @@ class ProgramCtrl extends CI_controller
     public function HapusRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening,$totalRekening,$totalRinci)
     {
         $query = $this->ProgramModel->DeleteDataRekening($kodeInstansi,$kodeProgram,$kodeKegiatan,$kodeRekening,$totalRekening,$totalRinci);
-        if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil hapus rekening',5);
+        if ($query[0]) {
+            $this->session->set_tempdata('succ', $query[1],5);
             $this->session->set_tempdata('Rekening_Direct', "Direction",5);
             $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
             $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);
             $this->session->set_tempdata('Rekening_KodeKegiatan', $kodeKegiatan,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal hapus rekening, segera hubungi admin',5);
+            $this->session->set_tempdata('fail', $query[1],5);
             $this->session->set_tempdata('Rekening_Direct', "Direction",5);
             $this->session->set_tempdata('Rekening_KodeInstansi', $kodeInstansi,5);
             $this->session->set_tempdata('Rekening_KodeProgram', $kodeProgram,5);

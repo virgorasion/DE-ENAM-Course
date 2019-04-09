@@ -420,8 +420,17 @@ class ProgramModel extends CI_model
     {
         //Call procedure to delete Rekening & DetailRekening
         //syncTotalRekening & TotalRinci
-        $this->db->query("CALL DeleteRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$kodeRekening')");
-        $this->db->query("CALL SyncTotalRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
+        $deleteRekening = $this->db->query("CALL DeleteRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$kodeRekening')");
+        $sync = $this->db->query("CALL SyncTotalRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
+        if ($deleteRekening->result_id == 0 && $sync->result_id == 0) {
+            return [false, "Semua Query Gagal Dijalankan"];
+        }elseif ($deleteRekening->result_id == 0) {
+            return [false, "Gagal Delete Data Rekening"];
+        }elseif ($sync->result_id == 0) {
+            return [false, "Gagal Sync Data TotalRekening & TotalRinci"];
+        }elseif ($deleteRekening->result_id == 1 && $sync->result_id == 1) {
+            return [true, "Berhasil Delete Data Rekening"];
+        }
     }
     
     //==============================================================================>>
