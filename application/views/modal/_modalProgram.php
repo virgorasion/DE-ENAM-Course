@@ -233,7 +233,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="addKodeRek">Jenis Pengeluaran</label>
-						<select class="form-control select2" name="addKodeRek" id="addKodeRek" style="width: 100%;">
+						<select class="form-control select2" name="addKodeRek" id="addKodeRek" style="width: 100%;" readonly>
 							<?php foreach($patokan as $item){ ?>
 							<option value="<?=$item->kode_patokan?>">
 								<?=$item->nama?>

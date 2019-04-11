@@ -812,6 +812,7 @@
 	$('#tableRekening').on('click','.edit_data', function(){
 		$("#formActionRekening").find("#actionTypeRekening").val("edit");
 		console.log(kodeKegiatan);
+		$('#formActionRekening').find('#addKodeRek').prop("disabled","disabled");
 		var mainID = $(this).data('id');
 		var rekeningID = $(this).data('rekening');
 		var patokanID = $(this).data('patokan');
@@ -821,7 +822,6 @@
 		var t3 = $(this).data('t3');
 		var t4 = $(this).data('t4');
 		$('#modalRekening').modal('show');
-		$('#formActionRekening').find('#addKodeRek').val(patokanID);
 		$('#formActionRekening').find('#addNamaRek').val(uraian);
 		$('#formActionRekening').find('#AddT1').val(t1);
 		$('#formActionRekening').find('#AddT2').val(t2);	

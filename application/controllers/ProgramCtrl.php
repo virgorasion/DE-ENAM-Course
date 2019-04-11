@@ -83,35 +83,47 @@ class ProgramCtrl extends CI_controller
         $uraianProgram = $this->input->post('addUraianProgram');
         $sasaranProgram = $this->input->post('addSasaranProgram');
         $plafon = str_replace(".", "", $this->input->post('addPlafon'));
-        $idInstansi = $this->input->post('idInstansi');
-        if ($_SESSION['akses'] == 'Admin') {
-            $data = array(
-                'kode_admin' => $_SESSION['kode_admin'],
-                'kode_instansi' => $idInstansi,
-                'kode_program' => $kodeProgram,
-                'jenis' => $jenisProgram,
-                'uraian' => $uraianProgram,
-                'sasaran' => $sasaranProgram,
-                'nama_program' => $namaProgram,
-                'plafon' => $plafon
-            );
-        } else {
-            $data = array(
-                'kode_admin' => 0,
-                'kode_instansi' => $idInstansi,
-                'kode_program' => $kodeProgram,
-                'nama_program' => $namaProgram,
-                'jenis' => $jenisProgram,
-                'uraian' => $uraianProgram,
-                'sasaran' => $sasaranProgram,
-                'nama_program' => $namaProgram,
-                'plafon' => $plafon
-            );
+        $kodeInstansi = $this->input->post('idInstansi');
+        // Check kode program (Tidak Boleh Kembar)
+        $getKodeProgram = $this->db->select("kode_program")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get();
+        $check = $getKodeProgram->num_rows();
+        if ($check > 0) {
+            $this->session->set_tempdata('fail', 'Kode Program sudah digunakan !',5);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }else{
+            if ($_SESSION['akses'] == 'Admin') {
+                $data = array(
+                    'kode_admin' => $_SESSION['kode_admin'],
+                    'kode_instansi' => $kodeInstansi,
+                    'kode_program' => $kodeProgram,
+                    'jenis' => $jenisProgram,
+                    'uraian' => $uraianProgram,
+                    'sasaran' => $sasaranProgram,
+                    'nama_program' => $namaProgram,
+                    'plafon' => $plafon
+                );
+            } else {
+                $data = array(
+                    'kode_admin' => 0,
+                    'kode_instansi' => $kodeInstansi,
+                    'kode_program' => $kodeProgram,
+                    'nama_program' => $namaProgram,
+                    'jenis' => $jenisProgram,
+                    'uraian' => $uraianProgram,
+                    'sasaran' => $sasaranProgram,
+                    'nama_program' => $namaProgram,
+                    'plafon' => $plafon
+                );
+            }
+            $query = $this->ProgramModel->ActionInsert('tb_program', $data);
+            if ($query) {
+                $this->session->set_tempdata('succ', 'Berhasil Menambahkan Program',5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            }else{
+                $this->session->set_tempdata('fail', 'Gagal Menambahkan Program, Segera Hubungi Admin !',5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            }
         }
-
-        $this->ProgramModel->ActionInsert('tb_program', $data);
-        $this->session->set_tempdata('msg', 'Berhasil Menambahkan Program',5);
-        redirect('ProgramCtrl/index/' . $idInstansi);
     }
 
     public function EditProgram()
@@ -248,29 +260,38 @@ class ProgramCtrl extends CI_controller
     public function TambahKegiatan()
     {
         $post = $this->input->post();
-        $kodeKegiatan = str_replace(" ", "", $this->generateKodeKegiatan($post['addKodeKegiatan']));
-        $idSiswa = $post['addKegiatanIdSiswa'];
-        $data = array(
-            'kode_instansi' => $post['kodeInstansi'],
-            'kode_program' => $post['kodeProgram'],
-            'kode_kegiatan' => $kodeKegiatan,
-            'nama_kegiatan' => htmlspecialchars($post['addNamaKegiatan']),
-            'keterangan' => htmlspecialchars($post['addKeterangan'])
-        );
-        $query = $this->ProgramModel->ActionInsert('tb_kegiatan', $data);
         $kodeInstansi = $post['kodeInstansi'];
         $kodeProgram = $post['kodeProgram'];
-
-        if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+        $kodeKegiatan = str_replace(" ", "", $this->generateKodeKegiatan($post['addKodeKegiatan']));
+        $idSiswa = $post['addKegiatanIdSiswa'];
+        //Check Kode Kegiatan
+        $getKodeKegiatan = $this->db->select("kode_kegiatan")->from("tb_kegiatan")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->where("kode_kegiatan",$kodeKegiatan)->get();
+        $check = $getKodeKegiatan->num_rows();
+        if ($check > 0){
+            $this->session->set_tempdata('fail', 'Kode Kegiatan Sudah Digunakan !',5);
             $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
             $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
-        } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
-            $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
-            $this->session->set_tempdata('idSiswa', $idSiswa,5);
-            redirect('ProgramCtrl/index/' . $kodeInstansi);
+        }else{
+            $data = array(
+                'kode_instansi' => $post['kodeInstansi'],
+                'kode_program' => $post['kodeProgram'],
+                'kode_kegiatan' => $kodeKegiatan,
+                'nama_kegiatan' => htmlspecialchars($post['addNamaKegiatan']),
+                'keterangan' => htmlspecialchars($post['addKeterangan'])
+            );
+            $query = $this->ProgramModel->ActionInsert('tb_kegiatan', $data);
+            if ($query != null) {
+                $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            } else {
+                $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
+                $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
+                $this->session->set_tempdata('idSiswa', $idSiswa,5);
+                redirect('ProgramCtrl/index/' . $kodeInstansi);
+            }
         }
     }
 
@@ -548,13 +569,7 @@ class ProgramCtrl extends CI_controller
             );
             $query = $this->ProgramModel->ActionInsert('tb_rekening', $data);
         } else {
-            $kodeRekening = $this->generateKodeRekening($p['addKodeRek'], $p['KodeKegiatanRekening'], $p['KodeProgramRekening'], $p['KodeInstansiRekening'], $p['KodeRekeningRekening']);
             $data = array(
-                'kode_patokan' => $p['addKodeRek'],
-                'kode_rekening' => $kodeRekening,
-                'kode_instansi' => $p['KodeInstansiRekening'],
-                'kode_program' => $p['KodeProgramRekening'],
-                'kode_kegiatan' => $p['KodeKegiatanRekening'],
                 'uraian_rekening' => $p['addNamaRek'],
                 'triwulan_1' => $r1,
                 'triwulan_2' => $r2,
