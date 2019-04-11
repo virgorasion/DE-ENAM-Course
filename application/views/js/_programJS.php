@@ -405,7 +405,7 @@
 
 	//Ganti Title BoxProgram jadi nama instansi
 	function getNamaInstansi(){
-		kodeInstansi = "<?=$kodeInstansi?>";
+		kodeInstansi = "<?=$kodeInstansi?>"; // Initialize awal KodeInstansi (Global Variable)
 		// console.log(kodeInstansi+"instansi");
 		$.ajax({
 			url: "<?=site_url('ProgramCtrl/getDataInstansiAPI/')?>"+kodeInstansi,
@@ -429,11 +429,11 @@
 
 	//Fungsi: Set variable kodeProgram setiap action dijalankan
 	<?php if (@$_SESSION['kodeProgram'] != null) { ?>
-		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>";
+		kodeProgram = "<?= @$_SESSION['kodeProgram']; ?>"; //Initialize awal saat selesai melakukan aksi (Delete/Update)
 	<?php } ?>
 
 	<?php if (@$_SESSION['Pembahasan_Direct'] != null) { ?>
-		idSiswa = "<?=@$_SESSION['idSiswa']?>";
+		idSiswa = "<?=@$_SESSION['idSiswa']?>";//Initialize awal saat selesai melakukan aksi (Delete/Update)
 		funcTableKegiatan(kodeProgram);
 		funcTableIndikator();
 		infoKegiatan(kodeInstansi,kodeProgram);
@@ -445,7 +445,7 @@
 		$("#nav-tabs-kegiatan-5").addClass("active in");
 	<?php }?>
 	<?php if (@$_SESSION['Indikator_Direct'] != null) { ?>
-		idSiswa = "<?=@$_SESSION['idSiswa']?>";
+		idSiswa = "<?=@$_SESSION['idSiswa']?>"; //Initialize awal saat selesai melakukan aksi (Delete/Update)
 		funcTablePembahasan();
 		funcTableKegiatan(kodeProgram);
 		infoKegiatan(kodeInstansi,kodeProgram);
@@ -459,7 +459,7 @@
 
 	// Fungsi: Redirect Rekening
 	<?php if (@$_SESSION['Rekening_Direct'] != null) { ?>
-		kodeInstansi = "<?= @$_SESSION['Rekening_KodeInstansi'] ?>";
+		kodeInstansi = "<?= @$_SESSION['Rekening_KodeInstansi'] ?>"; //Initialize awal saat selesai melakukan aksi (Delete/Update)
 		kodeProgram = "<?= @$_SESSION['Rekening_KodeProgram'] ?>";
 		kodeKegiatan = "<?= @$_SESSION['Rekening_KodeKegiatan'] ?>";
 		$("#nav-tab-program-3").removeClass("hidden");
@@ -492,9 +492,9 @@
 	$('#tableProgram').on('click', '#btnView', function () {
 		if ($('#boxKegiatan').hasClass('hidden')) {
 			var $item = $(this).closest('tr');
-			kodeProgram = $.trim($item.find('#kode_program').text());
+			kodeProgram = $.trim($item.find('#kode_program').text()); //Initialize awal kodeProgram
 			let namaProgram = $.trim($item.find('#nama_program').text());
-			idSiswa = $item.find("#idSiswa").val();
+			idSiswa = $item.find("#idSiswa").val(); // Initialize awal IdSiswa
 			$("#boxKegiatanTitle").html('Kegiatan : '+namaProgram);
 			if ($.fn.DataTable.isDataTable(tableKegiatan) == false) {
 				funcTableKegiatan(kodeProgram,idSiswa);
@@ -875,33 +875,62 @@
 
 	//Fungsi: Delete Program
 	$('#tableProgram').on('click', '#btnDelete', function () {
-      var $item = $(this).closest("tr");
-      var $nama = $.trim($item.find("#nama_program").text());
-      console.log($nama);
+      let $item = $(this).closest("tr");
+      let $nama = $.trim($item.find("#nama_program").text());
+			let kodeProgram = $.trim($item.find('#kode_program').text());
+      // console.log($nama);
       // $item.find("input[id$='no']").val();
       // alert("hai");
-      $.confirm({
-        theme: 'supervan',
-        title: 'Hapus Program Ini ?',
-        content: 'Program ' + $nama,
-        autoClose: 'Cancel|10000',
-        buttons: {
-          Cancel: function () {},
-          delete: {
-            text: 'Delete',
-            action: function () {
-              window.location = "<?= site_url('ProgramCtrl/Hapus/') ?>" + $item.find("#idProgram").val() +"/"+ "<?= $kodeInstansi ?>";
-            }
-          }
-        }
-      });
-    });
+			$.confirm({
+			theme: 'supervan',
+			title: 'WARNING !',
+			columnClass: 'col-md-12',
+			content: `MENGHAPUS PROGRAM INI AKAN MEMBUAT ANDA MENGHAPUS PULA DATA DIDALAMNYA 
+								<br> TERMASUK DATA "KEGIATAN", "REKENING" DAN "DETAIL REKENING"
+								<br> PROGRAM SISWA AKAN DIKEMBALIKAN MENJADI DEFAULT 
+								<br> APAKAH ANDA YAKIN INGIN MENGHAPUS PROGRAM <br> `+" \""+ $nama + "\" ",
+			buttons: {
+				Cancel: function () {},
+				delete: {
+					text: 'Delete',
+					action: function(){
+						$.confirm({
+							theme: 'supervan',
+							title: 'WARNING !',
+							content: 'APAKAH ANDA YAKIN ?',
+							buttons: {
+								Cancel: function(){},
+								Yakin: {
+									text: "Yakin",
+									action: function(){
+										$.confirm({
+											theme: 'supervan',
+											title: 'WARNING !',
+											content: 'TEKAN TOMBOL "OK"',
+											buttons: {
+												Cancel: function(){},
+												OK: function(){
+													window.location = "<?=site_url('ProgramCtrl/HapusProgram/')?>" + kodeInstansi+"/"+kodeProgram;
+												}
+											}
+										})
+									}
+								}
+							}
+						})
+					}
+				}
+			}
+		})
+  });
 
 	//Fungsi: Delete Kegiatan
 	$('#tableKegiatan').on('click', '.delete_data', function () {
-      var id = $(this).data('id');
-	  var nama = $(this).data('nama');
-      console.log(nama);
+      let kegiatanKode = $(this).data('kode');
+	  	let nama = $(this).data('nama');
+			let rekening = $(this).data("rekening");
+			let rinci = $(this).data("rinci");
+      // console.log(nama);
       // $item.find("input[id$='no']").val();
       // alert("hai");
       $.confirm({
@@ -914,7 +943,7 @@
           delete: {
             text: 'Delete',
             action: function () {
-              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>" + id +"/"+ kodeProgram +"/"+ kodeInstansi+"/"+idSiswa;
+              window.location = "<?= site_url('ProgramCtrl/HapusKegiatan/') ?>"+idSiswa+"/"+kodeInstansi+"/"+kodeProgram+"/"+kegiatanKode+"/"+rekening+"/"+rinci;
             }
           }
         }

@@ -159,15 +159,15 @@ class ProgramCtrl extends CI_controller
         echo json_encode($query);
     }
 
-    public function Hapus($idProgram, $idInstansi)
+    public function HapusProgram($kodeInstansi, $kodeProgram)
     {
-        $query = $this->ProgramModel->DeleteProgram('tb_program', $idProgram);
+        $query = $this->ProgramModel->DeleteProgram($kodeInstansi,$kodeProgram);
         if ($query == true) {
             $this->session->set_tempdata('succ', "Program berhasil dihapus",5);
-            redirect('ProgramCtrl/index/' . $idInstansi);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
             $this->session->set_tempdata('fail', "Program gagal dihapus segera hubungi admin",5);
-            redirect('ProgramCtrl/index/' . $idInstansi);
+            redirect('ProgramCtrl/index/' . $kodeInstansi);
         }
     }
 
@@ -442,17 +442,16 @@ class ProgramCtrl extends CI_controller
         }
     }
 
-    public function HapusKegiatan($idKegiatan, $kodeProgram, $kodeInstansi,$idSiswa)
+    public function HapusKegiatan($idSiswa,$kodeInstansi,$kodeProgram,$kodeKegiatan,$totalRekening,$totalRinci)
     {
-        $this->ProgramModel->SyncTotalRinci($kodeInstansi, $kodeProgram, $kodeKegiatan, $kodeRekening);
-        $query = $this->ProgramModel->DeleteDataKegiatan('tb_kegiatan', $idKegiatan);
-        if ($query != null) {
-            $this->session->set_tempdata('succ', 'Berhasil menambah kegiatan',5);
+        $query = $this->ProgramModel->DeleteDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan,$totalRekening,$totalRinci);
+        if ($query[0] != FALSE) {
+            $this->session->set_tempdata('succ', $query[1],5);
             $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
             $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);
         } else {
-            $this->session->set_tempdata('fail', 'Gagal menambah kegiatan, segera hubungi admin',5);
+            $this->session->set_tempdata('fail', $query[1],5);
             $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
             $this->session->set_tempdata('idSiswa', $idSiswa,5);
             redirect('ProgramCtrl/index/' . $kodeInstansi);

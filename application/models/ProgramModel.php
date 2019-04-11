@@ -30,9 +30,16 @@ class ProgramModel extends CI_model
     }
 
     //Fungsi delete, digunakan semua pihak
-    public function DeleteProgram($table,$idProgram)
+    public function DeleteProgram($kodeInstansi,$kodeProgram)
     {
-        return $this->db->delete($table, array('id'=> $idProgram));
+        // CALL procedur untuk Ubah program siswa menjadi nol
+        // lalu hapus data program
+        $query = $this->db->query("CALL DeleteProgram('$kodeInstansi','$kodeProgram')");
+        if ($query->result_id == 0) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public function getDataSiswaCetak($hakAkses,$kodeInstansi = NULL)
@@ -133,7 +140,7 @@ class ProgramModel extends CI_model
         $this->datatables->add_column('action',
             '<a href="javascript:void(0)" class="view_data btn btn-info btn-xs" data-kegiatan="$4" data-program="$3" data-instansi="$2" data-nama="$5"><i class="fa fa-eye"></i></a> 
             <a href="javascript:void(0)" class="edit_data btn btn-warning btn-xs" data-id="$1" data-program="$3" data-kode="$4" data-nama="$5" data-ket="$8"><i class="fa fa-pencil"></i></a> 
-            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-id="$1" data-nama="$5"><i class="fa fa-remove"></i></a>',
+            <a href="javascript:void(0)" class="delete_data btn btn-danger btn-xs" data-kode="$4" data-nama="$5" data-rekening="$6" data-rinci="$9"><i class="fa fa-remove"></i></a>',
             'id,
             kode_instansi,
             kode_program,
@@ -141,7 +148,8 @@ class ProgramModel extends CI_model
             nama_kegiatan,
             total_rekening,
             total_rinci,
-            keterangan');
+            keterangan,
+            tot_rinci');
         return $this->datatables->generate();
         // <a href="javascript:void(0)" class="view btn btn-primary btn-xs" data-id="$1"><i class="fa fa-eye"></i></a>
     }
@@ -313,9 +321,16 @@ class ProgramModel extends CI_model
         return $this->db->select("kode_program,nama_program,plafon,jenis,uraian,sasaran")->from("tb_program")->where("kode_instansi",$kodeInstansi)->where("kode_program",$kodeProgram)->get()->result();
     }
     
-    public function DeleteDataKegiatan($table,$idKegiatan)
+    public function DeleteDataKegiatan($kodeInstansi,$kodeProgram,$kodeKegiatan,$totalRekening,$totalRinci)
     {
-        return $this->db->delete($table,array('id'=>$idKegiatan));
+        //Call procedure untuk delete data kegiatan dan data dibawahnya
+        //lalu Sync data TotalRekening & TotalRinci ke Program
+        $query = $this->db->query("CALL DeleteKegiatan('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
+        if ($query->result_id == 0) {
+            return [FALSE,'Terjadi kesalahan, segera hubungi admin !'];
+        }else{
+            return [TRUE,'Data Berhasil Dihapus !'];
+        }
     }
     
     public function EditKegiatan($table,$data,$where)
