@@ -565,19 +565,31 @@
 			tableDetailRekening.destroy();
 		}
 	});
+
 	//Fungsi: Destroy table kegiatan ketika klik tabProgram dari tabKodeRekening
-	$("#tabKodeRekening").click(function(){
-		if (tableKegiatan instanceof $.fn.DataTable.Api == true) {
+	// Fungsi: untuk menampikan Box Rekening
+	$('#tab-nav').on('click', '.tabKodeRekening', function(){
+		//Funsgi: reinitialize tableRekening when click tab KodeRekening
+		if (tableRekening instanceof $.fn.dataTable.Api == false) {
+			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		}else {
+			tableRekening.destroy();
+			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
+		}
+		if (!$("#boxKegiatan").hasClass("hidden")) {
+			$("#boxKegiatan").fadeOut(1000);
+			$('#boxKegiatan').addClass('hidden');
 			tableKegiatan.destroy();
-		}
-		if (tablePembahasan instanceof $.fn.DataTable.Api == true) {
-			tablePembahasan.destroy();
-		}
-		if (tableIndikator instanceof $.fn.DataTable.Api == true) {
-			tableIndikator.destroy();
+			if ($.fn.dataTable.isDataTable("#tableIndikator") == true) {
+				tableIndikator.destroy();
+			}
+			if ($.fn.dataTable.isDataTable("#tablePembahasan") == true) {
+				tablePembahasan.destroy();
+			}
 		}
 		$("#titleBoxProgram").html("Rekening ("+namaKegiatan+")");
-	})
+	});
+
 	//Fungsi: untuk Hidden Box Detail Rekening ketika klik tabProgram
 	$("#tabProgram").click(function(){
 		$('#boxDetailRekening').fadeOut(1000);
@@ -1062,27 +1074,6 @@
 		namaKegiatan = $(this).data("nama");
 		console.log(kodeKegiatan);
 	})
-
-	// Fungsi: untuk menampikan Box Rekening
-	$('#tab-nav').on('click', '.tabKodeRekening', function(){
-		if ($('#boxKegiatan').hasClass('hidden')) {
-			//Nothing
-		}else{
-			$('#boxKegiatan').slideUp(1000);
-			$('#boxKegiatan').addClass('hidden');
-			// if (tableKegiatan instanceof $.fn.dataTable.Api) {
-			// 	tableKegiatan.destroy();
-			// }
-		}
-		console.log(kodeKegiatan);
-		//Funsgi: reinitialize tableRekening when click tab KodeRekening
-		if (tableRekening instanceof $.fn.dataTable.Api == false) {
-			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
-		}else {
-			tableRekening.destroy();
-			funcTableRekening(kodeInstansi,kodeProgram,kodeKegiatan);
-		}
-	});
 
 	//Fungsi: Insert kegiatan
 	$('#btnAddKegiatan').click(function(){

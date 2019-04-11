@@ -20,7 +20,7 @@
                             <div class="input-group-addon">
                                 010.
                             </div>
-                            <input required type="text" class="form-control" id="addId" name="addId" placeholder="9999" aria-describedby="helpId">
+                            <input required type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="addId" name="addId" placeholder="9999" aria-describedby="helpId" maxlength="15">
                         </div>
                         <!-- /.input group -->
                         <!-- <small id="helpId" class="text-muted"></small> -->
@@ -90,7 +90,7 @@
                             <div class="input-group-addon">
                                 010.
                             </div>
-                            <input type="text" class="form-control" id="editId" name="editId" placeholder="9999" aria-describedby="helpId">
+                            <input type="text" class="form-control" id="editId" name="editId" placeholder="9999" aria-describedby="helpId" readonly>
                         </div>
                         <!-- /.input group -->
                         <!-- <small id="helpId" class="text-muted"></small> -->

@@ -16,8 +16,8 @@
 							<div class="input-group-addon">
 								127.
 							</div>
-							<input required type="text" class="form-control" id="addKodeProgram" name="addKodeProgram" placeholder="9999"
-							 aria-describedby="helpId">
+							<input required type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="addKodeProgram" name="addKodeProgram" placeholder="9999"
+							 aria-describedby="helpId" maxlength="15">
 						</div>
 						<!-- /.input group -->
 						<!-- <small id="helpId" class="text-muted"></small> -->
@@ -79,8 +79,8 @@
 							<div class="input-group-addon">
 								127.
 							</div>
-							<input type="text" class="form-control" id="editKodeProgram" name="editKodeProgram" placeholder="9999"
-							 aria-describedby="helpId">
+							<input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="editKodeProgram" name="editKodeProgram" placeholder="9999"
+							 aria-describedby="helpId" maxlength="15" readonly>
 						</div>
 						<!-- /.input group -->
 						<!-- <small id="helpId" class="text-muted"></small> -->
@@ -141,8 +141,8 @@
 							<div class="input-group-addon">
 								080.
 							</div>
-							<input required type="text" class="form-control" id="addKodeKegiatan" name="addKodeKegiatan" placeholder="9999"
-							 aria-describedby="helpId">
+							<input required type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="addKodeKegiatan" name="addKodeKegiatan" placeholder="9999"
+							 aria-describedby="helpId" maxlength="15">
 						</div>
 						<!-- /.input group -->
 						<!-- <small id="helpId" class="text-muted"></small> -->
@@ -188,8 +188,8 @@
 							<div class="input-group-addon">
 								080.
 							</div>
-							<input type="number" class="form-control" id="editKodeKegiatan" max-lenght="5" name="editKodeKegiatan"
-							 placeholder="9999" aria-describedby="helpId">
+							<input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="editKodeKegiatan" maxlength="15" name="editKodeKegiatan"
+							 placeholder="9999" aria-describedby="helpId" readonly>
 						</div>
 						<!-- /.input group -->
 						<!-- <small id="helpId" class="text-muted"></small> -->
