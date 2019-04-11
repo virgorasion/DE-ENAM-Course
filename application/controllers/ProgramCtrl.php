@@ -506,7 +506,7 @@ class ProgramCtrl extends CI_controller
         $result = $sel->row();
         $tambahRes = $result->kode_indikator;
         $potong = substr($tambahRes, -3);
-        $hasil = $potong + 1;
+        $hasil = (int)$potong + 1;
         $kode = "1." . str_pad($hasil, 3, 0, STR_PAD_LEFT);
         return $kode;
     }
@@ -636,7 +636,7 @@ class ProgramCtrl extends CI_controller
                 $getRek = $query->row();
                 $kodeRek = $getRek->kode_rekening; // if(null):null ? 5.1.1.01
                 $potong = substr($kodeRek, -2); // 01
-                $tambah = $potong + 1; // 02
+                $tambah = (int)$potong + 1; // 02
                 $pad = str_pad($tambah, 2, "0", STR_PAD_LEFT); //02
                 $result = $kodePatokan . "." . $pad;
                 return $result;
@@ -766,7 +766,7 @@ class ProgramCtrl extends CI_controller
         $getKode = $query->row();
         $KodeRek = $getKode->kode_detail_rekening; //if(null): null ? 5.1.1.01.01
         $potong = substr($KodeRek, -2); // if(null): 1 ? 2
-        $tambah = $potong + 1;
+        $tambah = (int)$potong + 1;
         $result = str_pad($tambah, 2, "0", STR_PAD_LEFT); //01
         return $result;
     }
