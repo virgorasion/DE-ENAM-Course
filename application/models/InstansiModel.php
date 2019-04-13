@@ -18,6 +18,7 @@ class InstansiModel extends CI_model
                 ->from($table)
                 ->where('kode_instansi',$where)
                 ->where('id_siswa', NULL)
+                ->or_where('id_siswa', 0)
                 ->get()->result();
     }
 

@@ -481,8 +481,8 @@ class ProgramCtrl extends CI_controller
 
     public function HapusIndikator($idIndikator, $kodeProgram, $kodeInstansi, $idSiswa)
     {
-        $query = $this->ProgramModel->DeleteDataKegiatan('tb_indikator', $idIndikator);
-        if ($query != null) {
+        $query = $this->ProgramModel->ActionDelete('tb_indikator', ['id' => $idIndikator]);
+        if ($query != false) {
             $this->session->set_tempdata('succ', 'Berhasil Hapus Indikator',5);
             $this->session->set_tempdata('kodeProgram', $kodeProgram,5);
             $this->session->set_tempdata('idSiswa', $idSiswa,5);

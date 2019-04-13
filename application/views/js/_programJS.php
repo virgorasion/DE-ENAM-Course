@@ -804,6 +804,11 @@
 				$('#EditUraianProgram').val(data[0].uraian);
 				$('#EditSasaranProgram').val(data[0].sasaran);
 				$('#editPlafon').val(data[0].plafon);
+				$("#modalLoading").modal("hide");
+				$("#modal-edit").modal("show");
+			},
+			beforeSend:function(){
+				$("#modalLoading").modal("show");
 			}
 		});
 	})

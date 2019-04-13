@@ -173,8 +173,7 @@ $dataModal['patokan'] = $patokan;
 												</a>
 												<a href="#">
 													<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
-													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit" data-toggle="modal"
-													 data-target="#modal-edit">
+													<button class="btn btn-warning btn-xs btnEdit" data-title="Edit" id="btnEdit">
 														<span class="fa fa-pencil"></span>
 													</button>
 												</a>
@@ -280,9 +279,9 @@ $dataModal['patokan'] = $patokan;
 		<!-- End Box Program -->
 
 	<!-- Loader -->
-	<div class="modal fade" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
+	<div class="modal fade" id="modalLoading">
       <div class="modal-dialog">
-          <div class="text-center" style="margin-top:50%">
+          <div class="text-center" style="margin-top:50%;z-index:999999">
             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
           </div>
       </div>

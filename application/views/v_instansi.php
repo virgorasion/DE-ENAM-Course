@@ -94,49 +94,39 @@
 							<?php if($_SESSION['hakAkses'] == 1) { ?>
 							<td>
 								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">
-								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-id="<?=$item->kode_instansi?>" id="btnView">
 										<span class="fa fa-eye"></span>
 									</button>
-								</a>
-								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="Edit"></span>
 									<button class="btn btn-warning btn-xs btnEdit" data-toggle="modal" data-target="#modalEditInstansi" data-title="Edit"
 									 id="btnEdit">
 										<span class="fa fa-pencil"></span>
 									</button>
-								</a>
-								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="Delete"></span>
 									<button class="btn btn-danger btn-xs btnDelete" data-title="Delete" id="btnDelete">
 										<span class="fa fa-remove"></span>
 									</button>
-								</a>
 							</td>
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 2) { ?>
 							<td>
 								<input type="hidden" name="idInstansi" id="idInstansi" class="form-control" value="<?= $item->id ?>">
 								<?php if ($_SESSION['kode_instansi'] == $item->kode_instansi) { ?>
-								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
 										<span class="fa fa-eye"></span>
 									</button>
-								</a>
 								<?php } ?>
 							</td>
 							<?php } ?>
 							<?php if ($_SESSION['hakAkses'] == 3) { ?>
 							<td>
 								<?php if ($_SESSION['kode_instansi'] == $item->kode_instansi) { ?>
-								<a href="#">
 									<span data-placement="top" data-toggle="tooltip" title="View"></span>
 									<button class="btn btn-primary btn-xs btnView" data-title="View" id="btnView">
 										<span class="fa fa-eye"></span>
 									</button>
-								</a>
 								<?php } ?>
 							</td>
 							<?php } ?>

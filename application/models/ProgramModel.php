@@ -16,10 +16,16 @@ class ProgramModel extends CI_model
         return $this->db->get_where($table, array('id' => $id));
     }
 
-    //Fungsi Insert, digunakan semua pihak
+    //Fungsi Insert, digunakan global
     public function ActionInsert($table,$data)
     {
         return $this->db->insert($table,$data);
+    }
+
+    // Fungsi Delete, Digunakan global
+    public function ActionDelete($table,$data)
+    {
+        return $this->db->delete($table,$data);
     }
 
     //Fungsi update, digunakan semua pihak
@@ -29,10 +35,9 @@ class ProgramModel extends CI_model
         return $this->db->update($table, $data);
     }
 
-    //Fungsi delete, digunakan semua pihak
     public function DeleteProgram($kodeInstansi,$kodeProgram)
     {
-        // CALL procedur untuk Ubah program siswa menjadi nol
+        // CALL procedure untuk Ubah program siswa menjadi nol
         // lalu hapus data program
         $query = $this->db->query("CALL DeleteProgram('$kodeInstansi','$kodeProgram')");
         if ($query->result_id == 0) {
@@ -325,11 +330,20 @@ class ProgramModel extends CI_model
     {
         //Call procedure untuk delete data kegiatan dan data dibawahnya
         //lalu Sync data TotalRekening & TotalRinci ke Program
-        $query = $this->db->query("CALL DeleteKegiatan('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
-        if ($query->result_id == 0) {
-            return [FALSE,'Terjadi kesalahan, segera hubungi admin !'];
-        }else{
-            return [TRUE,'Data Berhasil Dihapus !'];
+        if ($totalRekening == 0 && $totalRinci == 0) {
+            $query = $this->db->query("CALL DeleteKegiatanAlternate('$kodeInstansi','$kodeProgram','$kodeKegiatan')");
+            if ($query->result_id == 0) {
+                return [FALSE,'Terjadi kesalahan, segera hubungi admin !'];
+            }else{
+                return [TRUE,'Data Berhasil Dihapus !'];
+            }
+        }else {
+            $query = $this->db->query("CALL DeleteKegiatan('$kodeInstansi','$kodeProgram','$kodeKegiatan',$totalRekening,$totalRinci)");
+            if ($query->result_id == 0) {
+                return [FALSE,'Terjadi kesalahan, segera hubungi admin !'];
+            }else{
+                return [TRUE,'Data Berhasil Dihapus !'];
+            }
         }
     }
     
@@ -436,7 +450,7 @@ class ProgramModel extends CI_model
         //Call procedure to delete Rekening & DetailRekening
         //syncTotalRekening & TotalRinci
         $deleteRekening = $this->db->query("CALL DeleteRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$kodeRekening')");
-        $sync = $this->db->query("CALL SyncTotalRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan','$totalRekening','$totalRinci')");
+        $sync = $this->db->query("CALL SyncTotalRekening('$kodeInstansi','$kodeProgram','$kodeKegiatan',$totalRekening,$totalRinci)");
         if ($deleteRekening->result_id == 0 && $sync->result_id == 0) {
             return [false, "Semua Query Gagal Dijalankan"];
         }elseif ($deleteRekening->result_id == 0) {

@@ -393,19 +393,23 @@ class Export_pdf extends CI_controller
                                             AND kode_rekening = '".@$rekening->kode_rekening."' ")->result();
             foreach ($dataDetail as $detail) {
                 $pdf->SetFont("Arial","",11);
-                $pdf->Cell(50,6,$detail->kode_detail_rekening,"LR",0,"L");
-                $pdf->Cell(120,6,$detail->uraian." | ".$detail->sub_uraian,"LR",0,"L");
-                $pdf->Cell(30,6,$detail->volume,"LR",0,"C");
-                $pdf->Cell(30,6,$detail->satuan,"LR",0,"C");
-                $pdf->Cell(50,6,$detail->harga,"LR",0,"R");
-                $pdf->Cell(55,6,$detail->total,"LR",1,"R");
+                $pdf->Cell(50,8,$detail->kode_detail_rekening,"LR",0,"L");
+                // $pdf->Cell(120,8,$detail->uraian." | ".$detail->sub_uraian,"LR",0,"L");
+                $x = $pdf->GetX();
+                $w = 120;
+                $h = 8;
+                $pdf->myCell($w,$h,$x,$detail->uraian." | ".$detail->sub_uraian);
+                $pdf->Cell(30,8,$detail->volume,"LR",0,"C");
+                $pdf->Cell(30,8,$detail->satuan,"LR",0,"C");
+                $pdf->Cell(50,8,$detail->harga,"LR",0,"R");
+                $pdf->Cell(55,8,$detail->total,"LR",1,"R");
             }
-                $pdf->Cell(50,6,"","LR",0,"C");
-                $pdf->Cell(120,6,"","LR",0,"C");
-                $pdf->Cell(30,6,"","LR",0,"C");
-                $pdf->Cell(30,6,"","LR",0,"C");
-                $pdf->Cell(50,6,"","LR",0,"C");
-                $pdf->Cell(55,6,"","LR",1,"C");
+                $pdf->Cell(50,8,"","LR",0,"C");
+                $pdf->Cell(120,8,"","LR",0,"C");
+                $pdf->Cell(30,8,"","LR",0,"C");
+                $pdf->Cell(30,8,"","LR",0,"C");
+                $pdf->Cell(50,8,"","LR",0,"C");
+                $pdf->Cell(55,8,"","LR",1,"C");
         }
         //End Data Utama
 
